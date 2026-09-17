@@ -1,0 +1,911 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDOS Redesign – Mobilní UX Prototyp (Vy.no & Konkurence)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React 18 & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel Standalone for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            vy: {
+              bg: '#04130f',
+              card: '#0a231c',
+              cardHover: '#0f2f26',
+              input: '#061a14',
+              mint: '#9be3d1',
+              mintDark: '#2b5349',
+              mintHover: '#b2edd9',
+              text: '#f1f5f3',
+              subtext: '#8aa69d',
+              border: '#163b31'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+    .phone-frame {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 12px #1f2937, 0 0 0 14px #374151;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-teal-500 selection:text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const IconArrowLeft = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M15 19l-7-7 7-7"/></svg>;
+    const IconClose = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M6 18L18 6M6 6l12 12"/></svg>;
+    const IconSwap = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>;
+    const IconUser = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>;
+    const IconFilter = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>;
+    const IconClock = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>;
+    const IconTrain = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm2 9h12M8 19l-2 2m10-2l2 2M9 8h.01M15 8h.01"/></svg>;
+    const IconBus = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 17a2 2 0 100-4 2 2 0 000 4zm8 0a2 2 0 100-4 2 2 0 000 4zM4 6h16v8H4V6zm0 0l2-2h12l2 2"/></svg>;
+    const IconStar = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>;
+    const IconInfo = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" strokeWidth="2"/><path strokeLinecap="round" strokeWidth="2" d="M12 8h.01M12 11v5"/></svg>;
+    function App() {
+      const [selectedApp, setSelectedApp] = useState('vy');
+      const [screen, setScreen] = useState('results');
+
+      const [passengers, setPassengers] = useState({
+        adult: 1,
+        child: 0,
+        childAge: '',
+        student: 0,
+        studentAge: '',
+        senior: 0,
+        military: 0
+      });
+
+      const [options, setOptions] = useState({
+        bike: 0,
+        pram: 0,
+        wheelchair: 0,
+        petSmall: 0,
+        petBig: 0
+      });
+
+      const [selectedTrip, setSelectedTrip] = useState(null);
+
+      const getSummaryString = () => {
+        const parts = [];
+        if (passengers.adult > 0) parts.push(`${passengers.adult} adult${passengers.adult > 1 ? 's' : ''}`);
+        if (passengers.child > 0) parts.push(`${passengers.child} child${passengers.childAge ? ` (${passengers.childAge}y)` : ''}`);
+        if (passengers.student > 0) parts.push(`${passengers.student} student${passengers.studentAge ? ` (${passengers.studentAge}y)` : ''}`);
+        if (passengers.senior > 0) parts.push(`${passengers.senior} senior${passengers.senior > 1 ? 's' : ''}`);
+        if (passengers.military > 0) parts.push(`${passengers.military} military`);
+        return parts.length > 0 ? parts.join(', ') : '0 passengers';
+      };
+
+      const calculateTotalPrice = (baseNok = 399) => {
+        let total = 0;
+        total += passengers.adult * baseNok;
+        total += passengers.child * Math.round(baseNok * 0.5);
+        total += passengers.student * Math.round(baseNok * 0.75);
+        total += passengers.senior * Math.round(baseNok * 0.5);
+        total += passengers.military * Math.round(baseNok * 0.5);
+        total += options.bike * 100;
+        total += options.petBig * 100;
+        return total > 0 ? total : baseNok;
+      };
+
+      const trips = [
+        { id: 't1', dep: '11:39', arr: '13:16', dur: '1 h 37 min', type: 'train', line: 'RE11 Skien', detail: 'Train with Vy from Oslo S · Track 5', basePrice: 399 },
+        { id: 't2', dep: '11:54', arr: '13:47', dur: '1 h 53 min', type: 'bus', line: 'VY190 express', detail: '12:00 Bus with Vy express from Oslo bussterminal', basePrice: 430 },
+        { id: 't3', dep: '12:39', arr: '14:16', dur: '1 h 37 min', type: 'train', line: 'RE11 Skien', detail: 'Train with Vy from Oslo S · Track 5', basePrice: 399 },
+        { id: 't4', dep: '13:39', arr: '15:16', dur: '1 h 37 min', type: 'train', line: 'RE11 Skien', detail: 'Train with Vy from Oslo S · Track 5', basePrice: 399 }
+      ];
+
+      return (
+        <div className="flex flex-col min-h-screen">
+          <header className="bg-slate-900 border-b border-slate-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 shadow-md">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-teal-500/20">
+                V
+              </div>
+              <div>
+                <h1 className="font-bold text-lg text-white flex items-center gap-2">
+                  IDOS Redesign <span className="text-xs px-2 py-0.5 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">Mobilní UX Mockupy</span>
+                </h1>
+                <p className="text-xs text-slate-400">Interaktivní simulace výběru cestujících a vyhledávání spojení</p>
+              </div>
+            </div>
+
+            <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <button
+                onClick={() => setSelectedApp('vy')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                  selectedApp === 'vy' ? 'bg-teal-500 text-slate-950 font-bold shadow-md shadow-teal-500/20' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <span>🇳🇴 Vy.no (Android)</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+              </button>
+              <button
+                onClick={() => setSelectedApp('db')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  selectedApp === 'db' ? 'bg-teal-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                🇩🇪 DB Navigator
+              </button>
+              <button
+                onClick={() => setSelectedApp('idos')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  selectedApp === 'idos' ? 'bg-teal-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                🇨🇿 IDOS Koncept
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 text-xs">
+              <span className="text-slate-400 mr-1 hidden sm:inline">Krok:</span>
+              <button onClick={() => setScreen('search')} className={`px-2.5 py-1 rounded-md transition ${screen === 'search' ? 'bg-slate-700 text-white font-medium' : 'text-slate-400 hover:bg-slate-800'}`}>1. Hledání</button>
+              <button onClick={() => setScreen('results')} className={`px-2.5 py-1 rounded-md transition ${screen === 'results' ? 'bg-slate-700 text-white font-medium' : 'text-slate-400 hover:bg-slate-800'}`}>2. Výsledky</button>
+              <button onClick={() => setScreen('passengers')} className={`px-2.5 py-1 rounded-md transition ${screen === 'passengers' ? 'bg-teal-500/20 text-teal-300 font-medium border border-teal-500/30' : 'text-slate-400 hover:bg-slate-800'}`}>3. Výběr cestujících</button>
+              <button onClick={() => setScreen('cart')} className={`px-2.5 py-1 rounded-md transition ${screen === 'cart' ? 'bg-slate-700 text-white font-medium' : 'text-slate-400 hover:bg-slate-800'}`}>4. Košík / Detail</button>
+            </div>
+          </header>
+
+          <main className="flex-1 max-w-7xl mx-auto w-full p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center">
+              <div className="w-[370px] h-[780px] bg-vy-bg rounded-[42px] border-[9px] border-slate-800 phone-frame overflow-hidden flex flex-col relative shadow-2xl">
+                <div className="bg-transparent px-6 pt-3 pb-1 flex justify-between items-center text-[12px] font-semibold tracking-wider text-vy-text/80 select-none z-20">
+                  <span>11:24</span>
+                  <div className="flex items-center gap-1.5 text-[11px]">
+                    <span className="text-[10px] font-bold">5G</span>
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9zm0 13c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
+                    <div className="w-5 h-2.5 border border-vy-text/60 rounded-sm p-0.5 flex items-center">
+                      <div className="w-3 h-full bg-vy-text/80 rounded-2xs"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 overflow-y-auto relative flex flex-col">
+                  {selectedApp === 'vy' ? (
+                    <>
+                      {screen === 'search' && (
+                        <VySearchScreen onSearch={() => setScreen('results')} onOpenPassengers={() => setScreen('passengers')} passengersSummary={getSummaryString()} />
+                      )}
+                      {screen === 'results' && (
+                        <VyResultsScreen
+                          trips={trips}
+                          onBack={() => setScreen('search')}
+                          onOpenPassengers={() => setScreen('passengers')}
+                          passengersSummary={getSummaryString()}
+                          calcPrice={calculateTotalPrice}
+                          onSelectTrip={(trip) => { setSelectedTrip(trip); setScreen('cart'); }}
+                        />
+                      )}
+                      {screen === 'passengers' && (
+                        <VyPassengersModal
+                          passengers={passengers}
+                          setPassengers={setPassengers}
+                          options={options}
+                          setOptions={setOptions}
+                          onClose={() => setScreen('results')}
+                          onSave={() => setScreen('results')}
+                        />
+                      )}
+                      {screen === 'cart' && (
+                        <VyCartScreen
+                          trip={selectedTrip || trips[0]}
+                          passengers={passengers}
+                          options={options}
+                          totalNok={calculateTotalPrice(selectedTrip ? selectedTrip.basePrice : 399)}
+                          onBack={() => setScreen('results')}
+                          onOpenPassengers={() => setScreen('passengers')}
+                        />
+                      )}
+                    </>
+                  ) : selectedApp === 'db' ? (
+                    <DBNavigatorPreview onSwitchToVy={() => setSelectedApp('vy')} />
+                  ) : (
+                    <IdosConceptPreview onSwitchToVy={() => setSelectedApp('vy')} />
+                  )}
+                </div>
+
+                <div className="h-6 bg-vy-bg flex items-center justify-center py-2 z-20">
+                  <div className="w-28 h-1 bg-white/30 rounded-full"></div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  setPassengers({ adult: 1, child: 0, childAge: '', student: 0, studentAge: '', senior: 0, military: 0 });
+                  setOptions({ bike: 0, pram: 0, wheelchair: 0, petSmall: 0, petBig: 0 });
+                  setScreen('results');
+                }}
+                className="mt-4 text-xs text-slate-400 hover:text-teal-400 transition flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg"
+              >
+                <span>↺ Obnovit výchozí stav (1 dospělý)</span>
+              </button>
+            </div>
+
+            <div className="lg:col-span-7 xl:col-span-7 space-y-6">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-teal-400"></span>
+                    <h2 className="font-semibold text-white">Živý stav aplikace: Vy.no (Android)</h2>
+                  </div>
+                  <span className="text-xs px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md font-mono">
+                    Obrazovka: {screen.toUpperCase()}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                  <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+                    <span className="text-xs text-slate-400 block mb-1">Cestující:</span>
+                    <span className="font-medium text-teal-300">{getSummaryString()}</span>
+                  </div>
+                  <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+                    <span className="text-xs text-slate-400 block mb-1">Doplňky (kolo/pes):</span>
+                    <span className="font-medium text-slate-200">
+                      {options.bike > 0 && `${options.bike}x kolo `}
+                      {options.petBig > 0 && `${options.petBig}x pes `}
+                      {options.pram > 0 && `${options.pram}x kočárek `}
+                      {options.bike === 0 && options.petBig === 0 && options.pram === 0 && 'Žádné'}
+                    </span>
+                  </div>
+                  <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+                    <span className="text-xs text-slate-400 block mb-1">Kalkulovaná cena (spoj 1):</span>
+                    <span className="font-bold text-lg text-emerald-400">{calculateTotalPrice(399)} NOK</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-slate-800/70 flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-slate-400">Rychlé scénáře k vyzkoušení:</span>
+                  <button
+                    onClick={() => {
+                      setPassengers({ adult: 1, child: 1, childAge: '7', student: 0, studentAge: '', senior: 0, military: 0 });
+                      setScreen('results');
+                    }}
+                    className="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"
+                  >
+                    1 Dospělý + Dítě (7 let)
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPassengers({ adult: 1, child: 1, childAge: '10', student: 1, studentAge: '21', senior: 0, military: 0 });
+                      setScreen('passengers');
+                    }}
+                    className="text-xs px-2.5 py-1 rounded bg-teal-900/40 hover:bg-teal-900/60 text-teal-300 border border-teal-700/50 transition"
+                  >
+                    Dítě + Student (otevře dialog s věkem)
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPassengers({ adult: 2, child: 0, childAge: '', student: 0, studentAge: '', senior: 0, military: 0 });
+                      setOptions(prev => ({ ...prev, bike: 2 }));
+                      setScreen('results');
+                    }}
+                    className="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"
+                  >
+                    2 Dospělí + 2 Kola
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 className="font-bold text-white text-base flex items-center gap-2">
+                  <span>💡</span> Klíčové principy zjištěné u aplikace Vy (Android)
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                    <div className="text-teal-400 font-semibold text-sm flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-teal-500/20 flex items-center justify-center text-xs">1</span>
+                      Kompaktní záhlaví ve výsledcích
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Po vyhledání spojení uživatel okamžitě vidí výsledky a <strong>stačí jen scrollovat dolů</strong>. V záhlaví zůstává trasa, čas i řádek <code>Passenger: 1 adult</code>. Kliknutím na něj se přímo otevře modální výběr bez nutnosti opustit výsledky.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                    <div className="text-teal-400 font-semibold text-sm flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-teal-500/20 flex items-center justify-center text-xs">2</span>
+                      Progresivní zadání věku
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Vstupní pole pro věk se u <em>Child/youth</em> a <em>Student</em> neukazuje zbytečně předem. Zobrazí se dynamicky až po navýšení počtu na 1+. Aplikace transparentně vysvětluje důvod (různé věkové limity různých dopravců).
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                    <div className="text-teal-400 font-semibold text-sm flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-teal-500/20 flex items-center justify-center text-xs">3</span>
+                      Doplňky v jednom toku
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Kolo, kočárek, zvířata i invalidní vozík nejsou schované v separátních podmenu, ale jsou umístěny přímo pod seznamem cestujících se stejným intuitivním ovládáním <code>−</code> / <code>+</code>.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                    <div className="text-teal-400 font-semibold text-sm flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-teal-500/20 flex items-center justify-center text-xs">4</span>
+                      Inspirace pro IDOS
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      V IDOSu by tento model umožnil zachovat stávající podporu více průkazů, ale zbavit se těžkopádného formuláře. Uživatel by v přehledném dialogu viděl počet osob a jejich slevy, přičemž ceny ve výsledcích by byly hned přesné.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+    function VySearchScreen({ onSearch, onOpenPassengers, passengersSummary }) {
+      return (
+        <div className="flex-1 flex flex-col bg-vy-bg text-vy-text p-4">
+          <div className="flex bg-vy-card p-1 rounded-full mb-5 border border-vy-border/40">
+            <button className="flex-1 py-2 rounded-full text-xs font-bold bg-vy-mint text-slate-950 shadow-sm transition">
+              Find journey
+            </button>
+            <button className="flex-1 py-2 rounded-full text-xs font-semibold text-vy-subtext hover:text-vy-text transition">
+              Departures
+            </button>
+          </div>
+
+          <div className="bg-vy-card rounded-2xl p-4 border border-vy-border/60 shadow-lg space-y-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-vy-border/40">
+              <div className="text-vy-mint">
+                <svg className="w-5 h-5 rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+              </div>
+              <div className="flex-1">
+                <div className="text-[11px] text-vy-subtext font-medium">Travel from</div>
+                <div className="text-sm font-semibold text-vy-text">My position</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="text-vy-subtext">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div className="flex-1">
+                <div className="text-[11px] text-vy-subtext font-medium">Travel to</div>
+                <div className="text-sm font-semibold text-vy-mint">Sandefjord stasjon</div>
+              </div>
+            </div>
+          </div>
+
+          <button className="mt-3 bg-vy-card hover:bg-vy-cardHover border border-vy-border/40 text-xs font-semibold py-2 px-4 rounded-full self-start text-vy-mint flex items-center gap-1.5 transition">
+            <span>+</span> Add place
+          </button>
+
+          <button
+            onClick={onSearch}
+            className="mt-6 w-full py-3.5 bg-vy-mint hover:bg-vy-mintHover text-slate-950 font-bold rounded-2xl text-sm transition shadow-lg shadow-vy-mint/10 flex items-center justify-center gap-2"
+          >
+            <span>Vyhledat spojení do Sandefjordu</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+
+          <div className="mt-8 space-y-3">
+            <h3 className="text-xs font-bold text-vy-subtext tracking-wider uppercase">Services</h3>
+            <div className="bg-vy-card p-3.5 rounded-2xl border border-vy-border/40 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-amber-500/20 text-amber-300 flex flex-col items-center justify-center text-[9px] font-black border border-amber-500/30">
+                TAXI
+              </div>
+              <div className="flex-1">
+                <div className="text-xs font-bold text-vy-text">Book a taxi</div>
+                <div className="text-[11px] text-vy-subtext">You pay the fixed quote or less</div>
+              </div>
+            </div>
+
+            <div className="bg-vy-card p-4 rounded-2xl border border-vy-border/40 flex items-center gap-3">
+              <div className="flex-1">
+                <div className="text-xs font-semibold text-vy-text mb-2">
+                  Add routes you travel often so you can find them quickly again.
+                </div>
+                <button className="text-xs font-bold py-1.5 px-3 rounded-full bg-vy-mint/20 text-vy-mint border border-vy-mint/30">
+                  + Add route
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto pt-4 border-t border-vy-border/40 flex justify-around text-[10px] text-vy-subtext font-medium">
+            <div className="flex flex-col items-center gap-1">
+              <span className="font-bold text-xs">V\Y</span>
+              <span>Explore</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+              <span>Ticket</span>
+            </div>
+            <div className="flex flex-col items-center gap-1 text-vy-mint">
+              <div className="px-3 py-0.5 rounded-full bg-vy-mint/20">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+              </div>
+              <span className="font-bold">Travel</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <IconUser />
+              <span>Profile</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function VyResultsScreen({ trips, onBack, onOpenPassengers, passengersSummary, calcPrice, onSelectTrip }) {
+      return (
+        <div className="flex-1 flex flex-col bg-vy-bg text-vy-text overflow-y-auto">
+          <div className="p-3 bg-vy-bg/95 backdrop-blur sticky top-0 z-10 border-b border-vy-border/40">
+            <div className="flex items-center gap-3 mb-2">
+              <button onClick={onBack} className="p-1 rounded-full hover:bg-vy-card text-vy-mint transition">
+                <IconArrowLeft />
+              </button>
+              <h2 className="text-base font-bold text-vy-text">Select departure</h2>
+            </div>
+
+            <div className="bg-vy-card rounded-2xl p-3 border border-vy-border/60 shadow space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2 text-xs font-bold text-vy-text">
+                    <span className="w-2 h-2 rounded-full border border-vy-mint"></span>
+                    <span>Oslo S</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-bold text-vy-text">
+                    <span className="w-2 h-2 rounded-full bg-vy-mint"></span>
+                    <span>Sandefjord stasjon</span>
+                  </div>
+                </div>
+                <button className="p-2 rounded-full bg-vy-bg text-vy-mint hover:bg-vy-cardHover border border-vy-border/40">
+                  <IconSwap />
+                </button>
+              </div>
+
+              <div className="border-t border-vy-border/40 pt-2 flex items-center justify-between text-xs">
+                <button
+                  onClick={onOpenPassengers}
+                  className="flex items-center gap-2 bg-vy-bg hover:bg-vy-cardHover border border-vy-border/60 px-3 py-1.5 rounded-xl text-vy-text transition group"
+                >
+                  <IconUser />
+                  <span className="font-semibold">{passengersSummary}</span>
+                  <span className="text-[10px] text-vy-mint group-hover:underline">Upravit</span>
+                </button>
+
+                <button className="flex items-center gap-1.5 bg-vy-bg hover:bg-vy-cardHover border border-vy-border/60 px-3 py-1.5 rounded-xl text-vy-subtext text-xs">
+                  <IconFilter />
+                  <span>Filter</span>
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between pt-1 text-[11px] text-vy-subtext">
+                <div className="flex items-center gap-1.5">
+                  <IconClock />
+                  <span>Now, 15 Sep. 11:23</span>
+                </div>
+                <div className="flex items-center gap-2 text-vy-mint font-medium">
+                  <button>+ Return</button>
+                  <span>•</span>
+                  <button>+ Promo code</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-3 space-y-3 flex-1">
+            <div className="flex items-center justify-between px-1 text-xs">
+              <span className="font-bold text-vy-subtext uppercase tracking-wider text-[10px]">Today</span>
+              <button className="text-vy-mint hover:underline text-xs flex items-center gap-1">
+                <IconClock /> View previous
+              </button>
+            </div>
+
+            {trips.map((trip) => {
+              const price = calcPrice(trip.basePrice);
+              return (
+                <div
+                  key={trip.id}
+                  onClick={() => onSelectTrip(trip)}
+                  className="bg-vy-card hover:bg-vy-cardHover border border-vy-border/50 rounded-2xl p-4 transition cursor-pointer shadow-md space-y-2 group"
+                >
+                  <div className="flex items-baseline justify-between">
+                    <div className="text-lg font-black text-vy-text tracking-tight">
+                      {trip.dep} – {trip.arr}
+                    </div>
+                    <div className="text-xs text-vy-subtext font-medium">
+                      {trip.dur}
+                    </div>
+                  </div>
+
+                  <div className="text-xs text-vy-subtext">
+                    {trip.detail}
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-vy-border/30">
+                    <div className="flex items-center gap-1.5">
+                      {trip.type === 'train' ? (
+                        <span className="px-2 py-0.5 rounded-md bg-teal-900/40 text-teal-300 border border-teal-700/40 text-[10px] font-bold flex items-center gap-1">
+                          <IconTrain /> {trip.line}
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 rounded-md bg-amber-900/40 text-amber-300 border border-amber-700/40 text-[10px] font-bold flex items-center gap-1">
+                          <IconBus /> {trip.line}
+                        </span>
+                      )}
+                      <span className="text-[11px] text-vy-subtext group-hover:text-vy-text transition ml-1">
+                        Show details
+                      </span>
+                    </div>
+
+                    <button className="px-3.5 py-1.5 rounded-xl bg-vy-mint/15 group-hover:bg-vy-mint text-vy-mint group-hover:text-slate-950 font-bold text-xs border border-vy-mint/30 transition shadow-sm">
+                      From NOK {price}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+    function VyPassengersModal({ passengers, setPassengers, options, setOptions, onClose, onSave }) {
+      const updatePassenger = (key, delta) => {
+        setPassengers(prev => ({
+          ...prev,
+          [key]: Math.max(0, prev[key] + delta)
+        }));
+      };
+
+      const updateOption = (key, delta) => {
+        setOptions(prev => ({
+          ...prev,
+          [key]: Math.max(0, prev[key] + delta)
+        }));
+      };
+
+      return (
+        <div className="absolute inset-0 bg-vy-bg z-30 flex flex-col text-vy-text overflow-hidden">
+          <div className="p-4 flex items-center justify-between border-b border-vy-border/40">
+            <h2 className="text-base font-bold text-vy-text">Passengers selected</h2>
+            <button onClick={onClose} className="p-1 rounded-full hover:bg-vy-card text-vy-subtext hover:text-vy-text">
+              <IconClose />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 pb-24">
+            {/* Adult */}
+            <div className={`p-4 rounded-2xl border transition ${passengers.adult > 0 ? 'bg-vy-card border-vy-border' : 'bg-vy-card/40 border-vy-border/20'}`}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-sm">Adult</span>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updatePassenger('adult', -1)} disabled={passengers.adult <= 0} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center disabled:opacity-30">−</button>
+                  <span className="w-5 text-center font-bold text-sm">{passengers.adult}</span>
+                  <button onClick={() => updatePassenger('adult', 1)} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Child / Youth with dynamic age */}
+            <div className={`p-4 rounded-2xl border transition ${passengers.child > 0 ? 'bg-vy-card border-vy-border' : 'bg-vy-card/40 border-vy-border/20'}`}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-sm">Child/youth</span>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updatePassenger('child', -1)} disabled={passengers.child <= 0} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center disabled:opacity-30">−</button>
+                  <span className="w-5 text-center font-bold text-sm">{passengers.child}</span>
+                  <button onClick={() => updatePassenger('child', 1)} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+
+              {passengers.child > 0 && (
+                <div className="mt-3 pt-3 border-t border-dashed border-vy-border/60 space-y-2.5">
+                  <p className="text-[11px] text-vy-subtext leading-relaxed">
+                    Different companies impose different age limits on their child tickets. Please enter your age to be shown the correct price.
+                  </p>
+                  <div className="w-28">
+                    <input
+                      type="number"
+                      placeholder="Age"
+                      value={passengers.childAge}
+                      onChange={(e) => setPassengers(prev => ({ ...prev, childAge: e.target.value }))}
+                      className="w-full bg-vy-input border border-vy-border rounded-xl px-3 py-2 text-sm text-vy-text focus:outline-none focus:border-vy-mint"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Student with dynamic age */}
+            <div className={`p-4 rounded-2xl border transition ${passengers.student > 0 ? 'bg-vy-card border-vy-border' : 'bg-vy-card/40 border-vy-border/20'}`}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-sm">Student</span>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updatePassenger('student', -1)} disabled={passengers.student <= 0} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center disabled:opacity-30">−</button>
+                  <span className="w-5 text-center font-bold text-sm">{passengers.student}</span>
+                  <button onClick={() => updatePassenger('student', 1)} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+
+              {passengers.student > 0 && (
+                <div className="mt-3 pt-3 border-t border-dashed border-vy-border/60 space-y-2.5">
+                  <p className="text-[11px] text-vy-subtext leading-relaxed">
+                    Different companies impose different age limits on their student tickets. Please enter your age to be shown the correct price. Remember to check that you meet the conditions for a discount with the relevant company.
+                  </p>
+                  <div className="w-28">
+                    <input
+                      type="number"
+                      placeholder="Age"
+                      value={passengers.studentAge}
+                      onChange={(e) => setPassengers(prev => ({ ...prev, studentAge: e.target.value }))}
+                      className="w-full bg-vy-input border border-vy-border rounded-xl px-3 py-2 text-sm text-vy-text focus:outline-none focus:border-vy-mint"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Senior */}
+            <div className={`p-4 rounded-2xl border transition ${passengers.senior > 0 ? 'bg-vy-card border-vy-border' : 'bg-vy-card/40 border-vy-border/20'}`}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-sm">Senior</span>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updatePassenger('senior', -1)} disabled={passengers.senior <= 0} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center disabled:opacity-30">−</button>
+                  <span className="w-5 text-center font-bold text-sm">{passengers.senior}</span>
+                  <button onClick={() => updatePassenger('senior', 1)} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Military */}
+            <div className={`p-4 rounded-2xl border transition ${passengers.military > 0 ? 'bg-vy-card border-vy-border' : 'bg-vy-card/40 border-vy-border/20'}`}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-sm">Military</span>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updatePassenger('military', -1)} disabled={passengers.military <= 0} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center disabled:opacity-30">−</button>
+                  <span className="w-5 text-center font-bold text-sm">{passengers.military}</span>
+                  <button onClick={() => updatePassenger('military', 1)} className="w-8 h-8 rounded-full bg-vy-mint/20 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Options */}
+            <div className="pt-4 space-y-3">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-vy-subtext tracking-wider uppercase">
+                <span>Additional options</span>
+                <IconInfo />
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-vy-card/60 border border-vy-border/30 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <span>🚲</span>
+                  <span>Bicycle/Pulk on train</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updateOption('bike', -1)} disabled={options.bike <= 0} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center disabled:opacity-20">−</button>
+                  <span className="w-4 text-center font-bold text-xs">{options.bike}</span>
+                  <button onClick={() => updateOption('bike', 1)} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-vy-card/60 border border-vy-border/30 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <span>👶</span>
+                  <span>Pram/Pushchair</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updateOption('pram', -1)} disabled={options.pram <= 0} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center disabled:opacity-20">−</button>
+                  <span className="w-4 text-center font-bold text-xs">{options.pram}</span>
+                  <button onClick={() => updateOption('pram', 1)} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-vy-card/60 border border-vy-border/30 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <span>♿</span>
+                  <span>Wheelchair</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updateOption('wheelchair', -1)} disabled={options.wheelchair <= 0} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center disabled:opacity-20">−</button>
+                  <span className="w-4 text-center font-bold text-xs">{options.wheelchair}</span>
+                  <button onClick={() => updateOption('wheelchair', 1)} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-vy-card/60 border border-vy-border/30 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <span>🐕</span>
+                  <span>Pet over 40cm</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => updateOption('petBig', -1)} disabled={options.petBig <= 0} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center disabled:opacity-20">−</button>
+                  <span className="w-4 text-center font-bold text-xs">{options.petBig}</span>
+                  <button onClick={() => updateOption('petBig', 1)} className="w-7 h-7 rounded-full bg-vy-mint/15 text-vy-mint font-bold flex items-center justify-center">+</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Family & Friends */}
+            <div className="pt-3">
+              <h3 className="text-xs font-bold text-vy-subtext tracking-wider uppercase mb-2">Family and friends</h3>
+              <div className="p-4 rounded-2xl bg-vy-card/40 border border-vy-border/30 space-y-2">
+                <p className="text-[11px] text-vy-subtext leading-relaxed">
+                  If you save the travellers by name, they will be added to the top of this page for quick access next time you travel.
+                </p>
+                <button className="text-xs font-bold py-1.5 px-3 rounded-full bg-vy-card hover:bg-vy-cardHover text-vy-mint border border-vy-border/60 flex items-center gap-1.5">
+                  <IconStar /> Go to family and friends
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-0 inset-x-0 p-4 bg-vy-bg/95 backdrop-blur border-t border-vy-border/40 z-20">
+            <button
+              onClick={onSave}
+              className="w-full py-3 bg-vy-mint hover:bg-vy-mintHover text-slate-950 font-bold rounded-full text-sm transition shadow-lg shadow-vy-mint/20"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function VyCartScreen({ trip, passengers, options, totalNok, onBack, onOpenPassengers }) {
+      return (
+        <div className="flex-1 flex flex-col bg-vy-bg text-vy-text overflow-y-auto">
+          <div className="p-4 flex items-center gap-3 border-b border-vy-border/40 sticky top-0 bg-vy-bg/95 backdrop-blur z-10">
+            <button onClick={onBack} className="p-1 rounded-full hover:bg-vy-card text-vy-mint">
+              <IconArrowLeft />
+            </button>
+            <h2 className="text-base font-bold text-vy-text">Trip summary & Ticket</h2>
+          </div>
+
+          <div className="p-4 space-y-4 flex-1">
+            <div className="bg-vy-card rounded-2xl p-4 border border-vy-border/60 space-y-3">
+              <div className="flex items-center justify-between text-xs text-vy-subtext">
+                <span className="font-semibold text-vy-mint">{trip.line}</span>
+                <span>Track 5</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <div>
+                  <div className="text-lg font-black text-vy-text">{trip.dep} Oslo S</div>
+                  <div className="text-sm font-semibold text-vy-subtext">{trip.arr} Sandefjord stasjon</div>
+                </div>
+                <div className="text-xs text-right text-vy-subtext">
+                  <div>15 Sep. 2026</div>
+                  <div>{trip.dur}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-vy-card rounded-2xl p-4 border border-vy-border/60 space-y-3">
+              <div className="flex items-center justify-between border-b border-vy-border/40 pb-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-vy-subtext">Passengers & Discounts</span>
+                <button onClick={onOpenPassengers} className="text-xs font-bold text-vy-mint hover:underline">
+                  Změnit
+                </button>
+              </div>
+
+              <div className="space-y-2 text-xs">
+                {passengers.adult > 0 && (
+                  <div className="flex justify-between">
+                    <span>{passengers.adult}x Adult (Standard)</span>
+                    <span className="font-semibold">{passengers.adult * trip.basePrice} NOK</span>
+                  </div>
+                )}
+                {passengers.child > 0 && (
+                  <div className="flex justify-between text-teal-300">
+                    <span>{passengers.child}x Child {passengers.childAge ? `(${passengers.childAge} let)` : ''} · 50% sleva</span>
+                    <span className="font-semibold">{passengers.child * Math.round(trip.basePrice * 0.5)} NOK</span>
+                  </div>
+                )}
+                {passengers.student > 0 && (
+                  <div className="flex justify-between text-teal-300">
+                    <span>{passengers.student}x Student {passengers.studentAge ? `(${passengers.studentAge} let)` : ''} · 25% sleva</span>
+                    <span className="font-semibold">{passengers.student * Math.round(trip.basePrice * 0.75)} NOK</span>
+                  </div>
+                )}
+                {passengers.senior > 0 && (
+                  <div className="flex justify-between text-teal-300">
+                    <span>{passengers.senior}x Senior · 50% sleva</span>
+                    <span className="font-semibold">{passengers.senior * Math.round(trip.basePrice * 0.5)} NOK</span>
+                  </div>
+                )}
+                {options.bike > 0 && (
+                  <div className="flex justify-between text-vy-subtext">
+                    <span>{options.bike}x Kolo / Pulk</span>
+                    <span className="font-semibold">{options.bike * 100} NOK</span>
+                  </div>
+                )}
+                {options.petBig > 0 && (
+                  <div className="flex justify-between text-vy-subtext">
+                    <span>{options.petBig}x Pes nad 40 cm</span>
+                    <span className="font-semibold">{options.petBig * 100} NOK</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="border-t border-vy-border/60 pt-3 flex items-baseline justify-between">
+                <span className="font-bold text-sm">Celková cena</span>
+                <span className="text-xl font-black text-vy-mint">{totalNok} NOK</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 bg-vy-card/60 rounded-2xl border border-vy-border/30 text-xs flex items-center justify-between">
+              <div>
+                <div className="font-bold text-vy-text">Standard seat reservation</div>
+                <div className="text-[11px] text-vy-subtext">Included with ticket</div>
+              </div>
+              <span className="text-vy-mint font-semibold">Included</span>
+            </div>
+
+            <button className="w-full py-3.5 bg-vy-mint hover:bg-vy-mintHover text-slate-950 font-bold rounded-full text-sm transition shadow-lg shadow-vy-mint/20 mt-4 flex items-center justify-center gap-2">
+              <span>Pokračovat k platbě ({totalNok} NOK)</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function DBNavigatorPreview({ onSwitchToVy }) {
+      return (
+        <div className="flex-1 flex flex-col bg-slate-100 text-slate-900 p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+            <h3 className="font-bold text-sm text-red-600">DB Navigator (Německo)</h3>
+            <button onClick={onSwitchToVy} className="text-xs text-teal-600 font-semibold underline">Zpět na Vy</button>
+          </div>
+          <div className="mt-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-200 space-y-3">
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dvoustupňový model výběru</div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              DB Navigator v Android aplikaci nejdříve nabídne výběr věkové kategorie (<em>Erwachsener 27-64 J.</em>, <em>Kind</em>, <em>Jugendlicher</em>) a pod ní se rozbalí akordeony se slevami:
+            </p>
+            <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-mono">
+              [+] BahnCards (25, 50, 100)<br/>
+              [+] SBA (Schwerbehinderte)<br/>
+              [+] Further discounts (až 4 slevy)
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function IdosConceptPreview({ onSwitchToVy }) {
+      return (
+        <div className="flex-1 flex flex-col bg-slate-900 text-white p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            <h3 className="font-bold text-sm text-orange-400">Návrh konceptu pro IDOS</h3>
+            <button onClick={onSwitchToVy} className="text-xs text-teal-400 font-semibold underline">Zpět na Vy</button>
+          </div>
+          <div className="mt-4 p-4 bg-slate-800/80 rounded-2xl border border-slate-700 space-y-3">
+            <div className="text-xs font-bold text-teal-400 uppercase tracking-wider">Aplikace pro IDOS Redesign</div>
+            <ul className="text-xs text-slate-300 space-y-2 list-disc pl-4">
+              <li><strong>Rychlý souhrn:</strong> Zachovat zaškrtávací kombinace slev, ale schovat je do modálního dialogu dostupného z výsledků.</li>
+              <li><strong>Scrollování:</strong> Po vyhledání nechat parametry cesty nahoře ve sticky liště a výsledky ihned scrollovat dolů jako ve Vy.</li>
+              <li><strong>Zadání věku:</strong> U studenta a juniora ptát se na věk dynamicky až při volbě kategorie.</li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

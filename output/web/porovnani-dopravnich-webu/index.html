@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Porovnání dopravních webů</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #14211f;
+      --muted: #64716e;
+      --line: #d5ddda;
+      --paper: #f2f5f1;
+      --panel: #ffffff;
+      --accent: #1c6754;
+      --left-size: calc(50vw - 7px);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--paper); color: var(--ink); font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    button, a { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #3e9d82; outline-offset: 2px; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      min-height: 66px; padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      background: #f6f8f5f2; border-bottom: 1px solid var(--line); backdrop-filter: blur(12px);
+    }
+    .title h1 { margin: 0; font-size: 18px; letter-spacing: -.2px; }
+    .title p { margin: 3px 0 0; color: var(--muted); font-size: 11px; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .actions button, .frame-actions button, .frame-actions a {
+      border: 1px solid #bfcac5; border-radius: 7px; background: #fff; color: var(--ink);
+      padding: 7px 10px; text-decoration: none; cursor: pointer;
+    }
+    .actions button:hover, .frame-actions button:hover, .frame-actions a:hover { background: #e6eee9; }
+    .notice {
+      padding: 9px 16px; background: #e5eee9; border-bottom: 1px solid #cddbd4;
+      color: #315348; font-size: 11px;
+    }
+    #board { width: 100%; }
+    .comparison-row { position: relative; height: 700px; min-height: 370px; max-height: 1600px; }
+    .row-content {
+      height: calc(100% - 12px); min-width: 0;
+      display: grid; grid-template-columns: minmax(260px, var(--left-size)) 12px minmax(260px, 1fr);
+    }
+    .site-panel { min-width: 0; min-height: 0; display: flex; flex-direction: column; background: var(--panel); }
+    .site-panel:first-child { border-right: 1px solid var(--line); }
+    .frame-head {
+      min-height: 48px; padding: 7px 9px 7px 13px; flex: 0 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      border-bottom: 1px solid var(--line); background: #fff;
+    }
+    .site-name { min-width: 0; }
+    .site-name strong { display: block; font-size: 13px; }
+    .site-name span { display: block; max-width: 34vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 9px; }
+    .frame-actions { display: flex; gap: 5px; flex: 0 0 auto; }
+    .frame-actions button, .frame-actions a { padding: 5px 8px; font-size: 11px; }
+    .frame-wrap { position: relative; flex: 1 1 auto; min-height: 0; background: #e8ece9; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+    .column-resizer {
+      position: relative; z-index: 5; cursor: col-resize; touch-action: none;
+      background: #dce4df;
+    }
+    .column-resizer::after {
+      content: ""; position: absolute; inset: 0 4px; background: #8ca198; border-radius: 5px;
+    }
+    .column-resizer:hover, .column-resizer.active { background: #c7d9d1; }
+    .row-resizer {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 12px; z-index: 6;
+      cursor: row-resize; touch-action: none; background: #dce4df; border-top: 1px solid #c3cec8;
+    }
+    .row-resizer::after { content: ""; position: absolute; left: 50%; top: 4px; width: 70px; height: 3px; border-radius: 4px; background: #8ca198; transform: translateX(-50%); }
+    .row-resizer:hover, .row-resizer.active { background: #c7d9d1; }
+    .dragging, .dragging * { user-select: none !important; cursor: inherit !important; }
+    .dragging iframe { pointer-events: none !important; }
+    .empty { display: grid; place-items: center; height: 100%; color: var(--muted); }
+    @media (max-width: 720px) {
+      :root { --left-size: 100%; }
+      .comparison-row { height: auto !important; min-height: 0; }
+      .row-content { height: auto; display: block; }
+      .site-panel { height: 650px; border-bottom: 10px solid #dce4df; }
+      .column-resizer, .row-resizer { display: none; }
+      .site-name span { max-width: 52vw; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">
+      <h1>Porovnání dopravních webů</h1>
+      <p>Dva weby vedle sebe · tažením měňte šířku sloupců a výšku jednotlivých řádků</p>
+    </div>
+    <div class="actions">
+      <button type="button" id="reset-sites">Vrátit všechny weby domů</button>
+      <button type="button" id="reset-layout">Obnovit rozložení</button>
+    </div>
+  </header>
+  <div class="notice">
+    Některé služby mohou vnoření z bezpečnostních důvodů zakázat. V takovém případě použijte v panelu „Otevřít zvlášť“.
+  </div>
+  <main id="board" aria-label="Porovnání webů ve dvou sloupcích"></main>
+
+  <script>
+    const sites = [
+      {name:'SBB', url:'https://www.sbb.ch/en'},
+      {name:'ODIS', url:'https://www.odis.cz/'},
+      {name:'Virtuální Plzeňská karta', url:'https://www.plzenskakarta.cz/'},
+      {name:'VOR', url:'https://www.vor.at/'},
+      {name:'IREDO', url:'https://www.iredo.info/'},
+      {name:'Trenitalia', url:'https://www.trenitalia.com/en.html'},
+      {name:'České dráhy / Můj vlak', url:'https://www.cd.cz/'},
+      {name:'DÚKapka', url:'https://www.dukapka.cz/'},
+      {name:'IDESKA', url:'https://www.ideska.info/'},
+      {name:'Idolka', url:'https://www.idolka.cz/'},
+      {name:'PID Lítačka', url:'https://www.pidlitacka.cz/'},
+      {name:'ÖBB', url:'https://www.oebb.at/en/'},
+      {name:'RegioJet', url:'https://regiojet.com/'},
+      {name:'FlixBus', url:'https://www.flixbus.cz/'},
+      {name:'DB', url:'https://int.bahn.de/en'},
+      {name:'Vy', url:'https://www.vy.no/en'}
+    ];
+    const storageKey = 'dopravni-weby-layout-v1';
+    const board = document.querySelector('#board');
+
+    function framePanel(site) {
+      const panel = document.createElement('section');
+      panel.className = 'site-panel';
+      panel.dataset.home = site.url;
+      panel.innerHTML = `
+        <div class="frame-head">
+          <div class="site-name"><strong></strong><span></span></div>
+          <div class="frame-actions">
+            <button type="button" class="home-button" title="Vrátit iframe na domovskou adresu">Domů</button>
+            <a target="_blank" rel="noopener noreferrer">Otevřít zvlášť ↗</a>
+          </div>
+        </div>
+        <div class="frame-wrap"><iframe loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+      panel.querySelector('strong').textContent = site.name;
+      panel.querySelector('.site-name span').textContent = site.url;
+      panel.querySelector('a').href = site.url;
+      const frame = panel.querySelector('iframe');
+      frame.title = site.name;
+      frame.src = site.url;
+      panel.querySelector('.home-button').addEventListener('click', () => resetFrame(panel));
+      return panel;
+    }
+
+    function resetFrame(panel) {
+      const frame = panel.querySelector('iframe');
+      const home = panel.dataset.home;
+      frame.src = 'about:blank';
+      requestAnimationFrame(() => { frame.src = home; });
+    }
+
+    function savedLayout() {
+      try { return JSON.parse(localStorage.getItem(storageKey)) || {}; }
+      catch { return {}; }
+    }
+
+    function saveLayout() {
+      const rows = [...document.querySelectorAll('.comparison-row')];
+      localStorage.setItem(storageKey, JSON.stringify({
+        left: getComputedStyle(document.documentElement).getPropertyValue('--left-size').trim(),
+        heights: rows.map(row => Math.round(row.getBoundingClientRect().height))
+      }));
+    }
+
+    function build() {
+      const saved = savedLayout();
+      if (saved.left) document.documentElement.style.setProperty('--left-size', saved.left);
+      for (let index = 0; index < sites.length; index += 2) {
+        const row = document.createElement('div');
+        row.className = 'comparison-row';
+        row.dataset.row = String(index / 2);
+        if (saved.heights?.[index / 2]) row.style.height = `${saved.heights[index / 2]}px`;
+        const content = document.createElement('div');
+        content.className = 'row-content';
+        content.append(framePanel(sites[index]));
+        const columnHandle = document.createElement('div');
+        columnHandle.className = 'column-resizer';
+        columnHandle.setAttribute('role', 'separator');
+        columnHandle.setAttribute('aria-orientation', 'vertical');
+        columnHandle.title = 'Táhněte pro změnu šířky sloupců';
+        content.append(columnHandle);
+        content.append(framePanel(sites[index + 1]));
+        const rowHandle = document.createElement('div');
+        rowHandle.className = 'row-resizer';
+        rowHandle.setAttribute('role', 'separator');
+        rowHandle.setAttribute('aria-orientation', 'horizontal');
+        rowHandle.title = 'Táhněte pro změnu výšky řádku';
+        row.append(content, rowHandle);
+        board.append(row);
+        enableColumnResize(columnHandle);
+        enableRowResize(rowHandle, row);
+      }
+    }
+
+    function enableColumnResize(handle) {
+      handle.addEventListener('pointerdown', event => {
+        if (matchMedia('(max-width: 720px)').matches) return;
+        event.preventDefault();
+        handle.classList.add('active');
+        document.body.classList.add('dragging');
+        const move = e => {
+          const min = 260;
+          const max = Math.max(min, innerWidth - 272);
+          const left = Math.min(max, Math.max(min, e.clientX - board.getBoundingClientRect().left));
+          document.documentElement.style.setProperty('--left-size', `${left}px`);
+        };
+        const end = () => {
+          handle.classList.remove('active');
+          document.body.classList.remove('dragging');
+          document.removeEventListener('pointermove', move);
+          document.removeEventListener('pointerup', end);
+          document.removeEventListener('pointercancel', end);
+          saveLayout();
+        };
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', end);
+        document.addEventListener('pointercancel', end);
+      });
+    }
+
+    function enableRowResize(handle, row) {
+      handle.addEventListener('pointerdown', event => {
+        if (matchMedia('(max-width: 720px)').matches) return;
+        event.preventDefault();
+        const startY = event.clientY;
+        const startHeight = row.getBoundingClientRect().height;
+        handle.classList.add('active');
+        document.body.classList.add('dragging');
+        const move = e => {
+          const height = Math.min(1600, Math.max(370, startHeight + e.clientY - startY));
+          row.style.height = `${height}px`;
+        };
+        const end = () => {
+          handle.classList.remove('active');
+          document.body.classList.remove('dragging');
+          document.removeEventListener('pointermove', move);
+          document.removeEventListener('pointerup', end);
+          document.removeEventListener('pointercancel', end);
+          saveLayout();
+        };
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', end);
+        document.addEventListener('pointercancel', end);
+      });
+    }
+
+    document.querySelector('#reset-sites').addEventListener('click', () => {
+      document.querySelectorAll('.site-panel').forEach(resetFrame);
+    });
+    document.querySelector('#reset-layout').addEventListener('click', () => {
+      localStorage.removeItem(storageKey);
+      document.documentElement.style.removeProperty('--left-size');
+      document.querySelectorAll('.comparison-row').forEach(row => row.style.removeProperty('height'));
+    });
+    build();
+  </script>
+</body>
+</html>

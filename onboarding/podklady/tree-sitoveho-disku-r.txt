@@ -1,0 +1,1574 @@
+Volume serial number is 0000021E 6A22:23C9
+R:.
+├───A3
+├───AMS
+├───Aplikace (fs.chaps.local) – zástupce
+├───ARES_PKP
+├───ARES_XL
+├───ARES_XL_OeBB
+├───ASWJR
+├───CASPRO
+├───CAVOS
+│   └───Tabule
+├───CHAPS_plan
+├───CIS
+├───CIS_SK
+├───DBmail_Praha
+├───DP
+├───DSK
+├───eShopAMS
+├───eShopCD
+├───IDOSDesktop
+├───IdosPID
+├───IDOSProdeje
+│   ├───!Nový grafikon
+│   ├───Aplikace Rutio
+│   ├───Archív
+│   │   ├───Arriva
+│   │   ├───Arriva plánjky
+│   │   │   ├───IDOS4
+│   │   │   │   └───845.C
+│   │   │   └───mIDOS
+│   │   │       ├───845.2
+│   │   │       ├───845.C
+│   │   │       ├───845.P + 845.C
+│   │   │       ├───845.V
+│   │   │       ├───irizari6s-59-mist
+│   │   │       ├───irizari6se
+│   │   │       ├───magelys-49-mist
+│   │   │       └───man-lions-coach-L
+│   │   └───DataTS
+│   │       ├───produkce
+│   │       └───test
+│   ├───Arriva
+│   ├───CRTestTrainRoute
+│   ├───DataEshopWS
+│   │   ├───produkce
+│   │   │   └───AppBin_eShopTaskCore_Data
+│   │   └───test
+│   ├───DataEshopWS Core
+│   │   └───Test
+│   │       └───PDF
+│   │           └───Img
+│   ├───DataPlugins
+│   │   ├───AMSPluginData
+│   │   │   ├───produkce
+│   │   │   └───Test
+│   │   ├───ArrPluginData
+│   │   │   ├───Produkce
+│   │   │   │   └───Archiv
+│   │   │   └───Test
+│   │   │       └───Archív
+│   │   ├───ARVPluginData
+│   │   ├───CDPluginData
+│   │   │   ├───Produkce
+│   │   │   └───Test
+│   │   ├───DUKPluginData
+│   │   │   ├───Produkce
+│   │   │   └───Test
+│   │   ├───FBPluginData
+│   │   │   ├───produkce
+│   │   │   └───test
+│   │   ├───JKPluginData
+│   │   │   ├───produkce
+│   │   │   └───Test
+│   │   ├───JMKPluginData
+│   │   │   ├───Produkce
+│   │   │   │   └───ARCHÍV
+│   │   │   └───Test
+│   │   │       └───archív
+│   │   ├───LEPluginData
+│   │   │   ├───produkce
+│   │   │   │   └───Archiv
+│   │   │   └───Test
+│   │   │       └───archív
+│   │   ├───OKPluginData
+│   │   │   ├───Produkce
+│   │   │   └───Test
+│   │   ├───PKPluginData
+│   │   │   ├───Produkce
+│   │   │   └───Test
+│   │   ├───RJPluginData
+│   │   │   ├───Produkce
+│   │   │   └───Test
+│   │   ├───ZKPluginData
+│   │   │   ├───Produkce
+│   │   │   └───Test
+│   │   └───ZSSKPluginData
+│   │       ├───Produkce
+│   │       │   └───Certs
+│   │       └───Test
+│   │           └───Archív
+│   ├───DataTS Nový
+│   │   ├───Produkce
+│   │   └───Test
+│   ├───eShopTaskTest
+│   │   └───Data
+│   │       └───Původní messages
+│   ├───Feltl
+│   ├───flipper - preklad bitu TTDetails
+│   │   └───static
+│   │       ├───css
+│   │       └───js
+│   ├───IDSjizdenkyProdeje
+│   │   ├───!Překryvy IDSů
+│   │   ├───DÚK
+│   │   │   └───Podklady pro ořezy dat
+│   │   ├───IDESKA
+│   │   │   └───ExportCC
+│   │   ├───IDPK
+│   │   │   ├───ClearingExport
+│   │   │   │   └───error
+│   │   │   ├───IDPK zastávky a zóny
+│   │   │   └───Číselníky
+│   │   │       ├───P00028_2026_04_01
+│   │   │       └───P00032_2026_07_01
+│   │   ├───IDS JMK
+│   │   │   ├───!archív
+│   │   │   ├───BusIDSJMK_podkladyKORDIS
+│   │   │   ├───Nekorektní CN
+│   │   │   ├───Podklady k pluginu
+│   │   │   │   ├───Configuration
+│   │   │   │   └───TIGR
+│   │   │   └───Podklady použité při přípravě prodejů
+│   │   │       ├───Aktivní jízdenka
+│   │   │       ├───Neaktivní jízdenka
+│   │   │       └───Snímky jízdenek
+│   │   ├───IDSOK
+│   │   │   ├───ClearingExport
+│   │   │   ├───PluginViaZones
+│   │   │   │   ├───Archív
+│   │   │   │   └───Data
+│   │   │   ├───PrujezdniZony
+│   │   │   │   ├───ISY
+│   │   │   │   ├───ISY2
+│   │   │   │   └───PetraKolarova
+│   │   │   └───TTDataAutobusy
+│   │   └───IDZK
+│   ├───Ikony aplikace - kompletní sada
+│   │   ├───Android SVG nové od Feltla  20230324
+│   │   ├───Android ze zdrojáku 20230317
+│   │   │   ├───drawable
+│   │   │   ├───drawable-hdpi
+│   │   │   ├───drawable-mdpi
+│   │   │   ├───drawable-nodpi
+│   │   │   ├───drawable-v21
+│   │   │   ├───drawable-xhdpi
+│   │   │   ├───drawable-xxhdpi
+│   │   │   ├───drawable-xxxhdpi
+│   │   │   ├───mipmap-hdpi
+│   │   │   ├───mipmap-mdpi
+│   │   │   ├───mipmap-xhdpi
+│   │   │   ├───mipmap-xxhdpi
+│   │   │   └───mipmap-xxxhdpi
+│   │   ├───iOS ze zdrojáku 20230317
+│   │   │   └───Images.xcassets
+│   │   │       ├───actionbar_ic_settings.imageset
+│   │   │       ├───AppIcon.appiconset
+│   │   │       ├───bg_bottom_delimiter.imageset
+│   │   │       ├───Brand Assets.launchimage
+│   │   │       ├───clear_white.imageset
+│   │   │       ├───content_bg_dash.imageset
+│   │   │       ├───content_btn_default_disabled.imageset
+│   │   │       ├───content_btn_default_normal.imageset
+│   │   │       ├───content_btn_default_pressed.imageset
+│   │   │       ├───content_btn_small_disabled.imageset
+│   │   │       ├───content_btn_small_normal.imageset
+│   │   │       ├───content_btn_small_pressed.imageset
+│   │   │       ├───content_ic_about.imageset
+│   │   │       ├───content_ic_add.imageset
+│   │   │       ├───content_ic_arrow.imageset
+│   │   │       ├───content_ic_arrow_down.imageset
+│   │   │       ├───content_ic_arrow_down_red.imageset
+│   │   │       ├───content_ic_arrow_up.imageset
+│   │   │       ├───content_ic_check.imageset
+│   │   │       ├───content_ic_checkbox_active.imageset
+│   │   │       ├───content_ic_checkmark_off.imageset
+│   │   │       ├───content_ic_checkmark_on.imageset
+│   │   │       ├───content_ic_clear.imageset
+│   │   │       ├───content_ic_dateandtime.imageset
+│   │   │       ├───content_ic_delete.imageset
+│   │   │       ├───content_ic_detail_bullet.imageset
+│   │   │       ├───content_ic_detail_bullet_warning.imageset
+│   │   │       ├───content_ic_detail_bullet_yellow.imageset
+│   │   │       ├───content_ic_direction_border.imageset
+│   │   │       ├───content_ic_direction_full.imageset
+│   │   │       ├───content_ic_direction_middle.imageset
+│   │   │       ├───content_ic_favorite_active.imageset
+│   │   │       ├───content_ic_favorite_filled.imageset
+│   │   │       ├───content_ic_map.imageset
+│   │   │       ├───content_ic_map_close.imageset
+│   │   │       ├───content_ic_reorder.imageset
+│   │   │       ├───content_ic_station.imageset
+│   │   │       ├───content_ic_timetable_all.imageset
+│   │   │       ├───content_ic_timetable_bg.imageset
+│   │   │       ├───content_ic_timetable_bus.imageset
+│   │   │       ├───content_ic_timetable_favorite.imageset
+│   │   │       ├───content_ic_timetable_history.imageset
+│   │   │       ├───content_ic_timetable_location.imageset
+│   │   │       ├───content_ic_timetable_mhd.imageset
+│   │   │       ├───content_ic_timetable_notification.imageset
+│   │   │       ├───content_ic_timetable_train.imageset
+│   │   │       ├───content_ic_timetable_trainbus.imageset
+│   │   │       ├───content_ic_vehicle_airplane.imageset
+│   │   │       ├───content_ic_vehicle_bus.imageset
+│   │   │       ├───content_ic_vehicle_cableway.imageset
+│   │   │       ├───content_ic_vehicle_metro.imageset
+│   │   │       ├───content_ic_vehicle_mover.imageset
+│   │   │       ├───content_ic_vehicle_ship.imageset
+│   │   │       ├───content_ic_vehicle_train.imageset
+│   │   │       ├───content_ic_vehicle_trainbus.imageset
+│   │   │       ├───content_ic_vehicle_tramvaj.imageset
+│   │   │       ├───content_inputfield_bg_active.imageset
+│   │   │       ├───content_inputfield_bg_inactive.imageset
+│   │   │       ├───content_inputfield_ic_delete.imageset
+│   │   │       ├───content_inputfield_ic_delete_light.imageset
+│   │   │       ├───content_inputfield_ic_search.imageset
+│   │   │       ├───content_train_direction.imageset
+│   │   │       ├───delay_history.imageset
+│   │   │       ├───hint_arrow_down.imageset
+│   │   │       ├───hint_arrow_up.imageset
+│   │   │       ├───icon_120.imageset
+│   │   │       ├───icon_180.imageset
+│   │   │       ├───icQuickDeparturesFavorites.imageset
+│   │   │       ├───icQuickSearchFavorite.imageset
+│   │   │       ├───icQuickSearchHistory.imageset
+│   │   │       ├───icQuickTickets.imageset
+│   │   │       ├───ic_ac_address.imageset
+│   │   │       ├───ic_ac_address_disabled.imageset
+│   │   │       ├───ic_ac_airplane.imageset
+│   │   │       ├───ic_ac_bus.imageset
+│   │   │       ├───ic_ac_cableway.imageset
+│   │   │       ├───ic_ac_location.imageset
+│   │   │       ├───ic_ac_location_disabled.imageset
+│   │   │       ├───ic_ac_metro_a.imageset
+│   │   │       ├───ic_ac_poi.imageset
+│   │   │       ├───ic_ac_ship.imageset
+│   │   │       ├───ic_ac_street.imageset
+│   │   │       ├───ic_ac_town.imageset
+│   │   │       ├───ic_ac_town_part.imageset
+│   │   │       ├───ic_ac_train.imageset
+│   │   │       ├───ic_ac_tramvaj.imageset
+│   │   │       ├───ic_ac_trolley.imageset
+│   │   │       ├───ic_invalid.imageset
+│   │   │       ├───ic_nofollow.imageset
+│   │   │       ├───ic_there_and_back.imageset
+│   │   │       ├───ic_warning_red.imageset
+│   │   │       ├───ic_warning_yellow.imageset
+│   │   │       ├───Images.xcassets
+│   │   │       │   ├───actionbar_ic_settings.imageset
+│   │   │       │   ├───AppIcon.appiconset
+│   │   │       │   ├───bg_bottom_delimiter.imageset
+│   │   │       │   ├───Brand Assets.launchimage
+│   │   │       │   ├───clear_white.imageset
+│   │   │       │   ├───content_bg_dash.imageset
+│   │   │       │   ├───content_btn_default_disabled.imageset
+│   │   │       │   ├───content_btn_default_normal.imageset
+│   │   │       │   ├───content_btn_default_pressed.imageset
+│   │   │       │   ├───content_btn_small_disabled.imageset
+│   │   │       │   ├───content_btn_small_normal.imageset
+│   │   │       │   ├───content_btn_small_pressed.imageset
+│   │   │       │   ├───content_ic_about.imageset
+│   │   │       │   ├───content_ic_add.imageset
+│   │   │       │   ├───content_ic_arrow.imageset
+│   │   │       │   ├───content_ic_arrow_down.imageset
+│   │   │       │   ├───content_ic_arrow_down_red.imageset
+│   │   │       │   ├───content_ic_arrow_up.imageset
+│   │   │       │   ├───content_ic_check.imageset
+│   │   │       │   ├───content_ic_checkbox_active.imageset
+│   │   │       │   ├───content_ic_checkmark_off.imageset
+│   │   │       │   ├───content_ic_checkmark_on.imageset
+│   │   │       │   ├───content_ic_clear.imageset
+│   │   │       │   ├───content_ic_dateandtime.imageset
+│   │   │       │   ├───content_ic_delete.imageset
+│   │   │       │   ├───content_ic_detail_bullet.imageset
+│   │   │       │   ├───content_ic_detail_bullet_warning.imageset
+│   │   │       │   ├───content_ic_detail_bullet_yellow.imageset
+│   │   │       │   ├───content_ic_direction_border.imageset
+│   │   │       │   ├───content_ic_direction_full.imageset
+│   │   │       │   ├───content_ic_direction_middle.imageset
+│   │   │       │   ├───content_ic_favorite_active.imageset
+│   │   │       │   ├───content_ic_favorite_filled.imageset
+│   │   │       │   ├───content_ic_map.imageset
+│   │   │       │   ├───content_ic_map_close.imageset
+│   │   │       │   ├───content_ic_reorder.imageset
+│   │   │       │   ├───content_ic_station.imageset
+│   │   │       │   ├───content_ic_timetable_all.imageset
+│   │   │       │   ├───content_ic_timetable_bg.imageset
+│   │   │       │   ├───content_ic_timetable_bus.imageset
+│   │   │       │   ├───content_ic_timetable_favorite.imageset
+│   │   │       │   ├───content_ic_timetable_history.imageset
+│   │   │       │   ├───content_ic_timetable_location.imageset
+│   │   │       │   ├───content_ic_timetable_mhd.imageset
+│   │   │       │   ├───content_ic_timetable_notification.imageset
+│   │   │       │   ├───content_ic_timetable_train.imageset
+│   │   │       │   ├───content_ic_timetable_trainbus.imageset
+│   │   │       │   ├───content_ic_vehicle_airplane.imageset
+│   │   │       │   ├───content_ic_vehicle_bus.imageset
+│   │   │       │   ├───content_ic_vehicle_cableway.imageset
+│   │   │       │   ├───content_ic_vehicle_metro.imageset
+│   │   │       │   ├───content_ic_vehicle_mover.imageset
+│   │   │       │   ├───content_ic_vehicle_ship.imageset
+│   │   │       │   ├───content_ic_vehicle_train.imageset
+│   │   │       │   ├───content_ic_vehicle_trainbus.imageset
+│   │   │       │   ├───content_ic_vehicle_tramvaj.imageset
+│   │   │       │   ├───content_inputfield_bg_active.imageset
+│   │   │       │   ├───content_inputfield_bg_inactive.imageset
+│   │   │       │   ├───content_inputfield_ic_delete.imageset
+│   │   │       │   ├───content_inputfield_ic_delete_light.imageset
+│   │   │       │   ├───content_inputfield_ic_search.imageset
+│   │   │       │   ├───content_train_direction.imageset
+│   │   │       │   ├───delay_history.imageset
+│   │   │       │   ├───hint_arrow_down.imageset
+│   │   │       │   ├───hint_arrow_up.imageset
+│   │   │       │   ├───icon_120.imageset
+│   │   │       │   ├───icon_180.imageset
+│   │   │       │   ├───icQuickDeparturesFavorites.imageset
+│   │   │       │   ├───icQuickSearchFavorite.imageset
+│   │   │       │   ├───icQuickSearchHistory.imageset
+│   │   │       │   ├───icQuickTickets.imageset
+│   │   │       │   ├───ic_ac_address.imageset
+│   │   │       │   ├───ic_ac_address_disabled.imageset
+│   │   │       │   ├───ic_ac_airplane.imageset
+│   │   │       │   ├───ic_ac_bus.imageset
+│   │   │       │   ├───ic_ac_cableway.imageset
+│   │   │       │   ├───ic_ac_location.imageset
+│   │   │       │   ├───ic_ac_location_disabled.imageset
+│   │   │       │   ├───ic_ac_metro_a.imageset
+│   │   │       │   ├───ic_ac_poi.imageset
+│   │   │       │   ├───ic_ac_ship.imageset
+│   │   │       │   ├───ic_ac_street.imageset
+│   │   │       │   ├───ic_ac_town.imageset
+│   │   │       │   ├───ic_ac_town_part.imageset
+│   │   │       │   ├───ic_ac_train.imageset
+│   │   │       │   ├───ic_ac_tramvaj.imageset
+│   │   │       │   ├───ic_ac_trolley.imageset
+│   │   │       │   ├───ic_invalid.imageset
+│   │   │       │   ├───ic_nofollow.imageset
+│   │   │       │   ├───ic_there_and_back.imageset
+│   │   │       │   ├───ic_warning_red.imageset
+│   │   │       │   ├───ic_warning_yellow.imageset
+│   │   │       │   ├───img_logo_idos.imageset
+│   │   │       │   ├───itunesartwork.imageset
+│   │   │       │   ├───LaunchImage.launchimage
+│   │   │       │   ├───logo_chaps.imageset
+│   │   │       │   ├───logo_idnes.imageset
+│   │   │       │   ├───logo_svt.imageset
+│   │   │       │   ├───map_flag.imageset
+│   │   │       │   ├───map_flag_content.imageset
+│   │   │       │   ├───map_pin_bg.imageset
+│   │   │       │   ├───map_pin_edge.imageset
+│   │   │       │   ├───map_pin_finish.imageset
+│   │   │       │   ├───map_pin_focus.imageset
+│   │   │       │   ├───menu_ic_about.imageset
+│   │   │       │   ├───menu_ic_departures_active.imageset
+│   │   │       │   ├───menu_ic_departures_inactive.imageset
+│   │   │       │   ├───menu_ic_dhelp.imageset
+│   │   │       │   ├───menu_ic_dinfo.imageset
+│   │   │       │   ├───menu_ic_more_active.imageset
+│   │   │       │   ├───menu_ic_more_inactive.imageset
+│   │   │       │   ├───menu_ic_passengers.imageset
+│   │   │       │   ├───menu_ic_profile.imageset
+│   │   │       │   ├───menu_ic_search_active.imageset
+│   │   │       │   ├───menu_ic_search_inactive.imageset
+│   │   │       │   ├───menu_ic_smsticket_active.imageset
+│   │   │       │   ├───menu_ic_smsticket_inactive.imageset
+│   │   │       │   ├───menu_ic_ticket_active.imageset
+│   │   │       │   ├───menu_ic_ticket_inactive.imageset
+│   │   │       │   ├───navbar_ic_actions.imageset
+│   │   │       │   ├───navbar_ic_favorite_active.imageset
+│   │   │       │   ├───navbar_ic_favorite_inactive.imageset
+│   │   │       │   ├───navbar_ic_map.imageset
+│   │   │       │   ├───navbar_ic_next.imageset
+│   │   │       │   ├───navbar_ic_next_disabled.imageset
+│   │   │       │   ├───navbar_ic_notification.imageset
+│   │   │       │   ├───navbar_ic_notification_active.imageset
+│   │   │       │   ├───navbar_ic_previous.imageset
+│   │   │       │   ├───navbar_ic_previous_disabled.imageset
+│   │   │       │   ├───navbar_ic_traffic.imageset
+│   │   │       │   ├───navbar_ic_traffic_active.imageset
+│   │   │       │   ├───navbar_ic_up.imageset
+│   │   │       │   ├───navbar_shadow_resizable.imageset
+│   │   │       │   ├───NHCalendarActivityIcon.imageset
+│   │   │       │   └───toolbar_ic_next.imageset
+│   │   │       ├───img_logo_idos.imageset
+│   │   │       ├───itunesartwork.imageset
+│   │   │       ├───LaunchImage.launchimage
+│   │   │       ├───logo_chaps.imageset
+│   │   │       ├───logo_idnes.imageset
+│   │   │       ├───logo_svt.imageset
+│   │   │       ├───map_flag.imageset
+│   │   │       ├───map_flag_content.imageset
+│   │   │       ├───map_pin_bg.imageset
+│   │   │       ├───map_pin_edge.imageset
+│   │   │       ├───map_pin_finish.imageset
+│   │   │       ├───map_pin_focus.imageset
+│   │   │       ├───menu_ic_about.imageset
+│   │   │       ├───menu_ic_departures_active.imageset
+│   │   │       ├───menu_ic_departures_inactive.imageset
+│   │   │       ├───menu_ic_dhelp.imageset
+│   │   │       ├───menu_ic_dinfo.imageset
+│   │   │       ├───menu_ic_more_active.imageset
+│   │   │       ├───menu_ic_more_inactive.imageset
+│   │   │       ├───menu_ic_passengers.imageset
+│   │   │       ├───menu_ic_profile.imageset
+│   │   │       ├───menu_ic_search_active.imageset
+│   │   │       ├───menu_ic_search_inactive.imageset
+│   │   │       ├───menu_ic_smsticket_active.imageset
+│   │   │       ├───menu_ic_smsticket_inactive.imageset
+│   │   │       ├───menu_ic_ticket_active.imageset
+│   │   │       ├───menu_ic_ticket_inactive.imageset
+│   │   │       ├───navbar_ic_actions.imageset
+│   │   │       ├───navbar_ic_favorite_active.imageset
+│   │   │       ├───navbar_ic_favorite_inactive.imageset
+│   │   │       ├───navbar_ic_map.imageset
+│   │   │       ├───navbar_ic_next.imageset
+│   │   │       ├───navbar_ic_next_disabled.imageset
+│   │   │       ├───navbar_ic_notification.imageset
+│   │   │       ├───navbar_ic_notification_active.imageset
+│   │   │       ├───navbar_ic_previous.imageset
+│   │   │       ├───navbar_ic_previous_disabled.imageset
+│   │   │       ├───navbar_ic_traffic.imageset
+│   │   │       ├───navbar_ic_traffic_active.imageset
+│   │   │       ├───navbar_ic_up.imageset
+│   │   │       ├───navbar_shadow_resizable.imageset
+│   │   │       ├───NHCalendarActivityIcon.imageset
+│   │   │       └───toolbar_ic_next.imageset
+│   │   └───Kolo a Pes 20240509
+│   ├───Logy
+│   ├───Náměty na rozvoj IDOS
+│   │   ├───Analitika
+│   │   │   ├───Doplnění Android
+│   │   │   ├───Doplnění iOS
+│   │   │   └───Sjednocení odlišných názvů - iOS a Android
+│   │   ├───Archív
+│   │   ├───Redesign scény Jízdenky
+│   │   │   ├───Archív
+│   │   │   └───VzhledJízdenkyKonkurence
+│   │   │       └───ObrazkyBobo
+│   │   └───Reginální jízdenky bez spojení
+│   │       └───Datové podklady
+│   ├───Náměty na rozvoj MHD Tabule
+│   ├───plánky
+│   ├───PPI-PPCP
+│   ├───Pravidelná rutinní práce
+│   │   └───Neúspěšně prodané jízdenky
+│   │       ├───Data
+│   │       └───Jízdenky ZSSK ARV
+│   │           ├───Archív
+│   │           └───K zpracování
+│   ├───PrezentaceProdejeIDOS
+│   ├───PromoKody - VypnutiReklamIDOS
+│   ├───Rutiny
+│   │   └───Nástroje
+│   ├───Sell_configs_CRWS
+│   │   ├───FB Prodatelnost Linky
+│   │   │   ├───2024
+│   │   │   └───2025
+│   │   ├───History
+│   │   └───_produkce
+│   │       ├───hist
+│   │       └───IDESKA - připravené sellkonfigy
+│   ├───SnímkyGooglePay
+│   ├───SnímkyObrazovekStore
+│   │   ├───Android 3.0.0
+│   │   ├───CPsk Android 2.0.0
+│   │   ├───CPsk iOS 2.0
+│   │   │   ├───CPsk
+│   │   │   └───__MACOSX
+│   │   │       └───CPsk
+│   │   └───iOS 3.1.0
+│   ├───statistiky
+│   │   ├───Analýza ČD jízdenek pro Davida
+│   │   │   └───Data
+│   │   ├───Celodenní jízdenky IDPK
+│   │   │   └───Data
+│   │   ├───IDS prodeje statistiky
+│   │   │   └───Data
+│   │   │       ├───IDOS
+│   │   │       │   ├───DÚK
+│   │   │       │   ├───IDS JMK
+│   │   │       │   └───IDSOK
+│   │   │       └───Můj vlak
+│   │   ├───Prodeje IDESKA
+│   │   │   └───Data
+│   │   │       ├───IDOS
+│   │   │       └───MůjVlak
+│   │   ├───Prodeje IDPK
+│   │   │   └───Data
+│   │   │       ├───IDOS
+│   │   │       └───MůjVlak
+│   │   ├───Prodeje IDSOK
+│   │   │   ├───Archív
+│   │   │   ├───Data
+│   │   │   │   ├───IDOS
+│   │   │   │   └───MůjVlak
+│   │   │   └───Kola a psi
+│   │   │       └───Data
+│   │   ├───Prodeje IDZK
+│   │   │   └───Data
+│   │   │       ├───IDOS
+│   │   │       └───Můjvlak
+│   │   ├───Prodeje jízdenek kola a psi
+│   │   │   └───Data
+│   │   │       ├───ARV
+│   │   │       ├───JMK
+│   │   │       ├───LE
+│   │   │       ├───OK
+│   │   │       ├───PK
+│   │   │       ├───ZK
+│   │   │       ├───ČD
+│   │   │       └───ČD OT
+│   │   ├───Prodeje ZSSK
+│   │   │   └───Data
+│   │   └───Statistky aplikací
+│   │       └───Počty zobrazení scén
+│   │           ├───Data
+│   │           └───Data per klient
+│   ├───TicketServerTest
+│   │   ├───Config
+│   │   ├───Data
+│   │   └───runtimes
+│   │       ├───win-arm64
+│   │       │   └───native
+│   │       ├───win-x64
+│   │       │   └───native
+│   │       └───win-x86
+│   │           └───native
+│   ├───TicketService
+│   │   ├───Clearing
+│   │   │   ├───Ideska
+│   │   │   ├───Idpk
+│   │   │   ├───Idsok
+│   │   │   └───Idzk, Odis
+│   │   ├───Dokumenty
+│   │   ├───IdsHelper
+│   │   │   ├───MapQrCodeGenerator
+│   │   │   │   ├───BuilderTest_v1_8
+│   │   │   │   │   ├───BuilderTest
+│   │   │   │   │   │   ├───.idea
+│   │   │   │   │   │   │   └───.idea.BuilderTest
+│   │   │   │   │   │   │       └───.idea
+│   │   │   │   │   │   ├───.vs
+│   │   │   │   │   │   │   └───BuilderTest
+│   │   │   │   │   │   │       ├───CopilotIndices
+│   │   │   │   │   │   │       │   ├───17.14.1091.29919
+│   │   │   │   │   │   │       │   └───17.14.1561.44479
+│   │   │   │   │   │   │       ├───FileContentIndex
+│   │   │   │   │   │   │       ├───v15
+│   │   │   │   │   │   │       │   └───Server
+│   │   │   │   │   │   │       │       └───sqlite3
+│   │   │   │   │   │   │       └───v17
+│   │   │   │   │   │   └───BuilderTest
+│   │   │   │   │   │       ├───.vs
+│   │   │   │   │   │       ├───bin
+│   │   │   │   │   │       │   ├───Debug
+│   │   │   │   │   │       │   └───Release
+│   │   │   │   │   │       ├───obj
+│   │   │   │   │   │       │   └───Debug
+│   │   │   │   │   │       │       └───TempPE
+│   │   │   │   │   │       └───Properties
+│   │   │   │   │   └───__MACOSX
+│   │   │   │   │       └───BuilderTest
+│   │   │   │   │           ├───.idea
+│   │   │   │   │           │   └───.idea.BuilderTest
+│   │   │   │   │           │       └───.idea
+│   │   │   │   │           ├───.vs
+│   │   │   │   │           │   └───BuilderTest
+│   │   │   │   │           │       ├───CopilotIndices
+│   │   │   │   │           │       │   └───17.14.1091.29919
+│   │   │   │   │           │       ├───FileContentIndex
+│   │   │   │   │           │       ├───v15
+│   │   │   │   │           │       │   └───Server
+│   │   │   │   │           │       │       └───sqlite3
+│   │   │   │   │           │       └───v17
+│   │   │   │   │           └───BuilderTest
+│   │   │   │   │               ├───.vs
+│   │   │   │   │               ├───bin
+│   │   │   │   │               │   └───Debug
+│   │   │   │   │               ├───obj
+│   │   │   │   │               │   └───Debug
+│   │   │   │   │               └───Properties
+│   │   │   │   └───BuilderTest_v1_9
+│   │   │   │       └───BuilderTest
+│   │   │   │           └───BuilderTest
+│   │   │   │               ├───bin
+│   │   │   │               │   └───Debug
+│   │   │   │               ├───obj
+│   │   │   │               │   └───Debug
+│   │   │   │               │       └───TempPE
+│   │   │   │               └───Properties
+│   │   │   ├───NT2-NET
+│   │   │   └───Nt2Test
+│   │   │       ├───.vs
+│   │   │       │   ├───IdeskaNt2Test
+│   │   │       │   │   └───CopilotIndices
+│   │   │       │   │       └───17.14.1561.44479
+│   │   │       │   ├───IdeskaNt2Test.slnx
+│   │   │       │   │   ├───DesignTimeBuild
+│   │   │       │   │   └───FileContentIndex
+│   │   │       │   ├───Nt2Test
+│   │   │       │   │   └───CopilotIndices
+│   │   │       │   │       └───17.14.1561.44479
+│   │   │       │   ├───Nt2Test.slnx
+│   │   │       │   │   ├───DesignTimeBuild
+│   │   │       │   │   ├───FileContentIndex
+│   │   │       │   │   ├───v17
+│   │   │       │   │   └───v18
+│   │   │       │   └───ProjectEvaluation
+│   │   │       └───IdeskaNt2Test
+│   │   │           ├───bin
+│   │   │           │   └───Debug
+│   │   │           │       └───net8.0
+│   │   │           │           ├───NT2-NET
+│   │   │           │           └───runtimes
+│   │   │           │               └───win
+│   │   │           │                   └───lib
+│   │   │           │                       └───net8.0
+│   │   │           ├───Models
+│   │   │           ├───Nt2
+│   │   │           │   └───Models
+│   │   │           ├───NT2-NET
+│   │   │           │   ├───Data
+│   │   │           │   └───Log
+│   │   │           └───obj
+│   │   │               └───Debug
+│   │   │                   └───net8.0
+│   │   │                       ├───ref
+│   │   │                       └───refint
+│   │   ├───JK (IDESKA)
+│   │   │   ├───Dokumentácia
+│   │   │   │   └───Mobilná aplikácia
+│   │   │   └───NT2 volania
+│   │   ├───OK (IDSOK)
+│   │   │   ├───Dokumentácia
+│   │   │   ├───OLTAS a NT2
+│   │   │   │   ├───ClientClasses
+│   │   │   │   ├───IPWS
+│   │   │   │   ├───NT2-NET
+│   │   │   │   │   └───Data
+│   │   │   │   └───V25_ProgramFiles_UNIPOK
+│   │   │   │       ├───NT2Data
+│   │   │   │       ├───NT2Log
+│   │   │   │       └───NTPresets
+│   │   │   ├───Podpisové kľúče
+│   │   │   │   ├───Prod
+│   │   │   │   └───Test
+│   │   │   └───Príklady volaní
+│   │   ├───Payment
+│   │   │   ├───Besteron
+│   │   │   └───GPPay
+│   │   ├───PK (IDPK)
+│   │   │   ├───Príklady lístkov
+│   │   │   └───Tarifné dáta
+│   │   └───ZK (IDZK)
+│   │       └───Dokumentácia
+│   ├───Videa
+│   │   ├───Draft
+│   │   └───Richardova videa ke zpracování
+│   │       └───Archív
+│   ├───welcomeScreen
+│   │   ├───3.7.0
+│   │   │   └───IDOS
+│   │   │       └───původní
+│   │   ├───3.8.0
+│   │   ├───Archív
+│   │   └───Fox IDOS 3.6.0 - CP 2.6.0
+│   │       └───CP
+│   └───ZSSK
+│       └───Počty hledání CPsk 20241206_15h-16h
+├───IDOS_Hrany
+├───INISS
+├───Iniss2
+├───IPList2
+│   ├───Data
+│   │   ├───Crawlers
+│   │   │   ├───AmazonAWS
+│   │   │   ├───Apple
+│   │   │   ├───Bing
+│   │   │   ├───Cloudflare
+│   │   │   ├───Facebook
+│   │   │   ├───Google
+│   │   │   ├───Huawei
+│   │   │   ├───Pingdom
+│   │   │   ├───Seznam
+│   │   │   └───UptimeRobot
+│   │   └───WHOIS
+│   ├───MMDB
+│   └───SW
+│       ├───Go-IPListReader
+│       │   └───.vscode
+│       ├───Go-Make-IPList-FromCSV
+│       │   └───.vscode
+│       ├───IPListComparer
+│       │   ├───bin
+│       │   ├───obj
+│       │   └───Properties
+│       ├───IPListLoader
+│       │   ├───bin
+│       │   ├───obj
+│       │   └───Properties
+│       └───Make-IPList
+│           └───Properties
+├───ISP
+├───ITP
+├───JR
+├───JRB
+├───JRCD
+├───JRData
+├───JRJ
+├───JRKiosk
+├───JRO
+├───JRS
+├───JRU
+├───KmlTTQ
+├───KUDYNE
+├───Kuryr
+├───MAVIS
+├───MA_IDS
+├───MISOP
+├───Nuget
+│   ├───AresPrint
+│   ├───AresShare
+│   ├───AzakAPI
+│   ├───CDBike
+│   ├───CreditAccount
+│   ├───Discount
+│   ├───DocumentConditions
+│   ├───eet
+│   ├───eShopCD
+│   ├───eShopCDLog
+│   ├───eShopService
+│   ├───eShopservice.BinaryNotesUIC
+│   ├───eShopService.CRShare
+│   ├───eShopService.DocumentConditions
+│   ├───eShopService.TicketBarcode
+│   ├───LoyaltyAccount
+│   ├───Mavis
+│   ├───MPV
+│   ├───OsdmApi
+│   ├───PagedListAsync
+│   ├───PagedListExt
+│   ├───PDF4NET
+│   ├───PP2GImport
+│   ├───PP2GShare
+│   ├───PP2GWS.Client
+│   ├───RazeniSign
+│   ├───SelfDocumentation
+│   ├───Ticket2DCode_MAIN
+│   ├───Ticket2DCode_MAIN-AZTEC-GEN6-01102024
+│   ├───Ticket2DCode_MAIN-ETD-IREDO
+│   ├───Ticket2DCode_MAIN-IT-PRINT
+│   ├───Ticket2DCode_MAIN-ODIS-PRINT-2025
+│   ├───Ticket2DCode_MAIN-QR-0523
+│   ├───Ticket2DCode_MAIN-REAL-DYNAMIC
+│   ├───Ticket2DCode_MAIN-REAL-DYNAMIC-V2
+│   ├───Ticket2DCode_MAIN-SJT
+│   ├───Ticket2DCode_MAIN-TEST-MASK
+│   ├───Ticket2DCode_MAIN-VERSION-4
+│   ├───TicketPrint_MAIN
+│   ├───TicketPrint_MAIN-IT-PRINT
+│   ├───TicketPrint_MAIN-REAL-DYNAMIC-V2
+│   ├───TicketServer
+│   ├───TrainCompositionX
+│   ├───UPPok2
+│   ├───UPPok2_MAIN
+│   ├───UPPok2_MAIN-CD-BIKE-2023-TARIFF
+│   ├───UPPok2_MAIN-COMPENSATION
+│   ├───UPPok2_MAIN-EPD-ALPHA
+│   ├───UPPok2_MAIN-EPD-ALPHA2
+│   ├───UPPok2_MAIN-EPD-GAMMA
+│   ├───UPPok2_MAIN-FANSHOP-12062024
+│   ├───UPPok2_MAIN-IDESKA26
+│   ├───UPPok2_MAIN-IDOL-MOS
+│   ├───UPPok2_MAIN-IDOL-MOS2
+│   ├───UPPok2_MAIN-MOPAJ-NG-24042024
+│   ├───UPPok2_MAIN-OAS
+│   ├───UPPok2_MAIN-OFFLINE
+│   ├───UPPok2_MAIN-PP2G-REDUCE-DETAIL-2-0324
+│   ├───UPPok2_MAIN-UPPS-SJT
+│   ├───VDLibCore
+│   └───VDPdfGen
+├───ODP
+├───OSDM
+├───PAJDPP
+├───PARIS
+├───Path
+├───PortalMK
+├───PP
+├───PR
+├───RAZENI
+├───RJ
+├───Scitlist
+├───SISM
+├───SPADO
+├───STOJAN.MHD
+├───TelCard
+├───TRPOD
+├───TT
+│   ├───ASP
+│   ├───Bmp
+│   │   └───Ikony
+│   ├───CD-Rom
+│   │   ├───ComCtl32
+│   │   ├───HtmlDocs
+│   │   │   ├───css
+│   │   │   ├───Images
+│   │   │   │   └───loga
+│   │   │   └───Scripts
+│   │   ├───IDOS
+│   │   │   ├───Data1
+│   │   │   │   └───C1
+│   │   │   ├───Data2
+│   │   │   │   └───C2
+│   │   │   │       └───img
+│   │   │   ├───Data3
+│   │   │   │   ├───CIDSJMK
+│   │   │   │   │   └───images
+│   │   │   │   ├───CODIS
+│   │   │   │   │   ├───css
+│   │   │   │   │   └───images
+│   │   │   │   └───CPID
+│   │   │   │       └───images
+│   │   │   ├───Data4
+│   │   │   └───DataIDSOK
+│   │   ├───Setup
+│   │   ├───Setup_C
+│   │   │   └───JDFkon
+│   │   └───Setup_V
+│   ├───CD-ROM Dotace
+│   │   ├───HtmlDocs
+│   │   ├───IDOS
+│   │   └───Setup_D
+│   ├───CD-Rom English
+│   │   ├───ComCtl32
+│   │   ├───HtmlDocs
+│   │   │   └───images
+│   │   │       └───cis
+│   │   ├───IDOS
+│   │   │   ├───Data1
+│   │   │   │   └───C1
+│   │   │   │       └───images
+│   │   │   ├───Data2
+│   │   │   │   └───C2
+│   │   │   │       └───img
+│   │   │   ├───Data3
+│   │   │   │   ├───CBrno
+│   │   │   │   │   └───images
+│   │   │   │   └───CODIS
+│   │   │   │       └───IMAGE
+│   │   │   └───Data4
+│   │   └───Setup
+│   │       └───Disk1
+│   ├───CD-Rom Intranet
+│   │   ├───HtmlDocs
+│   │   │   ├───css
+│   │   │   ├───files
+│   │   │   ├───images
+│   │   │   │   ├───cis
+│   │   │   │   ├───font
+│   │   │   │   ├───inst-int
+│   │   │   │   ├───inst-int-en
+│   │   │   │   └───inst-win
+│   │   │   ├───img
+│   │   │   └───js
+│   │   ├───Setup
+│   │   └───Setup_C
+│   │       └───JDFkon
+│   ├───CD-ROM_History
+│   │   └───IDOS
+│   │       ├───Data1
+│   │       └───Data2
+│   ├───Cd_jrcd
+│   │   ├───html
+│   │   │   ├───css
+│   │   │   └───img
+│   │   ├───JRCD
+│   │   └───Setup
+│   ├───ComCtl32
+│   ├───Dll
+│   ├───ExportyCRWS
+│   │   └───MUNI
+│   │       ├───20210119
+│   │       │   └───Data
+│   │       └───20220314
+│   │           └───Data
+│   ├───Font
+│   │   ├───InstFont
+│   │   │   └───Source
+│   │   ├───PismoIDOS
+│   │   ├───webfont
+│   │   │   ├───Zaloha20160226
+│   │   │   ├───Zaloha20160310
+│   │   │   ├───Zaloha20160321
+│   │   │   ├───Zaloha20160330
+│   │   │   │   └───css
+│   │   │   └───Zaloha20260421
+│   │   ├───Zalohy
+│   │   │   └───zaloha
+│   │   │       ├───20060906
+│   │   │       └───20090916
+│   │   └───Zdroje
+│   │       └───USB
+│   ├───Hlp
+│   │   ├───HCW
+│   │   ├───HTML
+│   │   │   ├───CP
+│   │   │   │   └───CP
+│   │   │   │       └───HTML
+│   │   │   │           ├───css
+│   │   │   │           └───img
+│   │   │   │               └───fnt
+│   │   │   ├───CZ
+│   │   │   │   ├───HTML
+│   │   │   │   │   ├───css
+│   │   │   │   │   └───img
+│   │   │   │   │       └───fnt
+│   │   │   │   ├───log
+│   │   │   │   └───zdroje
+│   │   │   └───Sk_nepouzivat
+│   │   │       ├───HTML
+│   │   │       │   ├───css
+│   │   │       │   └───img
+│   │   │       │       └───fnt
+│   │   │       ├───log
+│   │   │       └───zdroje
+│   │   │           └───Zaloha
+│   │   ├───IDOScr
+│   │   │   ├───Help
+│   │   │   │   ├───Cz
+│   │   │   │   │   ├───C
+│   │   │   │   │   ├───E
+│   │   │   │   │   └───G
+│   │   │   │   ├───Pl
+│   │   │   │   │   └───P
+│   │   │   │   ├───Pt
+│   │   │   │   │   ├───C
+│   │   │   │   │   ├───E
+│   │   │   │   │   ├───G
+│   │   │   │   │   └───T
+│   │   │   │   └───Sk
+│   │   │   │       ├───E
+│   │   │   │       └───S
+│   │   │   └───portal
+│   │   │       ├───base_cz
+│   │   │       ├───base_pl
+│   │   │       ├───base_pt
+│   │   │       └───base_sk
+│   │   ├───MHD_Tabule
+│   │   │   ├───Conditions
+│   │   │   │   └───Zalohy
+│   │   │   ├───WelcomeScreen
+│   │   │   │   └───Zalohy
+│   │   │   │       └───Zaloha
+│   │   │   └───Zaloha
+│   │   ├───mIDOS
+│   │   │   ├───Aplikace_CP
+│   │   │   │   ├───Lang_E
+│   │   │   │   │   ├───Conditions
+│   │   │   │   │   ├───PrivacyPolicy
+│   │   │   │   │   ├───WelcomeScreen
+│   │   │   │   │   │   └───Zalohy
+│   │   │   │   │   └───Zalohy
+│   │   │   │   ├───Lang_G
+│   │   │   │   └───Lang_S
+│   │   │   │       ├───Conditions
+│   │   │   │       ├───PrivacyPolicy
+│   │   │   │       ├───WelcomeScreen
+│   │   │   │       │   └───Zalohy
+│   │   │   │       └───Zalohy
+│   │   │   ├───Images
+│   │   │   │   └───Zaloha20150806
+│   │   │   ├───Lang_C
+│   │   │   │   ├───Conditions
+│   │   │   │   ├───PrivacyPolicy
+│   │   │   │   ├───WelcomeScreen
+│   │   │   │   │   └───Zalohy
+│   │   │   │   └───Zalohy
+│   │   │   ├───Lang_E
+│   │   │   │   ├───Conditions
+│   │   │   │   ├───PrivacyPolicy
+│   │   │   │   ├───WelcomeScreen
+│   │   │   │   │   └───Zalohy
+│   │   │   │   └───Zalohy
+│   │   │   ├───Lang_G
+│   │   │   │   ├───WelcomeScreen
+│   │   │   │   │   └───Zalohy
+│   │   │   │   └───Zalohy
+│   │   │   ├───Lang_S
+│   │   │   │   └───Zalohy
+│   │   │   ├───Lang_T
+│   │   │   │   ├───WelcomeScreen
+│   │   │   │   │   └───Zalohy
+│   │   │   │   └───Zalohy
+│   │   │   ├───ws
+│   │   │   ├───Zalohy
+│   │   │   └───_Preklady
+│   │   │       ├───android.2_3.c.html
+│   │   │       ├───ios.2_6.c.html
+│   │   │       ├───spi.c.html
+│   │   │       ├───WelcomeScreen
+│   │   │       ├───ws.android.2_3.c.html
+│   │   │       └───ws.ios.2_7.c.html
+│   │   ├───obrazky
+│   │   │   └───Fnt
+│   │   └───Záloha
+│   │       ├───HlpDotace
+│   │       ├───HlpE
+│   │       │   └───Obrazky
+│   │       └───HlpS
+│   │           ├───Html
+│   │           │   ├───html
+│   │           │   └───images
+│   │           └───obrazky
+│   │               └───Fnt
+│   ├───Instal
+│   │   ├───BAK
+│   │   │   ├───Data4
+│   │   │   └───Data5
+│   │   │       └───img
+│   │   ├───Data1
+│   │   │   └───C1
+│   │   ├───Data2
+│   │   │   └───C2
+│   │   │       └───img
+│   │   ├───Data3
+│   │   ├───DataDUK
+│   │   ├───DataIDSJK
+│   │   ├───DataIDSJMK
+│   │   │   └───Data
+│   │   ├───DataIDSOK
+│   │   ├───TT-ČD
+│   │   ├───TTE
+│   │   ├───TTG
+│   │   ├───TTO
+│   │   ├───TTS
+│   │   ├───TTZ
+│   │   └───Zalohy
+│   │       ├───2021
+│   │       │   ├───Data1
+│   │       │   └───Data2
+│   │       ├───zaloha
+│   │       │   └───Data3
+│   │       │       ├───CIDSJMK
+│   │       │       │   └───images
+│   │       │       ├───CODIS
+│   │       │       │   ├───css
+│   │       │       │   └───images
+│   │       │       └───CPID
+│   │       │           └───images
+│   │       └───zaloha-prt
+│   ├───InstallShield
+│   ├───Licence
+│   │   ├───Dotace
+│   │   ├───Inprop
+│   │   ├───intranet
+│   │   ├───ODIS
+│   │   └───PPC
+│   ├───MDB
+│   │   ├───3xHrany
+│   │   ├───MestaXLS
+│   │   ├───MHD
+│   │   │   └───Zaloha
+│   │   ├───Nerozposunute
+│   │   ├───SK_Sour
+│   │   └───Support
+│   ├───PDA
+│   │   └───Zaloha20030505
+│   │       ├───_Cz
+│   │       │   ├───cab
+│   │       │   └───exe
+│   │       └───_Sk
+│   │           ├───cab
+│   │           └───exe
+│   ├───PreRe
+│   │   └───debug
+│   ├───Produkty
+│   ├───Prt
+│   ├───Tarif
+│   │   ├───.vs
+│   │   │   └───Tarif
+│   │   │       └───v16
+│   │   ├───Bus
+│   │   │   ├───Data
+│   │   │   └───Zal
+│   │   │       └───UzNeplati
+│   │   │           ├───IDOL_PomocneSoubory
+│   │   │           │   ├───Update20131215
+│   │   │           │   └───Update20140128
+│   │   │           └───Zalohy
+│   │   ├───BusODIS
+│   │   │   └───Data
+│   │   │       └───Zal20251212
+│   │   ├───BUSSK
+│   │   │   ├───Zaloha
+│   │   │   │   ├───20220216
+│   │   │   │   └───20240820
+│   │   │   └───ZdrojIDSBB
+│   │   │       ├───Update20240604
+│   │   │       └───Update20250102
+│   │   ├───Data_IDS
+│   │   │   ├───IDSJK
+│   │   │   │   └───Zdroje
+│   │   │   └───IDSOK
+│   │   │       └───Zdroje
+│   │   │           ├───Update20160615
+│   │   │           └───Update20180126
+│   │   ├───MHD_CZ
+│   │   │   ├───As
+│   │   │   ├───Benesov
+│   │   │   ├───Beroun
+│   │   │   ├───Bilina
+│   │   │   ├───Brandys
+│   │   │   ├───Bruntal
+│   │   │   ├───BystriceNadPernstejnem
+│   │   │   ├───Caslav
+│   │   │   ├───CeskaLipa
+│   │   │   ├───CeskeBudejovice
+│   │   │   ├───CeskyKrumlov
+│   │   │   ├───CeskyTesin
+│   │   │   ├───Cheb
+│   │   │   ├───Chomutov_Jirkov
+│   │   │   ├───Chrudim
+│   │   │   ├───Dacice
+│   │   │   ├───Decin
+│   │   │   ├───Domazlice
+│   │   │   ├───Duchcov
+│   │   │   ├───DvurKraloveNadLabem
+│   │   │   ├───Frydek-Mistek
+│   │   │   ├───Havirov
+│   │   │   ├───HavlickuvBrod
+│   │   │   ├───Horice
+│   │   │   ├───HradecKralove
+│   │   │   ├───Hranice
+│   │   │   ├───IDSJMK
+│   │   │   │   ├───BIN
+│   │   │   │   ├───Pracovni
+│   │   │   │   ├───SablonyASWJR
+│   │   │   │   │   └───ZalohaMoje
+│   │   │   │   └───Zalohy
+│   │   │   │       ├───DojezdoveZony
+│   │   │   │       ├───IDSJMK_new
+│   │   │   │       │   ├───DojezdoveZony
+│   │   │   │       │   └───Zalohy
+│   │   │   │       └───UzSeNepouziva
+│   │   │   ├───IREDO
+│   │   │   ├───Jablonec
+│   │   │   ├───Jachymov
+│   │   │   ├───Jicin
+│   │   │   ├───Jihlava
+│   │   │   ├───JindrichuvHradec
+│   │   │   ├───Kadan
+│   │   │   ├───KarlovyVary
+│   │   │   ├───Karvina
+│   │   │   ├───Kladno
+│   │   │   ├───KlasterecNadOhri
+│   │   │   ├───Klatovy
+│   │   │   ├───Kolin
+│   │   │   ├───KralupyNadVltavou
+│   │   │   ├───Krnov
+│   │   │   ├───Kromeriz
+│   │   │   ├───KutnaHora
+│   │   │   ├───Letohrad
+│   │   │   ├───Liberec
+│   │   │   ├───Litomerice
+│   │   │   ├───Litomysl
+│   │   │   ├───Louny
+│   │   │   ├───Lovosice
+│   │   │   ├───MarianskeLazne
+│   │   │   ├───Melnik
+│   │   │   ├───Milevsko
+│   │   │   ├───MladaBoleslav
+│   │   │   ├───Most
+│   │   │   ├───Neratovice
+│   │   │   ├───NoveMestoNaMorave
+│   │   │   ├───NovyJicin
+│   │   │   ├───Nymburk
+│   │   │   ├───ODIS
+│   │   │   ├───Olomouc
+│   │   │   ├───Opava
+│   │   │   ├───Orlova
+│   │   │   ├───Ostrov
+│   │   │   ├───Pardubice
+│   │   │   ├───Pelhrimov
+│   │   │   │   └───Zdroje
+│   │   │   ├───PID
+│   │   │   │   └───Zalohy
+│   │   │   │       └───20220506
+│   │   │   ├───Pisek
+│   │   │   ├───Plzen
+│   │   │   ├───Policka
+│   │   │   ├───Prelouc
+│   │   │   ├───Prerov
+│   │   │   ├───Prestice
+│   │   │   ├───Pribram
+│   │   │   ├───Prostejov
+│   │   │   ├───Rokycany
+│   │   │   │   └───Zdroje
+│   │   │   ├───RoudniceNadLabem
+│   │   │   ├───Slany
+│   │   │   ├───Sokolov
+│   │   │   ├───Strakonice
+│   │   │   ├───Stribro
+│   │   │   ├───Studenka
+│   │   │   ├───Sumperk
+│   │   │   ├───Tabor
+│   │   │   ├───Tachov
+│   │   │   ├───Teplice
+│   │   │   ├───Trebic
+│   │   │   ├───Trinec
+│   │   │   ├───Trutnov
+│   │   │   ├───Turnov
+│   │   │   ├───UherskeHradiste
+│   │   │   ├───UstiNadOrlici
+│   │   │   ├───ValasskeMezirici
+│   │   │   ├───Varnsdorf
+│   │   │   ├───VelkeMezirici
+│   │   │   ├───Vimperk
+│   │   │   ├───Vlasim
+│   │   │   ├───Vsetin
+│   │   │   ├───Zabreh
+│   │   │   ├───Zamberk
+│   │   │   ├───Zatec
+│   │   │   ├───ZdarNadSazavou
+│   │   │   ├───ZlinOtrokovice
+│   │   │   └───_UzNeplati
+│   │   │       └───UstiNadLabem
+│   │   ├───MHD_Ostatni
+│   │   │   └───Wroclaw
+│   │   ├───MHD_SK
+│   │   │   ├───MHD_Bratislava
+│   │   │   ├───MHD_Cadca
+│   │   │   ├───MHD_Nitra
+│   │   │   ├───MHD_Presov
+│   │   │   └───MHD_Zilina
+│   │   ├───Vlak
+│   │   │   └───Zalohy
+│   │   │       ├───20000211
+│   │   │       ├───20000316
+│   │   │       ├───20000428
+│   │   │       ├───20000511
+│   │   │       ├───20001227
+│   │   │       ├───20010110
+│   │   │       ├───20010131
+│   │   │       ├───20010628
+│   │   │       ├───20011001
+│   │   │       ├───20090422
+│   │   │       ├───20090518_nemazat
+│   │   │       ├───20100222
+│   │   │       └───20250110
+│   │   ├───VlakSk
+│   │   │   ├───Zaloha
+│   │   │   └───Zdroj
+│   │   │       └───20081218
+│   │   ├───Vlaky
+│   │   └───Zaloha
+│   ├───TTAuto
+│   ├───TTcom
+│   │   ├───Debug
+│   │   └───Release
+│   ├───TTKAM
+│   ├───TTKey
+│   ├───TTMakeShortcut
+│   ├───TTR
+│   │   ├───Adamov
+│   │   ├───As
+│   │   ├───BanovceNadBebravou
+│   │   ├───BanskaBystrica
+│   │   ├───Bardejov
+│   │   ├───Benesov
+│   │   ├───Beroun
+│   │   ├───Bilina
+│   │   ├───Blansko
+│   │   ├───Brandys
+│   │   ├───Bratislava
+│   │   ├───Breclav
+│   │   ├───Brezno
+│   │   ├───Bruntal
+│   │   ├───Budapest
+│   │   ├───BusC
+│   │   ├───BusS
+│   │   ├───BystriceNadPernstejnem
+│   │   ├───Cadca
+│   │   ├───Caslav
+│   │   ├───CeskaLipa
+│   │   ├───CeskeBudejovice
+│   │   ├───CeskyKrumlov
+│   │   ├───CesTes
+│   │   ├───Cheb
+│   │   ├───Chomutov
+│   │   ├───Chrudim
+│   │   ├───Dacice
+│   │   ├───DDico
+│   │   ├───Decin
+│   │   ├───DolnyKubin
+│   │   ├───Domazlice
+│   │   ├───Dopravci
+│   │   ├───Duchcov
+│   │   ├───DunajskaLuzna
+│   │   ├───DunajskaStreda
+│   │   ├───DvurKral
+│   │   ├───Flixbus
+│   │   ├───FrydekMistek
+│   │   ├───Galanta
+│   │   ├───Galileo
+│   │   ├───Handlova
+│   │   ├───Havirov
+│   │   ├───HavlickuvBrod
+│   │   ├───Hlohovec
+│   │   ├───Hodonin
+│   │   ├───Horice
+│   │   ├───Hranice
+│   │   ├───HrKr
+│   │   ├───Humenne
+│   │   ├───Hustopece
+│   │   ├───IDSBK
+│   │   ├───IDSJK
+│   │   ├───IDSJMK
+│   │   ├───IzmirBus
+│   │   ├───IzmirDrahy
+│   │   ├───JablonecNN
+│   │   ├───Jachymov
+│   │   ├───Jicin
+│   │   ├───Jihlava
+│   │   ├───JinHrad
+│   │   ├───Kadan
+│   │   ├───KarlovyVary
+│   │   ├───Karvina
+│   │   ├───Kezmarok
+│   │   ├───KKK
+│   │   ├───Kladno
+│   │   ├───KlasterecNadOhri
+│   │   ├───Klatovy
+│   │   ├───Kolin
+│   │   ├───Komarno
+│   │   ├───Kosice
+│   │   ├───KostelecNadOrlici
+│   │   ├───Kralupy
+│   │   ├───Krnov
+│   │   ├───Kromeriz
+│   │   ├───KutnaHora
+│   │   ├───Kyjov
+│   │   ├───KysuckeNoveMesto
+│   │   ├───Letohrad
+│   │   ├───Levice
+│   │   ├───Levoca
+│   │   ├───Liberec
+│   │   ├───LiptovskyMikulas
+│   │   ├───Litomerice
+│   │   ├───Litomysl
+│   │   ├───LodeDUK
+│   │   ├───LodePPS
+│   │   ├───Lodz
+│   │   ├───Louny
+│   │   ├───Lovosice
+│   │   ├───Lucenec
+│   │   ├───Malacky
+│   │   ├───MarianskeLazne
+│   │   ├───Martin
+│   │   ├───MB
+│   │   ├───Melnik
+│   │   ├───Michalovce
+│   │   ├───Mikulov
+│   │   ├───Milevsko
+│   │   ├───MnisekPodBrdy
+│   │   ├───MoravskaTrebova
+│   │   ├───Most
+│   │   ├───Nachod
+│   │   ├───Neratovice
+│   │   ├───Nitra
+│   │   ├───NoveMestoNadVahom
+│   │   ├───NoveMestoNaMorave
+│   │   ├───NoveZamky
+│   │   ├───NovyJicin
+│   │   ├───Nymburk
+│   │   ├───Olomouc
+│   │   ├───Opava
+│   │   ├───Orlova
+│   │   ├───Ostrava
+│   │   ├───Ostrov
+│   │   ├───Pardubice
+│   │   ├───Partizanske
+│   │   ├───Pelhrimov
+│   │   ├───Pezinok
+│   │   ├───PID
+│   │   ├───Piestany
+│   │   ├───Pisek
+│   │   ├───Plzen
+│   │   ├───Policka
+│   │   ├───Poprad
+│   │   ├───PovazskaBystrica
+│   │   ├───Prelouc
+│   │   ├───Prerov
+│   │   ├───Presov
+│   │   ├───Prestice
+│   │   ├───Pribram
+│   │   ├───Prievidza
+│   │   ├───Prostejov
+│   │   ├───Puchov
+│   │   ├───Ricany
+│   │   ├───RimavskaSobota
+│   │   ├───Rokycany
+│   │   ├───RoudniceNadLabem
+│   │   ├───Roznava
+│   │   ├───Ruzomberok
+│   │   ├───RychnovNadKneznou
+│   │   ├───Sahy
+│   │   ├───Sala
+│   │   ├───Senec
+│   │   ├───Senica
+│   │   ├───Sered
+│   │   ├───Skalica
+│   │   ├───Slany
+│   │   ├───Sokolov
+│   │   ├───SpindleruvMlyn
+│   │   ├───SpisskaNovaVes
+│   │   ├───StaraLubovna
+│   │   ├───StaraTura
+│   │   ├───Steti
+│   │   ├───Strakonice
+│   │   ├───Stribro
+│   │   ├───Studenka
+│   │   ├───Sturovo
+│   │   ├───Sumperk
+│   │   ├───Surany
+│   │   ├───Svidnik
+│   │   ├───Svit
+│   │   ├───Tabor
+│   │   ├───Tachov
+│   │   ├───Teplice
+│   │   ├───Topolcany
+│   │   ├───TrebechovicePodOrebem
+│   │   ├───Trebic
+│   │   ├───Trebisov
+│   │   ├───Trencin
+│   │   ├───Trinec
+│   │   ├───Trnava
+│   │   ├───Trutnov
+│   │   ├───Turnov
+│   │   ├───TynisteNadOrlici
+│   │   ├───UherskeHradiste
+│   │   ├───UstiNadLabem
+│   │   ├───UstiNadOrlici
+│   │   ├───ValMez
+│   │   ├───Varnsdorf
+│   │   ├───VBB
+│   │   ├───VelkeMezirici
+│   │   ├───Viden
+│   │   ├───Vimperk
+│   │   ├───Vlak
+│   │   ├───Vlasim
+│   │   ├───VOR
+│   │   ├───VranovNadToplou
+│   │   ├───Vrchlabi
+│   │   ├───Vsetin
+│   │   ├───Vyskov
+│   │   ├───Wroclaw
+│   │   ├───Zabreh
+│   │   ├───Zamberk
+│   │   ├───Zatec
+│   │   ├───ZdarNadSazavou
+│   │   ├───ZiarNadHronom
+│   │   ├───Zilina
+│   │   ├───Zlin
+│   │   ├───Znojmo
+│   │   ├───Zvolen
+│   │   ├───Zvon
+│   │   ├───_Gif
+│   │   ├───_NepouzivaSe
+│   │   │   ├───Brno
+│   │   │   ├───BusPL
+│   │   │   ├───BusPL_SIP
+│   │   │   ├───LetisteBratislava
+│   │   │   ├───LetistePraha
+│   │   │   ├───VlakC
+│   │   │   ├───VlakC.old
+│   │   │   ├───VlakS
+│   │   │   └───VlakZSR
+│   │   ├───_Png
+│   │   └───__ZnakyMest
+│   │       └───znaky_soubory
+│   │           └───a_data
+│   ├───TTReg
+│   ├───TTRegDll
+│   ├───TTRgInet
+│   ├───TTUpdater
+│   ├───TTVzd
+│   ├───TT_DO
+│   │   ├───bak
+│   │   ├───data
+│   │   ├───kraje
+│   │   └───StC
+│   ├───Txt
+│   ├───Vyvesky
+│   │   └───Old
+│   │       └───Old
+│   ├───VyveskyB
+│   │   └───old
+│   └───ČD-prt
+├───UIRADR
+├───URM
+├───UtilityRuzne
+│   ├───ActionList
+│   ├───ActionListLib2
+│   │   ├───bak
+│   │   ├───bin
+│   │   │   ├───Debug
+│   │   │   └───Release
+│   │   ├───doc
+│   │   ├───images
+│   │   ├───My Project
+│   │   └───obj
+│   │       ├───Debug
+│   │       │   ├───temp
+│   │       │   └───TempPE
+│   │       └───Release
+│   │           ├───temp
+│   │           └───TempPE
+│   ├───AxWebBrowser
+│   ├───BrowserSwitch
+│   ├───Build
+│   │   ├───20160822_1053.bak
+│   │   ├───20160830_1449.bak
+│   │   ├───20161004_1623.bak
+│   │   └───20161004_1625.bak
+│   ├───Controls1
+│   ├───Controls2
+│   │   ├───bak
+│   │   ├───bin
+│   │   │   ├───Debug
+│   │   │   └───Release
+│   │   ├───Images
+│   │   ├───My Project
+│   │   ├───obj
+│   │   │   ├───Debug
+│   │   │   │   └───TempPE
+│   │   │   └───Release
+│   │   │       └───TempPE
+│   │   └───Resources
+│   ├───DBExportImport
+│   ├───DBmail
+│   │   └───wkdir
+│   ├───DBrowsDebugCtl
+│   ├───LogViewer
+│   │   ├───bin
+│   │   │   ├───Debug
+│   │   │   └───Release
+│   │   ├───My Project
+│   │   ├───obj
+│   │   │   ├───Debug
+│   │   │   │   └───TempPE
+│   │   │   └───Release
+│   │   │       └───TempPE
+│   │   └───Resources
+│   ├───ScanDirTimes
+│   ├───StructMan
+│   ├───UPXkomprese
+│   │   └───Verze304
+│   ├───VVMSap
+│   └───WdirSz
+├───VD
+├───Vlaky
+├───VŠB
+├───ZSSK
+└───ÖBB

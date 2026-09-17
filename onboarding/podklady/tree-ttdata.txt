@@ -1,0 +1,3685 @@
+PS R:\aplikace> cd r:\TTData\
+PS R:\TTData> tree
+Folder PATH listing
+Volume serial number is 00000271 6A22:23C9
+R:.
+├───Chaps
+│   ├───CIS
+│   │   └───ZIP
+│   ├───Dotace
+│   │   └───zip
+│   ├───EDOM
+│   │   └───ZIP
+│   ├───Eurotel
+│   │   └───ZIP
+│   ├───Globtel
+│   │   └───ZIP
+│   ├───Other
+│   │   └───ZIP
+│   ├───Update
+│   │   ├───JRCD
+│   │   │   └───ZIP
+│   │   ├───Jrcd_2025
+│   │   │   └───ZIP
+│   │   ├───Jrcd_2026
+│   │   │   └───ZIP
+│   │   ├───new
+│   │   │   ├───JRCD
+│   │   │   │   └───ZIP
+│   │   │   ├───ODIS
+│   │   │   │   └───ZIP
+│   │   │   ├───Smart
+│   │   │   │   └───JZ
+│   │   │   └───Win
+│   │   │       └───ZIP
+│   │   ├───ODIS
+│   │   │   └───ZIP
+│   │   ├───script
+│   │   ├───Smart
+│   │   │   └───JZ
+│   │   ├───Win
+│   │   │   └───ZIP
+│   │   └───_Zaloha
+│   │       └───20241107
+│   │           ├───Jrcd_2023
+│   │           │   └───ZIP
+│   │           ├───Jrcd_2024
+│   │           │   └───ZIP
+│   │           ├───Jrcd_2025
+│   │           │   └───ZIP
+│   │           ├───ODIS
+│   │           └───Win
+│   └───Vyvesky
+│       └───ZIP
+├───TT
+│   ├───Bin
+│   │   └───Záloha
+│   ├───BusCKD_26
+│   ├───BusCK_26
+│   ├───BusCNM_26
+│   ├───BusCO_26
+│   ├───BusC_26
+│   │   └───C2
+│   │       └───img
+│   ├───BusC_PPC
+│   │   ├───Cechy_26
+│   │   ├───Dalkove_26
+│   │   ├───Morava_26
+│   │   └───_Zaloha
+│   ├───BusSkCzO_26
+│   ├───BusSkCz_26
+│   ├───BusSkK_26
+│   ├───BusSk_26
+│   ├───BusS_26
+│   ├───Data_Dopravci
+│   │   ├───FlixBus
+│   │   └───_Zaloha
+│   ├───Data_IDS
+│   │   ├───DPKV
+│   │   │   └───BusDPKV
+│   │   │       ├───INI
+│   │   │       ├───SQL
+│   │   │       └───TXT
+│   │   ├───DUK
+│   │   │   ├───BusDUK
+│   │   │   │   ├───BusDUK26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusDUK_CD_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusDUK_Sell_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20230419
+│   │   │   │       │   ├───20240102
+│   │   │   │       │   ├───20240104
+│   │   │   │       │   ├───20240220
+│   │   │   │       │   ├───20241201
+│   │   │   │       │   ├───20241215
+│   │   │   │       │   ├───20250102
+│   │   │   │       │   ├───20250131
+│   │   │   │       │   ├───20251214
+│   │   │   │       │   ├───20260101
+│   │   │   │       │   ├───20260313
+│   │   │   │       │   ├───20260709
+│   │   │   │       │   └───20260820
+│   │   │   │       └───Zastavky_Sell
+│   │   │   │           ├───20240416
+│   │   │   │           │   └───xmlstarlet
+│   │   │   │           │       └───doc
+│   │   │   │           └───20260825
+│   │   │   ├───LodeDUK
+│   │   │   │   └───TXT
+│   │   │   └───VlakDUK_26
+│   │   ├───IDESKA
+│   │   │   ├───BusIDESKA
+│   │   │   │   ├───BusIDESKA26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIDESKA_CD_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIDESKA_J_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIDESKA_Sell_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20260112
+│   │   │   │       │   └───20260424
+│   │   │   │       ├───ZastOff_CD
+│   │   │   │       │   ├───20260727
+│   │   │   │       │   └───20260729
+│   │   │   │       └───Zony
+│   │   │   │           └───20260525
+│   │   │   ├───VlakIDESKA_26
+│   │   │   └───VlakIDESKA_SELL_26
+│   │   ├───IDOL
+│   │   │   ├───BusIDOL
+│   │   │   │   ├───BusIDOL26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20231206
+│   │   │   │       │   ├───20240629
+│   │   │   │       │   ├───20241201
+│   │   │   │       │   ├───20241215
+│   │   │   │       │   ├───20250618
+│   │   │   │       │   ├───20250902
+│   │   │   │       │   ├───20251214
+│   │   │   │       │   ├───20260428
+│   │   │   │       │   └───20260908
+│   │   │   │       └───Zastavky
+│   │   │   │           └───xmlstarlet
+│   │   │   │               └───doc
+│   │   │   └───VlakIDOL_26
+│   │   ├───IDP
+│   │   │   ├───BusIDP
+│   │   │   │   ├───BusIDP26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIDPK_Sell_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIDP_CD_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20240226
+│   │   │   │       │   ├───20240522
+│   │   │   │       │   ├───20250102
+│   │   │   │       │   ├───20250709
+│   │   │   │       │   ├───20251215
+│   │   │   │       │   ├───20260407
+│   │   │   │       │   ├───20260408
+│   │   │   │       │   ├───20260619
+│   │   │   │       │   └───_prac
+│   │   │   │       ├───Zastavky_BusIDP_CD
+│   │   │   │       │   ├───20230208
+│   │   │   │       │   ├───20240227
+│   │   │   │       │   ├───20250102
+│   │   │   │       │   ├───20250709
+│   │   │   │       │   ├───20251215
+│   │   │   │       │   ├───20260407
+│   │   │   │       │   └───20260619
+│   │   │   │       └───Zony
+│   │   │   │           ├───20181030
+│   │   │   │           ├───20210121
+│   │   │   │           ├───20210929
+│   │   │   │           ├───20220504
+│   │   │   │           ├───20221023
+│   │   │   │           ├───20240226
+│   │   │   │           ├───20240522
+│   │   │   │           ├───20250102
+│   │   │   │           ├───20250709
+│   │   │   │           ├───20251215
+│   │   │   │           ├───20260407
+│   │   │   │           └───20260619
+│   │   │   └───VlakIDP_26
+│   │   ├───IDSBBSK
+│   │   │   └───BusIDSBBSK
+│   │   │       ├───BusIDSBBSK26
+│   │   │       │   ├───INI
+│   │   │       │   ├───SQL
+│   │   │       │   └───TXT
+│   │   │       ├───INI
+│   │   │       ├───SQL
+│   │   │       └───TXT
+│   │   ├───IDSBK
+│   │   │   ├───BusIDSBK
+│   │   │   │   ├───BusIDSBK26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───INI
+│   │   │   │   └───TXT
+│   │   │   └───VlakIDSBK_26
+│   │   ├───IDSJK
+│   │   │   ├───BusIDSJK
+│   │   │   │   ├───BusIDSJK26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───Prac
+│   │   │   └───VlakIDSJK_26
+│   │   ├───IDSJMK
+│   │   │   ├───BusIDSJMK
+│   │   │   │   ├───BusIDSJMK26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───BusPdIDSJMK
+│   │   │   │       ├───GisTrasy
+│   │   │   │       │   ├───GisTrasy_klasicka
+│   │   │   │       │   ├───GisTrasy_poptavkova
+│   │   │   │       │   └───GisZast
+│   │   │   │       ├───INI
+│   │   │   │       └───TXT
+│   │   │   └───VlakIDSJMK_26
+│   │   ├───IDSOK
+│   │   │   ├───BusIDSOK
+│   │   │   │   ├───BusIDSOK26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIDSOK_CD_26
+│   │   │   │   │   ├───Bus_950904
+│   │   │   │   │   │   └───TXT
+│   │   │   │   │   ├───Bus_main
+│   │   │   │   │   │   ├───SQL
+│   │   │   │   │   │   └───TXT
+│   │   │   │   │   └───INI
+│   │   │   │   ├───BusIDSOK_Sell_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20221019
+│   │   │   │       │   ├───20240214
+│   │   │   │       │   ├───20241215
+│   │   │   │       │   ├───20250623
+│   │   │   │       │   ├───20250626
+│   │   │   │       │   ├───20250901
+│   │   │   │       │   ├───20251214
+│   │   │   │       │   ├───20260126
+│   │   │   │       │   ├───20260302
+│   │   │   │       │   ├───20260428
+│   │   │   │       │   ├───20260511
+│   │   │   │       │   ├───20260803
+│   │   │   │       │   └───20260805
+│   │   │   │       └───Zony
+│   │   │   │           ├───20221118
+│   │   │   │           ├───20221220
+│   │   │   │           ├───20231010
+│   │   │   │           ├───20240214
+│   │   │   │           ├───20241218
+│   │   │   │           ├───20250107
+│   │   │   │           ├───20250424
+│   │   │   │           ├───20250615
+│   │   │   │           ├───20250624
+│   │   │   │           ├───20250827
+│   │   │   │           ├───20251214
+│   │   │   │           ├───20260113
+│   │   │   │           ├───20260126
+│   │   │   │           ├───20260216
+│   │   │   │           ├───20260225
+│   │   │   │           ├───20260303
+│   │   │   │           ├───20260331
+│   │   │   │           ├───20260422
+│   │   │   │           ├───20260428
+│   │   │   │           ├───20260527
+│   │   │   │           ├───20260601
+│   │   │   │           ├───20260609
+│   │   │   │           ├───20260821
+│   │   │   │           └───_zonyOL
+│   │   │   └───VlakIDSOK_26
+│   │   ├───IDSPLUS
+│   │   │   ├───BusIDSPLUS
+│   │   │   │   ├───BusIDSPLUS26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       └───Linky
+│   │   │   │           ├───20230710
+│   │   │   │           ├───20230814
+│   │   │   │           ├───20240213
+│   │   │   │           ├───20240801
+│   │   │   │           ├───20250808
+│   │   │   │           ├───20260226
+│   │   │   │           └───20260819
+│   │   │   └───VlakIDSPLUS_26
+│   │   ├───IDSV
+│   │   │   ├───BusIDSV
+│   │   │   │   ├───BusIDSV26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       └───Linky
+│   │   │   │           ├───20240912
+│   │   │   │           ├───20260521
+│   │   │   │           ├───20260729
+│   │   │   │           └───20260828
+│   │   │   └───VlakIDSV_26
+│   │   ├───IDZK
+│   │   │   ├───BusIDZK
+│   │   │   │   └───BusIDZK26
+│   │   │   │       ├───INI
+│   │   │   │       ├───SQL
+│   │   │   │       └───TXT
+│   │   │   ├───BusIDZK_GTFS
+│   │   │   │   └───TXT
+│   │   │   ├───VlakIDZK_26
+│   │   │   ├───VlakIDZK_GTFS_26
+│   │   │   └───_BusUtils
+│   │   │       ├───Linky
+│   │   │       │   ├───20230112
+│   │   │       │   ├───20240516
+│   │   │       │   ├───20240606
+│   │   │       │   ├───20250219
+│   │   │       │   └───20260825
+│   │   │       └───Zony
+│   │   ├───IREDO
+│   │   │   ├───BusIREDO
+│   │   │   │   ├───BusIREDO26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusIREDO_O_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20231110
+│   │   │   │       │   ├───20240116
+│   │   │   │       │   ├───20240226
+│   │   │   │       │   ├───20240522
+│   │   │   │       │   ├───20240624
+│   │   │   │       │   ├───20240717
+│   │   │   │       │   ├───20240828
+│   │   │   │       │   ├───20241201
+│   │   │   │       │   ├───20241215
+│   │   │   │       │   ├───20241220
+│   │   │   │       │   ├───20250109
+│   │   │   │       │   ├───20250324
+│   │   │   │       │   ├───20250523
+│   │   │   │       │   ├───20250924
+│   │   │   │       │   ├───20251001
+│   │   │   │       │   ├───20251214
+│   │   │   │       │   ├───20260216
+│   │   │   │       │   ├───20260224
+│   │   │   │       │   └───20260226
+│   │   │   │       └───Zastavky
+│   │   │   │           ├───20240112
+│   │   │   │           ├───20240215
+│   │   │   │           ├───20240217
+│   │   │   │           ├───20240226
+│   │   │   │           ├───20240624
+│   │   │   │           ├───20240717
+│   │   │   │           ├───20240718
+│   │   │   │           ├───20240805
+│   │   │   │           ├───20240809
+│   │   │   │           ├───20241201
+│   │   │   │           ├───20241215
+│   │   │   │           ├───20250109
+│   │   │   │           ├───20250314
+│   │   │   │           ├───20250324
+│   │   │   │           ├───20250630
+│   │   │   │           ├───20250827
+│   │   │   │           ├───20251022
+│   │   │   │           ├───20251214
+│   │   │   │           ├───20260107
+│   │   │   │           ├───20260216
+│   │   │   │           ├───20260220
+│   │   │   │           ├───20260309
+│   │   │   │           ├───20260317
+│   │   │   │           ├───20260330
+│   │   │   │           ├───20260409
+│   │   │   │           ├───20260511
+│   │   │   │           ├───20260604
+│   │   │   │           ├───20260605
+│   │   │   │           ├───20260624
+│   │   │   │           └───20260824
+│   │   │   └───VlakIREDO_26
+│   │   ├───ODIS
+│   │   │   ├───BusODIS
+│   │   │   │   ├───BusODIS26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       └───Linky
+│   │   │   │           ├───20230612
+│   │   │   │           ├───20240609
+│   │   │   │           ├───20241211
+│   │   │   │           ├───20251214
+│   │   │   │           ├───20260301
+│   │   │   │           └───20260614
+│   │   │   └───VlakODIS_26
+│   │   ├───PID
+│   │   │   ├───BusPID
+│   │   │   │   ├───BusPID_CD_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusPID_EXT_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       └───Zastavky
+│   │   │   │           ├───20260309
+│   │   │   │           ├───20260311
+│   │   │   │           └───20260608
+│   │   │   └───VlakPID_26
+│   │   ├───VDV
+│   │   │   ├───BusVDV
+│   │   │   │   ├───BusVDV26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   ├───BusVDV_CD_26
+│   │   │   │   │   ├───INI
+│   │   │   │   │   ├───SQL
+│   │   │   │   │   └───TXT
+│   │   │   │   └───_utils
+│   │   │   │       ├───Linky
+│   │   │   │       │   ├───20240909
+│   │   │   │       │   ├───20250328
+│   │   │   │       │   ├───20250429
+│   │   │   │       │   ├───20250505
+│   │   │   │       │   ├───20260203
+│   │   │   │       │   └───20260728
+│   │   │   │       └───Zastavky
+│   │   │   │           ├───20240909
+│   │   │   │           └───20250328
+│   │   │   └───VlakVDV_26
+│   │   ├───ZLIN
+│   │   │   └───VlakZLIN_26
+│   │   └───ZVON
+│   ├───Dotace
+│   ├───Fonty
+│   ├───FontyStarsi
+│   ├───Galileo
+│   │   └───Zalohy
+│   ├───Jrcd_26
+│   ├───Lode
+│   │   └───LodePPS
+│   ├───MakeSFX
+│   │   ├───Aktualizace
+│   │   │   ├───bin
+│   │   │   │   ├───CRWSReload
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───DataIDSJMK
+│   │   │   │   ├───DataODIS
+│   │   │   │   ├───DataPID
+│   │   │   │   ├───Log
+│   │   │   │   ├───PS1
+│   │   │   │   │   └───Inc
+│   │   │   │   ├───WinSCP
+│   │   │   │   └───Zaloha
+│   │   │   ├───Maily
+│   │   │   │   ├───Bin
+│   │   │   │   │   └───Zal
+│   │   │   │   │       └───chaps
+│   │   │   │   │           ├───App_Data
+│   │   │   │   │           │   ├───AboutUs
+│   │   │   │   │           │   ├───Career
+│   │   │   │   │           │   ├───Contacts
+│   │   │   │   │           │   ├───Docs
+│   │   │   │   │           │   ├───Email
+│   │   │   │   │           │   ├───Links
+│   │   │   │   │           │   ├───News
+│   │   │   │   │           │   ├───Products
+│   │   │   │   │           │   ├───References
+│   │   │   │   │           │   ├───Sitemap
+│   │   │   │   │           │   ├───Texts
+│   │   │   │   │           │   │   └───Views
+│   │   │   │   │           │   │       ├───Home
+│   │   │   │   │           │   │       └───Shared
+│   │   │   │   │           │   └───Updates
+│   │   │   │   │           ├───App_Start
+│   │   │   │   │           ├───bin
+│   │   │   │   │           ├───Controllers
+│   │   │   │   │           ├───CSS
+│   │   │   │   │           ├───data
+│   │   │   │   │           │   └───inprop
+│   │   │   │   │           ├───files
+│   │   │   │   │           │   ├───cis
+│   │   │   │   │           │   ├───idos
+│   │   │   │   │           │   └───logo
+│   │   │   │   │           ├───Images
+│   │   │   │   │           │   ├───font
+│   │   │   │   │           │   ├───inst-win
+│   │   │   │   │           │   ├───jrcd-update
+│   │   │   │   │           │   ├───loga
+│   │   │   │   │           │   ├───slimbox
+│   │   │   │   │           │   └───thumbnails
+│   │   │   │   │           │       └───full
+│   │   │   │   │           ├───img
+│   │   │   │   │           ├───inc
+│   │   │   │   │           │   └───script
+│   │   │   │   │           ├───Lib
+│   │   │   │   │           ├───Models
+│   │   │   │   │           ├───My Project
+│   │   │   │   │           ├───obj
+│   │   │   │   │           │   └───Debug
+│   │   │   │   │           │       └───TempPE
+│   │   │   │   │           ├───Scripts
+│   │   │   │   │           ├───Views
+│   │   │   │   │           │   ├───Home
+│   │   │   │   │           │   │   └───Download
+│   │   │   │   │           │   │       └───scripts
+│   │   │   │   │           │   ├───Scripts
+│   │   │   │   │           │   └───Shared
+│   │   │   │   │           ├───_bin_deployableAssemblies
+│   │   │   │   │           ├───_UpgradeReport_Files
+│   │   │   │   │           └───_zaloha
+│   │   │   │   ├───Skupiny
+│   │   │   │   └───Zalohy
+│   │   │   │       ├───20240910
+│   │   │   │       │   └───Skupiny
+│   │   │   │       ├───20241029
+│   │   │   │       ├───new
+│   │   │   │       └───Zalohy_AGR
+│   │   │   ├───News
+│   │   │   │   └───Zaloha
+│   │   │   ├───Skripty
+│   │   │   │   └───Zalohy
+│   │   │   ├───SynLog
+│   │   │   ├───TTCompL
+│   │   │   ├───TTCompL_JMK
+│   │   │   └───Zaloha
+│   │   ├───AMS
+│   │   │   ├───bin
+│   │   │   │   ├───7zip
+│   │   │   │   ├───md5sum
+│   │   │   │   └───wget
+│   │   │   ├───log
+│   │   │   └───Zaloha
+│   │   ├───Bat_zaloha
+│   │   │   ├───Bat_2003
+│   │   │   ├───Bat_2004
+│   │   │   └───_NepouzivaSe
+│   │   ├───Komplet
+│   │   │   ├───Data1
+│   │   │   ├───Data2
+│   │   │   └───Data3
+│   │   ├───KompletCRWS
+│   │   ├───Rar
+│   │   ├───Smart
+│   │   │   ├───SK
+│   │   │   └───Zaloha
+│   │   ├───Smartrady
+│   │   │   ├───data
+│   │   │   ├───help
+│   │   │   ├───INPROP
+│   │   │   │   ├───SmartAKGen
+│   │   │   │   ├───Tt2xml
+│   │   │   │   │   ├───log
+│   │   │   │   │   └───tmp
+│   │   │   │   └───Xml2jz
+│   │   │   │       ├───bin
+│   │   │   │       ├───OutputCab
+│   │   │   │       ├───OutputExe
+│   │   │   │       ├───OutputJZ
+│   │   │   │       └───XmlExtrakty
+│   │   │   ├───Ruzne
+│   │   │   │   └───Smartřády
+│   │   │   ├───sn
+│   │   │   │   ├───Smartrady
+│   │   │   │   │   └───data
+│   │   │   │   └───SN - Test
+│   │   │   ├───TT2XML
+│   │   │   │   ├───log
+│   │   │   │   ├───tmp
+│   │   │   │   └───Zalohy
+│   │   │   └───XML2JZ
+│   │   │       ├───Backup
+│   │   │       │   ├───2026-09-14 642
+│   │   │       │   ├───2026-09-14 647
+│   │   │       │   ├───2026-09-14 647 1
+│   │   │       │   ├───2026-09-14 649
+│   │   │       │   ├───2026-09-14 651
+│   │   │       │   ├───2026-09-14 651 1
+│   │   │       │   ├───2026-09-14 651 2
+│   │   │       │   ├───2026-09-14 651 3
+│   │   │       │   ├───2026-09-14 651 4
+│   │   │       │   ├───2026-09-14 652
+│   │   │       │   └───2026-09-14 727
+│   │   │       ├───bin
+│   │   │       ├───DTD_Zdroj
+│   │   │       ├───GPS
+│   │   │       ├───OutputCab
+│   │   │       ├───OutputExe
+│   │   │       ├───OutputJZ
+│   │   │       ├───XmlExtrakty
+│   │   │       └───Zalohy
+│   │   ├───TarifPID
+│   │   │   └───Data3
+│   │   └───ZalohyBat
+│   │       ├───20240805
+│   │       ├───Kom
+│   │       │   └───Zaloha
+│   │       └───Smart
+│   ├───MHD_CZ
+│   │   ├───IDSJMK
+│   │   │   └───_Zaloha
+│   │   │       └───CIDSJMK
+│   │   │           └───images
+│   │   ├───IDSJMK_CRWS
+│   │   ├───IDSJMK_VK
+│   │   │   └───NaseReseni
+│   │   ├───MHD_Adamov
+│   │   ├───Mhd_As
+│   │   ├───Mhd_Bilina
+│   │   ├───Mhd_BK
+│   │   ├───Mhd_BN
+│   │   ├───Mhd_BR
+│   │   ├───Mhd_Brandys
+│   │   ├───Mhd_BV
+│   │   ├───Mhd_BystriceNadPernstejnem
+│   │   ├───Mhd_CB
+│   │   ├───Mhd_CH
+│   │   ├───Mhd_CK
+│   │   ├───Mhd_CL
+│   │   ├───Mhd_CR
+│   │   ├───Mhd_CTes
+│   │   ├───Mhd_CV
+│   │   ├───Mhd_DC
+│   │   ├───Mhd_DO
+│   │   ├───Mhd_Duchcov
+│   │   ├───Mhd_DvurKral
+│   │   ├───Mhd_FM
+│   │   ├───Mhd_Hav
+│   │   ├───Mhd_HB
+│   │   ├───Mhd_HK
+│   │   ├───Mhd_HO
+│   │   ├───Mhd_Horice
+│   │   ├───Mhd_Hranice
+│   │   ├───Mhd_Hustopece
+│   │   ├───Mhd_Jachymov
+│   │   ├───Mhd_JC
+│   │   ├───Mhd_JH
+│   │   ├───Mhd_JI
+│   │   ├───Mhd_JN
+│   │   ├───Mhd_KA
+│   │   ├───Mhd_Kadan
+│   │   ├───Mhd_KD
+│   │   ├───Mhd_KH
+│   │   ├───Mhd_KlasterecNadOhri
+│   │   ├───Mhd_KM
+│   │   ├───Mhd_KO
+│   │   ├───Mhd_KostelecNadOrlici
+│   │   ├───Mhd_Kralupy
+│   │   ├───MHD_Krnov
+│   │   ├───Mhd_KT
+│   │   ├───Mhd_KV
+│   │   ├───MHD_Kyjov
+│   │   ├───Mhd_LI
+│   │   ├───Mhd_Litomysl
+│   │   │   └───CLitomysl
+│   │   │       └───img
+│   │   ├───Mhd_LN
+│   │   ├───Mhd_Lovosice
+│   │   ├───Mhd_LT
+│   │   ├───MHD_MarianskeLazne
+│   │   ├───Mhd_MB
+│   │   ├───Mhd_Mikulov
+│   │   ├───Mhd_Milevsko
+│   │   ├───Mhd_Mnisek
+│   │   ├───Mhd_MO
+│   │   ├───Mhd_NA
+│   │   ├───Mhd_NJ
+│   │   ├───Mhd_NoveMestoMor
+│   │   ├───Mhd_OL
+│   │   ├───Mhd_OP
+│   │   ├───Mhd_Orl
+│   │   ├───Mhd_Ostrov
+│   │   ├───Mhd_PA
+│   │   ├───Mhd_PB
+│   │   ├───Mhd_PE
+│   │   ├───Mhd_PI
+│   │   ├───Mhd_PM
+│   │   ├───Mhd_PM_IDP
+│   │   ├───Mhd_Policka
+│   │   ├───Mhd_PR
+│   │   ├───Mhd_Prelouc
+│   │   ├───Mhd_PV
+│   │   ├───Mhd_Ricany
+│   │   ├───Mhd_RK
+│   │   ├───Mhd_RO
+│   │   ├───Mhd_RoudniceNadLabem
+│   │   ├───Mhd_Slany
+│   │   ├───Mhd_SO
+│   │   ├───Mhd_SpindleruvMlyn
+│   │   ├───Mhd_ST
+│   │   ├───Mhd_Steti
+│   │   ├───Mhd_Stribro
+│   │   ├───Mhd_Studenka
+│   │   ├───Mhd_SU
+│   │   ├───Mhd_TA
+│   │   ├───Mhd_TC
+│   │   ├───Mhd_TP
+│   │   ├───Mhd_TR
+│   │   ├───Mhd_Trin
+│   │   ├───Mhd_TU
+│   │   ├───Mhd_Turnov
+│   │   ├───Mhd_Tyniste
+│   │   ├───Mhd_UH
+│   │   ├───Mhd_UL
+│   │   ├───Mhd_UO
+│   │   ├───Mhd_ValMez
+│   │   ├───Mhd_Varnsdorf
+│   │   ├───Mhd_VelkeMezirici
+│   │   ├───Mhd_Vimperk
+│   │   ├───Mhd_Vlasim
+│   │   ├───Mhd_Vrchlabi
+│   │   ├───Mhd_VS
+│   │   ├───Mhd_VY
+│   │   ├───Mhd_Zabreh
+│   │   ├───Mhd_Zatec
+│   │   ├───Mhd_ZL
+│   │   ├───Mhd_ZN
+│   │   ├───Mhd_ZR
+│   │   ├───Odis
+│   │   │   ├───CODIS
+│   │   │   │   ├───css
+│   │   │   │   └───images
+│   │   │   └───Zdroje
+│   │   ├───PID
+│   │   │   └───CPID
+│   │   │       └───images
+│   │   └───PID_VK
+│   ├───Mhd_Ostatni
+│   │   ├───A_MHD_Viden
+│   │   ├───D_VBB
+│   │   ├───H_MHD_Budapest
+│   │   ├───PL_MHD_Lodz
+│   │   ├───PL_MHD_Wroclaw
+│   │   ├───TR_IzmirBus
+│   │   │   └───Zaloha_V16_2018
+│   │   └───TR_IzmirDrahy
+│   ├───MHD_SK
+│   │   ├───MD_SK_BA
+│   │   ├───MD_SK_BB
+│   │   ├───MD_SK_BJ
+│   │   ├───Md_sk_bn
+│   │   ├───MD_SK_CA
+│   │   ├───MD_SK_DK
+│   │   ├───MD_SK_DS
+│   │   ├───Md_sk_ga
+│   │   ├───Md_sk_ha
+│   │   ├───Md_sk_hc
+│   │   ├───MD_SK_HE
+│   │   ├───Md_sk_kk
+│   │   ├───MD_SK_KN
+│   │   ├───Md_sk_KNM
+│   │   ├───MD_SK_KO
+│   │   ├───MD_SK_LC
+│   │   ├───MD_SK_LE
+│   │   ├───MD_SK_LM
+│   │   ├───MD_SK_LV
+│   │   ├───MD_SK_MA
+│   │   ├───MD_SK_MI
+│   │   ├───MD_SK_MT
+│   │   ├───MD_SK_NM
+│   │   ├───MD_SK_NR
+│   │   ├───MD_SK_NZ
+│   │   ├───MD_SK_NZST
+│   │   ├───MD_SK_NZSU
+│   │   ├───MD_SK_PB
+│   │   ├───MD_SK_PD
+│   │   ├───Md_sk_pe
+│   │   ├───MD_SK_PN
+│   │   ├───MD_SK_PO
+│   │   ├───MD_SK_PP
+│   │   ├───MD_SK_PZ
+│   │   ├───MD_SK_RK
+│   │   ├───MD_SK_RS
+│   │   ├───MD_SK_RV
+│   │   ├───MD_SK_SA
+│   │   ├───MD_SK_SC
+│   │   ├───Md_sk_se
+│   │   ├───Md_sk_sh
+│   │   ├───MD_SK_SI
+│   │   ├───MD_SK_SN
+│   │   ├───Md_sk_sr
+│   │   ├───MD_SK_ST
+│   │   ├───MD_SK_SV
+│   │   ├───MD_SK_TN
+│   │   ├───MD_SK_TO
+│   │   ├───Md_sk_tt
+│   │   ├───MD_SK_TV
+│   │   ├───MD_SK_VT
+│   │   ├───MD_SK_ZA
+│   │   ├───MD_SK_ZV
+│   │   └───MHD_SK
+│   │       ├───MD_SK_BA
+│   │       ├───MD_SK_BB
+│   │       ├───MD_SK_BJ
+│   │       ├───Md_sk_bn
+│   │       ├───MD_SK_CA
+│   │       ├───MD_SK_DK
+│   │       ├───MD_SK_DS
+│   │       ├───Md_sk_ga
+│   │       ├───Md_sk_ha
+│   │       ├───Md_sk_hc
+│   │       ├───MD_SK_HE
+│   │       ├───Md_sk_kk
+│   │       ├───MD_SK_KN
+│   │       ├───Md_sk_KNM
+│   │       ├───MD_SK_KO
+│   │       ├───MD_SK_LC
+│   │       ├───MD_SK_LE
+│   │       ├───MD_SK_LM
+│   │       ├───MD_SK_LV
+│   │       ├───MD_SK_MA
+│   │       ├───MD_SK_MI
+│   │       ├───MD_SK_MT
+│   │       ├───MD_SK_NM
+│   │       ├───MD_SK_NR
+│   │       ├───MD_SK_NZ
+│   │       ├───MD_SK_NZST
+│   │       ├───MD_SK_NZSU
+│   │       ├───MD_SK_PB
+│   │       ├───MD_SK_PD
+│   │       ├───Md_sk_pe
+│   │       ├───MD_SK_PN
+│   │       ├───MD_SK_PO
+│   │       ├───MD_SK_PP
+│   │       ├───MD_SK_PZ
+│   │       ├───MD_SK_RK
+│   │       ├───MD_SK_RS
+│   │       ├───MD_SK_SA
+│   │       ├───MD_SK_SC
+│   │       ├───Md_sk_se
+│   │       ├───Md_sk_sh
+│   │       ├───MD_SK_SI
+│   │       ├───MD_SK_SN
+│   │       ├───Md_sk_sr
+│   │       ├───MD_SK_SV
+│   │       ├───MD_SK_TN
+│   │       ├───MD_SK_TO
+│   │       ├───Md_sk_tt
+│   │       ├───MD_SK_VT
+│   │       ├───MD_SK_ZA
+│   │       └───MD_SK_ZV
+│   ├───Pracovni
+│   │   ├───!!!Zaloha
+│   │   │   ├───BID
+│   │   │   │   └───Zaloha
+│   │   │   ├───BusCAkt_08
+│   │   │   │   └───zaloha
+│   │   │   ├───BusCAkt_21
+│   │   │   │   └───zaloha
+│   │   │   ├───BusSAkt_08
+│   │   │   │   └───zaloha
+│   │   │   ├───BusSAkt_21
+│   │   │   │   └───zaloha
+│   │   │   ├───CSA
+│   │   │   │   └───zaloha
+│   │   │   ├───CSL
+│   │   │   │   └───Zaloha
+│   │   │   ├───IDSJMK_Extrakty_MHD
+│   │   │   ├───IDSJMK_makegr.ini
+│   │   │   │   ├───! jen idsjmk
+│   │   │   │   ├───! velká kombinace
+│   │   │   │   ├───adamov
+│   │   │   │   ├───blansko
+│   │   │   │   ├───břeclav
+│   │   │   │   ├───hodonín
+│   │   │   │   ├───kyjov
+│   │   │   │   ├───mikulov
+│   │   │   │   ├───vyškov
+│   │   │   │   └───znojmo
+│   │   │   ├───IDSJMK_plan
+│   │   │   ├───VlakC_08
+│   │   │   │   └───C1
+│   │   │   │       ├───vl100_09_v1_soubory
+│   │   │   │       ├───vl101_09_v1_soubory
+│   │   │   │       ├───vl102_09_v1_soubory
+│   │   │   │       ├───vl103_09_v1_soubory
+│   │   │   │       ├───vl104_09_v1_soubory
+│   │   │   │       ├───vl105_09_v1_soubory
+│   │   │   │       ├───vl1106_09_v1_soubory
+│   │   │   │       ├───vl1107_09_v1_soubory
+│   │   │   │       ├───vl1107_09_v2_soubory
+│   │   │   │       ├───vl1108_09_v1_soubory
+│   │   │   │       ├───vl1109_09_v1_soubory
+│   │   │   │       ├───vl1112_09_v1_soubory
+│   │   │   │       ├───vl1113_09_v1_soubory
+│   │   │   │       ├───vl1114_09_v1_soubory
+│   │   │   │       ├───vl1115_09_v1_soubory
+│   │   │   │       ├───vl1116_09_v1_soubory
+│   │   │   │       ├───vl1116_09_v2_soubory
+│   │   │   │       ├───vl1117_09_v1_soubory
+│   │   │   │       ├───vl1118_09_v1_soubory
+│   │   │   │       ├───vl1119_09_v1_soubory
+│   │   │   │       ├───vl1137_09_v1_soubory
+│   │   │   │       ├───vl1138_09_v1_soubory
+│   │   │   │       ├───vl1138_09_v2_soubory
+│   │   │   │       ├───vl1139_09_v1_soubory
+│   │   │   │       ├───vl1140_09_v1_soubory
+│   │   │   │       ├───vl1141_09_v1_soubory
+│   │   │   │       ├───vl1142_09_v1_soubory
+│   │   │   │       ├───vl1143_09_v1_soubory
+│   │   │   │       ├───vl1143_09_v2_soubory
+│   │   │   │       ├───vl1144_09_v1_soubory
+│   │   │   │       ├───vl1144_09_v2_soubory
+│   │   │   │       ├───vl1145_09_v1_soubory
+│   │   │   │       ├───vl1146_09_v1_soubory
+│   │   │   │       ├───vl1147_09_v1_soubory
+│   │   │   │       ├───vl1148_09_v1_soubory
+│   │   │   │       ├───vl1149_09_v1_soubory
+│   │   │   │       ├───vl1149_09_v2_soubory
+│   │   │   │       ├───vl114_09_v1_soubory
+│   │   │   │       ├───vl1154_09_v1_soubory
+│   │   │   │       ├───vl1155_09_v1_soubory
+│   │   │   │       ├───vl1156_09_v1_soubory
+│   │   │   │       ├───vl1157_09_v1_soubory
+│   │   │   │       ├───vl1158_09_v1_soubory
+│   │   │   │       ├───vl1159_09_v1_soubory
+│   │   │   │       ├───vl115_09_v1_soubory
+│   │   │   │       ├───vl1160_09_v1_soubory
+│   │   │   │       ├───vl1161_09_v1_soubory
+│   │   │   │       ├───vl1162_09_v1_soubory
+│   │   │   │       ├───vl1163_09_v1_soubory
+│   │   │   │       ├───vl1164_09_v1_soubory
+│   │   │   │       ├───vl1165_09_v1_soubory
+│   │   │   │       ├───vl1166_09_v1_soubory
+│   │   │   │       ├───vl1167_09_v1_soubory
+│   │   │   │       ├───vl1168_09_v1_soubory
+│   │   │   │       ├───vl1169_09_v1_soubory
+│   │   │   │       ├───vl1180_09_v1_soubory
+│   │   │   │       ├───vl1181_09_v1_soubory
+│   │   │   │       ├───vl1182_09_v1_soubory
+│   │   │   │       ├───vl1183_09_v1_soubory
+│   │   │   │       ├───vl118_09_v1_soubory
+│   │   │   │       ├───vl1190_09_v1_soubory
+│   │   │   │       ├───vl1191_09_v1_soubory
+│   │   │   │       ├───vl1192_09_v1_soubory
+│   │   │   │       ├───vl1193_09_v1_soubory
+│   │   │   │       ├───vl1194_09_v1_soubory
+│   │   │   │       ├───vl1195_09_v1_soubory
+│   │   │   │       ├───vl1196_09_v1_soubory
+│   │   │   │       ├───vl1197_09_v1_soubory
+│   │   │   │       ├───vl119_09_v1_soubory
+│   │   │   │       ├───vl120_09_v1_soubory
+│   │   │   │       ├───vl121_09_v1_soubory
+│   │   │   │       ├───vl1224_09_v1_soubory
+│   │   │   │       ├───vl1240_09_v1_soubory
+│   │   │   │       ├───vl1241_09_v1_soubory
+│   │   │   │       ├───vl1242_09_v1_soubory
+│   │   │   │       ├───vl1242_09_v2_soubory
+│   │   │   │       ├───vl1243_09_v1_soubory
+│   │   │   │       ├───vl1243_09_v2_soubory
+│   │   │   │       ├───vl1244_09_v1_soubory
+│   │   │   │       ├───vl1244_09_v2_soubory
+│   │   │   │       ├───vl1245_09_v1_soubory
+│   │   │   │       ├───vl1246_09_v1_soubory
+│   │   │   │       ├───vl1247_09_v1_soubory
+│   │   │   │       ├───vl1248_09_v1_soubory
+│   │   │   │       ├───vl1249_09_v1_soubory
+│   │   │   │       ├───vl1250_09_v1_soubory
+│   │   │   │       ├───vl1251_09_v1_soubory
+│   │   │   │       ├───vl1252_09_v1_soubory
+│   │   │   │       ├───vl1253_09_v1_soubory
+│   │   │   │       ├───vl1254_09_v1_soubory
+│   │   │   │       ├───vl1255_09_v1_soubory
+│   │   │   │       ├───vl1256_09_v1_soubory
+│   │   │   │       ├───vl1256_09_v2_soubory
+│   │   │   │       ├───vl1257_09_v1_soubory
+│   │   │   │       ├───vl1257_09_v2_soubory
+│   │   │   │       ├───vl1258_09_v1_soubory
+│   │   │   │       ├───vl1259_09_v1_soubory
+│   │   │   │       ├───vl126_09_v1_soubory
+│   │   │   │       ├───vl127_09_v1_soubory
+│   │   │   │       ├───vl1284_09_v1_soubory
+│   │   │   │       ├───vl1285_09_v1_soubory
+│   │   │   │       ├───vl1286_09_v1_soubory
+│   │   │   │       ├───vl1287_09_v1_soubory
+│   │   │   │       ├───vl1288_09_v1_soubory
+│   │   │   │       ├───vl1289_09_v1_soubory
+│   │   │   │       ├───vl128_09_v1_soubory
+│   │   │   │       ├───vl1290_09_v1_soubory
+│   │   │   │       ├───vl1291_09_v1_soubory
+│   │   │   │       ├───vl1292_09_v1_soubory
+│   │   │   │       ├───vl1293_09_v1_soubory
+│   │   │   │       ├───vl1294_09_v1_soubory
+│   │   │   │       ├───vl1295_09_v1_soubory
+│   │   │   │       ├───vl1296_09_v1_soubory
+│   │   │   │       ├───vl1297_09_v1_soubory
+│   │   │   │       ├───vl1298_09_v1_soubory
+│   │   │   │       ├───vl1299_09_v1_soubory
+│   │   │   │       ├───vl129_09_v1_soubory
+│   │   │   │       ├───vl130_09_v1_soubory
+│   │   │   │       ├───vl130_09_v2_soubory
+│   │   │   │       ├───vl131_09_v1_soubory
+│   │   │   │       ├───vl131_09_v2_soubory
+│   │   │   │       ├───vl132_09_v1_soubory
+│   │   │   │       ├───vl133_09_v1_soubory
+│   │   │   │       ├───vl140_09_v1_soubory
+│   │   │   │       ├───vl141_09_v1_soubory
+│   │   │   │       ├───vl142_09_v1_soubory
+│   │   │   │       ├───vl1436_09_v1_soubory
+│   │   │   │       ├───vl143_09_v1_soubory
+│   │   │   │       ├───vl1444_09_v1_soubory
+│   │   │   │       ├───vl1445_09_v1_soubory
+│   │   │   │       ├───vl146_09_v1_soubory
+│   │   │   │       ├───vl147_09_v1_soubory
+│   │   │   │       ├───vl1490_09_v1_soubory
+│   │   │   │       ├───vl1491_09_v1_soubory
+│   │   │   │       ├───vl14_09_v1_soubory
+│   │   │   │       ├───vl1502_09_v1_soubory
+│   │   │   │       ├───vl1503_09_v1_soubory
+│   │   │   │       ├───vl1514_09_v1_soubory
+│   │   │   │       ├───vl1538_09_v1_soubory
+│   │   │   │       ├───vl1539_09_v1_soubory
+│   │   │   │       ├───vl1540_09_v1_soubory
+│   │   │   │       ├───vl1541_09_v1_soubory
+│   │   │   │       ├───vl15_09_v1_soubory
+│   │   │   │       ├───vl16_09_v1_soubory
+│   │   │   │       ├───vl170_09_v1_soubory
+│   │   │   │       ├───vl171_09_v1_soubory
+│   │   │   │       ├───vl172_09_v1_soubory
+│   │   │   │       ├───vl172_09_v2_soubory
+│   │   │   │       ├───vl173_09_v1_soubory
+│   │   │   │       ├───vl173_09_v2_soubory
+│   │   │   │       ├───vl174_09_v1_soubory
+│   │   │   │       ├───vl174_09_v2_soubory
+│   │   │   │       ├───vl175_09_v1_soubory
+│   │   │   │       ├───vl175_09_v2_soubory
+│   │   │   │       ├───vl176_09_v1_soubory
+│   │   │   │       ├───vl176_09_v2_soubory
+│   │   │   │       ├───vl177_09_v1_soubory
+│   │   │   │       ├───vl178_09_v1_soubory
+│   │   │   │       ├───vl179_09_v1_soubory
+│   │   │   │       ├───vl17_09_v1_soubory
+│   │   │   │       ├───vl18_09_v1_soubory
+│   │   │   │       ├───vl19_09_v1_soubory
+│   │   │   │       ├───vl200_09_v1_soubory
+│   │   │   │       ├───vl201_09_v1_soubory
+│   │   │   │       ├───vl202_09_v1_soubory
+│   │   │   │       ├───vl203_09_v1_soubory
+│   │   │   │       ├───vl206_09_v1_soubory
+│   │   │   │       ├───vl207_09_v1_soubory
+│   │   │   │       ├───vl208_09_v1_soubory
+│   │   │   │       ├───vl209_09_v1_soubory
+│   │   │   │       ├───vl234_09_v1_soubory
+│   │   │   │       ├───vl235_09_v1_soubory
+│   │   │   │       ├───vl250_09_v1_soubory
+│   │   │   │       ├───vl250_09_v2_soubory
+│   │   │   │       ├───vl251_09_v1_soubory
+│   │   │   │       ├───vl252_09_v1_soubory
+│   │   │   │       ├───vl253_09_v1_soubory
+│   │   │   │       ├───vl253_09_v2_soubory
+│   │   │   │       ├───vl270_09_v1_soubory
+│   │   │   │       ├───vl271_09_v1_soubory
+│   │   │   │       ├───vl271_09_v2_soubory
+│   │   │   │       ├───vl272_09_v1_soubory
+│   │   │   │       ├───vl273_09_v1_soubory
+│   │   │   │       ├───vl274_09_v1_soubory
+│   │   │   │       ├───vl275_09_v1_soubory
+│   │   │   │       ├───vl276_09_v1_soubory
+│   │   │   │       ├───vl277_09_v1_soubory
+│   │   │   │       ├───vl331_09_v1_soubory
+│   │   │   │       ├───vl340_09_v1_soubory
+│   │   │   │       ├───vl344_09_v1_soubory
+│   │   │   │       ├───vl345_09_v1_soubory
+│   │   │   │       ├───vl350_09_v1_soubory
+│   │   │   │       ├───vl351_09_v1_soubory
+│   │   │   │       ├───vl352_09_v1_soubory
+│   │   │   │       ├───vl353_09_v1_soubory
+│   │   │   │       ├───vl354_09_v1_soubory
+│   │   │   │       ├───vl355_09_v1_soubory
+│   │   │   │       ├───vl356_09_v1_soubory
+│   │   │   │       ├───vl357_09_v1_soubory
+│   │   │   │       ├───vl360_09_v1_soubory
+│   │   │   │       ├───vl361_09_v1_soubory
+│   │   │   │       ├───vl378_09_v1_soubory
+│   │   │   │       ├───vl378_09_v2_soubory
+│   │   │   │       ├───vl379_09_v1_soubory
+│   │   │   │       ├───vl379_09_v2_soubory
+│   │   │   │       ├───vl424_09_v1_soubory
+│   │   │   │       ├───vl425_09_v1_soubory
+│   │   │   │       ├───vl440_09_v1_soubory
+│   │   │   │       ├───vl441_09_v1_soubory
+│   │   │   │       ├───vl442_09_v1_soubory
+│   │   │   │       ├───vl443_09_v1_soubory
+│   │   │   │       ├───vl446_09_v1_soubory
+│   │   │   │       ├───vl447_09_v1_soubory
+│   │   │   │       ├───vl456_09_v1_soubory
+│   │   │   │       ├───vl457_09_v1_soubory
+│   │   │   │       ├───vl459_09_v1_soubory
+│   │   │   │       ├───vl459_09_v2_soubory
+│   │   │   │       ├───vl470_09_v1_soubory
+│   │   │   │       ├───vl470_09_v2_soubory
+│   │   │   │       ├───vl471_09_v1_soubory
+│   │   │   │       ├───vl471_09_v2_soubory
+│   │   │   │       ├───vl474_09_v1_soubory
+│   │   │   │       ├───vl475_09_v1_soubory
+│   │   │   │       ├───vl476_09_v1_soubory
+│   │   │   │       ├───vl477_09_v1_soubory
+│   │   │   │       ├───vl500_09_v1_soubory
+│   │   │   │       ├───vl501_09_v1_soubory
+│   │   │   │       ├───vl502_09_v1_soubory
+│   │   │   │       ├───vl503_09_v1_soubory
+│   │   │   │       ├───vl504_09_v1_soubory
+│   │   │   │       ├───vl505_09_v1_soubory
+│   │   │   │       ├───vl506_09_v1_soubory
+│   │   │   │       ├───vl507_09_v1_soubory
+│   │   │   │       ├───vl507_09_v2_soubory
+│   │   │   │       ├───vl508_09_v1_soubory
+│   │   │   │       ├───vl509_09_v1_soubory
+│   │   │   │       ├───vl510_09_v1_soubory
+│   │   │   │       ├───vl511_09_v1_soubory
+│   │   │   │       ├───vl513_09_v1_soubory
+│   │   │   │       ├───vl516_09_v1_soubory
+│   │   │   │       ├───vl517_09_v1_soubory
+│   │   │   │       ├───vl518_09_v1_soubory
+│   │   │   │       ├───vl519_09_v1_soubory
+│   │   │   │       ├───vl520_09_v1_soubory
+│   │   │   │       ├───vl521_09_v1_soubory
+│   │   │   │       ├───vl522_09_v1_soubory
+│   │   │   │       ├───vl523_09_v1_soubory
+│   │   │   │       ├───vl524_09_v1_soubory
+│   │   │   │       ├───vl525_09_v1_soubory
+│   │   │   │       ├───vl526_09_v1_soubory
+│   │   │   │       ├───vl527_09_v1_soubory
+│   │   │   │       ├───vl528_09_v1_soubory
+│   │   │   │       ├───vl529_09_v1_soubory
+│   │   │   │       ├───vl530_09_v1_soubory
+│   │   │   │       ├───vl531_09_v1_soubory
+│   │   │   │       ├───vl570_09_v1_soubory
+│   │   │   │       ├───vl570_09_v2_soubory
+│   │   │   │       ├───vl571_09_v1_soubory
+│   │   │   │       ├───vl571_09_v2_soubory
+│   │   │   │       ├───vl581_09_v1_soubory
+│   │   │   │       ├───vl581_09_v2_soubory
+│   │   │   │       ├───vl582_09_v1_soubory
+│   │   │   │       ├───vl583_09_v1_soubory
+│   │   │   │       ├───vl605_09_v1_soubory
+│   │   │   │       ├───vl606_09_v1_soubory
+│   │   │   │       ├───vl607_09_v1_soubory
+│   │   │   │       ├───vl608_09_v1_soubory
+│   │   │   │       ├───vl609_09_v1_soubory
+│   │   │   │       ├───vl610_09_v1_soubory
+│   │   │   │       ├───vl611_09_v1_soubory
+│   │   │   │       ├───vl612_09_v1_soubory
+│   │   │   │       ├───vl613_09_v1_soubory
+│   │   │   │       ├───vl614_09_v1_soubory
+│   │   │   │       ├───vl615_09_v1_soubory
+│   │   │   │       ├───vl616_09_v1_soubory
+│   │   │   │       ├───vl617_09_v1_soubory
+│   │   │   │       ├───vl618_09_v1_soubory
+│   │   │   │       ├───vl619_09_v1_soubory
+│   │   │   │       ├───vl620_09_v1_soubory
+│   │   │   │       ├───vl620_09_v2_soubory
+│   │   │   │       ├───vl621_09_v1_soubory
+│   │   │   │       ├───vl621_09_v2_soubory
+│   │   │   │       ├───vl622_09_v1_soubory
+│   │   │   │       ├───vl623_09_v1_soubory
+│   │   │   │       ├───vl624_09_v1_soubory
+│   │   │   │       ├───vl625_09_v1_soubory
+│   │   │   │       ├───vl626_09_v1_soubory
+│   │   │   │       ├───vl627_09_v1_soubory
+│   │   │   │       ├───vl628_09_v1_soubory
+│   │   │   │       ├───vl629_09_v1_soubory
+│   │   │   │       ├───vl630_09_v1_soubory
+│   │   │   │       ├───vl631_09_v1_soubory
+│   │   │   │       ├───vl632_09_v1_soubory
+│   │   │   │       ├───vl633_09_v1_soubory
+│   │   │   │       ├───vl634_09_v1_soubory
+│   │   │   │       ├───vl635_09_v1_soubory
+│   │   │   │       ├───vl636_09_v1_soubory
+│   │   │   │       ├───vl637_09_v1_soubory
+│   │   │   │       ├───vl638_09_v1_soubory
+│   │   │   │       ├───vl639_09_v1_soubory
+│   │   │   │       ├───vl640_09_v1_soubory
+│   │   │   │       ├───vl641_09_v1_soubory
+│   │   │   │       ├───vl642_09_v1_soubory
+│   │   │   │       ├───vl643_09_v1_soubory
+│   │   │   │       ├───vl644_09_v1_soubory
+│   │   │   │       ├───vl645_09_v1_soubory
+│   │   │   │       ├───vl646_09_v1_soubory
+│   │   │   │       ├───vl647_09_v1_soubory
+│   │   │   │       ├───vl648_09_v1_soubory
+│   │   │   │       ├───vl649_09_v1_soubory
+│   │   │   │       ├───vl650_09_v1_soubory
+│   │   │   │       ├───vl651_09_v1_soubory
+│   │   │   │       ├───vl652_09_v1_soubory
+│   │   │   │       ├───vl653_09_v1_soubory
+│   │   │   │       ├───vl654_09_v1_soubory
+│   │   │   │       ├───vl655_09_v1_soubory
+│   │   │   │       ├───vl660_09_v1_soubory
+│   │   │   │       ├───vl660_09_v2_soubory
+│   │   │   │       ├───vl661_09_v1_soubory
+│   │   │   │       ├───vl661_09_v2_soubory
+│   │   │   │       ├───vl662_09_v1_soubory
+│   │   │   │       ├───vl663_09_v1_soubory
+│   │   │   │       ├───vl664_09_v1_soubory
+│   │   │   │       ├───vl665_09_v1_soubory
+│   │   │   │       ├───vl666_09_v1_soubory
+│   │   │   │       ├───vl667_09_v1_soubory
+│   │   │   │       ├───vl667_09_v2_soubory
+│   │   │   │       ├───vl668_09_v1_soubory
+│   │   │   │       ├───vl668_09_v2_soubory
+│   │   │   │       ├───vl669_09_v1_soubory
+│   │   │   │       ├───vl670_09_v1_soubory
+│   │   │   │       ├───vl670_09_v2_soubory
+│   │   │   │       ├───vl671_09_v1_soubory
+│   │   │   │       ├───vl672_09_v1_soubory
+│   │   │   │       ├───vl673_09_v1_soubory
+│   │   │   │       ├───vl674_09_v1_soubory
+│   │   │   │       ├───vl675_09_v1_soubory
+│   │   │   │       ├───vl676_09_v1_soubory
+│   │   │   │       ├───vl677_09_v1_soubory
+│   │   │   │       ├───vl678_09_v1_soubory
+│   │   │   │       ├───vl679_09_v1_soubory
+│   │   │   │       ├───vl680_09_v1_soubory
+│   │   │   │       ├───vl681_09_v1_soubory
+│   │   │   │       ├───vl682_09_v1_soubory
+│   │   │   │       ├───vl683_09_v1_soubory
+│   │   │   │       ├───vl684_09_v1_soubory
+│   │   │   │       ├───vl685_09_v1_soubory
+│   │   │   │       ├───vl687_09_v1_soubory
+│   │   │   │       ├───vl687_09_v2_soubory
+│   │   │   │       ├───vl702_09_v1_soubory
+│   │   │   │       ├───vl703_09_v1_soubory
+│   │   │   │       ├───vl704_09_v1_soubory
+│   │   │   │       ├───vl705_09_v1_soubory
+│   │   │   │       ├───vl706_09_v1_soubory
+│   │   │   │       ├───vl707_09_v1_soubory
+│   │   │   │       ├───vl708_09_v1_soubory
+│   │   │   │       ├───vl709_09_v1_soubory
+│   │   │   │       ├───vl70_09_v1_soubory
+│   │   │   │       ├───vl711_09_v1_soubory
+│   │   │   │       ├───vl712_09_v1_soubory
+│   │   │   │       ├───vl713_09_v1_soubory
+│   │   │   │       ├───vl714_09_v1_soubory
+│   │   │   │       ├───vl715_09_v1_soubory
+│   │   │   │       ├───vl716_09_v1_soubory
+│   │   │   │       ├───vl717_09_v1_soubory
+│   │   │   │       ├───vl718_09_v1_soubory
+│   │   │   │       ├───vl719_09_v1_soubory
+│   │   │   │       ├───vl71_09_v1_soubory
+│   │   │   │       ├───vl720_09_v1_soubory
+│   │   │   │       ├───vl721_09_v1_soubory
+│   │   │   │       ├───vl722_09_v1_soubory
+│   │   │   │       ├───vl723_09_v1_soubory
+│   │   │   │       ├───vl724_09_v1_soubory
+│   │   │   │       ├───vl725_09_v1_soubory
+│   │   │   │       ├───vl726_09_v1_soubory
+│   │   │   │       ├───vl72_09_v1_soubory
+│   │   │   │       ├───vl730_09_v1_soubory
+│   │   │   │       ├───vl731_09_v1_soubory
+│   │   │   │       ├───vl732_09_v1_soubory
+│   │   │   │       ├───vl733_09_v1_soubory
+│   │   │   │       ├───vl734_09_v1_soubory
+│   │   │   │       ├───vl735_09_v1_soubory
+│   │   │   │       ├───vl736_09_v1_soubory
+│   │   │   │       ├───vl737_09_v1_soubory
+│   │   │   │       ├───vl738_09_v1_soubory
+│   │   │   │       ├───vl739_09_v1_soubory
+│   │   │   │       ├───vl73_09_v1_soubory
+│   │   │   │       ├───vl740_09_v1_soubory
+│   │   │   │       ├───vl741_09_v1_soubory
+│   │   │   │       ├───vl742_09_v1_soubory
+│   │   │   │       ├───vl743_09_v1_soubory
+│   │   │   │       ├───vl744_09_v1_soubory
+│   │   │   │       ├───vl745_09_v1_soubory
+│   │   │   │       ├───vl74_09_v1_soubory
+│   │   │   │       ├───vl750_09_v1_soubory
+│   │   │   │       ├───vl751_09_v1_soubory
+│   │   │   │       ├───vl752_09_v1_soubory
+│   │   │   │       ├───vl753_09_v1_soubory
+│   │   │   │       ├───vl753_09_v2_soubory
+│   │   │   │       ├───vl754_09_v1_soubory
+│   │   │   │       ├───vl755_09_v1_soubory
+│   │   │   │       ├───vl756_09_v1_soubory
+│   │   │   │       ├───vl757_09_v1_soubory
+│   │   │   │       ├───vl758_09_v1_soubory
+│   │   │   │       ├───vl759_09_v1_soubory
+│   │   │   │       ├───vl75_09_v1_soubory
+│   │   │   │       ├───vl760_09_v1_soubory
+│   │   │   │       ├───vl761_09_v1_soubory
+│   │   │   │       ├───vl762_09_v1_soubory
+│   │   │   │       ├───vl763_09_v1_soubory
+│   │   │   │       ├───vl764_09_v1_soubory
+│   │   │   │       ├───vl764_09_v2_soubory
+│   │   │   │       ├───vl765_09_v1_soubory
+│   │   │   │       ├───vl766_09_v1_soubory
+│   │   │   │       ├───vl767_09_v1_soubory
+│   │   │   │       ├───vl76_09_v1_soubory
+│   │   │   │       ├───vl770_09_v1_soubory
+│   │   │   │       ├───vl771_09_v1_soubory
+│   │   │   │       ├───vl772_09_v1_soubory
+│   │   │   │       ├───vl773_09_v1_soubory
+│   │   │   │       ├───vl773_09_v2_soubory
+│   │   │   │       ├───vl774_09_v1_soubory
+│   │   │   │       ├───vl775_09_v1_soubory
+│   │   │   │       ├───vl776_09_v1_soubory
+│   │   │   │       ├───vl777_09_v1_soubory
+│   │   │   │       ├───vl778_09_v1_soubory
+│   │   │   │       ├───vl779_09_v1_soubory
+│   │   │   │       ├───vl77_09_v1_soubory
+│   │   │   │       ├───vl780_09_v1_soubory
+│   │   │   │       ├───vl781_09_v1_soubory
+│   │   │   │       ├───vl782_09_v1_soubory
+│   │   │   │       ├───vl783_09_v1_soubory
+│   │   │   │       ├───vl784_09_v1_soubory
+│   │   │   │       ├───vl785_09_v1_soubory
+│   │   │   │       ├───vl786_09_v1_soubory
+│   │   │   │       ├───vl787_09_v1_soubory
+│   │   │   │       ├───vl788_09_v1_soubory
+│   │   │   │       ├───vl789_09_v1_soubory
+│   │   │   │       ├───vl790_09_v1_soubory
+│   │   │   │       ├───vl790_09_v2_soubory
+│   │   │   │       ├───vl791_09_v1_soubory
+│   │   │   │       ├───vl791_09_v2_soubory
+│   │   │   │       ├───vl792_09_v1_soubory
+│   │   │   │       ├───vl793_09_v1_soubory
+│   │   │   │       ├───vl794_09_v1_soubory
+│   │   │   │       ├───vl795_09_v1_soubory
+│   │   │   │       ├───vl796_09_v1_soubory
+│   │   │   │       ├───vl797_09_v1_soubory
+│   │   │   │       ├───vl798_09_v1_soubory
+│   │   │   │       ├───vl798_09_v2_soubory
+│   │   │   │       ├───vl799_09_v1_soubory
+│   │   │   │       ├───vl799_09_v2_soubory
+│   │   │   │       ├───vl800_09_v1_soubory
+│   │   │   │       ├───vl801_09_v1_soubory
+│   │   │   │       ├───vl802_09_v1_soubory
+│   │   │   │       ├───vl803_09_v1_soubory
+│   │   │   │       ├───vl803_09_v2_soubory
+│   │   │   │       ├───vl804_09_v1_soubory
+│   │   │   │       ├───vl805_09_v1_soubory
+│   │   │   │       ├───vl806_09_v1_soubory
+│   │   │   │       ├───vl806_09_v2_soubory
+│   │   │   │       ├───vl807_09_v1_soubory
+│   │   │   │       ├───vl808_09_v1_soubory
+│   │   │   │       ├───vl809_09_v1_soubory
+│   │   │   │       ├───vl810_09_v1_soubory
+│   │   │   │       ├───vl811_09_v1_soubory
+│   │   │   │       ├───vl812_09_v1_soubory
+│   │   │   │       ├───vl813_09_v1_soubory
+│   │   │   │       ├───vl814_09_v1_soubory
+│   │   │   │       ├───vl815_09_v1_soubory
+│   │   │   │       ├───vl816_09_v1_soubory
+│   │   │   │       ├───vl817_09_v1_soubory
+│   │   │   │       ├───vl818_09_v1_soubory
+│   │   │   │       ├───vl819_09_v1_soubory
+│   │   │   │       ├───vl820_09_v1_soubory
+│   │   │   │       ├───vl821_09_v1_soubory
+│   │   │   │       ├───vl822_09_v1_soubory
+│   │   │   │       ├───vl823_09_v1_soubory
+│   │   │   │       ├───vl824_09_v1_soubory
+│   │   │   │       ├───vl825_09_v1_soubory
+│   │   │   │       ├───vl825_09_v2_soubory
+│   │   │   │       ├───vl826_09_v1_soubory
+│   │   │   │       ├───vl826_09_v2_soubory
+│   │   │   │       ├───vl826_09_v3_soubory
+│   │   │   │       ├───vl827_09_v1_soubory
+│   │   │   │       ├───vl827_09_v2_soubory
+│   │   │   │       ├───vl828_09_v1_soubory
+│   │   │   │       ├───vl828_09_v2_soubory
+│   │   │   │       ├───vl828_09_v3_soubory
+│   │   │   │       ├───vl829_09_v1_soubory
+│   │   │   │       ├───vl829_09_v2_soubory
+│   │   │   │       ├───vl830_09_v1_soubory
+│   │   │   │       ├───vl831_09_v1_soubory
+│   │   │   │       ├───vl832_09_v1_soubory
+│   │   │   │       ├───vl833_09_v1_soubory
+│   │   │   │       ├───vl834_09_v1_soubory
+│   │   │   │       ├───vl835_09_v1_soubory
+│   │   │   │       ├───vl836_09_v1_soubory
+│   │   │   │       ├───vl837_09_v1_soubory
+│   │   │   │       ├───vl838_09_v1_soubory
+│   │   │   │       ├───vl839_09_v1_soubory
+│   │   │   │       ├───vl840_09_v1_soubory
+│   │   │   │       ├───vl841_09_v1_soubory
+│   │   │   │       ├───vl846_09_v1_soubory
+│   │   │   │       ├───vl848_09_v1_soubory
+│   │   │   │       ├───vl848_09_v2_soubory
+│   │   │   │       ├───vl849_09_v1_soubory
+│   │   │   │       ├───vl849_09_v2_soubory
+│   │   │   │       ├───vl850_09_v1_soubory
+│   │   │   │       ├───vl851_09_v1_soubory
+│   │   │   │       ├───vl851_09_v2_soubory
+│   │   │   │       ├───vl852_09_v1_soubory
+│   │   │   │       ├───vl853_09_v1_soubory
+│   │   │   │       ├───vl854_09_v1_soubory
+│   │   │   │       ├───vl855_09_v1_soubory
+│   │   │   │       ├───vl856_09_v1_soubory
+│   │   │   │       ├───vl856_09_v2_soubory
+│   │   │   │       ├───vl857_09_v1_soubory
+│   │   │   │       ├───vl858_09_v1_soubory
+│   │   │   │       ├───vl858_09_v2_soubory
+│   │   │   │       ├───vl859_09_v1_soubory
+│   │   │   │       ├───vl860_09_v1_soubory
+│   │   │   │       ├───vl861_09_v1_soubory
+│   │   │   │       ├───vl862_09_v1_soubory
+│   │   │   │       ├───vl864_09_v1_soubory
+│   │   │   │       ├───vl864_09_v2_soubory
+│   │   │   │       ├───vl865_09_v1_soubory
+│   │   │   │       ├───vl866_09_v1_soubory
+│   │   │   │       ├───vl866_09_v2_soubory
+│   │   │   │       ├───vl867_09_v1_soubory
+│   │   │   │       ├───vl868_09_v1_soubory
+│   │   │   │       ├───vl869_09_v1_soubory
+│   │   │   │       ├───vl870_09_v1_soubory
+│   │   │   │       ├───vl871_09_v1_soubory
+│   │   │   │       ├───vl872_09_v1_soubory
+│   │   │   │       ├───vl873_09_v1_soubory
+│   │   │   │       ├───vl874_09_v1_soubory
+│   │   │   │       ├───vl875_09_v1_soubory
+│   │   │   │       ├───vl875_09_v2_soubory
+│   │   │   │       ├───vl876_09_v1_soubory
+│   │   │   │       ├───vl877_09_v1_soubory
+│   │   │   │       ├───vl878_09_v1_soubory
+│   │   │   │       ├───vl878_09_v2_soubory
+│   │   │   │       ├───vl879_09_v1_soubory
+│   │   │   │       ├───vl880_09_v1_soubory
+│   │   │   │       ├───vl881_09_v1_soubory
+│   │   │   │       ├───vl881_09_v2_soubory
+│   │   │   │       ├───vl882_09_v1_soubory
+│   │   │   │       ├───vl883_09_v1_soubory
+│   │   │   │       ├───vl884_09_v1_soubory
+│   │   │   │       ├───vl884_09_v2_soubory
+│   │   │   │       ├───vl885_09_v1_soubory
+│   │   │   │       ├───vl886_09_v1_soubory
+│   │   │   │       ├───vl886_09_v2_soubory
+│   │   │   │       ├───vl887_09_v1_soubory
+│   │   │   │       ├───vl887_09_v2_soubory
+│   │   │   │       ├───vl902_09_v1_soubory
+│   │   │   │       ├───vl903_09_v1_soubory
+│   │   │   │       ├───vl904_09_v1_soubory
+│   │   │   │       ├───vl905_09_v1_soubory
+│   │   │   │       ├───vl906_09_v1_soubory
+│   │   │   │       ├───vl907_09_v1_soubory
+│   │   │   │       ├───vl908_09_v1_soubory
+│   │   │   │       ├───vl909_09_v1_soubory
+│   │   │   │       ├───vl910_09_v1_soubory
+│   │   │   │       ├───vl911_09_v1_soubory
+│   │   │   │       ├───vl912_09_v1_soubory
+│   │   │   │       ├───vl913_09_v1_soubory
+│   │   │   │       ├───vl920_09_v1_soubory
+│   │   │   │       ├───vl921_09_v1_soubory
+│   │   │   │       ├───vl922_09_v1_soubory
+│   │   │   │       ├───vl922_09_v2_soubory
+│   │   │   │       ├───vl923_09_v1_soubory
+│   │   │   │       ├───vl924_09_v1_soubory
+│   │   │   │       ├───vl924_09_v2_soubory
+│   │   │   │       ├───vl925_09_v1_soubory
+│   │   │   │       ├───vl925_09_v2_soubory
+│   │   │   │       ├───vl926_09_v1_soubory
+│   │   │   │       ├───vl927_09_v1_soubory
+│   │   │   │       ├───vl927_09_v2_soubory
+│   │   │   │       ├───vl928_09_v1_soubory
+│   │   │   │       ├───vl929_09_v1_soubory
+│   │   │   │       ├───vl929_09_v2_soubory
+│   │   │   │       ├───vl930_09_v1_soubory
+│   │   │   │       ├───vl931_09_v1_soubory
+│   │   │   │       ├───vl932_09_v1_soubory
+│   │   │   │       ├───vl933_09_v1_soubory
+│   │   │   │       ├───vl934_09_v1_soubory
+│   │   │   │       ├───vl935_09_v1_soubory
+│   │   │   │       ├───vl937_09_v1_soubory
+│   │   │   │       ├───vl940_09_v1_soubory
+│   │   │   │       ├───vl940_09_v2_soubory
+│   │   │   │       ├───vl942_09_v1_soubory
+│   │   │   │       ├───vl942_09_v2_soubory
+│   │   │   │       ├───vl950_09_v1_soubory
+│   │   │   │       ├───vl952_09_v1_soubory
+│   │   │   │       ├───vl953_09_v1_soubory
+│   │   │   │       ├───vl955_09_v1_soubory
+│   │   │   │       ├───vl957_09_v1_soubory
+│   │   │   │       ├───vl959_09_v1_soubory
+│   │   │   │       ├───vl960_09_v1_soubory
+│   │   │   │       ├───vl961_09_v1_soubory
+│   │   │   │       ├───vl962_09_v1_soubory
+│   │   │   │       ├───vl963_09_v1_soubory
+│   │   │   │       ├───vl963_09_v2_soubory
+│   │   │   │       ├───vl964_09_v1_soubory
+│   │   │   │       ├───vl965_09_v1_soubory
+│   │   │   │       ├───vl966_09_v1_soubory
+│   │   │   │       ├───vl967_09_v1_soubory
+│   │   │   │       ├───vl968_09_v1_soubory
+│   │   │   │       ├───vl969_09_v1_soubory
+│   │   │   │       ├───vl969_09_v2_soubory
+│   │   │   │       ├───vl970_09_v1_soubory
+│   │   │   │       ├───vl971_09_v1_soubory
+│   │   │   │       ├───vl976_09_v1_soubory
+│   │   │   │       ├───vl978_09_v1_soubory
+│   │   │   │       ├───vl979_09_v1_soubory
+│   │   │   │       ├───vl980_09_v1_soubory
+│   │   │   │       ├───vl981_09_v1_soubory
+│   │   │   │       ├───vl982_09_v1_soubory
+│   │   │   │       ├───vl983_09_v1_soubory
+│   │   │   │       ├───vl984_09_v1_soubory
+│   │   │   │       ├───vl985_09_v1_soubory
+│   │   │   │       ├───vl985_09_v2_soubory
+│   │   │   │       ├───vl986_09_v1_soubory
+│   │   │   │       ├───vl987_09_v1_soubory
+│   │   │   │       ├───vl988_09_v1_soubory
+│   │   │   │       ├───vl989_09_v1_soubory
+│   │   │   │       ├───vl990_09_v1_soubory
+│   │   │   │       ├───vl991_09_v1_soubory
+│   │   │   │       ├───vl992_09_v1_soubory
+│   │   │   │       ├───vl993_09_v1_soubory
+│   │   │   │       ├───vl994_09_v1_soubory
+│   │   │   │       ├───vl995_09_v1_soubory
+│   │   │   │       ├───vl996_09_v1_soubory
+│   │   │   │       ├───vl997_09_v1_soubory
+│   │   │   │       └───vozy
+│   │   │   ├───VlakE_08
+│   │   │   │   └───Zaloha
+│   │   │   ├───VlakINISS_08
+│   │   │   ├───VlakPID_08
+│   │   │   │   └───Zaloha
+│   │   │   ├───VlakPID_11
+│   │   │   ├───VlakPL_08
+│   │   │   │   └───Zaloha
+│   │   │   ├───VlakSk_08
+│   │   │   ├───VlakSV_08
+│   │   │   ├───VlakUNIPAJ_08
+│   │   │   ├───VlakVYKONY_08
+│   │   │   ├───Vlaky_pro_eShop_08
+│   │   │   │   ├───VlakEShop
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShopPokus
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CDTip
+│   │   │   │   │   ├───20090414
+│   │   │   │   │   ├───20090518
+│   │   │   │   │   ├───20090602
+│   │   │   │   │   ├───20090728
+│   │   │   │   │   ├───20090824
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CDTip_Pokus
+│   │   │   │   │   ├───PomocnaData
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_DB
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_DB_Pokus
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_MAV
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_OBB
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_OBB_Pokus
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_PKP
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_SZ
+│   │   │   │   │   └───Zaloha
+│   │   │   │   ├───VlakEShop_CD_ZSSK
+│   │   │   │   │   └───Zaloha
+│   │   │   │   └───VlakEShop_CD_ZSSKPokus
+│   │   │   │       └───Zaloha
+│   │   │   └───ZalohaASP
+│   │   │       ├───Asp
+│   │   │       │   ├───bin
+│   │   │       │   ├───data1
+│   │   │       │   ├───data2
+│   │   │       │   ├───data3
+│   │   │       │   ├───data4
+│   │   │       │   ├───img
+│   │   │       │   │   ├───Blue
+│   │   │       │   │   ├───Brown
+│   │   │       │   │   ├───Gray
+│   │   │       │   │   ├───Green
+│   │   │       │   │   ├───Red
+│   │   │       │   │   └───Yellow
+│   │   │       │   ├───includes
+│   │   │       │   ├───lang_c
+│   │   │       │   ├───lang_e
+│   │   │       │   ├───lang_g
+│   │   │       │   ├───lang_s
+│   │   │       │   ├───script
+│   │   │       │   └───styles
+│   │   │       ├───ASP-CD
+│   │   │       │   ├───bin
+│   │   │       │   ├───d
+│   │   │       │   │   ├───images
+│   │   │       │   │   ├───lang
+│   │   │       │   │   └───script
+│   │   │       │   ├───gb
+│   │   │       │   │   ├───images
+│   │   │       │   │   ├───lang
+│   │   │       │   │   └───script
+│   │   │       │   ├───images
+│   │   │       │   ├───lang
+│   │   │       │   ├───log
+│   │   │       │   └───script
+│   │   │       ├───Asp-CP
+│   │   │       │   ├───bin
+│   │   │       │   ├───data1
+│   │   │       │   ├───data2
+│   │   │       │   ├───data3
+│   │   │       │   ├───data4
+│   │   │       │   ├───img
+│   │   │       │   │   ├───Blue
+│   │   │       │   │   ├───Brown
+│   │   │       │   │   ├───Gray
+│   │   │       │   │   ├───Green
+│   │   │       │   │   ├───Red
+│   │   │       │   │   └───Yellow
+│   │   │       │   ├───includes
+│   │   │       │   ├───lang_c
+│   │   │       │   ├───lang_e
+│   │   │       │   ├───lang_g
+│   │   │       │   ├───lang_s
+│   │   │       │   ├───log
+│   │   │       │   ├───script
+│   │   │       │   └───styles
+│   │   │       ├───ASP-DPP
+│   │   │       │   ├───bin
+│   │   │       │   ├───data3
+│   │   │       │   ├───img
+│   │   │       │   │   └───Red
+│   │   │       │   ├───includes
+│   │   │       │   ├───lang_c
+│   │   │       │   ├───lang_e
+│   │   │       │   ├───lang_g
+│   │   │       │   ├───lang_s
+│   │   │       │   ├───log
+│   │   │       │   ├───script
+│   │   │       │   └───styles
+│   │   │       ├───Asp-I
+│   │   │       │   ├───bin
+│   │   │       │   ├───images
+│   │   │       │   ├───lang
+│   │   │       │   ├───log
+│   │   │       │   └───script
+│   │   │       ├───Asp-PID
+│   │   │       │   ├───bin
+│   │   │       │   ├───images
+│   │   │       │   ├───lang
+│   │   │       │   ├───log
+│   │   │       │   └───script
+│   │   │       ├───Asp-SK
+│   │   │       │   ├───bin
+│   │   │       │   ├───images
+│   │   │       │   ├───lang
+│   │   │       │   ├───log
+│   │   │       │   └───script
+│   │   │       ├───Asp_
+│   │   │       │   ├───bin
+│   │   │       │   ├───data1
+│   │   │       │   ├───data2
+│   │   │       │   ├───data3
+│   │   │       │   ├───data4
+│   │   │       │   ├───images
+│   │   │       │   ├───lang
+│   │   │       │   ├───log
+│   │   │       │   └───script
+│   │   │       ├───Asp_10
+│   │   │       │   ├───bin
+│   │   │       │   ├───data1
+│   │   │       │   ├───data2
+│   │   │       │   ├───data3
+│   │   │       │   ├───data4
+│   │   │       │   ├───img
+│   │   │       │   │   ├───Blue
+│   │   │       │   │   ├───Brown
+│   │   │       │   │   ├───Gray
+│   │   │       │   │   ├───Green
+│   │   │       │   │   ├───Red
+│   │   │       │   │   └───Yellow
+│   │   │       │   ├───includes
+│   │   │       │   ├───lang_c
+│   │   │       │   ├───lang_e
+│   │   │       │   ├───lang_g
+│   │   │       │   ├───lang_s
+│   │   │       │   ├───script
+│   │   │       │   └───styles
+│   │   │       ├───Asp_11
+│   │   │       │   ├───bin
+│   │   │       │   ├───data1
+│   │   │       │   ├───data2
+│   │   │       │   ├───data3
+│   │   │       │   ├───data4
+│   │   │       │   ├───img
+│   │   │       │   │   ├───Blue
+│   │   │       │   │   ├───Brown
+│   │   │       │   │   ├───Gray
+│   │   │       │   │   ├───Green
+│   │   │       │   │   ├───Red
+│   │   │       │   │   └───Yellow
+│   │   │       │   ├───includes
+│   │   │       │   ├───lang_c
+│   │   │       │   ├───lang_e
+│   │   │       │   ├───lang_g
+│   │   │       │   ├───lang_s
+│   │   │       │   ├───script
+│   │   │       │   └───styles
+│   │   │       └───ASP_12
+│   │   │           ├───bin
+│   │   │           ├───data1
+│   │   │           ├───data2
+│   │   │           ├───data3
+│   │   │           ├───data4
+│   │   │           ├───img
+│   │   │           │   ├───Blue
+│   │   │           │   ├───Brown
+│   │   │           │   ├───Gray
+│   │   │           │   ├───Green
+│   │   │           │   ├───Red
+│   │   │           │   └───Yellow
+│   │   │           ├───includes
+│   │   │           ├───lang_c
+│   │   │           ├───lang_e
+│   │   │           ├───lang_g
+│   │   │           ├───lang_s
+│   │   │           ├───script
+│   │   │           └───styles
+│   │   ├───AktualizaceVlaky
+│   │   ├───DataDPO
+│   │   ├───DataSVK
+│   │   │   └───Down
+│   │   ├───Ellipse
+│   │   ├───HistoryData
+│   │   │   ├───Data1
+│   │   │   └───Data2
+│   │   ├───IdsJmkAkt
+│   │   │   ├───20260902
+│   │   │   ├───20260904
+│   │   │   ├───20260908
+│   │   │   ├───20260910
+│   │   │   └───20260911
+│   │   ├───InfoFiles
+│   │   ├───Mapy
+│   │   │   ├───Bin
+│   │   │   ├───Bratislava
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Chyby
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zaloha
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20171019
+│   │   │   │       │   ├───Update20180309
+│   │   │   │       │   ├───Update20180313
+│   │   │   │       │   ├───Update20250205
+│   │   │   │       │   ├───Update20260217_blbe
+│   │   │   │       │   ├───Update20260218
+│   │   │   │       │   └───_ZalohaPuvodniData
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Bus
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       │   ├───Cesko
+│   │   │   │       │   │   ├───Kraj_Jihomoravský
+│   │   │   │       │   │   │   ├───Update20160816
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Jihomoravský
+│   │   │   │       │   │   │           └───Update20160816
+│   │   │   │       │   │   ├───Kraj_Jihočeský_Bobo_hotovo
+│   │   │   │       │   │   │   ├───Export
+│   │   │   │       │   │   │   ├───Licence
+│   │   │   │       │   │   │   │   ├───COMETT PLUS spol. s r.o
+│   │   │   │       │   │   │   │   │   ├───2013 II
+│   │   │   │       │   │   │   │   │   ├───390410 Soběslav.Chotěmice-Deštná-Dírná
+│   │   │   │       │   │   │   │   │   ├───390740  Mladá Vožice-Šebířov,Vrcholtovice
+│   │   │   │       │   │   │   │   │   └───390790  Mladá Vožice - Vlašim
+│   │   │   │       │   │   │   │   ├───ICOM transport a.s
+│   │   │   │       │   │   │   │   ├───JIHOTRANS
+│   │   │   │       │   │   │   │   ├───Josef Štefl - tour
+│   │   │   │       │   │   │   │   ├───STTRANS
+│   │   │   │       │   │   │   │   ├───VLACHOVO BŘEZÍ
+│   │   │   │       │   │   │   │   ├───ČSAD AUTOBUSY ČB a.s
+│   │   │   │       │   │   │   │   ├───ČSAD AUTOBUSY_Prachatice
+│   │   │   │       │   │   │   │   ├───ČSAD AUTOBUSY_Vodňany
+│   │   │   │       │   │   │   │   └───ČSAD AUTOBUSY_ČKrumlov
+│   │   │   │       │   │   │   ├───Puvodni
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Jihočeský_Bobo_hotovo
+│   │   │   │       │   │   │           ├───Export
+│   │   │   │       │   │   │           ├───Licence
+│   │   │   │       │   │   │           │   ├───COMETT PLUS spol. s r.o
+│   │   │   │       │   │   │           │   │   ├───2013 II
+│   │   │   │       │   │   │           │   │   ├───390410 Soběslav.Chotěmice-Deštná-Dírná
+│   │   │   │       │   │   │           │   │   ├───390740  Mladá Vožice-Šebířov,Vrcholtovice
+│   │   │   │       │   │   │           │   │   └───390790  Mladá Vožice - Vlašim
+│   │   │   │       │   │   │           │   ├───ICOM transport a.s
+│   │   │   │       │   │   │           │   ├───JIHOTRANS
+│   │   │   │       │   │   │           │   ├───Josef Štefl - tour
+│   │   │   │       │   │   │           │   ├───STTRANS
+│   │   │   │       │   │   │           │   ├───VLACHOVO BŘEZÍ
+│   │   │   │       │   │   │           │   ├───ČSAD AUTOBUSY ČB a.s
+│   │   │   │       │   │   │           │   ├───ČSAD AUTOBUSY_Prachatice
+│   │   │   │       │   │   │           │   ├───ČSAD AUTOBUSY_Vodňany
+│   │   │   │       │   │   │           │   └───ČSAD AUTOBUSY_ČKrumlov
+│   │   │   │       │   │   │           └───Puvodni
+│   │   │   │       │   │   ├───Kraj_Karlovarský_hotovo
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Karlovarský_Jirka_hotovo
+│   │   │   │       │   │   ├───Kraj_Královéhradecký_hotovo_20260505
+│   │   │   │       │   │   │   ├───spojnice pro CHAPS
+│   │   │   │       │   │   │   │   └───Upravene
+│   │   │   │       │   │   │   ├───x
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Královéhradecký_hotovo
+│   │   │   │       │   │   ├───Kraj_Liberecký_Ošmera_hotovo
+│   │   │   │       │   │   │   ├───IDOL
+│   │   │   │       │   │   │   │   ├───Zaloha20160310
+│   │   │   │       │   │   │   │   │   └───NeniIDOL
+│   │   │   │       │   │   │   │   └───Zaloha20160504
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Liberecký_Ošmera_hotovo
+│   │   │   │       │   │   │           └───IDOL
+│   │   │   │       │   │   │               ├───Zaloha20160310
+│   │   │   │       │   │   │               │   └───NeniIDOL
+│   │   │   │       │   │   │               └───Zaloha20160504
+│   │   │   │       │   │   ├───Kraj_Moravskoslezský_rozpracovano_20170920
+│   │   │   │       │   │   │   └───Zalohy
+│   │   │   │       │   │   │       └───Kraj_Moravskoslezský
+│   │   │   │       │   │   ├───Kraj_Olomoucký_hotovo_20170510
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Olomoucký_rozpracovano20160809
+│   │   │   │       │   │   ├───Kraj_Pardubický_Bobo_hotovo_20170310
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Pardubický_Bobo_rozpracovano
+│   │   │   │       │   │   ├───Kraj_Plzeňský_zadano_20260520
+│   │   │   │       │   │   │   ├───Zaloha
+│   │   │   │       │   │   │   │   └───Kraj_Plzeňský_Kollner_hotovo
+│   │   │   │       │   │   │   └───Zdroj
+│   │   │   │       │   │   ├───Kraj_Praha
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Praha
+│   │   │   │       │   │   ├───Kraj_Středočeský_hotovo
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Středočeský
+│   │   │   │       │   │   ├───Kraj_Vysočina_hotovo_20190812
+│   │   │   │       │   │   │   └───Zalohy
+│   │   │   │       │   │   │       └───Kraj_Vysočina_rozpracovano
+│   │   │   │       │   │   ├───Kraj_Zlínský_rozpracovano_20170206
+│   │   │   │       │   │   │   └───Zaloha
+│   │   │   │       │   │   │       └───Kraj_Zlínský
+│   │   │   │       │   │   ├───Kraj_Ústecký_Bobo_Jirka_hotovo
+│   │   │   │       │   │   │   ├───Zaloha
+│   │   │   │       │   │   │   │   └───Kraj_Ústecký_Bobo_Jirka_hotovo
+│   │   │   │       │   │   │   │       ├───Zaloha
+│   │   │   │       │   │   │   │       └───ZdrojoveMapy
+│   │   │   │       │   │   │   └───ZdrojoveMapy
+│   │   │   │       │   │   ├───MPVData
+│   │   │   │       │   │   ├───NepouzijuTytoData_HraniceObci
+│   │   │   │       │   │   └───Nezamerene_zastavky
+│   │   │   │       │   │       ├───Update20150216
+│   │   │   │       │   │       ├───Update20150727
+│   │   │   │       │   │       │   └───Data
+│   │   │   │       │   │       ├───Update20150821
+│   │   │   │       │   │       └───Update20151230
+│   │   │   │       │   ├───MapovePodklady
+│   │   │   │       │   └───Slovensko
+│   │   │   │       │       ├───BanskaBystrica_BB_neniCIS
+│   │   │   │       │       ├───Bardejov_BJ_mesto_hotovo
+│   │   │   │       │       ├───Cadca_CA_mesto_hotovo
+│   │   │   │       │       ├───Kosice_KE_mesto_hotovo
+│   │   │   │       │       ├───Levice_LV_mesto_hotovo
+│   │   │   │       │       ├───LiptovskyMikulas_LM_mesto_hotovo
+│   │   │   │       │       ├───Martin_MT_mesto_hotovo
+│   │   │   │       │       ├───Nitra_NR_mesto_hotovo
+│   │   │   │       │       ├───Piestany_PN_mesto_hotovo
+│   │   │   │       │       ├───Prievidza_PD_mesto_hotovo
+│   │   │   │       │       ├───Ruzomberok_RK_mesto_hotovo
+│   │   │   │       │       ├───SpiskaNovaVes_SN_mesto_hotovo
+│   │   │   │       │       ├───Trencin_TN_mesto_hotovo
+│   │   │   │       │       ├───Trnava_TT_mesto_hotovo
+│   │   │   │       │       ├───Zvolen_ZV_mesto_hotovo
+│   │   │   │       │       ├───_Ceda
+│   │   │   │       │       │   ├───KrajBA
+│   │   │   │       │       │   ├───KrajBB
+│   │   │   │       │       │   ├───KrajKE
+│   │   │   │       │       │   ├───KrajNR
+│   │   │   │       │       │   ├───KrajPO
+│   │   │   │       │       │   ├───KrajTN
+│   │   │   │       │       │   ├───KrajTT
+│   │   │   │       │       │   ├───KrajZA
+│   │   │   │       │       │   │   └───Hotovo
+│   │   │   │       │       │   ├───VysledekCeda
+│   │   │   │       │       │   │   ├───KrajBA_hotovo
+│   │   │   │       │       │   │   ├───KrajBB_hotovo
+│   │   │   │       │       │   │   ├───KrajKE_hotovo
+│   │   │   │       │       │   │   ├───KrajNR_hotovo
+│   │   │   │       │       │   │   ├───KrajPO_hotovo
+│   │   │   │       │       │   │   ├───KrajTN_hotovo
+│   │   │   │       │       │   │   ├───KrajTT_hotovo
+│   │   │   │       │       │   │   └───KrajZA_hotovo
+│   │   │   │       │       │   └───ZdrojovaDataCeda
+│   │   │   │       │       │       ├───KrajBA
+│   │   │   │       │       │       ├───KrajBB
+│   │   │   │       │       │       ├───KrajKE
+│   │   │   │       │       │       ├───KrajNR
+│   │   │   │       │       │       ├───KrajPO
+│   │   │   │       │       │       ├───KrajTN
+│   │   │   │       │       │       ├───KrajTT
+│   │   │   │       │       │       └───KrajZA
+│   │   │   │       │       ├───_Chybejici
+│   │   │   │       │       ├───_Jancura_20151215
+│   │   │   │       │       ├───_SAD_Zilina_hotovo
+│   │   │   │       │       │   ├───Naimportovano20160122
+│   │   │   │       │       │   ├───Naimportovano20160204
+│   │   │   │       │       │   └───Naimportovano20160226
+│   │   │   │       │       └───_Updates
+│   │   │   │       │           ├───Update20170406
+│   │   │   │       │           ├───Update20180723
+│   │   │   │       │           ├───Update20210811
+│   │   │   │       │           └───Update20220429
+│   │   │   │       ├───Puvodni
+│   │   │   │       │   ├───Dacice
+│   │   │   │       │   ├───HradecKralove
+│   │   │   │       │   ├───JihoceskyKraj
+│   │   │   │       │   ├───Nezamerene
+│   │   │   │       │   ├───SpindleruvMlyn
+│   │   │   │       │   └───_Bin
+│   │   │   │       │       └───Busy
+│   │   │   │       │           ├───Errors
+│   │   │   │       │           ├───Input
+│   │   │   │       │           ├───KMLIcons
+│   │   │   │       │           ├───Log
+│   │   │   │       │           ├───Output
+│   │   │   │       │           └───Processing
+│   │   │   │       ├───Updates
+│   │   │   │       │   ├───Update20250602
+│   │   │   │       │   ├───Update20250611
+│   │   │   │       │   ├───Update20250616
+│   │   │   │       │   ├───Update20250625_Slovaci
+│   │   │   │       │   │   ├───1095-1116
+│   │   │   │       │   │   ├───1117
+│   │   │   │       │   │   ├───1118-1173
+│   │   │   │       │   │   ├───1176
+│   │   │   │       │   │   └───Oprava
+│   │   │   │       │   ├───Update20250808
+│   │   │   │       │   ├───Update20250826
+│   │   │   │       │   ├───Update20250829
+│   │   │   │       │   ├───Update20250901
+│   │   │   │       │   ├───Update20250924
+│   │   │   │       │   ├───Update20251030
+│   │   │   │       │   ├───Update20251203
+│   │   │   │       │   ├───Update20251211
+│   │   │   │       │   ├───Update20251216_nedokonceno
+│   │   │   │       │   ├───Update20260115
+│   │   │   │       │   ├───Update20260123
+│   │   │   │       │   ├───Update20260123_IDPK
+│   │   │   │       │   │   ├───Ostatni
+│   │   │   │       │   │   └───Plzensky
+│   │   │   │       │   ├───Update20260205
+│   │   │   │       │   ├───Update20260219
+│   │   │   │       │   ├───Update20260225
+│   │   │   │       │   ├───Update20260226
+│   │   │   │       │   ├───Update20260305
+│   │   │   │       │   ├───Update20260331
+│   │   │   │       │   ├───Update20260521
+│   │   │   │       │   ├───Update20260524
+│   │   │   │       │   ├───Update20260612
+│   │   │   │       │   ├───Update20260618
+│   │   │   │       │   ├───Update20260701
+│   │   │   │       │   ├───Update20260702
+│   │   │   │       │   ├───Update20260707
+│   │   │   │       │   ├───_IDOL_Nemazat
+│   │   │   │       │   │   ├───Update20170418
+│   │   │   │       │   │   │   └───Zdroj
+│   │   │   │       │   │   ├───Update20180214
+│   │   │   │       │   │   └───Update20180424
+│   │   │   │       │   ├───_IDS_Min_Max
+│   │   │   │       │   └───_ZalohaUpdates
+│   │   │   │       │       ├───CtverceMHD
+│   │   │   │       │       ├───Korolkov
+│   │   │   │       │       │   ├───20170208
+│   │   │   │       │       │   └───20170309
+│   │   │   │       │       ├───Naimportovano_zaloha
+│   │   │   │       │       ├───Update20160504
+│   │   │   │       │       ├───Update20161004
+│   │   │   │       │       ├───Update20161018
+│   │   │   │       │       ├───Update20161214
+│   │   │   │       │       ├───Update20170201
+│   │   │   │       │       ├───Update20170203
+│   │   │   │       │       ├───Update20170313
+│   │   │   │       │       ├───Update20170519
+│   │   │   │       │       ├───Update20170622
+│   │   │   │       │       │   └───Mezistav
+│   │   │   │       │       ├───Update20170710
+│   │   │   │       │       ├───Update20170907
+│   │   │   │       │       ├───Update20170920
+│   │   │   │       │       ├───Update20171026
+│   │   │   │       │       │   ├───1
+│   │   │   │       │       │   └───2
+│   │   │   │       │       ├───Update20171108
+│   │   │   │       │       ├───Update20171129
+│   │   │   │       │       ├───Update20180118
+│   │   │   │       │       ├───Update20180124
+│   │   │   │       │       ├───Update20180129
+│   │   │   │       │       ├───Update20180305
+│   │   │   │       │       ├───Update20180326
+│   │   │   │       │       ├───Update20180404
+│   │   │   │       │       ├───Update20180410_Chybejici_SR
+│   │   │   │       │       │   └───Zaloha
+│   │   │   │       │       ├───Update20180424
+│   │   │   │       │       ├───Update20180608
+│   │   │   │       │       ├───Update20180712
+│   │   │   │       │       ├───Update20180828
+│   │   │   │       │       ├───Update20180912
+│   │   │   │       │       ├───Update20180918
+│   │   │   │       │       ├───Update20181015
+│   │   │   │       │       ├───Update20181105
+│   │   │   │       │       ├───Update20181119
+│   │   │   │       │       ├───Update20190109_BE_KD
+│   │   │   │       │       ├───Update20190114
+│   │   │   │       │       ├───Update20190225
+│   │   │   │       │       ├───Update20190403
+│   │   │   │       │       ├───Update20190416
+│   │   │   │       │       ├───Update20190426
+│   │   │   │       │       ├───Update20190502
+│   │   │   │       │       ├───Update20190529
+│   │   │   │       │       ├───Update20190603
+│   │   │   │       │       ├───Update20190612
+│   │   │   │       │       ├───Update20190718
+│   │   │   │       │       ├───Update20190906
+│   │   │   │       │       ├───Update20190912
+│   │   │   │       │       ├───Update20191022_Pecinkova
+│   │   │   │       │       ├───Update20191024_ZlinskyKraj
+│   │   │   │       │       ├───Update20191205
+│   │   │   │       │       ├───Update20191217_ZvolenTulska
+│   │   │   │       │       ├───Update20200106_Tetin
+│   │   │   │       │       ├───Update20200113_Podolak
+│   │   │   │       │       ├───Update20200207
+│   │   │   │       │       ├───Update20200211
+│   │   │   │       │       ├───Update20200330
+│   │   │   │       │       ├───Update20200603
+│   │   │   │       │       ├───Update20200617
+│   │   │   │       │       ├───Update20200624
+│   │   │   │       │       ├───Update20200703
+│   │   │   │       │       ├───Update20200709
+│   │   │   │       │       ├───Update20200804
+│   │   │   │       │       ├───Update20200817
+│   │   │   │       │       ├───Update20201130
+│   │   │   │       │       ├───Update20201203
+│   │   │   │       │       ├───Update20210118
+│   │   │   │       │       ├───Update20210127
+│   │   │   │       │       ├───Update20210312
+│   │   │   │       │       ├───Update20210714
+│   │   │   │       │       ├───Update20210809
+│   │   │   │       │       ├───Update20210903
+│   │   │   │       │       ├───Update20210924
+│   │   │   │       │       ├───Update20211104
+│   │   │   │       │       ├───Update20211108
+│   │   │   │       │       ├───Update20211126
+│   │   │   │       │       ├───Update20211130
+│   │   │   │       │       ├───Update20211215
+│   │   │   │       │       ├───Update20220111
+│   │   │   │       │       ├───Update20220114
+│   │   │   │       │       ├───Update20220209
+│   │   │   │       │       ├───Update20220217
+│   │   │   │       │       ├───Update20220323
+│   │   │   │       │       ├───Update20220510
+│   │   │   │       │       ├───Update20220517
+│   │   │   │       │       ├───Update20220602_400
+│   │   │   │       │       ├───Update20220725
+│   │   │   │       │       ├───Update20220923_IREDO
+│   │   │   │       │       ├───Update20220926
+│   │   │   │       │       ├───Update20221013_Vsechno
+│   │   │   │       │       ├───Update20221021
+│   │   │   │       │       ├───Update20221130
+│   │   │   │       │       ├───Update20230109
+│   │   │   │       │       ├───Update20230206
+│   │   │   │       │       ├───Update20230209
+│   │   │   │       │       │   └───DataPID
+│   │   │   │       │       ├───Update20230314
+│   │   │   │       │       ├───Update20230315
+│   │   │   │       │       ├───Update20230316
+│   │   │   │       │       ├───Update20230327
+│   │   │   │       │       ├───Update20230329
+│   │   │   │       │       ├───Update20230610
+│   │   │   │       │       ├───Update20230815
+│   │   │   │       │       ├───Update20230825
+│   │   │   │       │       ├───Update20231113
+│   │   │   │       │       ├───Update20231122
+│   │   │   │       │       ├───Update20231204
+│   │   │   │       │       ├───Update20231210
+│   │   │   │       │       ├───Update20231221
+│   │   │   │       │       ├───Update20240201
+│   │   │   │       │       ├───Update20240208
+│   │   │   │       │       ├───Update20240213
+│   │   │   │       │       │   └───Hotovo
+│   │   │   │       │       ├───Update20240214
+│   │   │   │       │       ├───Update20240228
+│   │   │   │       │       ├───Update20240522
+│   │   │   │       │       ├───Update20240621
+│   │   │   │       │       ├───Update20240628
+│   │   │   │       │       ├───Update20240809
+│   │   │   │       │       ├───Update20240809_2_Martin
+│   │   │   │       │       ├───Update20240815
+│   │   │   │       │       ├───Update20240819
+│   │   │   │       │       ├───Update20240822
+│   │   │   │       │       ├───Update20240904
+│   │   │   │       │       ├───Update20240916
+│   │   │   │       │       ├───Update20240918
+│   │   │   │       │       ├───Update20240926
+│   │   │   │       │       ├───Update20240927
+│   │   │   │       │       ├───Update20241001
+│   │   │   │       │       ├───Update20241004
+│   │   │   │       │       ├───Update20241029
+│   │   │   │       │       ├───Update20241111
+│   │   │   │       │       ├───Update20241202
+│   │   │   │       │       ├───Update20241204
+│   │   │   │       │       ├───Update20241212
+│   │   │   │       │       ├───Update20241216
+│   │   │   │       │       ├───Update20241218
+│   │   │   │       │       ├───Update20250115
+│   │   │   │       │       ├───Update20250130
+│   │   │   │       │       ├───Update20250205
+│   │   │   │       │       ├───Update20250218
+│   │   │   │       │       ├───Update20250221
+│   │   │   │       │       ├───Update20250317
+│   │   │   │       │       ├───Update20250320
+│   │   │   │       │       ├───Update20250324
+│   │   │   │       │       ├───Update20250328
+│   │   │   │       │       ├───Update20250401
+│   │   │   │       │       ├───Update20250408
+│   │   │   │       │       ├───Update20250409
+│   │   │   │       │       ├───Update20250428
+│   │   │   │       │       ├───Update20250513
+│   │   │   │       │       ├───Update20250516
+│   │   │   │       │       ├───Update20250519
+│   │   │   │       │       ├───Update20250522
+│   │   │   │       │       └───Update20250527
+│   │   │   │       └───_Bin2
+│   │   │   │           └───Busy
+│   │   │   │               ├───Input
+│   │   │   │               │   └───Zalohy
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               │   ├───Pom
+│   │   │   │               │   └───Zaloha
+│   │   │   │               └───Pracovni
+│   │   │   ├───CesBud
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zaloha
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20141216
+│   │   │   │       │   ├───Update20160831
+│   │   │   │       │   ├───Update20170504
+│   │   │   │       │   ├───Update20190207
+│   │   │   │       │   ├───Update20190717
+│   │   │   │       │   ├───Update20230131
+│   │   │   │       │   ├───Update20240227
+│   │   │   │       │   ├───Update20240513
+│   │   │   │       │   ├───Update20240625
+│   │   │   │       │   ├───Update20240902
+│   │   │   │       │   ├───Update20241009
+│   │   │   │       │   ├───Update20241023
+│   │   │   │       │   ├───Update20250220
+│   │   │   │       │   ├───Update20250618
+│   │   │   │       │   ├───Update20250630
+│   │   │   │       │   ├───Update20250910
+│   │   │   │       │   ├───Update20251215
+│   │   │   │       │   ├───Update20260408
+│   │   │   │       │   ├───Update20260528
+│   │   │   │       │   └───Update20260822
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Comb
+│   │   │   ├───Decin
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20161013
+│   │   │   │       │   ├───Update20171017
+│   │   │   │       │   ├───Update20190710
+│   │   │   │       │   ├───Update20191030
+│   │   │   │       │   ├───Update20230712
+│   │   │   │       │   ├───Update20250206
+│   │   │   │       │   ├───Update20250402
+│   │   │   │       │   └───Update20260608
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Flixbus
+│   │   │   │   └───TTM
+│   │   │   ├───HraniceMestPolygony
+│   │   │   │   └───Bin
+│   │   │   │       └───obce_WGS84
+│   │   │   ├───IDSJMK
+│   │   │   │   ├───TTM
+│   │   │   │   │   └───Zalohy
+│   │   │   │   │       └───TTQ
+│   │   │   │   │           ├───Adamov
+│   │   │   │   │           ├───Blansko
+│   │   │   │   │           ├───Břeclav
+│   │   │   │   │           ├───Data
+│   │   │   │   │           ├───Hodonín
+│   │   │   │   │           ├───Kyjov
+│   │   │   │   │           ├───Mikulov
+│   │   │   │   │           ├───Vyškov
+│   │   │   │   │           ├───Zalohy
+│   │   │   │   │           └───_BIN
+│   │   │   │   │               └───Regional
+│   │   │   │   │                   ├───Input
+│   │   │   │   │                   ├───KMLIcons
+│   │   │   │   │                   ├───Log
+│   │   │   │   │                   ├───Output
+│   │   │   │   │                   └───Processing
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       │   └───Update20150201
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───_BIN
+│   │   │   │       │   ├───Regional
+│   │   │   │       │   │   ├───Input
+│   │   │   │       │   │   ├───KMLIcons
+│   │   │   │       │   │   ├───Output
+│   │   │   │       │   │   └───Pracovni
+│   │   │   │       │   └───Zalohy
+│   │   │   │       └───_Zdroje
+│   │   │   │           ├───Adamov
+│   │   │   │           ├───Blansko
+│   │   │   │           ├───Břeclav
+│   │   │   │           ├───Hodonín
+│   │   │   │           ├───Kyjov
+│   │   │   │           ├───Mikulov
+│   │   │   │           ├───Update20170505
+│   │   │   │           ├───Update20190919
+│   │   │   │           ├───Update20220401
+│   │   │   │           ├───Vyškov
+│   │   │   │           └───Zalohy
+│   │   │   │               ├───Zaloha20120409
+│   │   │   │               └───Zaloha20120509
+│   │   │   ├───Jablonec
+│   │   │   │   ├───TTM
+│   │   │   │   │   └───Update20260624
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       └───_Bin2
+│   │   │   │           └───Busy
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               │   └───Zdroj
+│   │   │   │               └───Pracovni
+│   │   │   ├───Jihlava
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20140325
+│   │   │   │       │   ├───Update20170116
+│   │   │   │       │   ├───Update20171211
+│   │   │   │       │   ├───Update20210415
+│   │   │   │       │   ├───Update20230711
+│   │   │   │       │   ├───Update20241217
+│   │   │   │       │   └───Update20250402
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Kladno
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20161013
+│   │   │   │       │   ├───Update20230106
+│   │   │   │       │   ├───Update20230711
+│   │   │   │       │   ├───Update20250402
+│   │   │   │       │   └───Update20260223
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───MarianskeLazne
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20210611
+│   │   │   │       │   └───Update20260218
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Most
+│   │   │   │   └───TTM
+│   │   │   ├───Olomouc
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───20120713
+│   │   │   │       │   ├───20130829
+│   │   │   │       │   ├───20131017
+│   │   │   │       │   ├───20140110
+│   │   │   │       │   ├───20150107
+│   │   │   │       │   ├───20150504
+│   │   │   │       │   ├───20170329
+│   │   │   │       │   ├───20171221
+│   │   │   │       │   ├───20190211
+│   │   │   │       │   ├───20190325
+│   │   │   │       │   ├───20220111
+│   │   │   │       │   ├───20230711
+│   │   │   │       │   └───20250402
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Ostrava
+│   │   │   │   ├───TTM
+│   │   │   │   │   ├───gtfs
+│   │   │   │   │   ├───Zaloha
+│   │   │   │   │   │   └───Zal20251118
+│   │   │   │   │   │       └───_Zalohy
+│   │   │   │   │   │           ├───Bobo
+│   │   │   │   │   │           ├───BodnarukovoKML
+│   │   │   │   │   │           │   ├───Data
+│   │   │   │   │   │           │   └───KMLdata
+│   │   │   │   │   │           ├───zdroj
+│   │   │   │   │   │           ├───ZdrojNew
+│   │   │   │   │   │           └───_PrevodKML
+│   │   │   │   │   │               ├───1
+│   │   │   │   │   │               ├───2
+│   │   │   │   │   │               └───3
+│   │   │   │   │   └───Zdroj
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zaloha
+│   │   │   │       │   ├───KMLdata
+│   │   │   │       │   └───Zdroje
+│   │   │   │       │       └───Old
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   └───Soubory_TT
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               └───Output
+│   │   │   │                   └───Pom
+│   │   │   ├───Pardubice
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20160111
+│   │   │   │       │   ├───Update20161111
+│   │   │   │       │   ├───Update20180116
+│   │   │   │       │   ├───Update20230711
+│   │   │   │       │   ├───Update20250402
+│   │   │   │       │   └───Update20260218
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───PID
+│   │   │   │   ├───TTM
+│   │   │   │   └───Ttq_generujePodolak
+│   │   │   │       ├───PS
+│   │   │   │       │   ├───KmlTiles
+│   │   │   │       │   ├───Test
+│   │   │   │       │   │   ├───KmlTiles
+│   │   │   │       │   │   └───zal
+│   │   │   │       │   └───Zal
+│   │   │   │       └───_Zaloha
+│   │   │   ├───Plzen
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   └───Update20260223
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               │   └───Y
+│   │   │   │               └───Pracovni
+│   │   │   ├───Pokus
+│   │   │   │   └───Convert
+│   │   │   │       └───Osmium
+│   │   │   ├───UstiNadLabem
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zaloha
+│   │   │   │       ├───Zdroj
+│   │   │   │       │   ├───Update20230712
+│   │   │   │       │   └───Update20250402
+│   │   │   │       └───_Bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Vlaky
+│   │   │   │   ├───Data
+│   │   │   │   ├───PorizovaniSouradnic
+│   │   │   │   ├───Portugalsko
+│   │   │   │   │   ├───Data
+│   │   │   │   │   └───_Bin
+│   │   │   │   │       └───Trains
+│   │   │   │   │           ├───Input
+│   │   │   │   │           │   └───VsechnyKML
+│   │   │   │   │           ├───KMLIcons
+│   │   │   │   │           ├───Log
+│   │   │   │   │           ├───Output
+│   │   │   │   │           └───Processing
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───ZdrojeKML
+│   │   │   │       │   ├───00_Pomocne_body
+│   │   │   │       │   ├───10_Finsko_hotovo_Bobo_20170724
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220112
+│   │   │   │       │   ├───20_Rusko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20180606
+│   │   │   │       │   ├───21_Bělorusko_hotovo_Bobo_20170725
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       ├───Update20180606
+│   │   │   │       │   │       └───Update20220112
+│   │   │   │       │   ├───22_Ukrajina_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       ├───Update20180606
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───23_Moldavsko_hotovo_Bobo_20170725
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───24_Litva_hotovo_Bobo_20170725
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───25_Lotyšsko_hotovo_Bobo_20170710
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───26_Estonsko_hotovo_Bobo_20170710
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───27_Kazachstán
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       ├───Update20180607
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───28_Gruzie_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───29_Uzbekistán_hotovo_Bobo_20170731
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───30_Kldr_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───31_Mongolsko_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───33_Čína_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───51_Polsko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───52_Bulharsko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───53_Rumunsko_hotovo_20170911
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───54_Česko_hotovo
+│   │   │   │       │   ├───55_Maďarsko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───56_Slovensko_hotovo
+│   │   │   │       │   ├───57_Azerbajdžán_hotovo_Bobo_20170721
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───59_Kirgizsko_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───60_Irsko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───62_ČernáHora_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───65_Makedonie_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220113
+│   │   │   │       │   ├───66_TádžickáŽeleznice_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───70_VelkáBritánie_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───71_Španělsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───72_Srbsko_hotovo_Bobo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───73_Řecko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───74_Švédsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───75_Turecko_hotovo_Bobo_20170711
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───76_Norsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───78_Chorvatsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───79_Slovinsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───80_Německo_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───81_Rakousko_hotovo
+│   │   │   │       │   │   ├───Data
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───82_Lucembursko_hotovo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───83_Itálie
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───84_Nizozemí_hotovo
+│   │   │   │       │   │   ├───Data
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───85_Švýcarsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───86_Dánsko
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───87_Francie
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───88_Belgie_hotovo_Bobo
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───89_BosnaHercegovina
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───94_Portugalsko_hotovo
+│   │   │   │       │   │   ├───Data
+│   │   │   │       │   │   ├───Zdroje
+│   │   │   │       │   │   │   ├───Update20170710
+│   │   │   │       │   │   │   └───Update20220114
+│   │   │   │       │   │   └───_Bin
+│   │   │   │       │   │       └───Trains
+│   │   │   │       │   │           ├───Input
+│   │   │   │       │   │           │   └───VsechnyKML
+│   │   │   │       │   │           ├───KMLIcons
+│   │   │   │       │   │           ├───Log
+│   │   │   │       │   │           ├───Output
+│   │   │   │       │   │           └───Processing
+│   │   │   │       │   ├───96_Írán
+│   │   │   │       │   │   └───Zdroje
+│   │   │   │       │   │       ├───Update20170710
+│   │   │   │       │   │       └───Update20220114
+│   │   │   │       │   ├───_Updates
+│   │   │   │       │   │   ├───Update20160908
+│   │   │   │       │   │   ├───Update20161004
+│   │   │   │       │   │   ├───Update20170224
+│   │   │   │       │   │   ├───Update20170629
+│   │   │   │       │   │   ├───Update20170710
+│   │   │   │       │   │   ├───Update20180326
+│   │   │   │       │   │   ├───Update20180606
+│   │   │   │       │   │   ├───Update20180725
+│   │   │   │       │   │   ├───Update20181005
+│   │   │   │       │   │   └───Update20251104
+│   │   │   │       │   ├───_Zaloha
+│   │   │   │       │   │   ├───Zdroje
+│   │   │   │       │   │   │   └───_Zalohy
+│   │   │   │       │   │   │       ├───_Afinita
+│   │   │   │       │   │   │       └───_Merits
+│   │   │   │       │   │   │           └───KonverzePresAmapy
+│   │   │   │       │   │   │               ├───Davkova
+│   │   │   │       │   │   │               └───Jednotliva
+│   │   │   │       │   │   └───_Nepouzivat
+│   │   │   │       │   │       ├───Regional
+│   │   │   │       │   │       │   └───Log
+│   │   │   │       │   │       ├───Trains
+│   │   │   │       │   │       │   ├───Errors
+│   │   │   │       │   │       │   ├───Input
+│   │   │   │       │   │       │   ├───KMLIcons
+│   │   │   │       │   │       │   ├───Log
+│   │   │   │       │   │       │   ├───Output
+│   │   │   │       │   │       │   └───Processing
+│   │   │   │       │   │       ├───_bin
+│   │   │   │       │   │       │   ├───Errors
+│   │   │   │       │   │       │   ├───Input
+│   │   │   │       │   │       │   ├───KMLIcons
+│   │   │   │       │   │       │   ├───Log
+│   │   │   │       │   │       │   ├───Output
+│   │   │   │       │   │       │   ├───Processing
+│   │   │   │       │   │       │   └───ZalohaInput
+│   │   │   │       │   │       ├───_TrateVlakuCR
+│   │   │   │       │   │       │   ├───Hotove_kraje
+│   │   │   │       │   │       │   └───Zdroje
+│   │   │   │       │   │       └───_TrateVlakuSR
+│   │   │   │       │   │           ├───Hotove_kraje
+│   │   │   │       │   │           └───Zdroje
+│   │   │   │       │   └───_ZdrojVesely
+│   │   │   │       ├───_Bin
+│   │   │   │       │   ├───Trains
+│   │   │   │       │   │   ├───Input
+│   │   │   │       │   │   │   ├───VsechnyKML
+│   │   │   │       │   │   │   │   └───Zalohy
+│   │   │   │       │   │   │   └───Zalohy
+│   │   │   │       │   │   ├───KMLIcons
+│   │   │   │       │   │   ├───Output
+│   │   │   │       │   │   │   └───Pom
+│   │   │   │       │   │   └───Pracovni
+│   │   │   │       │   └───Zalohy
+│   │   │   │       └───_Data
+│   │   │   ├───Zilina
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zdroje
+│   │   │   │       │   └───Update20260219
+│   │   │   │       └───_bin
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───Zlin
+│   │   │   │   ├───TTM
+│   │   │   │   └───TTQ
+│   │   │   │       ├───Data
+│   │   │   │       ├───Zalohy
+│   │   │   │       ├───Zdroje
+│   │   │   │       │   ├───Update20160823
+│   │   │   │       │   ├───Update20180328
+│   │   │   │       │   ├───Update20230712
+│   │   │   │       │   ├───Update20250331
+│   │   │   │       │   ├───Update20260218
+│   │   │   │       │   └───Zalohy
+│   │   │   │       │       └───Zal20160823
+│   │   │   │       └───_BIN
+│   │   │   │           └───Regional
+│   │   │   │               ├───Input
+│   │   │   │               ├───KMLIcons
+│   │   │   │               ├───Output
+│   │   │   │               └───Pracovni
+│   │   │   ├───_KML2Magis
+│   │   │   ├───_MakeHranyTTQ
+│   │   │   │   └───Data
+│   │   │   ├───_RoadsAndPaths
+│   │   │   │   ├───bin
+│   │   │   │   │   ├───Env
+│   │   │   │   │   ├───GisInternals
+│   │   │   │   │   │   ├───bin
+│   │   │   │   │   │   │   ├───gdal
+│   │   │   │   │   │   │   │   ├───apps
+│   │   │   │   │   │   │   │   ├───csharp
+│   │   │   │   │   │   │   │   ├───java
+│   │   │   │   │   │   │   │   ├───plugins
+│   │   │   │   │   │   │   │   ├───plugins-external
+│   │   │   │   │   │   │   │   ├───plugins-optional
+│   │   │   │   │   │   │   │   │   └───sqlncli
+│   │   │   │   │   │   │   │   └───python
+│   │   │   │   │   │   │   │       ├───osgeo
+│   │   │   │   │   │   │   │       │   └───__pycache__
+│   │   │   │   │   │   │   │       ├───osgeo_utils
+│   │   │   │   │   │   │   │       │   ├───auxiliary
+│   │   │   │   │   │   │   │       │   └───samples
+│   │   │   │   │   │   │   │       └───scripts
+│   │   │   │   │   │   │   ├───gdal-data
+│   │   │   │   │   │   │   ├───ms
+│   │   │   │   │   │   │   │   ├───apps
+│   │   │   │   │   │   │   │   ├───csharp
+│   │   │   │   │   │   │   │   ├───java
+│   │   │   │   │   │   │   │   ├───plugins
+│   │   │   │   │   │   │   │   │   ├───mssql2008
+│   │   │   │   │   │   │   │   │   └───oci
+│   │   │   │   │   │   │   │   └───python
+│   │   │   │   │   │   │   └───proj9
+│   │   │   │   │   │   │       ├───apps
+│   │   │   │   │   │   │       └───share
+│   │   │   │   │   │   └───doc
+│   │   │   │   │   ├───MakeCurvesIntersections
+│   │   │   │   │   │   └───Src
+│   │   │   │   │   │       └───MakeCurvesIntersections
+│   │   │   │   │   │           ├───bin
+│   │   │   │   │   │           │   ├───Debug
+│   │   │   │   │   │           │   │   └───net10.0
+│   │   │   │   │   │           │   └───Release
+│   │   │   │   │   │           │       └───net10.0
+│   │   │   │   │   │           │           ├───publish
+│   │   │   │   │   │           │           │   └───win-x64
+│   │   │   │   │   │           │           └───win-x64
+│   │   │   │   │   │           ├───My Project
+│   │   │   │   │   │           │   └───PublishProfiles
+│   │   │   │   │   │           ├───obj
+│   │   │   │   │   │           │   ├───Debug
+│   │   │   │   │   │           │   │   └───net10.0
+│   │   │   │   │   │           │   │       ├───ref
+│   │   │   │   │   │           │   │       └───refint
+│   │   │   │   │   │           │   ├───publish
+│   │   │   │   │   │           │   │   └───win-x64
+│   │   │   │   │   │           │   └───Release
+│   │   │   │   │   │           │       └───net10.0
+│   │   │   │   │   │           │           ├───ref
+│   │   │   │   │   │           │           ├───refint
+│   │   │   │   │   │           │           └───win-x64
+│   │   │   │   │   │           │               ├───linked
+│   │   │   │   │   │           │               ├───R2R
+│   │   │   │   │   │           │               ├───ref
+│   │   │   │   │   │           │               └───refint
+│   │   │   │   │   │           └───Properties
+│   │   │   │   │   └───RoadsGeoConv
+│   │   │   │   │       ├───Backup
+│   │   │   │   │       ├───Proj
+│   │   │   │   │       │   ├───x64
+│   │   │   │   │       │   └───x86
+│   │   │   │   │       └───SRC
+│   │   │   │   │           └───RoadsGeoConv
+│   │   │   │   │               ├───packages
+│   │   │   │   │               │   ├───CommandLineParser.2.9.1
+│   │   │   │   │               │   │   └───lib
+│   │   │   │   │               │   │       ├───net40
+│   │   │   │   │               │   │       ├───net45
+│   │   │   │   │               │   │       ├───net461
+│   │   │   │   │               │   │       └───netstandard2.0
+│   │   │   │   │               │   ├───EGIS.Projections.4.8.9
+│   │   │   │   │               │   │   ├───build
+│   │   │   │   │               │   │   │   ├───net47
+│   │   │   │   │               │   │   │   ├───net6.0
+│   │   │   │   │               │   │   │   └───net6.0-windows
+│   │   │   │   │               │   │   ├───contentFiles
+│   │   │   │   │               │   │   │   └───any
+│   │   │   │   │               │   │   │       └───any
+│   │   │   │   │               │   │   │           └───Proj
+│   │   │   │   │               │   │   │               ├───x64
+│   │   │   │   │               │   │   │               └───x86
+│   │   │   │   │               │   │   └───lib
+│   │   │   │   │               │   │       ├───net47
+│   │   │   │   │               │   │       └───net6.0-windows7.0
+│   │   │   │   │               │   ├───EGIS.ShapeFileLib.4.8.9
+│   │   │   │   │               │   │   ├───build
+│   │   │   │   │               │   │   │   └───net47
+│   │   │   │   │               │   │   ├───content
+│   │   │   │   │               │   │   ├───contentFiles
+│   │   │   │   │               │   │   │   └───any
+│   │   │   │   │               │   │   │       ├───net47
+│   │   │   │   │               │   │   │       └───net6.0-windows7.0
+│   │   │   │   │               │   │   └───lib
+│   │   │   │   │               │   │       ├───net47
+│   │   │   │   │               │   │       └───net6.0-windows7.0
+│   │   │   │   │               │   └───Microsoft.CSharp.4.7.0
+│   │   │   │   │               │       ├───lib
+│   │   │   │   │               │       │   ├───MonoAndroid10
+│   │   │   │   │               │       │   ├───MonoTouch10
+│   │   │   │   │               │       │   ├───net45
+│   │   │   │   │               │       │   ├───netcore50
+│   │   │   │   │               │       │   ├───netcoreapp2.0
+│   │   │   │   │               │       │   ├───netstandard1.3
+│   │   │   │   │               │       │   ├───netstandard2.0
+│   │   │   │   │               │       │   ├───portable-net45+win8+wp8+wpa81
+│   │   │   │   │               │       │   ├───uap10.0.16299
+│   │   │   │   │               │       │   ├───win8
+│   │   │   │   │               │       │   ├───wp80
+│   │   │   │   │               │       │   ├───wpa81
+│   │   │   │   │               │       │   ├───xamarinios10
+│   │   │   │   │               │       │   ├───xamarinmac20
+│   │   │   │   │               │       │   ├───xamarintvos10
+│   │   │   │   │               │       │   └───xamarinwatchos10
+│   │   │   │   │               │       └───ref
+│   │   │   │   │               │           ├───MonoAndroid10
+│   │   │   │   │               │           ├───MonoTouch10
+│   │   │   │   │               │           ├───net45
+│   │   │   │   │               │           ├───netcore50
+│   │   │   │   │               │           │   ├───de
+│   │   │   │   │               │           │   ├───es
+│   │   │   │   │               │           │   ├───fr
+│   │   │   │   │               │           │   ├───it
+│   │   │   │   │               │           │   ├───ja
+│   │   │   │   │               │           │   ├───ko
+│   │   │   │   │               │           │   ├───ru
+│   │   │   │   │               │           │   ├───zh-hans
+│   │   │   │   │               │           │   └───zh-hant
+│   │   │   │   │               │           ├───netcoreapp2.0
+│   │   │   │   │               │           ├───netstandard1.0
+│   │   │   │   │               │           │   ├───de
+│   │   │   │   │               │           │   ├───es
+│   │   │   │   │               │           │   ├───fr
+│   │   │   │   │               │           │   ├───it
+│   │   │   │   │               │           │   ├───ja
+│   │   │   │   │               │           │   ├───ko
+│   │   │   │   │               │           │   ├───ru
+│   │   │   │   │               │           │   ├───zh-hans
+│   │   │   │   │               │           │   └───zh-hant
+│   │   │   │   │               │           ├───netstandard2.0
+│   │   │   │   │               │           ├───portable-net45+win8+wp8+wpa81
+│   │   │   │   │               │           ├───uap10.0.16299
+│   │   │   │   │               │           ├───win8
+│   │   │   │   │               │           ├───wp80
+│   │   │   │   │               │           ├───wpa81
+│   │   │   │   │               │           ├───xamarinios10
+│   │   │   │   │               │           ├───xamarinmac20
+│   │   │   │   │               │           ├───xamarintvos10
+│   │   │   │   │               │           └───xamarinwatchos10
+│   │   │   │   │               └───RoadsGeoConv
+│   │   │   │   │                   ├───bin
+│   │   │   │   │                   │   ├───Debug
+│   │   │   │   │                   │   │   ├───Proj
+│   │   │   │   │                   │   │   │   ├───x64
+│   │   │   │   │                   │   │   │   └───x86
+│   │   │   │   │                   │   │   └───shp
+│   │   │   │   │                   │   └───Release
+│   │   │   │   │                   │       └───Proj
+│   │   │   │   │                   │           ├───x64
+│   │   │   │   │                   │           └───x86
+│   │   │   │   │                   ├───Model
+│   │   │   │   │                   ├───obj
+│   │   │   │   │                   │   ├───Debug
+│   │   │   │   │                   │   │   └───TempPE
+│   │   │   │   │                   │   └───Release
+│   │   │   │   │                   │       └───TempPE
+│   │   │   │   │                   └───Properties
+│   │   │   │   ├───DataBusVlak
+│   │   │   │   │   ├───Krivky
+│   │   │   │   │   └───Paths
+│   │   │   │   ├───DataCR
+│   │   │   │   │   ├───Krivky
+│   │   │   │   │   ├───Paths
+│   │   │   │   │   ├───PathsMerged
+│   │   │   │   │   └───Stops
+│   │   │   │   ├───DataRegions
+│   │   │   │   │   ├───Bratislava
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───CesBud
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Decin
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───IDSJMK
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Jablonec
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Jihlava
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Kladno
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───LodeDUK
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───MarianskeLazne
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───ODIS
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Olomouc
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Pardubice
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───PID
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───PID_test
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Plzen
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───UstiNadLabem
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   ├───Zilina
+│   │   │   │   │   │   ├───ClipPolygon
+│   │   │   │   │   │   ├───Krivky
+│   │   │   │   │   │   ├───Paths
+│   │   │   │   │   │   └───Stops
+│   │   │   │   │   └───Zlin
+│   │   │   │   │       ├───ClipPolygon
+│   │   │   │   │       ├───Krivky
+│   │   │   │   │       ├───Paths
+│   │   │   │   │       └───Stops
+│   │   │   │   └───DataShared
+│   │   │   │       └───OsmRoadsAndPaths
+│   │   │   │           ├───CZ
+│   │   │   │           └───SK
+│   │   │   ├───_Sr70gps
+│   │   │   │   ├───ErrorLog
+│   │   │   │   ├───Input
+│   │   │   │   └───Output
+│   │   │   └───_Zalohy
+│   │   │       ├───Budapest
+│   │   │       │   ├───TTM
+│   │   │       │   └───TTQ
+│   │   │       │       ├───Data
+│   │   │       │       ├───Zdroj
+│   │   │       │       │   └───Zaloha
+│   │   │       │       └───_Bin
+│   │   │       │           ├───Errors
+│   │   │       │           └───Regional
+│   │   │       │               ├───Input
+│   │   │       │               ├───KMLIcons
+│   │   │       │               ├───Log
+│   │   │       │               ├───Output
+│   │   │       │               └───Processing
+│   │   │       ├───IZMIRBus
+│   │   │       │   ├───TTM
+│   │   │       │   └───Ttq
+│   │   │       │       ├───Data
+│   │   │       │       └───_BIN
+│   │   │       │           └───Regional
+│   │   │       │               ├───Input
+│   │   │       │               ├───KMLIcons
+│   │   │       │               ├───Output
+│   │   │       │               └───Pracovni
+│   │   │       ├───IzmirDrahy
+│   │   │       │   ├───TTM
+│   │   │       │   └───TTQ
+│   │   │       │       ├───Data
+│   │   │       │       │   └───TT_20170202
+│   │   │       │       ├───Zaloha
+│   │   │       │       └───_BIN
+│   │   │       │           └───Regional
+│   │   │       │               ├───Input
+│   │   │       │               ├───KMLIcons
+│   │   │       │               ├───Output
+│   │   │       │               └───Pracovni
+│   │   │       ├───JindrichuvHradecPokus
+│   │   │       │   └───Ttq
+│   │   │       │       ├───Data
+│   │   │       │       └───_Bin2
+│   │   │       │           └───Busy
+│   │   │       │               ├───Input
+│   │   │       │               ├───KMLIcons
+│   │   │       │               ├───Output
+│   │   │       │               └───Pracovni
+│   │   │       ├───LodeDUK
+│   │   │       │   ├───TTM
+│   │   │       │   └───TTQ
+│   │   │       │       ├───Data
+│   │   │       │       ├───Zdroj
+│   │   │       │       └───_Bin
+│   │   │       │           └───Regional
+│   │   │       │               ├───Input
+│   │   │       │               ├───KMLIcons
+│   │   │       │               ├───Output
+│   │   │       │               └───Pracovni
+│   │   │       ├───Lodz
+│   │   │       │   └───TTM
+│   │   │       ├───Trebic
+│   │   │       │   ├───TTM
+│   │   │       │   └───Ttq_asi_nejaky_pokus
+│   │   │       │       ├───Data
+│   │   │       │       ├───Zdroj
+│   │   │       │       └───_bin
+│   │   │       │           └───Regional
+│   │   │       │               ├───Errors
+│   │   │       │               ├───Input
+│   │   │       │               ├───KMLIcons
+│   │   │       │               ├───Log
+│   │   │       │               ├───Output
+│   │   │       │               └───Processing
+│   │   │       ├───VBB
+│   │   │       │   ├───TTM
+│   │   │       │   └───TTQ
+│   │   │       ├───VlakS
+│   │   │       ├───VOR
+│   │   │       │   └───TTM
+│   │   │       └───Wroclaw
+│   │   │           ├───TTM
+│   │   │           └───TTQ
+│   │   │               ├───Data
+│   │   │               ├───Pracovni
+│   │   │               └───_BIN
+│   │   │                   └───Regional
+│   │   │                       ├───Errors
+│   │   │                       ├───Input
+│   │   │                       ├───KMLIcons
+│   │   │                       ├───Log
+│   │   │                       ├───Output
+│   │   │                       └───Processing
+│   │   ├───mIDOS_ObjectsToBin
+│   │   │   ├───Classes
+│   │   │   │   └───Zaloha
+│   │   │   ├───CRWSLogAnalyzer
+│   │   │   │   ├───Zaloha20160614
+│   │   │   │   └───Zaloha20160628
+│   │   │   ├───CZ
+│   │   │   │   ├───New
+│   │   │   │   │   ├───Data
+│   │   │   │   │   │   ├───Objects
+│   │   │   │   │   │   ├───Pomocny
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   │       └───Objects
+│   │   │   │   │   ├───Generovani
+│   │   │   │   │   │   ├───Log
+│   │   │   │   │   │   ├───Output
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   └───Zalohy
+│   │   │   │   │       ├───Zaloha20250509
+│   │   │   │   │       ├───Zaloha20250516
+│   │   │   │   │       ├───Zaloha20250520
+│   │   │   │   │       ├───Zaloha20250530
+│   │   │   │   │       ├───Zaloha20250623
+│   │   │   │   │       ├───Zaloha20250624
+│   │   │   │   │       ├───Zaloha20250703
+│   │   │   │   │       ├───Zaloha20250710
+│   │   │   │   │       ├───Zaloha20250804
+│   │   │   │   │       ├───Zaloha20250820
+│   │   │   │   │       ├───Zaloha20250902
+│   │   │   │   │       ├───Zaloha20251006
+│   │   │   │   │       ├───Zaloha20251029
+│   │   │   │   │       ├───Zaloha20251106
+│   │   │   │   │       ├───Zaloha20251108
+│   │   │   │   │       ├───Zaloha20251126
+│   │   │   │   │       ├───Zaloha20251128
+│   │   │   │   │       ├───Zaloha20251210
+│   │   │   │   │       ├───Zaloha20251212
+│   │   │   │   │       ├───Zaloha20251215
+│   │   │   │   │       ├───Zaloha20251216
+│   │   │   │   │       ├───Zaloha20260106
+│   │   │   │   │       ├───Zaloha20260107
+│   │   │   │   │       ├───Zaloha20260119
+│   │   │   │   │       ├───Zaloha20260126
+│   │   │   │   │       ├───Zaloha20260219
+│   │   │   │   │       ├───Zaloha20260222
+│   │   │   │   │       ├───Zaloha20260228
+│   │   │   │   │       ├───Zaloha20260318
+│   │   │   │   │       ├───Zaloha20260323
+│   │   │   │   │       ├───Zaloha20260326
+│   │   │   │   │       ├───Zaloha20260409
+│   │   │   │   │       ├───Zaloha20260412
+│   │   │   │   │       ├───Zaloha20260423
+│   │   │   │   │       ├───Zaloha20260518
+│   │   │   │   │       ├───Zaloha20260527
+│   │   │   │   │       ├───Zaloha20260602
+│   │   │   │   │       ├───Zaloha20260608
+│   │   │   │   │       ├───Zaloha20260625
+│   │   │   │   │       ├───Zaloha20260703
+│   │   │   │   │       ├───Zaloha20260715
+│   │   │   │   │       ├───Zaloha20260803
+│   │   │   │   │       ├───Zaloha20260901
+│   │   │   │   │       ├───Zaloha20260909
+│   │   │   │   │       ├───Zaloha20260914
+│   │   │   │   │       └───_Generator_NEMAZAT
+│   │   │   │   │           ├───20190604
+│   │   │   │   │           ├───20250820
+│   │   │   │   │           ├───20260119
+│   │   │   │   │           └───20260608
+│   │   │   │   ├───Test
+│   │   │   │   │   ├───Data
+│   │   │   │   │   │   ├───Objects
+│   │   │   │   │   │   ├───Pomocny
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   ├───Generovani
+│   │   │   │   │   │   ├───Log
+│   │   │   │   │   │   ├───Output
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   └───Zalohy
+│   │   │   │   │       ├───Zaloha20260412
+│   │   │   │   │       ├───Zaloha20260423
+│   │   │   │   │       ├───Zaloha20260518
+│   │   │   │   │       ├───Zaloha20260527
+│   │   │   │   │       ├───Zaloha20260602
+│   │   │   │   │       ├───Zaloha20260605
+│   │   │   │   │       ├───Zaloha20260605_generator
+│   │   │   │   │       ├───Zaloha20260608
+│   │   │   │   │       ├───Zaloha20260625
+│   │   │   │   │       ├───Zaloha20260703
+│   │   │   │   │       ├───Zaloha20260715
+│   │   │   │   │       ├───Zaloha20260729
+│   │   │   │   │       ├───Zaloha20260803
+│   │   │   │   │       ├───Zaloha20260806
+│   │   │   │   │       ├───Zaloha20260810
+│   │   │   │   │       ├───Zaloha20260901
+│   │   │   │   │       ├───Zaloha20260909
+│   │   │   │   │       └───Zaloha20260914
+│   │   │   │   └───Zaloha
+│   │   │   │       ├───Old
+│   │   │   │       │   ├───Data
+│   │   │   │       │   │   ├───Objects
+│   │   │   │       │   │   └───Zaloha
+│   │   │   │       │   ├───Generovani
+│   │   │   │       │   │   ├───Log
+│   │   │   │       │   │   ├───Output
+│   │   │   │       │   │   └───Zaloha
+│   │   │   │       │   └───Zalohy
+│   │   │   │       │       ├───Zaloha20250509
+│   │   │   │       │       ├───Zaloha20250516
+│   │   │   │       │       ├───Zaloha20250520
+│   │   │   │       │       ├───Zaloha20250530
+│   │   │   │       │       ├───Zaloha20250623
+│   │   │   │       │       ├───Zaloha20250624
+│   │   │   │       │       ├───Zaloha20250703
+│   │   │   │       │       ├───Zaloha20250710
+│   │   │   │       │       ├───Zaloha20250804
+│   │   │   │       │       └───_Generator_NEMAZAT
+│   │   │   │       ├───Zaloha20260324
+│   │   │   │       └───Zaloha20260326
+│   │   │   ├───SK
+│   │   │   │   ├───New
+│   │   │   │   │   ├───Data
+│   │   │   │   │   │   ├───Objects
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   ├───Generovani
+│   │   │   │   │   │   ├───Log
+│   │   │   │   │   │   ├───Output
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   └───Zalohy
+│   │   │   │   │       ├───Zaloha20250509
+│   │   │   │   │       ├───Zaloha20250516
+│   │   │   │   │       ├───Zaloha20250520
+│   │   │   │   │       ├───Zaloha20250623
+│   │   │   │   │       ├───Zaloha20250626
+│   │   │   │   │       ├───Zaloha20250703
+│   │   │   │   │       ├───Zaloha20250710
+│   │   │   │   │       ├───Zaloha20250804
+│   │   │   │   │       ├───Zaloha20250806
+│   │   │   │   │       ├───Zaloha20250820
+│   │   │   │   │       ├───Zaloha20250902
+│   │   │   │   │       ├───Zaloha20250909
+│   │   │   │   │       ├───Zaloha20251006
+│   │   │   │   │       ├───Zaloha20251022
+│   │   │   │   │       ├───Zaloha20251030
+│   │   │   │   │       ├───Zaloha20251108
+│   │   │   │   │       ├───Zaloha20251202
+│   │   │   │   │       ├───Zaloha20251205
+│   │   │   │   │       ├───Zaloha20251215
+│   │   │   │   │       ├───Zaloha20251216
+│   │   │   │   │       ├───Zaloha20251218
+│   │   │   │   │       ├───Zaloha20260112
+│   │   │   │   │       ├───Zaloha20260119
+│   │   │   │   │       ├───Zaloha20260126
+│   │   │   │   │       ├───Zaloha20260219
+│   │   │   │   │       ├───Zaloha20260318
+│   │   │   │   │       ├───Zaloha20260323
+│   │   │   │   │       ├───Zaloha20260409
+│   │   │   │   │       ├───Zaloha20260412
+│   │   │   │   │       ├───Zaloha20260423
+│   │   │   │   │       ├───Zaloha20260518
+│   │   │   │   │       ├───Zaloha20260527
+│   │   │   │   │       ├───Zaloha20260617
+│   │   │   │   │       ├───Zaloha20260618
+│   │   │   │   │       ├───Zaloha20260623
+│   │   │   │   │       ├───Zaloha20260625
+│   │   │   │   │       ├───Zaloha20260715
+│   │   │   │   │       ├───Zaloha20260803
+│   │   │   │   │       ├───Zaloha20260901
+│   │   │   │   │       ├───Zaloha20260914
+│   │   │   │   │       └───_Generator_NEMAZAT
+│   │   │   │   │           ├───20190604
+│   │   │   │   │           └───20250820
+│   │   │   │   ├───Test
+│   │   │   │   │   ├───Data
+│   │   │   │   │   │   ├───Objects
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   ├───Generovani
+│   │   │   │   │   │   ├───Log
+│   │   │   │   │   │   ├───Output
+│   │   │   │   │   │   └───Zaloha
+│   │   │   │   │   └───Zalohy
+│   │   │   │   │       ├───Zaloha20251030
+│   │   │   │   │       ├───Zaloha20251108
+│   │   │   │   │       ├───Zaloha20251126
+│   │   │   │   │       ├───Zaloha20251202
+│   │   │   │   │       ├───Zaloha20251205
+│   │   │   │   │       ├───Zaloha20251215
+│   │   │   │   │       ├───Zaloha20251216
+│   │   │   │   │       ├───Zaloha20251218
+│   │   │   │   │       ├───Zaloha20260112
+│   │   │   │   │       ├───Zaloha20260119
+│   │   │   │   │       ├───Zaloha20260126
+│   │   │   │   │       ├───Zaloha20260219
+│   │   │   │   │       ├───Zaloha20260318
+│   │   │   │   │       ├───Zaloha20260323
+│   │   │   │   │       ├───Zaloha20260324
+│   │   │   │   │       ├───Zaloha20260409
+│   │   │   │   │       ├───Zaloha20260412
+│   │   │   │   │       ├───Zaloha20260423
+│   │   │   │   │       ├───Zaloha20260518
+│   │   │   │   │       ├───Zaloha20260527
+│   │   │   │   │       ├───Zaloha20260617
+│   │   │   │   │       ├───Zaloha20260618
+│   │   │   │   │       ├───Zaloha20260623
+│   │   │   │   │       ├───Zaloha20260625
+│   │   │   │   │       ├───Zaloha20260715
+│   │   │   │   │       ├───Zaloha20260722
+│   │   │   │   │       ├───Zaloha20260729
+│   │   │   │   │       ├───Zaloha20260803
+│   │   │   │   │       ├───Zaloha20260901
+│   │   │   │   │       ├───Zaloha20260914
+│   │   │   │   │       └───_Generator_NEMAZAT
+│   │   │   │   │           ├───20190604
+│   │   │   │   │           ├───20250820
+│   │   │   │   │           └───20260617
+│   │   │   │   └───Zaloha
+│   │   │   │       └───Old
+│   │   │   │           ├───Data
+│   │   │   │           │   ├───Objects
+│   │   │   │           │   └───Zaloha
+│   │   │   │           ├───Generovani
+│   │   │   │           │   ├───Log
+│   │   │   │           │   ├───Output
+│   │   │   │           │   └───Zaloha
+│   │   │   │           └───Zalohy
+│   │   │   │               ├───Zaloha20250509
+│   │   │   │               ├───Zaloha20250516
+│   │   │   │               ├───Zaloha20250520
+│   │   │   │               ├───Zaloha20250623
+│   │   │   │               ├───Zaloha20250626
+│   │   │   │               ├───Zaloha20250703
+│   │   │   │               ├───Zaloha20250710
+│   │   │   │               ├───Zaloha20250804
+│   │   │   │               ├───Zaloha20250806
+│   │   │   │               └───_Generator_NEMAZAT
+│   │   │   ├───Zaloha
+│   │   │   ├───ZZZPom
+│   │   │   └───_ZdrojGenerator
+│   │   │       ├───GenerovaniOfflineDat
+│   │   │       │   ├───v2
+│   │   │       │   │   ├───bin
+│   │   │       │   │   ├───data
+│   │   │       │   │   │   ├───cz
+│   │   │       │   │   │   │   └───Objects
+│   │   │       │   │   │   └───sk
+│   │   │       │   │   │       └───Objects
+│   │   │       │   │   └───log
+│   │   │       │   └───v3
+│   │   │       │       ├───bin
+│   │   │       │       ├───data
+│   │   │       │       │   ├───cz
+│   │   │       │       │   │   └───Objects
+│   │   │       │       │   └───sk
+│   │   │       │       │       └───Objects
+│   │   │       │       └───log
+│   │   │       └───Zalohy
+│   │   ├───ODIS
+│   │   │   ├───Mapy
+│   │   │   │   ├───1- Zastavky
+│   │   │   │   └───2 - TTQ
+│   │   │   └───ZdrojoveSoubory
+│   │   ├───Old
+│   │   │   ├───IdsJmk
+│   │   │   │   └───NaseReseni
+│   │   │   ├───ODIS
+│   │   │   │   └───CODIS
+│   │   │   │       ├───css
+│   │   │   │       └───images
+│   │   │   ├───PID
+│   │   │   │   └───Pid_vk
+│   │   │   └───ZdrojeODIS
+│   │   ├───PidAkt
+│   │   │   ├───20260909
+│   │   │   ├───20260911
+│   │   │   ├───20260912
+│   │   │   └───20260914
+│   │   ├───StationsCity
+│   │   │   └───SqlServer
+│   │   │       └───22.4.5.1
+│   │   │           ├───coreclr
+│   │   │           │   ├───de
+│   │   │           │   ├───es
+│   │   │           │   ├───fr
+│   │   │           │   ├───it
+│   │   │           │   ├───ja
+│   │   │           │   ├───ko
+│   │   │           │   ├───pt-BR
+│   │   │           │   ├───ru
+│   │   │           │   ├───runtimes
+│   │   │           │   │   ├───unix
+│   │   │           │   │   │   └───lib
+│   │   │           │   │   │       ├───net6.0
+│   │   │           │   │   │       └───net8.0
+│   │   │           │   │   └───win
+│   │   │           │   │       └───lib
+│   │   │           │   │           ├───net6.0
+│   │   │           │   │           │   ├───win-x64
+│   │   │           │   │           │   └───win-x86
+│   │   │           │   │           └───net8.0
+│   │   │           │   ├───zh-Hans
+│   │   │           │   └───zh-Hant
+│   │   │           ├───de
+│   │   │           ├───en
+│   │   │           ├───es
+│   │   │           ├───fr
+│   │   │           ├───it
+│   │   │           ├───ja
+│   │   │           ├───ko
+│   │   │           ├───pt-BR
+│   │   │           ├───ru
+│   │   │           ├───zh-Hans
+│   │   │           └───zh-Hant
+│   │   ├───TTK
+│   │   │   ├───Adaptech
+│   │   │   ├───Cenek
+│   │   │   │   ├───Kiosk
+│   │   │   │   └───tt2xml
+│   │   │   ├───CNS
+│   │   │   ├───CSADPrahaHolding
+│   │   │   ├───DPP
+│   │   │   ├───DPPraha_AsiKiosky
+│   │   │   ├───idos.cz_old
+│   │   │   ├───KioskyCHAPS
+│   │   │   ├───ODP
+│   │   │   ├───PPC
+│   │   │   │   ├───2006-2007
+│   │   │   │   └───2007-2008
+│   │   │   ├───SVT
+│   │   │   ├───Tomana
+│   │   │   ├───TT_DO
+│   │   │   ├───UNIPOK
+│   │   │   ├───vlak.cz
+│   │   │   └───_VyrobaDat
+│   │   ├───Vesely
+│   │   │   ├───Přeshraniční_SR_26
+│   │   │   │   └───Zaloha
+│   │   │   ├───Přeshraniční_ČR_26
+│   │   │   │   └───Zaloha
+│   │   │   └───VlakE_26
+│   │   ├───VlakE_PPC_25
+│   │   │   └───Zalohy
+│   │   ├───VlakE_PPC_26
+│   │   │   └───Zalohy
+│   │   ├───ZalohaBusODIS
+│   │   ├───Zalohy_Ruzne
+│   │   │   ├───BusBORS
+│   │   │   ├───BusCO_18
+│   │   │   ├───BusPL_10
+│   │   │   ├───BusSkCzO_18
+│   │   │   ├───BusUsteckeSluzby
+│   │   │   ├───Data_IDS
+│   │   │   │   └───Bid
+│   │   │   │       ├───BusBID_14
+│   │   │   │       └───VlakBID_14
+│   │   │   ├───DemoBus
+│   │   │   ├───DemoVlak
+│   │   │   ├───Dublin
+│   │   │   ├───eShop
+│   │   │   │   └───Záloha
+│   │   │   ├───IDSJMK_Pokus
+│   │   │   ├───MD_SK_BR
+│   │   │   ├───MD_SK_DL
+│   │   │   ├───MD_SK_PU
+│   │   │   ├───MD_SK_SD
+│   │   │   ├───MD_SK_SL
+│   │   │   ├───MD_SK_ZH
+│   │   │   ├───Mhd_BE
+│   │   │   ├───Mhd_Caslav
+│   │   │   ├───Mhd_KH
+│   │   │   ├───Mhd_ME
+│   │   │   ├───MHD_Mikulov
+│   │   │   ├───Mhd_NB
+│   │   │   ├───Mhd_Neratovice
+│   │   │   ├───Mhd_TP
+│   │   │   ├───Mhd_TR
+│   │   │   ├───MHD_TrebechovicePodOrebem
+│   │   │   ├───Mhd_VYdot
+│   │   │   ├───Mhd_VY_IDSJMK
+│   │   │   ├───Mhd_Zamberk
+│   │   │   ├───Mhd_ZL
+│   │   │   │   └───_old
+│   │   │   ├───Obrazky
+│   │   │   │   └───TTS
+│   │   │   │       ├───2007
+│   │   │   │       └───2008
+│   │   │   ├───Old
+│   │   │   │   ├───Brno
+│   │   │   │   ├───BusConnex
+│   │   │   │   ├───CSA
+│   │   │   │   ├───CSL
+│   │   │   │   │   └───bak
+│   │   │   │   │       └───bak
+│   │   │   │   ├───MD_SK_MA
+│   │   │   │   ├───MD_SK_PK
+│   │   │   │   ├───MD_SK_PU
+│   │   │   │   ├───Mhd_BK
+│   │   │   │   ├───Mhd_HO
+│   │   │   │   ├───Mhd_VY
+│   │   │   │   ├───Pid_PPC
+│   │   │   │   ├───SslL
+│   │   │   │   ├───VlakConnex
+│   │   │   │   ├───VlakConnex_04
+│   │   │   │   ├───VlakPID_BAK
+│   │   │   │   │   └───Puvodni
+│   │   │   │   └───zaloha02
+│   │   │   ├───SetupData
+│   │   │   ├───TTTxt
+│   │   │   ├───VlakPortugalsko_21
+│   │   │   ├───VlakPortugalsko_22
+│   │   │   ├───ZalohaCRWS
+│   │   │   │   └───20231018
+│   │   │   │       └───Ostra
+│   │   │   ├───ZalohaDat
+│   │   │   │   ├───PID_CD
+│   │   │   │   ├───SSL
+│   │   │   │   │   ├───S heslem
+│   │   │   │   │   └───zaloha
+│   │   │   │   │       ├───2000
+│   │   │   │   │       ├───2001
+│   │   │   │   │       │   └───bak
+│   │   │   │   │       ├───2002
+│   │   │   │   │       └───2003
+│   │   │   │   └───Vlak_eShop
+│   │   │   │       ├───VlakEShop_CDTip_11
+│   │   │   │       ├───VlakEShop_CDTip_Test_11
+│   │   │   │       ├───VlakEShop_ETiket_11
+│   │   │   │       └───VlakEShop_ETiket_Test_11
+│   │   │   ├───ZalohaDavekDataIDS
+│   │   │   └───_cp
+│   │   └───_NeProdukce
+│   │       └───Dump
+│   ├───TT
+│   ├───TTbmp
+│   │   └───Zalohy
+│   ├───TTcom.ini
+│   │   ├───CP
+│   │   │   └───prechod
+│   │   ├───IDOS
+│   │   │   └───prechod
+│   │   ├───intranet
+│   │   └───Orange
+│   │       └───prechod
+│   ├───TTE
+│   ├───TTOdis
+│   ├───TTOdis_W2K
+│   ├───TTOld
+│   ├───TTS
+│   ├───TTS_ELIS
+│   ├───TTtxt
+│   │   └───ST2
+│   ├───TTtxtSK
+│   │   └───ST2
+│   ├───TTWS.configy
+│   │   ├───sms
+│   │   │   └───zal
+│   │   ├───TTWS2
+│   │   └───wap
+│   │       └───zal
+│   ├───TT_old
+│   ├───Tt_W2K
+│   ├───Tt_W98
+│   ├───Tt_WXP
+│   ├───VlakC_26
+│   │   └───C1
+│   ├───VlakE_26
+│   │   └───Pom
+│   ├───VlakE_SK_26
+│   ├───VlakINISS_26
+│   ├───VlakMAVIS
+│   │   ├───Mavis_Arriva
+│   │   │   └───zaloha
+│   │   ├───Mavis_dalk
+│   │   ├───Mavis_RegioJet
+│   │   │   └───zaloha
+│   │   ├───Mavis_SV
+│   │   ├───TXT
+│   │   ├───Zaloha
+│   │   └───ZmenyIDS
+│   ├───VlakSk_26
+│   ├───VlakSV_26
+│   ├───VlakUNIPAJ_26
+│   ├───VlakVykonySk_26
+│   ├───VlakVykony_26
+│   ├───Vlak_eShop
+│   │   ├───VlakEShop_CDZvlVlaky_26
+│   │   ├───VlakEShop_CDZvlVlaky_Test_26
+│   │   ├───VlakEShop_CD_ALL_26
+│   │   │   └───Pom
+│   │   ├───VlakEShop_CD_ALL_NT_26
+│   │   ├───VlakEShop_CD_ALL_NT_Test_26
+│   │   ├───VlakEShop_CD_ALL_Test_26
+│   │   │   └───Pom
+│   │   ├───VlakEShop_CD_Auto_26
+│   │   ├───VlakEShop_CD_Auto_Test_26
+│   │   ├───VlakUNIPOK_CD_ALL_26
+│   │   │   └───Pom
+│   │   └───VlakUNIPOK_CD_ALL_Test_26
+│   │       └───Pom
+│   ├───ZalohaTT
+│   │   ├───20210419
+│   │   ├───BusPL_SIP
+│   │   ├───Fonty
+│   │   ├───Mhd_BM
+│   │   ├───ZalohaPRT20181009
+│   │   └───ZalohaVlakVykonyNEMAZAT
+│   ├───ZalohaTTEXE
+│   │   └───20250108
+│   ├───Zalohy_JRCD
+│   │   ├───JRCD_11
+│   │   ├───JRCD_12
+│   │   ├───Jrcd_13
+│   │   ├───Jrcd_14
+│   │   ├───Jrcd_15
+│   │   ├───Jrcd_16
+│   │   ├───Jrcd_17
+│   │   ├───Jrcd_18
+│   │   ├───Jrcd_19
+│   │   ├───Jrcd_20
+│   │   ├───Jrcd_21
+│   │   ├───Jrcd_22
+│   │   └───JRCD_23
+│   └───ZastSK
+└───TTSetup
+    ├───INNOSetup
+    │   └───IDOS
+    │       ├───ScriptFiles
+    │       │   ├───cesbud
+    │       │   ├───cz
+    │       │   ├───idsjmk
+    │       │   ├───intranet
+    │       │   ├───jrcd
+    │       │   ├───odis
+    │       │   ├───pisek
+    │       │   └───sk
+    │       ├───SetupFiles
+    │       │   ├───cesbud
+    │       │   ├───cz
+    │       │   ├───idsjmk
+    │       │   ├───intranet
+    │       │   ├───jinhrad
+    │       │   ├───jrcd
+    │       │   ├───odis
+    │       │   ├───pisek
+    │       │   ├───sk
+    │       │   └───_Zalohy
+    │       │       └───cz
+    │       └───Zalohy
+    └───Univ26
+        └───Windows
+            ├───CD
+            └───Disketa
+PS R:\TTData>

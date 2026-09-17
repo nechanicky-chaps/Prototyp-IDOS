@@ -1,0 +1,5732 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Služba eShopWS - prodejní API",
+    "description": "Programové rozhraní služby eShopWS",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v2"
+    }
+  ],
+  "paths": {
+    "/basket/create": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Vytvoření nového košíku.",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "description": "ID přihlášeného zákazníka.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vrací ID nově vytvořeného košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBasketResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBasketResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBasketResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/add": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Přidání cenové nabídky do košíku.\r\nV košíku nelze kombinovat běžné a speciální cenové nabídky.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na přidání cenové nabídky do košíku.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToBasketRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToBasketRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToBasketRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/addSpecial": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Přidání speciální cenové nabídky do košíku.\r\nV košíku nelze kombinovat běžné a speciální cenové nabídky.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na přidání speciální cenové nabídky do košíku.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToBasketSpecialRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToBasketSpecialRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToBasketSpecialRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/removeFromBasket/{priceHandle}": {
+      "delete": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Odstranění cenové nabídky z košíku.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Odstranění cenové nabídky bylo provedeno."
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/removeFromPriceOffer/{priceHandle}": {
+      "delete": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Odstranění části cenové nabídky.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na odstranění části cenové nabídky.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveFromPriceOfferRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveFromPriceOfferRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveFromPriceOfferRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/refresh": {
+      "get": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Přepočet cenových nabídek v košíku.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}": {
+      "get": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Získaní aktuálního obsahu košíku.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Zahození košíku, odstranění všech cenových nabídek nebo rezervací.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Zahození košíku bylo provedeno."
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/alternativeOffers/{priceHandle}": {
+      "get": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Získání alternativních nabídek pro danou cenovou nabídku.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data dané cenové nabídky včetně alternativních nabídek.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceOfferInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceOfferInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceOfferInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/setPassengers": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Změna cestujících pro všechny cenové nabídky v košíku.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek pro nastavení cestujících.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPassengersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPassengersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPassengersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku s akutalizovanými cenovými nabídkami.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/setTrainPlaces": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Změna místa nebo vozové třídy u jednoho spoje.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek pro nastavení místa nebo vozové třídy.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTrainPlacesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTrainPlacesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTrainPlacesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku s akutalizovanými cenovými nabídkami.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/computeBikes/{priceHandle}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Výpočet ceny za přepravu kol.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na výpočet ceny přepravy kol.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Informace o přepravě kol.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikesInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikesInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikesInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/setBikes/{priceHandle}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Nastavení přepravy kol.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na nastavení přepravy kol.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/computeDogs/{priceHandle}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Výpočet ceny za přepravu psů.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na výpočet ceny přepravy psů.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DogsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DogsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DogsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Informace o přepravě psů.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DogsInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DogsInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DogsInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/setDogs/{priceHandle}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Nastavení přepravy psů.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na nastavení přepravy psů.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DogsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DogsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DogsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/setActivation/{priceHandle}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Nastavení druhu aktivace IDS jízdenky.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na aktivaci jízdenky.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/setAlternativeOffer/{priceHandle}/{alternativeOfferId}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Nastavení alternativní nabídky.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "alternativeOfferId",
+            "in": "path",
+            "description": "ID alternativní nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/basket/{basketId}/priceOfferRollback/{priceHandle}": {
+      "post": {
+        "tags": [
+          "Basket"
+        ],
+        "summary": "Návrat k posledně korektně napočítané cenové nabídce.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceHandle",
+            "in": "path",
+            "description": "ID cenové nabídky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obsah košíku.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enum/specialOffers": {
+      "get": {
+        "tags": [
+          "Enum"
+        ],
+        "summary": "Konfigurace pro zakoupení speciálních nabídek.",
+        "parameters": [
+          {
+            "name": "versionTimestamp",
+            "in": "query",
+            "description": "Časové razítko verze poslední načtené konfigurace.\r\n            Pokud se na serveru nenachází novější verze, vrací se HTTP kód 304 (Not Modified) s prázdnou odpovědí.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecialOffersConfig"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecialOffersConfig"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecialOffersConfig"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not Modified"
+          }
+        }
+      }
+    },
+    "/payment/{basketId}/start": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Vytvoření nového košíku.",
+        "parameters": [
+          {
+            "name": "basketId",
+            "in": "path",
+            "description": "ID košíku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Parametry požadavku na zahájení platby.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentStartRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentStartRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentStartRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vrací informace pro zahájení platby.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentStartResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentStartResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentStartResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refund/check": {
+      "post": {
+        "tags": [
+          "Refund"
+        ],
+        "summary": "Výpočet možností vrácení jízdenky.",
+        "parameters": [
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na výpočet možností vrácení jízdenky.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComputePossibleRefundRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComputePossibleRefundRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComputePossibleRefundRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Vrací bitovou masku dostupných vrácení. Viz výčet TicketService.Api.Enums.ReturnOperationMask.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refund/init": {
+      "post": {
+        "tags": [
+          "Refund"
+        ],
+        "summary": "Zahájení (inicializace) vrácení jízdenky.",
+        "parameters": [
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na zahájení vrácení jízdenky.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitRefundRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitRefundRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitRefundRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Vrací informace o zahájení vrácení jízdenky.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refund/release/{refundHandle}": {
+      "delete": {
+        "tags": [
+          "Refund"
+        ],
+        "summary": "Odvolání rozpracovaného vrácení jízdenky.",
+        "parameters": [
+          {
+            "name": "refundHandle",
+            "in": "path",
+            "description": "Identifikátor rozpracovaného vrácení jízdenky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Odvolání vrácení bylo provedeno."
+          }
+        }
+      }
+    },
+    "/refund/process/{refundHandle}": {
+      "post": {
+        "tags": [
+          "Refund"
+        ],
+        "summary": "Výpočet možností vrácení jízdenky.",
+        "parameters": [
+          {
+            "name": "refundHandle",
+            "in": "path",
+            "description": "Identifikátor rozpracovaného vrácení jízdenky.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vrací informace o návratce.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schema/trainSchema": {
+      "post": {
+        "tags": [
+          "Schema"
+        ],
+        "summary": "Vrátí plánek a třídy jednoho spoje cenové nabídky v košíku.",
+        "parameters": [
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na získaní plánku.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainSchemaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainSchemaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainSchemaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Data s plánky a třídami. Dle prodejního pluginu můžou být plánky schematické (`VehicleSchema`) nebo grafické (`VehicleBgSchema`)",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainSchemaInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainSchemaInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainSchemaInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schema/schemaImage/{imageId}": {
+      "get": {
+        "tags": [
+          "Schema"
+        ],
+        "summary": "Vrátí obrázek plánku v PNG formátu.",
+        "parameters": [
+          {
+            "name": "imageId",
+            "in": "path",
+            "description": "ID požadovaného obrázku plánku.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/schema/ticketTrainSchema": {
+      "post": {
+        "tags": [
+          "Schema"
+        ],
+        "summary": "Načtení plánku pro jeden spoj v rámci prodané jízdenky. Dostupné pouze když je u jízdenky nastaven příznak TicketSchemaEnabled.",
+        "parameters": [
+          {
+            "name": "X-Lang",
+            "in": "header",
+            "description": "Jazyk",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserId",
+            "in": "header",
+            "description": "ID uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-UserDesc",
+            "in": "header",
+            "description": "Popis uživatele",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Požadavek na získaní plánku u jízdenky.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketTrainSchemaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketTrainSchemaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketTrainSchemaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Data s plánky. Dle prodejního pluginu můžou být plánky schematické (`VehicleSchema`) nebo grafické (`VehicleBgSchema`)",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainSchemaInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainSchemaInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainSchemaInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActivationInfo": {
+        "required": [
+          "possibleActivationTypes"
+        ],
+        "type": "object",
+        "properties": {
+          "activationType": {
+            "type": "integer",
+            "description": "Zvolený typ aktivace.\r\nViz výčet ActivationType.",
+            "format": "int32",
+            "default": 0
+          },
+          "possibleActivationTypes": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Povolené druhy aktivace.\r\nViz výčet ActivationType.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o manuální / automatické aktivaci IDS jízdenky, aktuálně vybrané formě aktivace a možnosti výběru."
+      },
+      "ActivationRequest": {
+        "type": "object",
+        "properties": {
+          "activationType": {
+            "type": "integer",
+            "description": "Požadovaný druh aktivace dle výčtu TicketService.Api.Request.ActivationRequest.ActivationType.",
+            "format": "int32"
+          },
+          "back": {
+            "type": "boolean",
+            "description": "Příznak části ve směru zpět."
+          },
+          "connectionTrain": {
+            "type": "integer",
+            "description": "Index spoje v rámci spojení.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na aktivaci jízdenky."
+      },
+      "ActivationType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Způsob aktivace IDS jízdenky.\n\n0 = Automatic (Automatická aktivace v době odjezdu prvního spoje.)\n\n1 = Manual (Ruční odložená aktivace uživatelem ve vybraný moment.)",
+        "format": "int32",
+        "x-enumNames": [
+          "Automatic",
+          "Manual"
+        ],
+        "x-enum-descriptions": [
+          "Automatická aktivace v době odjezdu prvního spoje.",
+          "Ruční odložená aktivace uživatelem ve vybraný moment."
+        ]
+      },
+      "AddToBasketRequest": {
+        "required": [
+          "connectionHandleThere",
+          "connectionIdThere",
+          "priceOfferHandle"
+        ],
+        "type": "object",
+        "properties": {
+          "priceOfferHandle": {
+            "type": "string",
+            "description": "Handle spočítané cenové nabídky, která má být přidána do košíku.",
+            "nullable": true
+          },
+          "connectionHandleThere": {
+            "type": "integer",
+            "description": "Handle vyhledaného spojení ve směru tam.",
+            "format": "int32"
+          },
+          "connectionIdThere": {
+            "type": "integer",
+            "description": "ID vyhledaného spojení ve směru tam.",
+            "format": "int32"
+          },
+          "connectionHandleBack": {
+            "type": "integer",
+            "description": "Handle vyhledaného spojení ve směru zpět.",
+            "format": "int32",
+            "nullable": true
+          },
+          "connectionIdBack": {
+            "type": "integer",
+            "description": "ID vyhledaného spojení ve směru tam.",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na přidání cenové nabídky do košíku."
+      },
+      "AddToBasketSpecialRequest": {
+        "type": "object",
+        "properties": {
+          "standaloneRequests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StandaloneOfferRequest"
+            },
+            "description": "Žádosti o jízdenky bez vazby na spojení.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na přidání speciální nabídky do košíku."
+      },
+      "AlternativeOffer": {
+        "required": [
+          "description",
+          "descriptionDetails",
+          "offerID",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "offerID": {
+            "type": "string",
+            "description": "Identifikátor cenové nabídky.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Orientační cena.",
+            "format": "int32",
+            "default": -1
+          },
+          "title": {
+            "type": "string",
+            "description": "Název cenové nabídky.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Popis nabídky.",
+            "nullable": true
+          },
+          "descriptionDetails": {
+            "type": "string",
+            "description": "Detailní popis nabídky.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o alternativní ceové nabídce k danému spojení."
+      },
+      "ApiEnumExport": {
+        "required": [
+          "activationType",
+          "bgImageType",
+          "customerType",
+          "direction",
+          "offerFlags",
+          "partOfferFlags",
+          "passengerFlags",
+          "paymentType",
+          "placeDescFlags",
+          "placeFlags",
+          "reservationTypeId",
+          "ticketFlags",
+          "vehicleFlags"
+        ],
+        "type": "object",
+        "properties": {
+          "activationType": {
+            "$ref": "#/components/schemas/ActivationType"
+          },
+          "bgImageType": {
+            "$ref": "#/components/schemas/BgImageType"
+          },
+          "customerType": {
+            "$ref": "#/components/schemas/CustomerType"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/Direction"
+          },
+          "offerFlags": {
+            "$ref": "#/components/schemas/OfferFlags"
+          },
+          "partOfferFlags": {
+            "$ref": "#/components/schemas/PartOfferFlags"
+          },
+          "passengerFlags": {
+            "$ref": "#/components/schemas/PassengerFlags"
+          },
+          "paymentType": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "placeDescFlags": {
+            "$ref": "#/components/schemas/PlaceDescFlags"
+          },
+          "placeFlags": {
+            "$ref": "#/components/schemas/PlaceFlags"
+          },
+          "reservationTypeId": {
+            "$ref": "#/components/schemas/ReservationTypeId"
+          },
+          "ticketFlags": {
+            "$ref": "#/components/schemas/TicketFlags"
+          },
+          "vehicleFlags": {
+            "$ref": "#/components/schemas/VehicleFlags"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "Kód chyby.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": { },
+        "description": "Informace o chybě."
+      },
+      "ApplePayInitParams": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "supportedNetworks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "merchantCapabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Konfigurace pro spuštění ApplePay platby."
+      },
+      "BasketInfo": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Jednoznačný identifikátor košíku.",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "description": "Číslo objednávky. Nastavuje se až při zahájení platby.",
+            "format": "int64"
+          },
+          "paymentTime": {
+            "type": "string",
+            "description": "Datum a čas uhrazení košíku.",
+            "nullable": true
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketViewInfo"
+            },
+            "description": "Jízdenky v košíku.",
+            "nullable": true
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceOfferInfo"
+            },
+            "description": "Cenové nabídky v košíku.",
+            "nullable": true
+          },
+          "specialOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpecialOfferInfo"
+            },
+            "description": "Speciální cenové nabídky v košíku.",
+            "nullable": true
+          },
+          "changes": {
+            "type": "string",
+            "description": "Informace o změnách v košíku, při provádění operace s košíkem (změna cestujících, změna třídy, ...)",
+            "nullable": true
+          },
+          "errorInfo": {
+            "type": "string",
+            "description": "Informace o chybě, při provádění operace s košíkem (změna cestujících, změna třídy, ...)",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/BasketStatus"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o cenových nabídkách a jízdenkách v košíku."
+      },
+      "BasketStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "description": "Status košíku.\n\n0 = NotPaid (Založen (nezaplacen).\r\nNa začátku nebo po neúspěšné platbě.)\n\n1 = StartPay (Platba zahájena.)\n\n2 = Paid (Zaplacen.)\n\n3 = ToReturn (K vrácení.\r\nPo zaplacení košíku došlo k chybě při vytváření jízdenek. Zaplacené peníze budou vráceny zpět.)\n\n4 = Returned (Vráceno.\r\nZaplacené peníze vráceny zpět.)\n\n5 = ReturnError (Při vrácení peněz za zaplacený košík došlo k chybě.\r\nPeníze budou vráceny runčně.)",
+        "format": "int32",
+        "x-enumNames": [
+          "NotPaid",
+          "StartPay",
+          "Paid",
+          "ToReturn",
+          "Returned",
+          "ReturnError"
+        ],
+        "x-enum-descriptions": [
+          "Založen (nezaplacen).\r\nNa začátku nebo po neúspěšné platbě.",
+          "Platba zahájena.",
+          "Zaplacen.",
+          "K vrácení.\r\nPo zaplacení košíku došlo k chybě při vytváření jízdenek. Zaplacené peníze budou vráceny zpět.",
+          "Vráceno.\r\nZaplacené peníze vráceny zpět.",
+          "Při vrácení peněz za zaplacený košík došlo k chybě.\r\nPeníze budou vráceny runčně."
+        ]
+      },
+      "BgImageType": {
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "type": "integer",
+        "description": "Typ obrázku grafického plánku.\n\n1 = Background (Pozadí.)\n\n2 = Free (Volné sedačky.)\n\n4 = Selected (Vybrané sedačky.)\n\n8 = Occupied (Obsazené sedačky.)",
+        "format": "int32",
+        "x-enumNames": [
+          "Background",
+          "Free",
+          "Selected",
+          "Occupied"
+        ],
+        "x-enum-descriptions": [
+          "Pozadí.",
+          "Volné sedačky.",
+          "Vybrané sedačky.",
+          "Obsazené sedačky."
+        ]
+      },
+      "BgPlace": {
+        "type": "object",
+        "properties": {
+          "desc": {
+            "type": "integer",
+            "description": "Indetifikátor místa.",
+            "format": "int32"
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky místa.\r\nViz výčet PlaceFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "class": {
+            "type": "string",
+            "description": "Třída místa.",
+            "nullable": true
+          },
+          "x": {
+            "type": "number",
+            "description": "Souřadnice od levého okraje obrázku.",
+            "format": "float"
+          },
+          "y": {
+            "type": "number",
+            "description": "Souřadnice od vrchního okraje obrázku.",
+            "format": "float"
+          },
+          "width": {
+            "type": "number",
+            "description": "Šířka sedačky.",
+            "format": "float"
+          },
+          "height": {
+            "type": "number",
+            "description": "Výška sedačky.",
+            "format": "float"
+          },
+          "info": {
+            "type": "string",
+            "description": "Informace pro cestujícího o vybrané sedačce.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Název místa. Pokud název místa neexistuje, tak je hodnota totožná s Desc.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o jednom místě v grafickém plánku vozu."
+      },
+      "BgSchemaParam": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "integer",
+            "description": "Šířka vozu, podle toho se vygeneruje příslušná velikost obrázku schématu.\r\nAplikace poté musí přepočítat souřadnice, protože obrázek nebude přesně odpovídat zvolené šířce,\r\nale bude pouze několik vybraných šířek (320, 640, 960, případně 1280).",
+            "format": "int32"
+          },
+          "maxHeight": {
+            "type": "integer",
+            "description": "Maximální výška, kterou může obrázek mít (≤0 - nedefinováno a řídí se jen podle šířky).\r\nJe to hlavně omezení kvůli tomu, kdyby nějaký plánek byl moc vysoký a koncová zařízení by měla s velikostí problémy\r\n(dostupné hodnoty typicky 960, 1200, 2048, 3072, 4096).",
+            "format": "int32"
+          },
+          "orientation": {
+            "type": "integer",
+            "description": "Požadavek na orientaci schématu (dle výčtu TicketService.Api.Enums.VehicleOrientation).",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "Parametry pro grafické plánky - rozměry a orientace. Nutno vyplnit pouze pro dopravce, kteří poskytují grafické plánky ve formě obrázků."
+      },
+      "BikesInfo": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Počet přepravovaných kol.",
+            "format": "int32"
+          },
+          "maxCount": {
+            "type": "integer",
+            "description": "Maximální počet kol, které lze přepravit.\r\nPoložka není plněna při výpočtu ceny v metodě ComputeBikes.",
+            "format": "int32"
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena za přepravu kol v setinách měny.",
+            "format": "int32"
+          },
+          "isPartial": {
+            "type": "boolean",
+            "description": "Příznak, že se jedná o neúplnou cenu.\r\nNěkterá api dopravců neumožňují zjistit samostatnou cenu za přepravu kol.",
+            "default": false
+          },
+          "reservationTypeEnabled": {
+            "type": "boolean",
+            "description": "Příznak, zda je možné zobrazit volbu \"pokud možno rezervovat místo (jen pro spoje s možností rezervace)\".\r\nPoložka není plněna při výpočtu ceny v metodě ComputeBikes.",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o přepravě kol."
+      },
+      "BikesRequest": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Počet přepravovaných kol.",
+            "format": "int32"
+          },
+          "reservationType": {
+            "type": "integer",
+            "description": "Preferovaný způsob rezervace kola.\r\nViz výčet BikesReservationType.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek pro přepravu kol."
+      },
+      "BuyerInfo": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Jméno kupujícího.",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "description": "Příjmení kupujícího.",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Telefon kupujícího.",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Email kupujícího.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o kupujícícím."
+      },
+      "ClearingInfo": {
+        "type": "object",
+        "properties": {
+          "customerProfile": {
+            "type": "integer",
+            "description": "Profil dokladu (zákazníka) - typ slevy / věkové kategorie. Zkratka CP.",
+            "format": "int32"
+          },
+          "tariffProfile": {
+            "type": "integer",
+            "description": "Tarifní profil - typ tarifu, nap5. jednotlivé jízdné nebo jednodenní. Zkratka TP.",
+            "format": "int32"
+          },
+          "zones": {
+            "type": "string",
+            "description": "Seznam zón, ve kterých je daná IDS jízdenka platná. Oddělené čárkou.",
+            "nullable": true
+          },
+          "passengerCount": {
+            "type": "integer",
+            "description": "Počet cestujících daného CP/TP, pro které je jízdenka platná.",
+            "format": "int32",
+            "default": 0
+          },
+          "journeyType": {
+            "type": "integer",
+            "description": "Typ směrování.",
+            "format": "int32",
+            "default": 0
+          },
+          "carrierNumber": {
+            "type": "integer",
+            "description": "Číslo dopravce u prvního spoje.\r\nPoložka pro clearing IDPK.",
+            "format": "int32",
+            "default": 0
+          },
+          "tariffUnits": {
+            "type": "integer",
+            "description": "Počet tarifních jednic.",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dodatečné informace o IDS jízdenky pro potřeby clearingových center."
+      },
+      "ComputePossibleRefundRequest": {
+        "required": [
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "string",
+            "description": "Kód IDOS jízdenky.",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "description": "ID zákazníka.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na výpočet možností vrácení jízdenky."
+      },
+      "ConnectionInfo": {
+        "type": "object",
+        "properties": {
+          "combId": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "distance": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeLength": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "$ref": "#/components/schemas/RemarksInfo"
+          },
+          "trains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionTrainInfo"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - info o jednom spojeni."
+      },
+      "ConnectionPartPriceOfferInfo": {
+        "required": [
+          "trains"
+        ],
+        "type": "object",
+        "properties": {
+          "therePart": {
+            "type": "integer",
+            "description": "Index spřažené části ve směru tam.\r\nJen u části zpět. Pokud je uveden, indikuje, že ceny zahrnují i příslušnou část tam.",
+            "format": "int32",
+            "default": -1
+          },
+          "backPart": {
+            "type": "integer",
+            "description": "Index spřažené části ve směru zpět.\r\nJen u casti tam. Z obou TherePart a BackPart smí být vyplněn pouze jeden.",
+            "format": "int32",
+            "default": -1
+          },
+          "classes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Nabídka tříd, jsou-li k dispozici.\r\nPokud má třída id a název, je v řetězci naformátováno id$nazev,\r\nvšude jinde se pak předpokládá použití id, kromě těch míst, kde se bude třída zobrazovat, tam zas bude jen název.",
+            "nullable": true
+          },
+          "class": {
+            "type": "string",
+            "description": "Vybrana třída. Pokud má třída id a název, vrací se zde pouze id.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Orientační cena jízdy v setinách měny (-1 = nedefinováno).\r\nU směru zpět může zahrnovat obousměrné jízdenky.",
+            "format": "int32",
+            "default": -1
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionPrice"
+            },
+            "description": "Cenová nabídka - jednotlivé jízdenky.\r\nU směru zpět může zahrnovat obousměrné jízdenky.",
+            "nullable": true
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna.\r\nViz výčet Currency.",
+            "format": "int32",
+            "default": 0
+          },
+          "trains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionTrainPriceOfferInfo"
+            },
+            "description": "Podrobnosti o jednotlivých spojích (plánky a navržená místa).",
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky cenové nabídky pro část spojení.\r\nViz výčet PartOfferFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "errinfo": {
+            "type": "string",
+            "description": "Bližší popis chyby pro příznaky v Flags.\r\nSměr (T,B),index vlaku,vůz,místo 1,místo 2. Vůz a místa mohou případně chybět.",
+            "nullable": true
+          },
+          "changes": {
+            "type": "string",
+            "description": "Upozornění pro klienta o nastané změně při přepočtě ceny (např. o změny ceny).",
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "description": "Identifikátor pluginu, který spočítal cenovou nabídku.",
+            "nullable": true
+          },
+          "activationInfo": {
+            "$ref": "#/components/schemas/ActivationInfo"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Cenová nabídka k části spojení (jednomu nebo více spojům)."
+      },
+      "ConnectionPrice": {
+        "required": [
+          "fareType"
+        ],
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "integer",
+            "description": "Směr jízdenky.\r\nViz výčet Direction.",
+            "format": "int32",
+            "default": 0
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena za jízdenku v setinách měny.",
+            "format": "int32",
+            "default": -1
+          },
+          "dph": {
+            "type": "string",
+            "description": "Snazba DPH.",
+            "nullable": true
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna.",
+            "format": "int32",
+            "default": 0
+          },
+          "tarCode": {
+            "type": "string",
+            "description": "Specifikace tarifu (interní kód).",
+            "nullable": true
+          },
+          "fareType": {
+            "type": "string",
+            "description": "Druh jízdného (k zobrazení a tisku).",
+            "nullable": true
+          },
+          "class": {
+            "type": "string",
+            "description": "Název třídy (k zobrazeni a tisku).",
+            "nullable": true
+          },
+          "warning": {
+            "type": "string",
+            "description": "Varování u jízdenky.",
+            "nullable": true
+          },
+          "tarInfo": {
+            "type": "string",
+            "description": "Přepravní podmínky.",
+            "nullable": true
+          },
+          "annul": {
+            "type": "string",
+            "description": "Podmínky vrácení. Neplní jedine ČD.",
+            "nullable": true
+          },
+          "ticketFlags": {
+            "type": "integer",
+            "description": "Příznaky jízdenky.\r\nViz výčet TicketFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "passengerId": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "ID druhu zákazníka.\r\nDimenze odpovídá počtu osob, kteří na jízdenku pojedou.",
+            "nullable": true
+          },
+          "reductionId": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Použitá sleva nebo 0.\r\nParalelní pole k PassengerId, smí být kratší.",
+            "nullable": true
+          },
+          "passengerIdx": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Index cestujícího ve skladbě (0..n-1 nebo -1 = neznámé).\r\nParalelní pole k PassengerId, smí být kratší.",
+            "nullable": true
+          },
+          "remThere": {
+            "type": "string",
+            "description": "Poznámka k tisku na jízdenku pro směr tam.",
+            "nullable": true
+          },
+          "remBack": {
+            "type": "string",
+            "description": "Poznámka k tisku na jízdenku pro směr zpět.",
+            "nullable": true
+          },
+          "copiesThere": {
+            "type": "integer",
+            "description": "Počet kopií jízdenky do PDF pro směr tam.",
+            "format": "int32",
+            "default": 0
+          },
+          "copiesBack": {
+            "type": "integer",
+            "description": "Počet kopií jízdenky do PDF pro směr zpět.",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "Jeden druh ceny (slevy) za jednu jízdenku (tj. obvykle za jednoho cestujícího na jedné části spojení).\r\nMůže odpovídat obousměrné jízdence - v tom případě odpovídá dvěma částem spojení, jedné tam a jedné zpet."
+      },
+      "ConnectionTrainInfo": {
+        "type": "object",
+        "properties": {
+          "trainData": {
+            "$ref": "#/components/schemas/TrainDataInfo"
+          },
+          "from": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "to": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dateTime1": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime2": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkDist": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "distance": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeLength": {
+            "type": "string",
+            "nullable": true
+          },
+          "delay": {
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          "delayText": {
+            "type": "string",
+            "nullable": true
+          },
+          "fromTable": {
+            "type": "boolean",
+            "default": false
+          },
+          "delayQuery": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasPreReservation": {
+            "type": "boolean",
+            "default": false
+          },
+          "stdChange": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "linkDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "occupancyLevel": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "trCategory": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trSubCategory": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - informace o vlaku na spojeni."
+      },
+      "ConnectionTrainPriceOfferInfo": {
+        "type": "object",
+        "properties": {
+          "connectionTrain": {
+            "type": "integer",
+            "description": "Index spoje v rámci spojení.",
+            "format": "int32",
+            "default": -1
+          },
+          "freePlaces": {
+            "type": "integer",
+            "description": "Orientační počet volných míst (-1 = nedefinováno).",
+            "format": "int32",
+            "default": -1
+          },
+          "vehicleSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleSchema"
+            },
+            "description": "Schematické plánky vozů.",
+            "nullable": true
+          },
+          "vehicleBgSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleBgSchema"
+            },
+            "description": "Grafické plánky vozů.",
+            "nullable": true
+          },
+          "vehicleNum": {
+            "type": "string",
+            "description": "Rezervační číslo vozu.",
+            "nullable": true
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Seznam čísel míst.",
+            "nullable": true
+          },
+          "placesDesc": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaceDesc"
+            },
+            "description": "Rozšířený popis míst.",
+            "nullable": true
+          },
+          "passengers": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Index cestujícího ve skladbě.\r\nParalelní pole k Places, smí být kratší (0..n-1 nebo -1 = neznámé).",
+            "nullable": true
+          },
+          "reservationsInfo": {
+            "$ref": "#/components/schemas/PriceOfferReservationsInfo"
+          },
+          "reservationType": {
+            "type": "integer",
+            "description": "Vybraný typ rezervace.",
+            "format": "int32"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaceDetail"
+            },
+            "description": "Detailní informace o zvoleném místu.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Podrobnosti o jednom spoji pro ConnectionPartPriceOfferInfo (plánky a navržená místa)."
+      },
+      "CreateBasketResponse": {
+        "required": [
+          "basketId"
+        ],
+        "type": "object",
+        "properties": {
+          "basketId": {
+            "type": "string",
+            "description": "Jednoznačný identifikátor košíku.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o nově vytvořeném košíku."
+      },
+      "CustomerType": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "description": "Typ zákazníka.\n\n1 = EshopWS (Náš zakazník.)\n\n2 = Google (Externí systémy - Google.)\n\n3 = Facebook (Externí systémy - Facebook.)\n\n4 = Apple (Externí systémy - Apple.)",
+        "format": "int32",
+        "x-enumNames": [
+          "EshopWS",
+          "Google",
+          "Facebook",
+          "Apple"
+        ],
+        "x-enum-descriptions": [
+          "Náš zakazník.",
+          "Externí systémy - Google.",
+          "Externí systémy - Facebook.",
+          "Externí systémy - Apple."
+        ]
+      },
+      "Direction": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "Směr jízdenky.\n\n0 = Single (Jednosměrná jízdenka.)\n\n1 = There (Jízdenka pro směr tam.)\n\n2 = Back (Jízdenka pro směr zpět.)\n\n3 = Both (Obousměrná jízdenka.)",
+        "format": "int32",
+        "x-enumNames": [
+          "Single",
+          "There",
+          "Back",
+          "Both"
+        ],
+        "x-enum-descriptions": [
+          "Jednosměrná jízdenka.",
+          "Jízdenka pro směr tam.",
+          "Jízdenka pro směr zpět.",
+          "Obousměrná jízdenka."
+        ]
+      },
+      "DogsInfo": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Počet přepravovaných psů.",
+            "format": "int32"
+          },
+          "maxCount": {
+            "type": "integer",
+            "description": "Maximální počet psů, které lze přepravit.\r\nPoložka není plněna při výpočtu ceny v metodě ComputeDogs.",
+            "format": "int32"
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena za přepravu psů v setinách měny.",
+            "format": "int32"
+          },
+          "isPartial": {
+            "type": "boolean",
+            "description": "Příznak, že se jedná o neúplnou cenu.\r\nNěkterá api dopravců neumožňují zjistit samostatnou cenu za přepravu psů.",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o přepravě psů."
+      },
+      "DogsRequest": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Počet přepravovaných psů.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek pro přepravu psů."
+      },
+      "FixedCodeInfo": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "ttText": {
+            "type": "string",
+            "nullable": true
+          },
+          "desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "descExt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GooglePayCheckoutParams": {
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "apiVersionMinor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentMethodType": {
+            "type": "string",
+            "nullable": true
+          },
+          "allowedCardNetworks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "allowedCardAuthMethods": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "assuranceDetailsRequired": {
+            "type": "boolean"
+          },
+          "billingAddressRequired": {
+            "type": "boolean"
+          },
+          "billingAddressParametersFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "tokenizationSpecificationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "gateway": {
+            "type": "string",
+            "nullable": true
+          },
+          "gatewayMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "googlepayMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantName": {
+            "type": "string",
+            "nullable": true
+          },
+          "environment": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalPriceStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Konfigurace pro spuštění google pay platby."
+      },
+      "IdsInfo": {
+        "type": "object",
+        "properties": {
+          "activationType": {
+            "type": "integer",
+            "description": "Druh aktivace dle výčtu TicketService.Api.Ticket.IdsInfo.ActivationType",
+            "format": "int32"
+          },
+          "activationStatus": {
+            "type": "integer",
+            "description": "Stav aktivace dle výčtu TicketService.Api.Ticket.IdsInfo.ActivationStatus",
+            "format": "int32"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Datum expirace jízdenky. Do tohto data je možné aktivovat jízdenku.",
+            "nullable": true
+          },
+          "validFrom": {
+            "type": "string",
+            "description": "Počátek platnosti jízdenky.",
+            "nullable": true
+          },
+          "validTo": {
+            "type": "string",
+            "description": "Konec platnosti jízdenky.",
+            "nullable": true
+          },
+          "activatedAt": {
+            "type": "string",
+            "description": "Čas aktivace jízdenky.",
+            "nullable": true
+          },
+          "clearingInfo": {
+            "$ref": "#/components/schemas/ClearingInfo"
+          },
+          "isWebPurchase": {
+            "type": "boolean",
+            "description": "Příznak nákupu IDS jízdenky přes web s vazbou na jméno cestujícího."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o vlastnostech IDS jízdenky, například o její aktivaci."
+      },
+      "InitRefundRequest": {
+        "required": [
+          "operation",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "string",
+            "description": "Kód IDOS jízdenky.",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "description": "ID zákazníka.",
+            "nullable": true
+          },
+          "operation": {
+            "$ref": "#/components/schemas/ReturnOperationMask"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na zahájení vrácení jízdenky."
+      },
+      "LineRouteInfo": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "km": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "line": {
+            "type": "string",
+            "default": "",
+            "nullable": true
+          },
+          "lineVer": {
+            "type": "string",
+            "default": "",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - jeden zaznam trate na draze vlaku."
+      },
+      "OfferFlags": {
+        "enum": [
+          1,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512,
+          1024,
+          2048,
+          4096
+        ],
+        "type": "integer",
+        "description": "Příznaky pro základní cenovou nabídku pro celé spojení.\n\n1 = CanSell (Spojení nebo alepoň nějakou jehob část lze prodat.)\n\n4 = RequiredName (Je nutné zadat jméno cestujícího.)\n\n8 = RequiredPhone (Je nutné zadat telefonní číslo.)\n\n16 = AllowStroller (Je možné požadovat místo pro kočárek alespoň u nějakého spoje (musí to však podpořit i druh nebo sleva cestujícího).)\n\n32 = AllowWheelchair (Je možné požadovat místo pro invalidní vozík alespoň u nějakého spoje (musí to však podpořit i druh nebo sleva cestujícího).)\n\n64 = RequiredGender (Vyžadování pohlaví cestujícího.)\n\n128 = RequiredBirthdate (Datum narozeni cestujiciho.)\n\n256 = RequiredBuyer (Vyžadována identifikace kupujiciho.)\n\n512 = RequiredFirstPassName (Vyžadováno jméno a příjmení u prvního cestujícího.)\n\n1024 = Skipped (Výpočet ceny přeskočen na základě hintu PriceDetails.BaseOfferCall.)\n\n2048 = AlternativeOffer (Pro dané spojení existují alternativní cenové nabídky.)\n\n4096 = CanRollback (Výpočet některé cenové nabídky skončil chybou a je možné provést návrat k předchozí korektně napočítané cenové nabídce.)",
+        "format": "int32",
+        "x-enumNames": [
+          "CanSell",
+          "RequiredName",
+          "RequiredPhone",
+          "AllowStroller",
+          "AllowWheelchair",
+          "RequiredGender",
+          "RequiredBirthdate",
+          "RequiredBuyer",
+          "RequiredFirstPassName",
+          "Skipped",
+          "AlternativeOffer",
+          "CanRollback"
+        ],
+        "x-enum-descriptions": [
+          "Spojení nebo alepoň nějakou jehob část lze prodat.",
+          "Je nutné zadat jméno cestujícího.",
+          "Je nutné zadat telefonní číslo.",
+          "Je možné požadovat místo pro kočárek alespoň u nějakého spoje (musí to však podpořit i druh nebo sleva cestujícího).",
+          "Je možné požadovat místo pro invalidní vozík alespoň u nějakého spoje (musí to však podpořit i druh nebo sleva cestujícího).",
+          "Vyžadování pohlaví cestujícího.",
+          "Datum narozeni cestujiciho.",
+          "Vyžadována identifikace kupujiciho.",
+          "Vyžadováno jméno a příjmení u prvního cestujícího.",
+          "Výpočet ceny přeskočen na základě hintu PriceDetails.BaseOfferCall.",
+          "Pro dané spojení existují alternativní cenové nabídky.",
+          "Výpočet některé cenové nabídky skončil chybou a je možné provést návrat k předchozí korektně napočítané cenové nabídce."
+        ]
+      },
+      "PartOfferFlags": {
+        "enum": [
+          1,
+          64,
+          128,
+          256,
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          1048576
+        ],
+        "type": "integer",
+        "description": "Příznaky cenové nabídky pro část spojení.\n\n1 = CanSell (Jízdenku na tuto část spojení lze prodat.)\n\n64 = Start (Prodejní období ještě nenastalo.)\n\n128 = EndSale (Prodejní období již skončilo.)\n\n256 = SoldOut (Spoj vyprodán.)\n\n1024 = FewPlaces (Žádný vůz některého spoje v části spojení nemá dostatek míst.)\n\n2048 = FewFreePlaces (Žádný vůz některého spoje v části spojení nemá dostatek volných míst.)\n\n4096 = PlaceNotFree (Některé z požadovaných míst je zablokované.)\n\n8192 = PlaceNotFound (Některé z požadovaných míst neexistuje.)\n\n16384 = FewPlacesInCoach (Ve voze, pro který jsou požadována místa, není dost míst pro všechny cestující (ale v jiném voze by byla).)\n\n32768 = FewFreePlacesInCoach (Ve voze, pro který jsou požadována místa, není dost volných míst pro všechny cestující (ale v jiném voze by byla).)\n\n65536 = TooManyPlaces (Požadovaných míst je více, než jízdenek (pozor, ne každý cestující musí mít jízdenku - třeba malé dítě).)\n\n131072 = VehicleNotFound (Vůz, pro který jsou požadovány rezervace, nebyl nalezen.)\n\n262144 = VehicleNoPlaces (Vůz, pro který jsou požadovány rezervace, nepovoluje rezervace na místa.)\n\n524288 = ShowErrorInfo (Zobrazit chybovou hlášku ErrInfo.)\n\n1048576 = ShowErrorInfoFormatted (Chybovou hlášku zobrazit formátovaně (např. 4096,T,0,1:23,24;).\r\nZároveň je nastaven i příznak ShowErrorInfo.)",
+        "format": "int32",
+        "x-enumNames": [
+          "CanSell",
+          "Start",
+          "EndSale",
+          "SoldOut",
+          "FewPlaces",
+          "FewFreePlaces",
+          "PlaceNotFree",
+          "PlaceNotFound",
+          "FewPlacesInCoach",
+          "FewFreePlacesInCoach",
+          "TooManyPlaces",
+          "VehicleNotFound",
+          "VehicleNoPlaces",
+          "ShowErrorInfo",
+          "ShowErrorInfoFormatted"
+        ],
+        "x-enum-descriptions": [
+          "Jízdenku na tuto část spojení lze prodat.",
+          "Prodejní období ještě nenastalo.",
+          "Prodejní období již skončilo.",
+          "Spoj vyprodán.",
+          "Žádný vůz některého spoje v části spojení nemá dostatek míst.",
+          "Žádný vůz některého spoje v části spojení nemá dostatek volných míst.",
+          "Některé z požadovaných míst je zablokované.",
+          "Některé z požadovaných míst neexistuje.",
+          "Ve voze, pro který jsou požadována místa, není dost míst pro všechny cestující (ale v jiném voze by byla).",
+          "Ve voze, pro který jsou požadována místa, není dost volných míst pro všechny cestující (ale v jiném voze by byla).",
+          "Požadovaných míst je více, než jízdenek (pozor, ne každý cestující musí mít jízdenku - třeba malé dítě).",
+          "Vůz, pro který jsou požadovány rezervace, nebyl nalezen.",
+          "Vůz, pro který jsou požadovány rezervace, nepovoluje rezervace na místa.",
+          "Zobrazit chybovou hlášku ErrInfo.",
+          "Chybovou hlášku zobrazit formátovaně (např. 4096,T,0,1:23,24;).\r\nZároveň je nastaven i příznak ShowErrorInfo."
+        ]
+      },
+      "Passenger": {
+        "type": "object",
+        "properties": {
+          "passengerId": {
+            "type": "integer",
+            "description": "ID druhu zákazníka.",
+            "format": "int32"
+          },
+          "reductionId": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Seznam slev (podmnožina PassengerType.ReductionID), na které měl nárok.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Jméno zákazníka.",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "description": "Příjmení zákazníka.",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Telefon.",
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky pro cestujícího.\r\nViz výčet PassengerFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "gender": {
+            "type": "integer",
+            "description": "Pohlaví zákazníka.",
+            "format": "int32"
+          },
+          "birthdate": {
+            "type": "string",
+            "description": "Datum narození zákazníka.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Jeden cestující ze skladby cestujících."
+      },
+      "PassengerFlags": {
+        "enum": [
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "Příznaky pro cestujícího.\n\n1 = Stroller (Je požadováno nebo je možno požadovat místo pro kočárek, pokud to podporuje spojení.)\n\n2 = WheelChair (Je požadováno nebo je možno požadovat místo pro invalidní vozík, pokud to podporuje spojení.)",
+        "format": "int32",
+        "x-enumNames": [
+          "Stroller",
+          "WheelChair"
+        ],
+        "x-enum-descriptions": [
+          "Je požadováno nebo je možno požadovat místo pro kočárek, pokud to podporuje spojení.",
+          "Je požadováno nebo je možno požadovat místo pro invalidní vozík, pokud to podporuje spojení."
+        ]
+      },
+      "PassengerInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Jméno a příjmení cestujícího.",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Telefonní číslo cestujícího.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Seznam údajů k cestujícím (jméno,..) (jen je-li třeba k cestujícím upřesnit nějaké informace)."
+      },
+      "PaymentStartRequest": {
+        "required": [
+          "backURL",
+          "buyerInfo",
+          "deviceId"
+        ],
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "description": "Id zařízení (pro identifikaci anonymních jízdenek).",
+            "nullable": true
+          },
+          "paymentType": {
+            "type": "integer",
+            "description": "Zvolený typ platby.",
+            "format": "int32"
+          },
+          "paymentTypeDetail": {
+            "type": "string",
+            "description": "Doplňující informace k typu platby.\r\nNapříklad u platební brány PayU je zde uveden kód banky.",
+            "nullable": true
+          },
+          "buyerInfo": {
+            "$ref": "#/components/schemas/BuyerInfo"
+          },
+          "backURL": {
+            "type": "string",
+            "description": "Url, na které se má přesměrovat platební brána po ukončení platby.",
+            "nullable": true
+          },
+          "returnViaEshop": {
+            "type": "boolean",
+            "description": "Návrat z platební brány se provede nejdříve na eShopWS, kde se provede ukončení platby, a teprve poté na adresu zadanou v backUrl."
+          },
+          "oneClickAction": {
+            "type": "integer",
+            "description": "Určuje, co se má provést se zapamatovanou kartou při platbě Na klik.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Parametry operace zahájení platby."
+      },
+      "PaymentStartResponse": {
+        "type": "object",
+        "properties": {
+          "paymentURL": {
+            "type": "string",
+            "description": "Url pro přesměrování na platební bránu u ostatních platebních metod.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Placená částka v setinách měny.",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna platby.",
+            "format": "int32"
+          },
+          "immediatePaymentFinish": {
+            "type": "boolean",
+            "description": "Neprovádět přesměrování uživatele na platební bránu a rovnou zavolat metodu pro ukončení platby."
+          },
+          "googlePayInfo": {
+            "$ref": "#/components/schemas/GooglePayCheckoutParams"
+          },
+          "applePayInitParams": {
+            "$ref": "#/components/schemas/ApplePayInitParams"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Výsledek operace zahájení platby."
+      },
+      "PaymentType": {
+        "enum": [
+          0,
+          1,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "type": "integer",
+        "description": "Druh platební brány.\n\n0 = NONE (Žádný.)\n\n1 = GPPay (Platební brána GP Pay.\r\nJiž se nepoužívá.)\n\n5 = PayU (Platební brána PayU.)\n\n6 = BesteronOld (Platební brána Besteron.\r\nPůvodní, již nepoužívané API.)\n\n7 = CSOBeAPI (Platební brána ČSOB.)\n\n8 = Besteron (Platební brány Besteron.)\n\n9 = ApplePay (Platební brána GP Pay - platba přes ApplePay.\r\nJiž se nepoužívá.)\n\n10 = GooglePay (Platební brána GP Pay - platba přes GooglePay.\r\nJiž se nepoužívá.)\n\n11 = CSOB_GooglePay (Platební brána ČSOB - platba přes GooglePay.\r\nJiž se nepoužívá.)\n\n12 = CSOB_GooglePay_19 (Platební brána ČSOB - platba přes GooglePay.\r\nTyp platby vzniknul přechodem na ČSOB eAPI 1.9.)\n\n13 = CSOB_ApplePay_19 (Platební brána ČSOB - platba přes ApplePay.\r\nTyp platby vzniknul přechodem na ČSOB eAPI 1.9.)\n\n14 = CSOB_OneClick_19 (Platební brána ČSOB - platba na klik.\r\nTyp platby vzniknul přechodem na ČSOB eAPI 1.9.)",
+        "format": "int32",
+        "x-enumNames": [
+          "NONE",
+          "GPPay",
+          "PayU",
+          "BesteronOld",
+          "CSOBeAPI",
+          "Besteron",
+          "ApplePay",
+          "GooglePay",
+          "CSOB_GooglePay",
+          "CSOB_GooglePay_19",
+          "CSOB_ApplePay_19",
+          "CSOB_OneClick_19"
+        ],
+        "x-enum-descriptions": [
+          "Žádný.",
+          "Platební brána GP Pay.\r\nJiž se nepoužívá.",
+          "Platební brána PayU.",
+          "Platební brána Besteron.\r\nPůvodní, již nepoužívané API.",
+          "Platební brána ČSOB.",
+          "Platební brány Besteron.",
+          "Platební brána GP Pay - platba přes ApplePay.\r\nJiž se nepoužívá.",
+          "Platební brána GP Pay - platba přes GooglePay.\r\nJiž se nepoužívá.",
+          "Platební brána ČSOB - platba přes GooglePay.\r\nJiž se nepoužívá.",
+          "Platební brána ČSOB - platba přes GooglePay.\r\nTyp platby vzniknul přechodem na ČSOB eAPI 1.9.",
+          "Platební brána ČSOB - platba přes ApplePay.\r\nTyp platby vzniknul přechodem na ČSOB eAPI 1.9.",
+          "Platební brána ČSOB - platba na klik.\r\nTyp platby vzniknul přechodem na ČSOB eAPI 1.9."
+        ]
+      },
+      "Place": {
+        "type": "object",
+        "properties": {
+          "num": {
+            "type": "integer",
+            "description": "Číslo místa.",
+            "format": "int32"
+          },
+          "row": {
+            "type": "integer",
+            "description": "Řada (od nuly).\r\nŘada místa je podélně ve voze, počítáno od nuly z pravé strany ve směru jízdy.",
+            "format": "int32"
+          },
+          "col": {
+            "type": "integer",
+            "description": "Sloupec (od nuly).\r\nSloupec místa je řada sedadel počítáno od nuly u řidiče.",
+            "format": "int32"
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky místa.\r\nViz výčet PlaceFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "class": {
+            "type": "string",
+            "description": "Třída místa.",
+            "nullable": true
+          },
+          "info": {
+            "type": "string",
+            "description": "Informace pro cestujícího o vybrané sedačce.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o jednom místě ve schematickém plánku vozu."
+      },
+      "PlaceDesc": {
+        "type": "object",
+        "properties": {
+          "num": {
+            "type": "integer",
+            "description": "Identifikátor.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Název pro zobrazení v aplikacích.",
+            "nullable": true
+          },
+          "ticketName": {
+            "type": "string",
+            "description": "Zobrazení na jízdence.",
+            "nullable": true
+          },
+          "vehicleNum": {
+            "type": "string",
+            "description": "Označení vozu.",
+            "nullable": true
+          },
+          "placeFlags": {
+            "type": "integer",
+            "description": "Příznaky místa.\r\nViz výčet PlaceFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky místa.\r\nViz výčet PlaceDescFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "info": {
+            "type": "string",
+            "description": "Informace pro cestujícího o vybrané sedačce.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Rozšířený popis místa - náhrada pouze za číslo použité třeba u třídy Place jako Num, případně za Places použité v ConnectionTrainPriceOfferInfo.\r\nUmožní definovat pro každé místo jiný vůz, případně definuje správné označení, které se má zobrazit."
+      },
+      "PlaceDescFlags": {
+        "enum": [
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "Příznaky rozšířeného popisu místa.\n\n1 = NameContainsVehicle (Název místa pro zobrazeni v aplikaci obsahuje označení vozu.)\n\n2 = TicketNameContainsVehicle (Název místa pro jízdenku obsahuje označení vozu.)",
+        "format": "int32",
+        "x-enumNames": [
+          "NameContainsVehicle",
+          "TicketNameContainsVehicle"
+        ],
+        "x-enum-descriptions": [
+          "Název místa pro zobrazeni v aplikaci obsahuje označení vozu.",
+          "Název místa pro jízdenku obsahuje označení vozu."
+        ]
+      },
+      "PlaceDetail": {
+        "required": [
+          "header",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "header": {
+            "type": "string",
+            "description": "Hlavička.",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "description": "Popis.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Detailní informace o zvolených místech."
+      },
+      "PlaceFlags": {
+        "enum": [
+          1,
+          2,
+          4
+        ],
+        "type": "integer",
+        "description": "Příznaky místa v plánku.\n\n1 = Occupied (Obsazené místo.)\n\n2 = Inv (Místo pro invalidy.)\n\n4 = First (Místo v první řadě vozu.\r\nPro zobrazení hlášky \"Bylo vybráno místo v první řadě, které není určeno pro osoby do 12 let nebo 150 cm výšky.\"))",
+        "format": "int32",
+        "x-enumNames": [
+          "Occupied",
+          "Inv",
+          "First"
+        ],
+        "x-enum-descriptions": [
+          "Obsazené místo.",
+          "Místo pro invalidy.",
+          "Místo v první řadě vozu.\r\nPro zobrazení hlášky \"Bylo vybráno místo v první řadě, které není určeno pro osoby do 12 let nebo 150 cm výšky.\")"
+        ]
+      },
+      "PriceOfferInfo": {
+        "type": "object",
+        "properties": {
+          "priceHandle": {
+            "type": "string",
+            "description": "ID cenové nabídky.",
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky cenové nabídky.\r\nViz výčet OfferFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionPartPriceOfferInfo"
+            },
+            "description": "Cenové nabídky pro spoj (skupinu spojů) pro směr tam.",
+            "nullable": true
+          },
+          "partsBack": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionPartPriceOfferInfo"
+            },
+            "description": "Cenové nabídky pro spoj (skupinu spojů) pro směr zpět.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena spojení v setinách měny (-1 = nedefinováno).",
+            "format": "int32",
+            "default": -1
+          },
+          "ch": {
+            "type": "integer",
+            "description": "Connection handle vyhledaného spojení ve směru tam.",
+            "format": "int32",
+            "default": 0
+          },
+          "cid": {
+            "type": "integer",
+            "description": "Connection ID vyhledaného spojení ve směru tam.",
+            "format": "int32",
+            "default": 0
+          },
+          "bch": {
+            "type": "integer",
+            "description": "Connection handle vyhledaného spojení ve směru zpět.",
+            "format": "int32",
+            "default": 0
+          },
+          "bcid": {
+            "type": "integer",
+            "description": "Connection ID vyhledaného spojení ve směru zpět.",
+            "format": "int32",
+            "default": 0
+          },
+          "conn": {
+            "$ref": "#/components/schemas/ConnectionInfo"
+          },
+          "connBack": {
+            "$ref": "#/components/schemas/ConnectionInfo"
+          },
+          "request": {
+            "$ref": "#/components/schemas/PriceOfferRequest"
+          },
+          "alternativeOffer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlternativeOffer"
+            },
+            "description": "Alternativní cenové nabídky pro dané spojení.",
+            "nullable": true
+          },
+          "bikesInfo": {
+            "$ref": "#/components/schemas/BikesInfo"
+          },
+          "dogsInfo": {
+            "$ref": "#/components/schemas/DogsInfo"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Cenová nabídka ke spojení."
+      },
+      "PriceOfferRequest": {
+        "type": "object",
+        "properties": {
+          "passengers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Passenger"
+            },
+            "description": "Skladba cestujících, kteří přišli na vstupu.",
+            "nullable": true
+          },
+          "priceDetails": {
+            "type": "integer",
+            "description": "Příznaky cenové nabídky.",
+            "format": "int32"
+          },
+          "alternativeOfferID": {
+            "type": "string",
+            "description": "ID vybrané alternativní nabídky.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Parametry požadavku na cenovou nabídku."
+      },
+      "PriceOfferReservationsInfo": {
+        "required": [
+          "reservationTypes"
+        ],
+        "type": "object",
+        "properties": {
+          "minCount": {
+            "type": "integer",
+            "description": "Minimální počet míst.",
+            "format": "int32"
+          },
+          "maxCount": {
+            "type": "integer",
+            "description": "Maximální počet míst.",
+            "format": "int32"
+          },
+          "reservationTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReservationType"
+            },
+            "description": "Seznam dostupných typů rezervací.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o rezervacích při vytváření cenové nabídky."
+      },
+      "RefundInfo": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "integer",
+            "description": "Vybraná (právě jedna) možnost vrácení jízdenky. Viz výčet TicketService.Api.Enums.ReturnOperationMask.",
+            "format": "int32"
+          },
+          "refund": {
+            "type": "integer",
+            "description": "Částka k vrácení v setinách měny.",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna.",
+            "format": "int32",
+            "default": 0
+          },
+          "refundHandle": {
+            "type": "string",
+            "description": "Identifikátor rozpracovaného vrácení jízdenky.",
+            "nullable": true
+          },
+          "refundMessage": {
+            "type": "string",
+            "description": "Zpráva pro zákazníka.",
+            "nullable": true
+          },
+          "newTicket": {
+            "$ref": "#/components/schemas/TicketInfo"
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky vrácení. Viz výčet TicketService.Api.Enums.RefundFlags.\r\nPouze pro interní potřebu TicketServeru.",
+            "format": "int32"
+          },
+          "refundDeclined": {
+            "type": "boolean",
+            "description": "Příznak zamítnutí vrácení jízdenky. Nastavuje se pouze u jízdenek, u kterých probíhá posouzení vrácení.\r\nPouze pro interní potřebu TicketServeru.",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o zahájení/zpracování vrácení jízdenky."
+      },
+      "RemarkInfo": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RemarksInfo": {
+        "type": "object",
+        "properties": {
+          "remarks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RemarkInfo"
+            },
+            "nullable": true
+          },
+          "legend": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FixedCodeInfo"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - seznam poznamek."
+      },
+      "RemoveFromPriceOfferRequest": {
+        "type": "object",
+        "properties": {
+          "back": {
+            "type": "boolean",
+            "description": "Příznak části ve směru zpět.",
+            "default": false
+          },
+          "connectionTrain": {
+            "type": "integer",
+            "description": "Index spoje v rámci spojení.",
+            "format": "int32",
+            "default": -1
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na odstranění části cenové nabídky, kde se vyskytuje uvedený spoj."
+      },
+      "ReservationType": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "Typ rezervace.\r\nViz výčet ReservationTypeId.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Název pro zobrazení v aplikaci.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dostupný typ rezervace."
+      },
+      "ReservationTypeId": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "Typy rezervací.\n\n0 = None (Nelze rezervovat.)\n\n1 = NoRes (Bez rezervace.)\n\n2 = SeatAuto (Sedadlo automaticky.)\n\n3 = SeatPlan (Sedadlo vybrat z plánku.)",
+        "format": "int32",
+        "x-enumNames": [
+          "None",
+          "NoRes",
+          "SeatAuto",
+          "SeatPlan"
+        ],
+        "x-enum-descriptions": [
+          "Nelze rezervovat.",
+          "Bez rezervace.",
+          "Sedadlo automaticky.",
+          "Sedadlo vybrat z plánku."
+        ]
+      },
+      "ReturnOperationMask": {
+        "enum": [
+          1,
+          2,
+          4
+        ],
+        "type": "integer",
+        "description": "Bitová maska možných vrácení jízdenky.\n\n1 = There (Vrácení jednosměrné jízdenky nebo směru tam u obousměrky.)\n\n2 = Back (Vrácení směru zpět u obousměrky.)\n\n4 = Both (Vrácení celé obousměrky.)",
+        "format": "int32",
+        "x-enumNames": [
+          "There",
+          "Back",
+          "Both"
+        ],
+        "x-enum-descriptions": [
+          "Vrácení jednosměrné jízdenky nebo směru tam u obousměrky.",
+          "Vrácení směru zpět u obousměrky.",
+          "Vrácení celé obousměrky."
+        ]
+      },
+      "SetPassengersRequest": {
+        "required": [
+          "passengers"
+        ],
+        "type": "object",
+        "properties": {
+          "passengers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Passenger"
+            },
+            "description": "Seznam cestujících, kteří budou nastaveni pro všechny cenové nabídky v košíku.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek pro nastavení cestujících v košíku."
+      },
+      "SetTrainPlacesRequest": {
+        "required": [
+          "priceHandle",
+          "trainPlacement"
+        ],
+        "type": "object",
+        "properties": {
+          "priceHandle": {
+            "type": "string",
+            "description": "Identifikátor (handle) cenové nabídky, pro kterou se změna má vykonat.",
+            "nullable": true
+          },
+          "trainPlacement": {
+            "$ref": "#/components/schemas/TrainPlacement"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na změnu požadovaných míst nebo cestovní třídy."
+      },
+      "SpecialOfferInfo": {
+        "type": "object",
+        "properties": {
+          "priceHandle": {
+            "type": "string",
+            "description": "ID cenové nabídky.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Celková cena speciální nabídky.",
+            "format": "int32",
+            "default": -1
+          },
+          "standaloneOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StandaloneOfferInfo"
+            },
+            "description": "Cenové nabídky o jízdenku bez vazby na spojení.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o speciální cenové nabídce."
+      },
+      "SpecialOffersConfig": {
+        "required": [
+          "regions",
+          "versionTimestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpecialOffersRegion"
+            },
+            "description": "Seznam regionů.",
+            "nullable": true
+          },
+          "versionTimestamp": {
+            "type": "string",
+            "description": "Časové razítko (LastWriteTimeUtc) poslední změny konfigurace na serveru. Klient jej odešle\r\nzpět v parametru `versionTimestamp` při dalším volání, aby se při nezměněné konfiguraci\r\nvrátilo HTTP 304 Not Modified místo celého obsahu.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Konfigurace pro zakoupení speciálních nabídek."
+      },
+      "SpecialOffersFilter": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unikátní identifikátor filtru v rámci regionu.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Název filtru.",
+            "nullable": true
+          },
+          "isPreselected": {
+            "type": "boolean",
+            "description": "Zda je filtr defaultně předvybraný."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Filtr pro zobrazení jízdenek - katalogová položka v rámci regionu."
+      },
+      "SpecialOffersGroup": {
+        "required": [
+          "name",
+          "standaloneTickets"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Název skupiny.",
+            "nullable": true
+          },
+          "standaloneTickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StandaloneConfigItem"
+            },
+            "description": "Jízdenky v této skupině.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Skupina jízdenek v rámci regionu (např. \"Jízdenky na 2 zóny\", \"30 minut\", \"Doplatky\")."
+      },
+      "SpecialOffersRegion": {
+        "required": [
+          "areaCoordinates",
+          "filters",
+          "groups",
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unikátní identifikátor regionu.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Název regionu.",
+            "nullable": true
+          },
+          "regionType": {
+            "$ref": "#/components/schemas/SpecialOffersRegionType"
+          },
+          "areaCoordinates": {
+            "type": "string",
+            "description": "Souřadnice oblasti: Lon1,Lat1 Lon2,Lat2...\r\nNapříklad: 48.64786,15.96890 49.41472,17.49617.",
+            "nullable": true
+          },
+          "hasRequiredStopSelection": {
+            "type": "boolean",
+            "description": "Je nutné pro tento region vybrat výchozí zastávku/zónu."
+          },
+          "allowedActivationTypes": {
+            "$ref": "#/components/schemas/StandaloneActivationType"
+          },
+          "minVersionAndroid": {
+            "type": "integer",
+            "description": "Minimální verze (číslo buildu) aplikace Android, která tento region vůbec nabídne.",
+            "format": "int32"
+          },
+          "minVersionIos": {
+            "type": "integer",
+            "description": "Minimální verze (číslo buildu) aplikace iOS, která tento region vůbec nabídne.",
+            "format": "int32"
+          },
+          "maxCount": {
+            "type": "integer",
+            "description": "Maximální souhrnný počet jízdenek napříč všemi typy v tomto regionu v jednom nákupu.\r\nHodnota 0 znamená, že souhrnný limit není definován.",
+            "format": "int32"
+          },
+          "crwsCombinationId": {
+            "type": "string",
+            "description": "Identifikátor CRWS kombinace, ke které tento region patří.",
+            "nullable": true
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpecialOffersFilter"
+            },
+            "description": "Katalog filtrů dostupných v tomto regionu.",
+            "nullable": true
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpecialOffersGroup"
+            },
+            "description": "Seznam skupin jízdenek v tomto regionu.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Konfigurace pro zakoupení speciálních nabídek - jeden region (kraj nebo město)."
+      },
+      "SpecialOffersRegionType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Typ regionu pro regionální jízdenky bez vazby na spojení.\n\n0 = Region (Kraj / IDS.)\n\n1 = City (Město (MHD).)",
+        "format": "int32",
+        "x-enumNames": [
+          "Region",
+          "City"
+        ],
+        "x-enum-descriptions": [
+          "Kraj / IDS.",
+          "Město (MHD)."
+        ]
+      },
+      "StandaloneActivationType": {
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "type": "integer",
+        "description": "Povolené druhy aktivácie standalone jízdenky pro daný region - bitová maska.\n\n1 = AutomaticGrouped (Automatická aktivace ihned po nákupu, jízdenky s jedním tarifem prodané společně.)\n\n2 = ManualGrouped (Odložená (manuální) aktivace, jízdenky s jedním tarifem prodané společně.)\n\n4 = ManualIndividual (Odložená (manuální) aktivace, každá jízdenka samostatně (po 1 ks).)\n\n8 = AutomaticIndividual (Automatická aktivace ihned po nákupu, každá jízdenka samostatně (po 1 ks).)",
+        "format": "int32",
+        "x-enumNames": [
+          "AutomaticGrouped",
+          "ManualGrouped",
+          "ManualIndividual",
+          "AutomaticIndividual"
+        ],
+        "x-enum-descriptions": [
+          "Automatická aktivace ihned po nákupu, jízdenky s jedním tarifem prodané společně.",
+          "Odložená (manuální) aktivace, jízdenky s jedním tarifem prodané společně.",
+          "Odložená (manuální) aktivace, každá jízdenka samostatně (po 1 ks).",
+          "Automatická aktivace ihned po nákupu, každá jízdenka samostatně (po 1 ks)."
+        ]
+      },
+      "StandaloneConfigItem": {
+        "required": [
+          "conditions",
+          "description",
+          "filterId",
+          "offerId",
+          "tariffName",
+          "validity",
+          "validityTitle"
+        ],
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "string",
+            "description": "Identifikátor nabídky/jízdenky.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena za jednu jízdenku.",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna.",
+            "format": "int32"
+          },
+          "offerFlags": {
+            "$ref": "#/components/schemas/OfferFlags"
+          },
+          "filterId": {
+            "type": "string",
+            "description": "Identifikátor filtru (odkaz do Region.Filters).",
+            "nullable": true
+          },
+          "tariffName": {
+            "type": "string",
+            "description": "Název tarifu.",
+            "nullable": true
+          },
+          "zonesTitle": {
+            "type": "string",
+            "description": "Popisek zón (např. \"zóny\", \"zóna\"). Doplatkové jízdenky ho nemají.",
+            "nullable": true
+          },
+          "zonesDescription": {
+            "type": "string",
+            "description": "Hodnota zón (např. \"2\", \"001\"). Doplatkové jízdenky ji nemají.",
+            "nullable": true
+          },
+          "validity": {
+            "type": "string",
+            "description": "Platnost jízdenky (např. \"10 min\", \"24 hod\").",
+            "nullable": true
+          },
+          "validityTitle": {
+            "type": "string",
+            "description": "Popisek platnosti (např. \"platnost\").",
+            "nullable": true
+          },
+          "displayFrom": {
+            "type": "string",
+            "description": "Čas odkdy je daná jízdenka dostupná k prodeji. Pokud je naplněno, tak možno jízdenku zobrazit pouze od daného data. K použití např. změně tarifu.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "displayUntil": {
+            "type": "string",
+            "description": "Čas dokdy je daná jízdenka dostupná k prodeji. Pokud je naplněno, tak možno jízdenku zobrazit pouze do daného data. K použití např. změně tarifu.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Popis jízdenky.",
+            "nullable": true
+          },
+          "conditions": {
+            "type": "string",
+            "description": "Přepravní podmínky.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Konfigurace pro zakoupení jízdenky bez vazby na spojení."
+      },
+      "StandaloneOfferInfo": {
+        "required": [
+          "count",
+          "offerId"
+        ],
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "string",
+            "description": "Identifikátor nabídky/jízdenky.",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Počet jízdenek (cestujících).",
+            "format": "int32"
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena.",
+            "format": "int32",
+            "default": -1
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna.",
+            "format": "int32",
+            "default": 0
+          },
+          "stationFrom": {
+            "$ref": "#/components/schemas/StandaloneOfferStation"
+          },
+          "activationType": {
+            "type": "integer",
+            "description": "Požadovaný druh aktivace dle výčtu ActivationType.",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "Cenová nabídka o jízdenku bez vazby na spojení."
+      },
+      "StandaloneOfferRequest": {
+        "required": [
+          "count",
+          "offerId",
+          "regionId"
+        ],
+        "type": "object",
+        "properties": {
+          "regionId": {
+            "type": "string",
+            "description": "Identifikátor regionu, do kterého nabídka patří.",
+            "nullable": true
+          },
+          "offerId": {
+            "type": "string",
+            "description": "Identifikátor nabídky/jízdenky.",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Počet jízdenek (cestujících).",
+            "format": "int32"
+          },
+          "stationFrom": {
+            "$ref": "#/components/schemas/StandaloneOfferStation"
+          },
+          "activationType": {
+            "type": "integer",
+            "description": "Požadovaný druh aktivace dle výčtu ActivationType.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Žádost o jízdenku bez vazby na spojení."
+      },
+      "StandaloneOfferStation": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "integer",
+            "description": "Klíč stanice dle CRWS.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Název stanice v rámci dané kombinace.",
+            "nullable": true
+          },
+          "zone": {
+            "type": "string",
+            "description": "Tarifní zóna stanice, není nutno vyplnit, dohledává eShopWS z odjezdových tabulí na CRWS.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Popis stanice pro nákup jízdenky bez vazby na spojení."
+      },
+      "StationInfo": {
+        "type": "object",
+        "properties": {
+          "station": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "fixedCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FixedCodeInfo"
+            },
+            "nullable": true
+          },
+          "key": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "reservKey": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "infoFile": {
+            "type": "string",
+            "nullable": true
+          },
+          "coorX": {
+            "type": "number",
+            "format": "double",
+            "default": 0
+          },
+          "coorY": {
+            "type": "number",
+            "format": "double",
+            "default": 0
+          },
+          "trTypeId": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - info o stanici."
+      },
+      "TicketAttachment": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Název přílohy. Může být použit k vyhledávání. Musí být unikátní.",
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "description": "Typ přílohy na základě výčtu TicketService.Api.Enums.AttachmentType.",
+            "format": "int32"
+          },
+          "content": {
+            "type": "string",
+            "description": "Obsah přílohy zakódovaný do base64.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Reprezentuje přílohu k jízdence."
+      },
+      "TicketDirection": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Výchozí stanice.",
+            "nullable": true
+          },
+          "to": {
+            "type": "string",
+            "description": "Cílová stanice.",
+            "nullable": true
+          },
+          "trains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketTrain"
+            },
+            "description": "Informace o vlacích pro daný směr.",
+            "nullable": true
+          },
+          "conn": {
+            "$ref": "#/components/schemas/ConnectionInfo"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Reprezentuje směr jízdenky, včetně výchozí a cílové stanice a informací o vlacích."
+      },
+      "TicketDirectionInfo": {
+        "required": [
+          "from",
+          "to",
+          "trains"
+        ],
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Počáteční stanice.",
+            "nullable": true
+          },
+          "to": {
+            "type": "string",
+            "description": "Cílová stanice.",
+            "nullable": true
+          },
+          "conn": {
+            "$ref": "#/components/schemas/ConnectionInfo"
+          },
+          "trains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketTrainInfo"
+            },
+            "description": "Informace o vlacích.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o směru jízdenky."
+      },
+      "TicketFlags": {
+        "enum": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128
+        ],
+        "type": "integer",
+        "description": "Příznaky k jízdence.\n\n1 = NeedsPrint (Jízdenku je nutno tisknout.)\n\n2 = RequiredBuyer (Vyžadována identifikace kupujiciho.)\n\n4 = RequiredName (Nutno pořídit jmeno cestujícího.)\n\n8 = RequiredPhone (Nutno pořídit číslo telefonu.)\n\n16 = RequiredGender (Vyžadování pohlaví cestujícího.)\n\n32 = ReuiredBirthdate (Datum narození cestujícího.)\n\n64 = RequiredFirstPassName (Vyžadování jméno a příjmení u prvního cestujícího.)\n\n128 = NoTicket (K cestujícímu (dítěti) není jízdenka.)",
+        "format": "int32",
+        "x-enumNames": [
+          "NeedsPrint",
+          "RequiredBuyer",
+          "RequiredName",
+          "RequiredPhone",
+          "RequiredGender",
+          "ReuiredBirthdate",
+          "RequiredFirstPassName",
+          "NoTicket"
+        ],
+        "x-enum-descriptions": [
+          "Jízdenku je nutno tisknout.",
+          "Vyžadována identifikace kupujiciho.",
+          "Nutno pořídit jmeno cestujícího.",
+          "Nutno pořídit číslo telefonu.",
+          "Vyžadování pohlaví cestujícího.",
+          "Datum narození cestujícího.",
+          "Vyžadování jméno a příjmení u prvního cestujícího.",
+          "K cestujícímu (dítěti) není jízdenka."
+        ]
+      },
+      "TicketInfo": {
+        "required": [
+          "provider",
+          "there",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "string",
+            "description": "Kód pro IDOS (transakční kód typu xxxx-xxxx-xxxx).",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Interní kód jízdenky přidělen dopravcem. Neprezentuje se klientovi.",
+            "nullable": true
+          },
+          "foreigncode": {
+            "type": "string",
+            "description": "Kód pro odbavení u dopravce.",
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "description": "Kód prodejního subsystému (ID Pluginu).",
+            "nullable": true
+          },
+          "there": {
+            "$ref": "#/components/schemas/TicketDirectionInfo"
+          },
+          "back": {
+            "$ref": "#/components/schemas/TicketDirectionInfo"
+          },
+          "class": {
+            "type": "string",
+            "description": "Název vybrané třídy nebo null.",
+            "nullable": true
+          },
+          "price": {
+            "$ref": "#/components/schemas/ConnectionPrice"
+          },
+          "passengers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketPassenger"
+            },
+            "description": "Seznam dodatečných údajů o cestujících.",
+            "nullable": true
+          },
+          "toTime": {
+            "type": "string",
+            "description": "Datum a čas, do kdy je možné s jízdenkou provést vrácení.",
+            "nullable": true
+          },
+          "issue": {
+            "type": "string",
+            "description": "Datum a čas transakce.",
+            "nullable": true
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionPrice"
+            },
+            "description": "Seznam cen/dokladů. Plní pouze ARV a ČD pluginy.",
+            "nullable": true
+          },
+          "altChannelName": {
+            "type": "string",
+            "description": "Alternativní název dopravce.",
+            "nullable": true
+          },
+          "idsInfo": {
+            "$ref": "#/components/schemas/IdsInfo"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Info o prodané jízdence."
+      },
+      "TicketPassenger": {
+        "type": "object",
+        "properties": {
+          "passenger": {
+            "type": "integer",
+            "description": "Index cestujícího ve skladbě (0..n-1 nebo -1 = neznámé).",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Jméno a příjmení zákazníka (má-li se tisknout na jízdenku) nebo null.",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Telefon (má-li se tisknout na jízdenku) nebo null.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dodatečné údaje o cestujícím."
+      },
+      "TicketTrain": {
+        "type": "object",
+        "properties": {
+          "connIndex": {
+            "type": "integer",
+            "description": "Index spoje v rámci spojení.",
+            "format": "int32"
+          },
+          "stand": {
+            "type": "string",
+            "description": "Nástupiště.",
+            "nullable": true
+          },
+          "vehicle": {
+            "type": "string",
+            "description": "Číslo vozu.",
+            "nullable": true
+          },
+          "place": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Textové popisy vybraných míst.",
+            "nullable": true
+          },
+          "placeDesc": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaceDesc"
+            },
+            "description": "Rozšířený popis míst (null, když se nerezervuje na místa).",
+            "nullable": true
+          },
+          "ticketSchemaEnabled": {
+            "type": "boolean",
+            "description": "Příznak, zda jdou zobrazit sedadla v plánku po prodeji jízdenky."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Reprezentuje informace o vlaku v rámci jízdenky."
+      },
+      "TicketTrainInfo": {
+        "type": "object",
+        "properties": {
+          "connIndex": {
+            "type": "integer",
+            "description": "Index do seznamu spojů v rámci jednoho spojení.",
+            "format": "int32"
+          },
+          "vehicleNum": {
+            "type": "string",
+            "description": "Rezervační číslo vozu.",
+            "nullable": true
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Čísla míst (null, když se nerezervuje na místa)",
+            "nullable": true
+          },
+          "passengers": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Indexy cestujících ve skladbě (0..n-1), paralelní k aiPlaces, smí být kratší.",
+            "nullable": true
+          },
+          "stand": {
+            "type": "string",
+            "description": "Stanoviště.",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "description": "Název dopravce.",
+            "nullable": true
+          },
+          "ownerVATNum": {
+            "type": "string",
+            "description": "DIC dopravce.",
+            "nullable": true
+          },
+          "placesDesc": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaceDesc"
+            },
+            "description": "Rozšířený popis míst (null, když se nerezervuje na místa).",
+            "nullable": true
+          },
+          "num1": {
+            "type": "string",
+            "description": "Číslo vlaku nebo linka, jak je uvedena v rezervačním systému (může se lišit od čísla v CRWS a na jízdence chceme číslo z rezervačního systému), pokud není uvedeno, brát z CRWS.",
+            "nullable": true
+          },
+          "num2": {
+            "type": "string",
+            "description": "Název vlaku nebo číslo spoje, jak je uvedeno v rezervačním systému (může se lišit od čísla v CRWS a na jízdence chceme číslo z rezervačního systému).",
+            "nullable": true
+          },
+          "ticketSchemaEnabled": {
+            "type": "boolean",
+            "description": "Příznak, zda jdou zobrazit sedadla v plánku po prodeji jízdenky."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o vlaku."
+      },
+      "TicketTrainSchemaRequest": {
+        "required": [
+          "connectionTrain",
+          "isBack",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "string",
+            "description": "Identifikátor jízdenky, pro kterého cenovou nabídku se plánek získavá.",
+            "nullable": true
+          },
+          "connectionTrain": {
+            "type": "integer",
+            "description": "Index spoje v rámci cenové nabídky.",
+            "format": "int32"
+          },
+          "isBack": {
+            "type": "boolean",
+            "description": "Příznak, zda se má plánek pro spoj ve směru zpět (true) nebo pro spoj v směru tam (false)."
+          },
+          "schemaParam": {
+            "$ref": "#/components/schemas/BgSchemaParam"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na získaní plánku jedneho spoje u jízdenky."
+      },
+      "TicketViewInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID položky v košíku.",
+            "nullable": true
+          },
+          "direction": {
+            "type": "integer",
+            "description": "Směr jízdenky - single, tam, zpět nebo obousměrná. Dle TicketService.Api.Enums.Direction.",
+            "format": "int32"
+          },
+          "there": {
+            "$ref": "#/components/schemas/TicketDirection"
+          },
+          "back": {
+            "$ref": "#/components/schemas/TicketDirection"
+          },
+          "fareType": {
+            "type": "string",
+            "description": "Druh jízdného.",
+            "nullable": true
+          },
+          "class": {
+            "type": "string",
+            "description": "Třída.",
+            "nullable": true
+          },
+          "warning": {
+            "type": "string",
+            "description": "Varování u jízdenky.",
+            "nullable": true
+          },
+          "tarInfo": {
+            "type": "string",
+            "description": "Přepravní podmínky.",
+            "nullable": true
+          },
+          "annulTerms": {
+            "type": "string",
+            "description": "Podmínky vrácení.",
+            "nullable": true
+          },
+          "price": {
+            "type": "integer",
+            "description": "Cena v setinách měny.",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "integer",
+            "description": "Měna dle enum CURRENCY.",
+            "format": "int32"
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky dle enum FLAGS.",
+            "format": "int32"
+          },
+          "ticketCode": {
+            "type": "string",
+            "description": "Kód jízdenky (je-li již známý).",
+            "nullable": true
+          },
+          "expires": {
+            "type": "integer",
+            "description": "Jen není-li ještě zaplacena - za kolik sekund vyprší (nebo 0=nevyprší, již zaplacena).",
+            "format": "int32"
+          },
+          "passengers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PassengerInfo"
+            },
+            "description": "Seznam údajů k cestujícím (jméno,..) (jen je-li třeba k cestujícím upřesnit nějaké informace).",
+            "nullable": true
+          },
+          "dbId": {
+            "type": "integer",
+            "description": "ID rezervace / jízdenky v databázi.",
+            "format": "int32"
+          },
+          "refTime": {
+            "type": "string",
+            "description": "Datum a čas odjezdu daného směru jízdenky.",
+            "nullable": true
+          },
+          "isBack": {
+            "type": "boolean",
+            "description": "Zda se datum vztahuje ke směru zpět."
+          },
+          "anonymous": {
+            "type": "boolean",
+            "description": "Zda jde o anonymní jízdenku (bez zadaného zákazníka)."
+          },
+          "refunded": {
+            "type": "boolean",
+            "description": "Zda je vrácena (alespoň částečně)."
+          },
+          "mail": {
+            "type": "string",
+            "description": "Email.",
+            "nullable": true
+          },
+          "pdfTicket": {
+            "type": "string",
+            "description": "PDF jízdenka zakódovaná v base64, je null pokud o ni člověk výslovně nepožádá.",
+            "nullable": true
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketAttachment"
+            },
+            "description": "Seznam příloh k jízdence (QR kód, ...).",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "description": "Status jízdenky.",
+            "format": "int32"
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionPrice"
+            },
+            "description": "Seznam tarifů/dokladů.",
+            "nullable": true
+          },
+          "idsInfo": {
+            "$ref": "#/components/schemas/IdsInfo"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Plugin (dopravce).",
+            "nullable": true
+          },
+          "alternativeOfferID": {
+            "type": "string",
+            "description": "ID vybrané alternativní nabídky.",
+            "nullable": true
+          },
+          "refundInfo": {
+            "$ref": "#/components/schemas/TicketViewRefundInfo"
+          }
+        },
+        "additionalProperties": false,
+        "description": "(Základní) informace o jedné jízdence v košíku."
+      },
+      "TicketViewRefundInfo": {
+        "type": "object",
+        "properties": {
+          "refundDate": {
+            "type": "string",
+            "description": "Datum a čas (schválení) vrácení jízdenky pro JSON serializaci.",
+            "nullable": true
+          },
+          "refundPrice": {
+            "type": "integer",
+            "description": "Vracená částka zákazníkovi.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Informace o vrácení dané jízdenky."
+      },
+      "TrainDataInfo": {
+        "type": "object",
+        "properties": {
+          "info": {
+            "$ref": "#/components/schemas/TrainInfo"
+          },
+          "remarks": {
+            "$ref": "#/components/schemas/RemarksInfo"
+          },
+          "route": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrainRouteInfo"
+            },
+            "nullable": true
+          },
+          "next": {
+            "$ref": "#/components/schemas/TrainDataInfo"
+          },
+          "lineRoute": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineRouteInfo"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - uplna informace o spoji."
+      },
+      "TrainInfo": {
+        "type": "object",
+        "properties": {
+          "ttIndex": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "train": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "num1": {
+            "type": "string",
+            "nullable": true
+          },
+          "num2": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "color": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "fixedCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FixedCodeInfo"
+            },
+            "nullable": true
+          },
+          "info": {
+            "type": "string",
+            "nullable": true
+          },
+          "idsLine": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - hlavička spoje."
+      },
+      "TrainPlacement": {
+        "type": "object",
+        "properties": {
+          "back": {
+            "type": "boolean",
+            "description": "Příznak části ve směru zpět (jen pro daný směr - příp. spřažená část bude mít svůj PartPlacement, třídy musí souhlasit).",
+            "default": false
+          },
+          "connectionTrain": {
+            "type": "integer",
+            "description": "Index spoje (v rámci spojení).",
+            "format": "int32",
+            "default": -1
+          },
+          "class": {
+            "type": "string",
+            "description": "Třída (nepovinná a jen je-li k dispozici, pokud má třída id a název, zadává se zde pouze id).",
+            "nullable": true
+          },
+          "vehicleNum": {
+            "type": "string",
+            "description": "Rezervační číslo vozu.",
+            "nullable": true
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Seznam čísel míst.",
+            "nullable": true
+          },
+          "passengers": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Index cestujícího ve skladbě (0..n-1), paralelní k Places, smí být kratší.",
+            "nullable": true
+          },
+          "reservationType": {
+            "type": "integer",
+            "description": "Vybraný typ rezervace.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Seznam míst a třída v jenom spoji/vozu (pro požadavek na umístění atp.).\r\nTřída vlastně musí být stejná pro celou \"část spojení\" - pro pohodlí zadávání však umožňujeme zadávat po spojích."
+      },
+      "TrainRouteInfo": {
+        "type": "object",
+        "properties": {
+          "station": {
+            "$ref": "#/components/schemas/StationInfo"
+          },
+          "fixedCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FixedCodeInfo"
+            },
+            "nullable": true
+          },
+          "arrTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "depTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrCycle": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "depCycle": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "flags": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "dist": {
+            "type": "string",
+            "nullable": true
+          },
+          "coorX": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "nullable": true
+          },
+          "coorY": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CRWS - jeden zaznam na draze spoje."
+      },
+      "TrainSchemaInfo": {
+        "type": "object",
+        "properties": {
+          "class": {
+            "type": "string",
+            "description": "Aktuální třída (nebo null). Nevyplňuje plugin AMS.",
+            "nullable": true
+          },
+          "classes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Nabídka možných tříd (nebo null). Nevyplňuje plugin AMS.",
+            "nullable": true
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Čísla aktuálně vybraných míst (nebo null).",
+            "nullable": true
+          },
+          "placeDescs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaceDesc"
+            },
+            "description": "Rozšiřené popisy aktuálně vybraných míst (nebo null).",
+            "nullable": true
+          },
+          "passengers": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Index cestujícího ze skladby na daném místě (nemusí být vyplněno).",
+            "nullable": true
+          },
+          "vehicleSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleSchema"
+            },
+            "description": "Schémata spoje (nebo null). Vyplněno pouze pro dopravce / pluginy, kteří poskytují schémata spoje ve formě datové struktury, ze které si aplikace sama\r\ntvoří zobrazovaný grid sedadel (tzv. schematické plánky).",
+            "nullable": true
+          },
+          "vehicleBgSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleBgSchema"
+            },
+            "description": "Grafická schémata spoje (nebo null). Vyplněno pouze pro dopravce / pluginy, kteří poskytují schémata spoje ve formě již vygenerovaných obrázků\r\n(tzv. grafické plánky). Samotná binární data obrázků nejsou součástí tohoto objektu, ale jsou dostupná přes endpoint `/schema/schemaImage/{imageId}`.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Schéma a třídy jednoho spoje cenové nabídky."
+      },
+      "TrainSchemaRequest": {
+        "required": [
+          "basketId",
+          "connectionTrain",
+          "isBack",
+          "priceHandle"
+        ],
+        "type": "object",
+        "properties": {
+          "basketId": {
+            "type": "string",
+            "description": "Identifikátor košíku, pro kterého cenovou nabídku se plánek získavá.",
+            "nullable": true
+          },
+          "priceHandle": {
+            "type": "string",
+            "description": "Identifikátor (handle) cenové nabídky, pro kterou se plánek získává.",
+            "nullable": true
+          },
+          "connectionTrain": {
+            "type": "integer",
+            "description": "Index spoje v rámci cenové nabídky.",
+            "format": "int32"
+          },
+          "isBack": {
+            "type": "boolean",
+            "description": "Příznak, zda se má plánek pro spoj ve směru zpět (true) nebo pro spoj v směru tam (false)."
+          },
+          "schemaParam": {
+            "$ref": "#/components/schemas/BgSchemaParam"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Požadavek na získaní plánku jedneho spoje."
+      },
+      "VehicleBgSchema": {
+        "required": [
+          "images",
+          "num",
+          "places"
+        ],
+        "type": "object",
+        "properties": {
+          "num": {
+            "type": "string",
+            "description": "Rezervační číslo vozu.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Název vozu pro zobrazení, pokud není, zobrazit Num.",
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky vozu.\r\nViz výčet VehicleFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BgPlace"
+            },
+            "description": "Jednotlivá místa vozu.",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleBgSchemaImage"
+            },
+            "description": "Obrázky grafického plánku (vrstvy).",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Grafický plánek jednoho vozu."
+      },
+      "VehicleBgSchemaImage": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id obrázku - je možné dle id cachovat.",
+            "nullable": true
+          },
+          "imageType": {
+            "type": "integer",
+            "description": "Typ obrázku (vrstvy) grafického plánku.\r\nViz výčet <seealso cref=\"T:TicketService.Api.Enums.BgImageType\" />.",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "Obrázek (vrstva) grafického plánku vozu."
+      },
+      "VehicleFlags": {
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "type": "integer",
+        "description": "Příznaky vozu v plánku.\n\n1 = NoChangePlaces (Místa nejdou vybrat.\r\nNerezervuje se na místa, nebo místa nejdou změnit.)\n\n2 = PositiveDirection (Vůz je v pozitivním směru.)\n\n4 = ReverseDirection (Vůz je v obráceném směru.)\n\n8 = PlaceNameContainsVehicleName (Název vozu je obsažen v názvu sedačky a není třeba ho zobrazovat zvlášť.)",
+        "format": "int32",
+        "x-enumNames": [
+          "NoChangePlaces",
+          "PositiveDirection",
+          "ReverseDirection",
+          "PlaceNameContainsVehicleName"
+        ],
+        "x-enum-descriptions": [
+          "Místa nejdou vybrat.\r\nNerezervuje se na místa, nebo místa nejdou změnit.",
+          "Vůz je v pozitivním směru.",
+          "Vůz je v obráceném směru.",
+          "Název vozu je obsažen v názvu sedačky a není třeba ho zobrazovat zvlášť."
+        ]
+      },
+      "VehicleSchema": {
+        "required": [
+          "num",
+          "places"
+        ],
+        "type": "object",
+        "properties": {
+          "num": {
+            "type": "string",
+            "description": "Rezervační číslo vozu.",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Číslo vozu k zobrazení při výběru vozu.",
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "description": "Příznaky vozu.\r\nViz výčet VehicleFlags.",
+            "format": "int32",
+            "default": 0
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Place"
+            },
+            "description": "Jednotlivá místa vozu.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Schematický plánek jednoho vozu."
+      }
+    }
+  },
+  "security": [
+    { }
+  ],
+  "tags": [
+    {
+      "name": "Basket",
+      "description": "Akce pro práci s košíky cenovými nabídkami."
+    },
+    {
+      "name": "Enum",
+      "description": "Číselníky, nastavení a další konfigurace."
+    },
+    {
+      "name": "Payment",
+      "description": "Akce pro zaplacení košíku."
+    },
+    {
+      "name": "Refund",
+      "description": "Akce pro operace s vracením jízdenek."
+    },
+    {
+      "name": "ServiceInfo"
+    },
+    {
+      "name": "Schema",
+      "description": "Akce pro získavaní a spracovaní plánků."
+    }
+  ]
+}

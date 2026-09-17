@@ -1,0 +1,10 @@
+{
+  "description": "Easily upload and share screenshots to create interactive prototypes, streamlining the design process for teams and enhancing collaboration.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

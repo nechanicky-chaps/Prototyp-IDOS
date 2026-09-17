@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IDOS v1 – výběr jízdenek ve spodním panelu</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main class="workbench">
+    <header class="workbench-head">
+      <div>
+        <p class="kicker">VARIANTA V1 · SPODNÍ PANEL</p>
+        <h1>Nákup jízdenky v IDOS</h1>
+      </div>
+      <div class="workbench-actions">
+        <button id="theme-toggle" class="tool-button" type="button" aria-pressed="true">Tmavý motiv</button>
+        <button id="reset-flow" class="tool-button" type="button">Začít znovu</button>
+      </div>
+    </header>
+
+    <nav id="step-nav" class="step-nav" aria-label="Kroky nákupu"></nav>
+
+    <section class="mock-layout" aria-label="Klikací prototyp aplikace IDOS">
+      <div id="phone" class="phone dark-theme">
+        <div class="status-bar" aria-hidden="true"><span>12:36</span><span>◔ ▮▮ 80%</span></div>
+        <div id="app" class="app" aria-live="polite"></div>
+        <div id="sheet" class="sheet-backdrop" hidden></div>
+      </div>
+      <aside class="mock-note">
+        <strong>Varianta v1</strong>
+        <p>Po stisku Koupit se nad výsledky vysune panel inspirovaný SBB. Pracuje s jízdenkou, její platností a počtem kusů.</p>
+        <p>Jméno cestujícího se nezadává, pokud ho konkrétní tarif nepotřebuje. Akce Zaplatit nic neodesílá.</p>
+      </aside>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

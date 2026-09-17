@@ -1,0 +1,77 @@
+# Přehled větví lokální mapy
+
+Počty zahrnují všechny zaznamenané cesty ve větvi, včetně samotné větve, pokud je ve výpisu. Nejde o ověřené počty souborů.
+
+| Větev | Počet cest |
+| --- | --- |
+| `R:\aplikace\A3` | 1 |
+| `R:\aplikace\AMS` | 1 |
+| `R:\aplikace\Aplikace (fs.chaps.local) – zástupce` | 2 |
+| `R:\aplikace\ARES_PKP` | 1 |
+| `R:\aplikace\ARES_XL` | 1 |
+| `R:\aplikace\ARES_XL_OeBB` | 1 |
+| `R:\aplikace\ASWJR` | 1 |
+| `R:\aplikace\CASPRO` | 1 |
+| `R:\aplikace\CAVOS` | 525 |
+| `R:\aplikace\CIS` | 1 |
+| `R:\aplikace\CIS_SK` | 1 |
+| `R:\aplikace\DBmail_Praha` | 1 |
+| `R:\aplikace\DP` | 1 |
+| `R:\aplikace\DSK` | 1 |
+| `R:\aplikace\eShopAMS` | 1 |
+| `R:\aplikace\eShopCD` | 1 |
+| `R:\aplikace\CHAPS_plan` | 2 |
+| `R:\aplikace\IDOS_Hrany` | 1 |
+| `R:\aplikace\IDOSDesktop` | 1 |
+| `R:\aplikace\IdosPID` | 1 |
+| `R:\aplikace\IDOSProdeje` | 4673 |
+| `R:\aplikace\INISS` | 1 |
+| `R:\aplikace\Iniss2` | 1 |
+| `R:\aplikace\IPList2` | 85 |
+| `R:\aplikace\ISP` | 1 |
+| `R:\aplikace\ITP` | 1 |
+| `R:\aplikace\JR` | 1 |
+| `R:\aplikace\JRB` | 1 |
+| `R:\aplikace\JRCD` | 1 |
+| `R:\aplikace\JRData` | 1 |
+| `R:\aplikace\JRJ` | 1 |
+| `R:\aplikace\JRKiosk` | 1 |
+| `R:\aplikace\JRO` | 1 |
+| `R:\aplikace\JRS` | 1 |
+| `R:\aplikace\JRU` | 1 |
+| `R:\aplikace\KmlTTQ` | 1 |
+| `R:\aplikace\KUDYNE` | 1 |
+| `R:\aplikace\Kuryr` | 1 |
+| `R:\aplikace\MA_IDS` | 1 |
+| `R:\aplikace\MAVIS` | 1 |
+| `R:\aplikace\MISOP` | 1 |
+| `R:\aplikace\Nuget` | 2553 |
+| `R:\aplikace\ÖBB` | 1 |
+| `R:\aplikace\ODP` | 1 |
+| `R:\aplikace\OSDM` | 1 |
+| `R:\aplikace\Painter Presets.sqlrsr` | 1 |
+| `R:\aplikace\PAJDPP` | 1 |
+| `R:\aplikace\PARIS` | 1 |
+| `R:\aplikace\Path` | 1 |
+| `R:\aplikace\PortalMK` | 1 |
+| `R:\aplikace\PP` | 1 |
+| `R:\aplikace\PR` | 1 |
+| `R:\aplikace\RAZENI` | 1 |
+| `R:\aplikace\RJ` | 1 |
+| `R:\aplikace\Scitlist` | 1 |
+| `R:\aplikace\SISM` | 1 |
+| `R:\aplikace\SPADO` | 1 |
+| `R:\aplikace\STOJAN.MHD` | 1 |
+| `R:\aplikace\TelCard` | 1 |
+| `R:\aplikace\TRPOD` | 1 |
+| `R:\aplikace\TT` | 62728 |
+| `R:\aplikace\UIRADR` | 1 |
+| `R:\aplikace\URM` | 1 |
+| `R:\aplikace\UtilityRuzne` | 622 |
+| `R:\aplikace\VD` | 1 |
+| `R:\aplikace\Vlaky` | 1 |
+| `R:\aplikace\VŠB` | 6 |
+| `R:\aplikace\ZSSK` | 1 |
+| `R:\TTData\Chaps` | 1198 |
+| `R:\TTData\TT` | 76894 |
+| `R:\TTData\TTSetup` | 367 |

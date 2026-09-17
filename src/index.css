@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-bg: #080e1c;
+  --color-header: #3a6fa5;
+  --color-header-dark: #2d5a8c;
+  --color-card: #0f1826;
+  --color-card2: #111c2e;
+  --color-border: #1e2d44;
+  --color-tram: #ff6b35;
+  --color-train: #c084fc;
+  --color-blue-link: #60a5fa;
+  --color-green: #4ade80;
+  --color-muted: #6b80a0;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #000;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar { display: none; }

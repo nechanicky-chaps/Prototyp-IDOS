@@ -1,0 +1,120 @@
+{
+  "trenitalia-002": [
+    "Velmi minimalistické přidávání osob. V tomto výběru vidím dospělé a děti, seniory ne. Ještě prozkoumám, zda nejsou další možnosti později."
+  ],
+  "muj-vlak-002": [
+    "Jsem přihlášený, ale ve výběru mi chybí oblíbení cestující."
+  ],
+  "muj-vlak-004": [
+    "Líbí se mi, že jeden cestující může mít více průkazů.",
+    "IDOS také umožňuje více průkazů, pomocí zaškrtávání. K jeho porovnání se dostaneme na konci."
+  ],
+  "dukapka-001": [
+    "Při hledání nemusím vybírat cestující. Připadá mi to logické, pokud hodně zákazníků už má předplatní jízdenku."
+  ],
+  "dukapka-002": [
+    "Cestující přidávám plusem až při nákupu.",
+    "I samostatný nákup bez hledání spoje používá prakticky stejný výběr relace a cestujících. Tato jednotnost se mi líbí."
+  ],
+  "dukapka-003": [
+    "Je to dost minimalistické, ale musím vybrat druh jízdného, i když nemusím vědět, co jeho označení znamená."
+  ],
+  "ideska-002": [
+    "Jako nepřihlášený po stisknutí Koupit ještě nevidím cenu. Nejdřív musím vybrat cestující, což je otravné."
+  ],
+  "ideska-003": [
+    "Souhrn nákupu se mi líbí. Mohu z něj upravit cestující."
+  ],
+  "ideska-004": [
+    "Ani po registraci se mi počet cestujících nepředvyplní. Očekával bych alespoň jednoho.",
+    "Stále musím projít výběrem a scrollovat dolů k potvrzení. Pro rychlé nákupy je to nepraktické; registrace mi tento krok nezrychlila."
+  ],
+  "ideska-005": [
+    "Přehled jízdenek v souhrnu je pěkný."
+  ],
+  "ideska-006": [
+    "I při nákupu bez hledání spoje se znovu musím proklikat výběrem kategorie cestujícího."
+  ],
+  "ideska-007": [
+    "Líbí se mi design volby, zda chci jízdenku pro relaci, síťovou, nebo pro MHD. Lze tak nakupovat bez hledání konkrétního spoje."
+  ],
+  "idolka-002": [
+    "Výběr cestujících až po hledání mi tolik nevadí. Hlavní problém je, že u předvyplněného dospělého nevidím cenu, pouze 1 ks."
+  ],
+  "idolka-003": [
+    "Přepínání mezi časovou a síťovou jízdenkou je docela fajn."
+  ],
+  "idolka-005": [
+    "Tlačítko Koupit jízdenku může působit jako nákup už vybrané jízdenky, přitom až za ním následuje výběr pro relaci. (Pracovní výklad nejasného diktátu.)"
+  ],
+  "idolka-007": [
+    "Opět nevidím cenu předvyplněné plné varianty. Navíc mi není úplně jasné, co jednotlivé tarifní možnosti znamenají."
+  ],
+  "pid-litacka-003": [
+    "Při hledání prakticky nevolím cestujícího. Aplikace mi automaticky nabídne jízdenku vhodnou pro můj profil."
+  ],
+  "pid-litacka-001": [
+    "Koupit jízdenku pro někoho jiného může být problém."
+  ],
+  "pid-litacka-004": [
+    "Při samostatném nákupu mám seznam variant, ale musím sám vědět, na kterou jízdenku mám nárok."
+  ],
+  "oebb-001": [
+    "Aplikace má výběr cestujících přímo ve formuláři hledání."
+  ],
+  "oebb-002": [
+    "Výběr funguje podobně jako na webu: přidávám plusy nahoře a dole přibývají karty."
+  ],
+  "oebb-003": [
+    "Líbí se mi vyplnění samotného věku místo celého data narození."
+  ],
+  "regiojet-003": [
+    "RegioJet i FlixBus mají minimalistický výběr cestujících. Přičítám to jejich menší nabídce slev a kombinací."
+  ],
+  "flixbus-002": [
+    "RegioJet i FlixBus mají minimalistický výběr cestujících. Přičítám to jejich menší nabídce slev a kombinací."
+  ],
+  "db-navigator-002": [
+    "Líbí se mi jednoduchý design a karty, které nabízejí dost možností. Nejdřív věk, potom slevy; je mi to celkem příjemné."
+  ],
+  "vy-001": [
+    "Design aplikace mi připadá moderní."
+  ],
+  "vy-002": [
+    "Po vyhledání spojení stačí scrollovat dolů a prohlížet výsledky."
+  ],
+  "vy-005": [
+    "Výběr pasažérů je jednoduchý a opět se zadává věk."
+  ],
+  "vy-004": [
+    "Výběr pasažérů je jednoduchý a opět se zadává věk."
+  ],
+  "iredo-002": [
+    "Přidávání člověka je docela příjemné. Je to rychlé a nemusím chodit na jinou stránku."
+  ],
+  "iredo-001": [
+    "Volba tarifu je méně viditelná. Rozbalovací menu se mi otevírá různými směry a působí trochu zmateně."
+  ],
+  "vor-001": [
+    "Rovnou mi nabídne výběr druhu jízdenky a ceny."
+  ],
+  "virtualni-plzenska-karta-002": [
+    "Zvláštní řešení, kdy je vše pod vyhledávacím polem."
+  ],
+  "odisappka-001": [
+    "Výběr jízdenek je pod spojením. Oproti Idolce mi připadá o něco lepší, ale prostorově dost náročný.",
+    "U jízdenek není uvedeno, zda se vážou na konkrétní spoj ani jak dlouho platí."
+  ],
+  "odisappka-002": [
+    "Jednu jízdenku koupím prvním klepnutím; dalším klepnutím otevřu posuvník pro vyšší počet."
+  ],
+  "sbb-001": [
+    "Výběr celého data narození se mi opravdu nelíbí, ale designový minimalismus mi přijde docela fajn."
+  ],
+  "idzk-001": [
+    "Vybírá se zde pouze předplatní jízdenka, takže jde o trochu jiný případ."
+  ],
+  "idzk-002": [
+    "Tarifní výběr je přehledný a nachází se na samostatné obrazovce."
+  ]
+}

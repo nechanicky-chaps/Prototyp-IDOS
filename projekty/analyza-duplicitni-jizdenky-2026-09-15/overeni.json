@@ -1,0 +1,23 @@
+{
+  "source": "260915_Request.log",
+  "bytes": 2399047266,
+  "lines": 3658210,
+  "matches": 23,
+  "email_matches": 2,
+  "sha256": "c8f43d3824191df2e23d42e8bcb456220d900c3abc7943dbef7e291906d121c1",
+  "crc32": "f659033c",
+  "zip_crc_verified": true,
+  "selectors": [
+    "aristippos@yahoo.com",
+    "d3990868-8b70-4f14-0000-019a741fbb21",
+    "83fb78ba679bf92c",
+    "b28a4093-3471-43be-82a7-f589af9960e2",
+    "411aa6bf-5d1e-4609-9af6-ca01469ab313",
+    "c98bff55-9c24-45ff-91a5-521f837966fc",
+    "ff27d47a-5d18-44c6-9e75-bec1062b56dc",
+    "c6e4e8af-b57a-4733-819e-4563e97104fc",
+    "293081450",
+    "304318639",
+    "6irv-mnxm-ktn3"
+  ]
+}
