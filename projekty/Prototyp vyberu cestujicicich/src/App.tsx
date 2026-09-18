@@ -1467,42 +1467,6 @@ export default function App() {
           position: "relative",
         }}
       >
-        {/* Status bar */}
-        <div
-          style={{ background: HEADER, color: "white", fontSize: 11, paddingTop: 10 }}
-          className="flex items-center justify-between px-5 pb-1 flex-shrink-0"
-        >
-          <div className="flex items-center gap-2">
-            <span className="font-semibold tracking-wide">12:36</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" opacity="0.8">
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-            </svg>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" opacity="0.8">
-              <circle cx="12" cy="12" r="4" />
-            </svg>
-          </div>
-          <div className="flex items-center gap-2">
-            {/* Wifi */}
-            <svg width="13" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.4">
-              <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-              <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-              <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-              <line x1="12" y1="20" x2="12.01" y2="20" strokeWidth="3" />
-            </svg>
-            {/* Cellular */}
-            <svg width="13" height="10" viewBox="0 0 14 11" fill="white">
-              <rect x="0.5" y="7.5" width="2" height="3.5" rx="0.5" opacity="0.4" />
-              <rect x="3.5" y="5" width="2" height="6" rx="0.5" opacity="0.7" />
-              <rect x="6.5" y="2.5" width="2" height="8.5" rx="0.5" opacity="0.9" />
-              <rect x="9.5" y="0.5" width="2" height="10.5" rx="0.5" />
-            </svg>
-            {/* Battery */}
-            <div className="flex items-center gap-0.5 border border-white/80 rounded px-1 py-0.2 text-[9px] font-bold">
-              <span>⚡80</span>
-            </div>
-          </div>
-        </div>
-
         {/* Screen content */}
         <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
           {renderScreen()}
