@@ -38,6 +38,6 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
       </article>)}
       {!ticketIds.length && <div className="journey-padding"><p className="flow-empty">Nemáte vybranou žádnou jízdenku.</p><button className="flow-text-button" onClick={() => { setTicketIds(journeyTickets.map(t => t.id)); setRemoved(null); }}>Obnovit všechny úseky</button></div>}
     </div>
-    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count} onClick={onNext}><span>Pokračovat k platbě</span><span>→</span></button></footer>
+    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count} onClick={onNext}><span>Souhrn</span><span>→</span></button></footer>
   </section>;
 }

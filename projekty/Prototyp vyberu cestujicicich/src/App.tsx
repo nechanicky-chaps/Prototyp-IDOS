@@ -1,5 +1,5 @@
 import MultiTicketSummary, { JourneyResult, journeyTickets, multiTotal } from "./MultiTicketSummary";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PassengerFlow, { initialPassengers, initialFavorites, passengerLabel, passLabels, countLabel, demoTotal, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
 
 type Screen =
@@ -8,6 +8,7 @@ type Screen =
   | "passengers"
   | "fares"
   | "summary"
+  | "checkout-summary"
   | "payment"
   | "confirm";
 
@@ -862,42 +863,13 @@ function SummaryScreen({
   passengers,
   onBack,
   onNext,
-  onShowFares,
   onEditPassengers,
 }: {
   passengers: Passenger[];
   onBack: () => void;
   onNext: () => void;
-  onShowFares: () => void;
   onEditPassengers: () => void;
 }) {
-  const [fareFabHovered, setFareFabHovered] = useState(false);
-  const [fareFabIdleExpanded, setFareFabIdleExpanded] = useState(false);
-  useEffect(() => {
-    let openTimer: ReturnType<typeof setTimeout>;
-    let closeTimer: ReturnType<typeof setTimeout>;
-    const scheduleHint = () => {
-      clearTimeout(openTimer);
-      clearTimeout(closeTimer);
-      setFareFabIdleExpanded(false);
-      openTimer = setTimeout(() => {
-        setFareFabIdleExpanded(true);
-        closeTimer = setTimeout(() => setFareFabIdleExpanded(false), 3000);
-      }, 6000);
-    };
-    scheduleHint();
-    window.addEventListener("pointerdown", scheduleHint);
-    window.addEventListener("keydown", scheduleHint);
-    window.addEventListener("scroll", scheduleHint, true);
-    return () => {
-      clearTimeout(openTimer);
-      clearTimeout(closeTimer);
-      window.removeEventListener("pointerdown", scheduleHint);
-      window.removeEventListener("keydown", scheduleHint);
-      window.removeEventListener("scroll", scheduleHint, true);
-    };
-  }, []);
-  const fareFabExpanded = fareFabHovered || fareFabIdleExpanded;
   return (
     <div className="flex flex-col h-full" style={{ background: BG }}>
       <Header
@@ -1048,23 +1020,6 @@ function SummaryScreen({
         </div>
       </div>
 
-      {/* FAB — Alternativní tarifní nabídky */}
-      <div style={{ position: "relative", height: 0 }}>
-        <button
-          onClick={onShowFares}
-          onMouseEnter={() => setFareFabHovered(true)}
-          onMouseLeave={() => setFareFabHovered(false)}
-          onFocus={() => setFareFabHovered(true)}
-          onBlur={() => setFareFabHovered(false)}
-          aria-label="Alternativní tarifní nabídky"
-          aria-expanded={fareFabExpanded}
-          className={`fare-fab ${fareFabExpanded ? "expanded" : ""}`}
-        >
-          <span className="fare-fab-icon" aria-hidden="true"><TicketIcon /><b>+</b></span>
-          <span className="fare-fab-label">Alternativní tarifní nabídky</span>
-        </button>
-      </div>
-
       {/* Bottom bar */}
       <div
         style={{ background: HEADER }}
@@ -1083,10 +1038,84 @@ function SummaryScreen({
           onClick={onNext}
           className="flex items-center gap-2 text-white font-medium hover:opacity-80"
         >
-          <span className="text-sm">Platba</span>
+          <span className="text-sm">Souhrn</span>
           <ArrowRight />
         </button>
       </div>
+    </div>
+  );
+}
+
+function CheckoutSummaryScreen({
+  passengers,
+  multi,
+  total,
+  ticketCount,
+  onBack,
+  onPayment,
+  onChooseAlternative,
+}: {
+  passengers: Passenger[];
+  multi: boolean;
+  total: number;
+  ticketCount: number;
+  onBack: () => void;
+  onPayment: () => void;
+  onChooseAlternative: () => void;
+}) {
+  const alternatives = multi
+    ? [
+        { title: "Jedna průběžná jízdenka", detail: "Flexi základní jednosměrná", price: "284 Kč" },
+        { title: "Celodenní nabídka", detail: "Síťová jízdenka pro celou trasu", price: "319 Kč" },
+      ]
+    : [
+        { title: "Jízdenka dopravce", detail: "Základní jednosměrná", price: "46 Kč" },
+        { title: "Jednodenní nabídka IDS", detail: "Celodenní cestování v oblasti", price: "250 Kč" },
+        { title: "Flexi nabídka", detail: "Více možností změny spojení", price: "58 Kč" },
+      ];
+
+  return (
+    <div className="checkout-summary-screen">
+      <Header title="Souhrn" onBack={onBack} />
+      <div className="checkout-summary-content">
+        <section className="checkout-route-row" aria-label="Spojení">
+          <div>
+            <strong>{multi ? "Veverská Bítýška → Česká Lípa" : "Bráfova → Adamov zastávka"}</strong>
+            <span>{multi ? "14:14–19:31 · přes Tišnov a Kolín" : "13:06–13:50 · Tram 1, Vlak S2"}</span>
+          </div>
+          <span>{multi ? "5:17" : "0:44"}</span>
+        </section>
+
+        <section className="checkout-ticket-card">
+          <p className="checkout-section-label">Kupujete</p>
+          <div className="checkout-ticket-main">
+            <TicketIcon />
+            <div>
+              <strong>{multi ? `${ticketCount} samostatné jízdenky` : "Nabídka IDS"}</strong>
+              <span>{multi ? "Pro jednotlivé úseky spojení" : `${passengers.length}× IDS JMK Základní`}</span>
+            </div>
+            <strong>{total} Kč</strong>
+          </div>
+        </section>
+
+        <section className="checkout-alternatives">
+          <h2>Alternativní tarifní nabídky</h2>
+          {alternatives.map((offer) => (
+            <button key={offer.title} onClick={onChooseAlternative} className="checkout-offer">
+              <div>
+                <strong>{offer.title}</strong>
+                <span>{offer.detail}</span>
+              </div>
+              <span>{offer.price}</span>
+              <ArrowRight />
+            </button>
+          ))}
+        </section>
+      </div>
+      <button onClick={onPayment} className="checkout-payment-button">
+        <span>{total} Kč</span>
+        <span>Platba <ArrowRight /></span>
+      </button>
     </div>
   );
 }
@@ -1416,15 +1445,26 @@ export default function App() {
             setTicketIds={setTicketIds}
             onBack={() => setScreen("results")}
             onEditPassengers={() => setScreen("passengers")}
-            onNext={() => setScreen("payment")}
+            onNext={() => setScreen("checkout-summary")}
           />
         ) : (
           <SummaryScreen
             passengers={passengers}
             onBack={() => setScreen("results")}
-            onNext={() => setScreen("payment")}
-            onShowFares={() => setScreen("fares")}
+            onNext={() => setScreen("checkout-summary")}
             onEditPassengers={() => setScreen("passengers")}
+          />
+        );
+      case "checkout-summary":
+        return (
+          <CheckoutSummaryScreen
+            passengers={passengers}
+            multi={multi}
+            total={total}
+            ticketCount={ticketCount}
+            onBack={() => setScreen("summary")}
+            onPayment={() => setScreen("payment")}
+            onChooseAlternative={() => setScreen("summary")}
           />
         );
       case "payment":
@@ -1433,7 +1473,7 @@ export default function App() {
             total={total}
             ticketCount={ticketCount}
             passengers={passengers}
-            onBack={() => setScreen("summary")}
+            onBack={() => setScreen("checkout-summary")}
             onPay={() => setScreen("confirm")}
           />
         );
