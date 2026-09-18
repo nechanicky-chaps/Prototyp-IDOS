@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import PassengerFlow, { initialPassengers, initialFavorites, passengerLabel, passLabels, countLabel, demoTotal, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
 
 type Screen =
-  | "home"
   | "results"
   | "passenger"
   | "passengers"
@@ -529,7 +528,7 @@ function ResultsScreen({
   multi,
   onScenario,
 }: {
-  onBack: () => void;
+  onBack?: () => void;
   onBuy: () => void;
   multi: boolean;
   onScenario: (multi: boolean) => void;
@@ -1353,7 +1352,7 @@ function ConfirmScreen({
 // ─────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState<Screen>(
-    location.hash === "#vice-jizdenek" ? "results" : location.hash === "#cestujici" ? "passengers" : "home"
+    location.hash === "#cestujici" ? "passengers" : "results"
   );
   const [passengers, setPassengers] = useState<Passenger[]>(
     location.hash === "#vice-jizdenek" ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers
@@ -1380,20 +1379,11 @@ export default function App() {
 
   const renderScreen = () => {
     switch (screen) {
-      case "home":
-        return (
-          <HomeScreen
-            onSearch={() => setScreen("results")}
-            passengersCount={passengers.length}
-            onOpenPassengers={() => setScreen("passengers")}
-          />
-        );
       case "results":
         return (
           <ResultsScreen
             multi={multi}
             onScenario={chooseScenario}
-            onBack={() => setScreen("home")}
             onBuy={() => setScreen("summary")}
           />
         );
@@ -1454,7 +1444,7 @@ export default function App() {
             ticketCount={ticketCount}
             multi={multi}
             passengers={passengers}
-            onDone={() => setScreen("home")}
+            onDone={() => setScreen("results")}
           />
         );
     }
