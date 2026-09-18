@@ -1034,14 +1034,15 @@ function SummaryScreen({
         <section className="inline-fares">
           <h2>Alternativní tarifní nabídky</h2>
           {purchaseFareOptions.map((offer, index) => index !== selectedFare && (
-            <button key={offer.title} onClick={() => onSelectFare(index)} className="checkout-offer">
+            <div key={offer.title} className="checkout-offer">
               <div>
                 <strong>{offer.title}</strong>
                 <span>{offer.detail}</span>
               </div>
-              <span>{offer.price * passengers.length} Kč</span>
-              <ArrowRight />
-            </button>
+              <button className="checkout-offer-action" onClick={() => onSelectFare(index)}>
+                Vybrat za {offer.price * passengers.length} Kč
+              </button>
+            </div>
           ))}
         </section>
       </div>

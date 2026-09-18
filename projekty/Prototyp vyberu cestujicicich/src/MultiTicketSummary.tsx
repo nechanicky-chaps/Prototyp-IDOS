@@ -43,9 +43,10 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
         {[
           { title: 'Jedna průběžná jízdenka', detail: 'Flexi základní jednosměrná', price: '284 Kč' },
           { title: 'Celodenní nabídka', detail: 'Síťová jízdenka pro celou trasu', price: '319 Kč' },
-        ].map(offer => <button key={offer.title} onClick={() => setAlternative(offer.title)} className="checkout-offer">
-          <div><strong>{offer.title}</strong><span>{offer.detail}</span></div><span>{offer.price}</span><span aria-hidden="true">{alternative === offer.title ? '✓' : '→'}</span>
-        </button>)}
+        ].map(offer => <div key={offer.title} className="checkout-offer">
+          <div><strong>{offer.title}</strong><span>{offer.detail}</span></div>
+          <button className="checkout-offer-action" onClick={() => setAlternative(offer.title)}>{alternative === offer.title ? 'Vybráno' : `Vybrat za ${offer.price}`}</button>
+        </div>)}
       </section>}
     </div>
     <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count} onClick={onNext}><span>Platba</span><span>→</span></button></footer>
