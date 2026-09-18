@@ -1,54 +1,108 @@
 import { useEffect, useRef, useState } from 'react';
 
-export type Passenger = { uid: string; catId: string; passId: string; name?: string; firstName?: string; lastName?: string; passNumber?: string };
+export type Passenger = { uid: string; catId: string; passIds: string[]; name?: string; firstName?: string; lastName?: string; passNumber?: string };
 export const categories = [
-  { id: 'child0', label: 'Dítě do 6 let', sub: 'Věk v den cesty', color: '#34d399' },
-  { id: 'child6', label: 'Dítě 6–14 let', sub: 'Věk v den cesty', color: '#60a5fa' },
-  { id: 'junior', label: 'Junior 15–17 let', sub: 'Věk v den cesty', color: '#a78bfa' },
-  { id: 'student', label: 'Student 18–25 let', sub: 'Studující cestující', color: '#f472b6' },
-  { id: 'adult', label: 'Dospělý 26–59 let', sub: 'Dospělý cestující', color: '#60a5fa' },
-  { id: 'senior60', label: 'Senior 60–64 let', sub: 'Věk v den cesty', color: '#fbbf24' },
-  { id: 'senior65', label: 'Senior 65+', sub: 'Věk v den cesty', color: '#fb923c' },
-  { id: 'ztp', label: 'ZTP / ZTP-P', sub: 'Držitel průkazu', color: '#94a3b8' },
+  { id: 'child0', label: 'Dítě (0–1 rok)', color: '#34d399' },
+  { id: 'child2', label: 'Dítě (2 roky)', color: '#34d399' },
+  { id: 'child3', label: 'Dítě (3 roky)', color: '#34d399' },
+  { id: 'child4', label: 'Dítě (4 roky)', color: '#34d399' },
+  { id: 'child5', label: 'Dítě (5 let)', color: '#34d399' },
+  { id: 'child6', label: 'Dítě (6 let)', color: '#60a5fa' },
+  { id: 'child7', label: 'Dítě (7 let)', color: '#60a5fa' },
+  { id: 'child8', label: 'Dítě (8 let)', color: '#60a5fa' },
+  { id: 'child9', label: 'Dítě (9 let)', color: '#60a5fa' },
+  { id: 'child10', label: 'Dítě (10 let)', color: '#60a5fa' },
+  { id: 'child11', label: 'Dítě (11 let)', color: '#60a5fa' },
+  { id: 'child12', label: 'Dítě (12 let)', color: '#60a5fa' },
+  { id: 'child13', label: 'Dítě (13 let)', color: '#60a5fa' },
+  { id: 'child14', label: 'Dítě (14 let)', color: '#60a5fa' },
+  { id: 'junior15', label: 'Mládež (15 let)', color: '#a78bfa' },
+  { id: 'junior1617', label: 'Mládež (16–17 let)', color: '#a78bfa' },
+  { id: 'student', label: 'Mládež (18–25 let)', color: '#f472b6' },
+  { id: 'adult', label: 'Dospělý (26–59 let)', color: '#60a5fa' },
+  { id: 'senior60', label: 'Senior (60–61 let)', color: '#fbbf24' },
+  { id: 'senior6264', label: 'Senior (62–64 let)', color: '#fbbf24' },
+  { id: 'senior65', label: 'Senior (65–69 let)', color: '#fb923c' },
+  { id: 'senior70', label: 'Senior (70 let a více)', color: '#fb923c' },
 ];
 export const passes = [
   { id: 'none', label: 'Bez průkazu', sub: 'Pokračovat bez slevové karty' },
-  { id: 'inkarta', label: 'In-Karta Standard', sub: 'Věrnostní karta' },
-  { id: 'inkarta_plus', label: 'In-Karta Plus', sub: 'Věrnostní karta' },
-  { id: 'isic', label: 'ISIC / ITIC', sub: 'Studentský průkaz' },
+  { id: 'in25', label: 'IN 25', sub: 'In-Karta' },
+  { id: 'in50', label: 'IN 50', sub: 'In-Karta' },
+  { id: 'inkarta', label: 'In-Karta Standard', sub: 'In-Karta' },
+  { id: 'inkarta_plus', label: 'In-Karta Plus', sub: 'In-Karta' },
+  { id: 'itic', label: 'Karta ITIC', sub: 'Studentský průkaz' },
+  { id: 'isic', label: 'ISIC', sub: 'Studentský průkaz' },
+  { id: 'alive', label: 'Karta ALIVE', sub: 'Studentský průkaz' },
+  { id: 'invalidity3', label: 'Osvědčení invalidity 3. stupně', sub: 'Průkaz cestujícího' },
   { id: 'ztp', label: 'Průkaz ZTP', sub: 'Průkaz cestujícího' },
   { id: 'ztpp', label: 'Průkaz ZTP/P', sub: 'Průkaz cestujícího' },
+  { id: 'ztpp_guide', label: 'Průvodce ZTP/P', sub: 'Průkaz cestujícího' },
+  { id: 'tzp', label: 'Průkaz TZP', sub: 'Průkaz cestujícího' },
+  { id: 'tzps', label: 'Průkaz TZP/S', sub: 'Průkaz cestujícího' },
+  { id: 'tzps_guide', label: 'Průvodce TZP/S', sub: 'Průkaz cestujícího' },
+  { id: 'parent', label: 'Průkaz rodiče pro ústavy', sub: 'Průkaz cestujícího' },
+  { id: 'first_class', label: 'Časový doplatek do 1. třídy', sub: 'Doplatek' },
+  { id: 'idsok', label: 'Průkaz IDSOK', sub: 'Krajská karta' },
 ];
-export const initialPassengers: Passenger[] = [{ uid: 'adult-default', catId: 'adult', passId: 'none' }];
+const categoryGroups = [
+  { id: 'children', label: 'Děti (0–15)', items: categories.filter(c => c.id.startsWith('child')) },
+  { id: 'youth', label: 'Mladiství (15–26)', items: categories.filter(c => c.id.startsWith('junior') || c.id === 'student') },
+  { id: 'adults', label: 'Dospělí (26–59)', items: categories.filter(c => c.id === 'adult') },
+  { id: 'seniors', label: 'Senior+', items: categories.filter(c => c.id.startsWith('senior')) },
+];
+const passGroups = [
+  { id: 'inkarta', label: 'In-Karta', items: passes.filter(p => ['none', 'in25', 'in50', 'inkarta', 'inkarta_plus'].includes(p.id)) },
+  { id: 'student', label: 'Studentské karty', items: passes.filter(p => ['itic', 'isic', 'alive'].includes(p.id)) },
+  { id: 'accessibility', label: 'Průkazy ZTP a invalidity', items: passes.filter(p => ['invalidity3', 'ztp', 'ztpp', 'ztpp_guide', 'tzp', 'tzps', 'tzps_guide'].includes(p.id)) },
+  { id: 'other', label: 'Ostatní průkazy', items: passes.filter(p => ['parent', 'first_class', 'idsok'].includes(p.id)) },
+];
+export const initialPassengers: Passenger[] = [{ uid: 'adult-default', catId: 'adult', passIds: ['none'] }];
 export const initialFavorites: Passenger[] = [
-  { uid: 'fav1', catId: 'adult', passId: 'none', name: 'Tom' },
-  { uid: 'fav2', catId: 'senior60', passId: 'inkarta', name: 'Jana' },
+  { uid: 'fav1', catId: 'adult', passIds: ['none'], name: 'Tom' },
+  { uid: 'fav2', catId: 'senior60', passIds: ['inkarta'], name: 'Jana' },
 ];
 export const passengerLabel = (p: Passenger) => p.name || categories.find(c => c.id === p.catId)?.label || 'Cestující';
+export const passLabels = (p: Passenger) => p.passIds.map(id => passes.find(pass => pass.id === id)?.label).filter(Boolean).join(', ');
 export const countLabel = (n: number) => `${n} ${n > 0 && n < 5 ? 'cestující' : 'cestujících'}`;
 // Deliberately a fixed demonstration price, not a tariff calculation.
 export const demoTotal = (passengers: Passenger[]) => passengers.length * 33;
 
-type Page = 'list' | 'category' | 'pass' | 'review' | 'favorite';
-const steps = ['Kategorie', 'Průkaz', 'Kontrola'];
-export default function PassengerFlow({ passengers, favorites, onSaveFavorites, onBack, onConfirm }: {
-  passengers: Passenger[]; favorites: Passenger[]; onSaveFavorites: (p: Passenger[]) => void;
+export type DesignVersion = 'v1.0' | 'v2.0' | 'v3.0';
+type Page = 'list' | 'category' | 'favorite';
+export default function PassengerFlow({ passengers, availablePassengers, favorites, version, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
+  passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
+  onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
+  version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
   onBack: () => void; onConfirm: (p: Passenger[]) => void;
 }) {
   const [selected, setSelected] = useState(passengers);
   const [page, setPage] = useState<Page>('list');
-  const [draft, setDraft] = useState<Passenger>({ uid: '', catId: '', passId: 'none' });
+  const [draft, setDraft] = useState<Passenger>({ uid: '', catId: '', passIds: ['none'] });
   const [saveFavorite, setSaveFavorite] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [quickAddOpen, setQuickAddOpen] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
   useEffect(() => { heading.current?.focus(); content.current?.scrollTo(0, 0); }, [page]);
-  const stepIndex = page === 'category' ? 0 : page === 'pass' ? 1 : 2;
   const cat = categories.find(c => c.id === draft.catId);
-  const pass = passes.find(p => p.id === draft.passId);
+  const togglePass = (passId: string) => setDraft(current => ({
+    ...current,
+    passIds: passId === 'none'
+      ? ['none']
+      : current.passIds.includes(passId)
+        ? current.passIds.filter(id => id !== passId).length ? current.passIds.filter(id => id !== passId) : ['none']
+        : [...current.passIds.filter(id => id !== 'none'), passId],
+  }));
   const start = (p?: Passenger, favorite = false) => {
-    setDraft(p ? { ...p } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: '', passId: 'none' });
+    setDraft(p ? { ...p } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: '', passIds: ['none'] });
     setEditing(!!p); setSaveFavorite(favorite); setPage('category');
+  };
+  const startQuickAdd = () => {
+    setDraft({ uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: '', passIds: ['none'] });
+    setEditing(false);
+    setSaveFavorite(false);
+    setQuickAddOpen(true);
   };
   const toggleFavorite = (p: Passenger) => {
     if (favorites.some(f => f.uid === p.uid)) {
@@ -60,38 +114,73 @@ export default function PassengerFlow({ passengers, favorites, onSaveFavorites, 
     setSaveFavorite(true);
     setPage('favorite');
   };
+  const toggleSelected = (p: Passenger) => {
+    const active = selected.some(item => item.uid === p.uid);
+    setSelected(items => active ? items.filter(item => item.uid !== p.uid) : [...items, { ...p }]);
+  };
   const back = () => {
     if (page === 'list') onBack();
-    else setPage(page === 'category' || page === 'favorite' ? 'list' : page === 'pass' ? 'category' : 'pass');
+    else setPage('list');
   };
   const complete = () => {
     if (!draft.catId || (saveFavorite && !draft.name?.trim())) return;
     const passenger = { ...draft, name: draft.name?.trim() || undefined };
-    setSelected(items => editing ? items.map(p => p.uid === passenger.uid ? passenger : p) : [...items, passenger]);
+    const upsert = (items: Passenger[]) => items.some(p => p.uid === passenger.uid)
+      ? items.map(p => p.uid === passenger.uid ? passenger : p)
+      : [...items, passenger];
+    setSelected(upsert);
+    onSaveAvailablePassengers(upsert(availablePassengers));
     if (saveFavorite) onSaveFavorites([...favorites.filter(p => p.uid !== passenger.uid), passenger]);
+    setQuickAddOpen(false);
     setPage('list');
   };
+  const categoryOption = (c: typeof categories[number]) => <button key={c.id} aria-pressed={draft.catId === c.id} className={`flow-option ${draft.catId === c.id ? 'selected' : ''}`} onClick={() => setDraft({ ...draft, catId: c.id })}>
+    <span className="flow-avatar" style={{ color: c.color }}>●</span><span><strong>{c.label}</strong></span><span className="flow-radio">{draft.catId === c.id ? '●' : '○'}</span>
+  </button>;
+  const passOption = (p: typeof passes[number]) => <label key={p.id} className={`flow-option ${draft.passIds.includes(p.id) ? 'selected' : ''}`}>
+    <input type="checkbox" checked={draft.passIds.includes(p.id)} onChange={() => togglePass(p.id)} />
+    <span><strong>{p.label}</strong><small>{p.sub}</small></span>
+  </label>;
+  const otherPassengers = availablePassengers.filter(p => p.uid !== 'adult-default' && !favorites.some(f => f.uid === p.uid));
+  const v2Rows = [
+    { passenger: availablePassengers.find(p => p.uid === 'adult-default') || initialPassengers[0], label: 'Já', favorite: false },
+    ...otherPassengers.filter(p => selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
+    ...favorites.map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
+    ...otherPassengers.filter(p => !selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
+  ];
   return (
     <section className="passenger-flow">
+      <div className="flow-version-switch" role="group" aria-label="Verze návrhu">
+        <span>Verze návrhu</span>
+        <button className={version === 'v1.0' ? 'selected' : ''} aria-pressed={version === 'v1.0'} onClick={() => onVersionChange('v1.0')}>V1.0</button>
+        <button className={version === 'v2.0' ? 'selected' : ''} aria-pressed={version === 'v2.0'} onClick={() => onVersionChange('v2.0')}>V2.0</button>
+        <button className={version === 'v3.0' ? 'selected' : ''} aria-pressed={version === 'v3.0'} onClick={() => onVersionChange('v3.0')}>V3.0</button>
+      </div>
       <header className="flow-header">
         <button aria-label="Zpět" onClick={back}>←</button>
         <h1 ref={heading} tabIndex={-1}>{page === 'list' ? 'Cestující' : page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Upravit cestujícího' : 'Přidat cestujícího'}</h1>
         {page !== 'list' && <button className="flow-cancel" onClick={() => setPage('list')}>Zrušit</button>}
       </header>
-      {page !== 'list' && page !== 'favorite' && <ol className="flow-steps" aria-label="Postup přidání cestujícího">{steps.map((label, i) => (
-        <li key={label} aria-current={i === stepIndex ? 'step' : undefined} className={i <= stepIndex ? 'active' : ''}><span>{i < stepIndex ? '✓' : i + 1}</span>{label}</li>
-      ))}</ol>}
       <div ref={content} className="flow-content">
-        {page === 'list' ? <>
-          <p className="flow-eyebrow">Společně na cestu</p>
-          <h2>Kdo bude cestovat?</h2>
-          <p className="flow-hint">Přidejte cestující nebo vyberte někoho z oblíbených.</p>
-          <div className="flow-section-title"><h3>Vybraní cestující</h3><span>{selected.length}</span></div>
+        {page === 'list' && (version === 'v2.0' || version === 'v3.0') ? <>
+          <div className="flow-v2-list">
+            {v2Rows.map(({ passenger, label, favorite }) => {
+              const active = selected.some(item => item.uid === passenger.uid);
+              return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
+                <span className={`flow-v2-marker ${favorite ? 'favorite' : ''}`} aria-hidden="true">{favorite ? '★' : '●'}</span>
+                <span className="flow-v2-avatar" aria-hidden="true" />
+                <span className="flow-v2-info"><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></span>
+                <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>
+              </div>;
+            })}
+          </div>
+          <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span>＋</span> Přidat dalšího cestujícího</button>
+        </> : page === 'list' ? <>
           {!selected.length && <p className="flow-empty">Zatím není nikdo vybraný. Přidejte alespoň jednoho cestujícího.</p>}
           <div className="flow-cards">{selected.map(p => <div className="flow-person" key={p.uid}>
             <span className="flow-avatar" style={{ color: categories.find(c => c.id === p.catId)?.color }}>●</span>
             <button className="flow-person-info" aria-label={`Upravit ${passengerLabel(p)}`} onClick={() => start(p)}>
-              <strong>{passengerLabel(p)}</strong><small>{p.name && `${categories.find(c => c.id === p.catId)?.label} · `}{passes.find(s => s.id === p.passId)?.label}</small>
+              <strong>{passengerLabel(p)}</strong><small>{p.name && `${categories.find(c => c.id === p.catId)?.label} · `}{passLabels(p)}</small>
             </button>
             <button className="flow-star" aria-pressed={favorites.some(f => f.uid === p.uid)}
               aria-label={(favorites.some(f => f.uid === p.uid) ? 'Odebrat z oblíbených: ' : 'Přidat do oblíbených: ') + passengerLabel(p)}
@@ -110,23 +199,39 @@ export default function PassengerFlow({ passengers, favorites, onSaveFavorites, 
           })}</div>
           <button className="flow-text-button" onClick={() => start(undefined, true)}>＋ Přidat oblíbeného cestujícího</button>
         </> : <>
-          <p className="flow-eyebrow">{page === 'favorite' ? 'Oblíbený cestující' : 'Krok ' + (stepIndex + 1) + ' ze 3'}</p>
-          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : page === 'category' ? 'Vyberte kategorii' : page === 'pass' ? 'Má cestující průkaz?' : 'Zkontrolujte cestujícího'}</h2>
-          <p className="flow-hint">{page === 'favorite' ? 'Kategorii a průkaz už máte vybrané. Doplňte přezdívku, podle které ho příště poznáte.' : page === 'category' ? 'Vyberte kategorii podle věku v den cesty.' : page === 'pass' ? 'Vyberte slevovou kartu, kterou si vezmete na cestu.' : 'Údaje můžete upravit návratem do předchozích kroků.'}</p>
-          {page === 'category' && <div className="flow-options" role="group" aria-label="Kategorie cestujícího">{categories.map(c => <button key={c.id} aria-pressed={draft.catId === c.id} className={`flow-option ${draft.catId === c.id ? 'selected' : ''}`} onClick={() => setDraft({ ...draft, catId: c.id })}>
-            <span className="flow-avatar" style={{ color: c.color }}>●</span><span><strong>{c.label}</strong><small>{c.sub}</small></span><span className="flow-radio">{draft.catId === c.id ? '●' : '○'}</span>
-          </button>)}</div>}
-          {page === 'pass' && <><div className="flow-chip">{cat?.label}</div><div className="flow-options" role="group" aria-label="Slevový průkaz">{passes.map(p => <button key={p.id} aria-pressed={draft.passId === p.id} className={`flow-option ${draft.passId === p.id ? 'selected' : ''}`} onClick={() => setDraft({ ...draft, passId: p.id })}>
-            <span><strong>{p.label}</strong><small>{p.sub}</small></span><span className="flow-radio">{draft.passId === p.id ? '●' : '○'}</span>
-          </button>)}</div></>}
-          {(page === 'review' || page === 'favorite') && <>
-            <div className="flow-review"><span className="flow-avatar" style={{ color: cat?.color }}>●</span><h3>{cat?.label}</h3><p>{pass?.label}</p>{page !== 'favorite' && <button className="flow-text-button" onClick={() => setPage('category')}>Upravit údaje</button>}</div>
-            {page !== 'favorite' && <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>}
+          {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
+          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : 'Vyberte kategorii'}</h2>
+          <p className="flow-hint">{page === 'favorite' ? 'Doplňte přezdívku, podle které ho příště poznáte.' : 'Vyberte kategorii a případný slevový průkaz.'}</p>
+          {page === 'category' && <>
+            <div className="flow-disclosures" role="group" aria-label="Kategorie cestujícího">{categoryGroups.map(group => group.items.length === 1 ? <div key={group.id} className="flow-disclosure flow-single-category">
+              <div className="flow-category-label">{group.label}</div>
+              <div className="flow-options">{group.items.map(categoryOption)}</div>
+            </div> : <details key={group.id} className="flow-disclosure">
+              <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
+              <div className="flow-options">{group.items.map(categoryOption)}</div>
+            </details>)}</div>
+            <details className="flow-disclosure">
+              <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></summary>
+              <div className="flow-disclosures">{passGroups.map(group => <details key={group.id} className="flow-disclosure flow-disclosure-nested">
+                <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
+                <div className="flow-options" role="group" aria-label={group.label}>{group.items.map(passOption)}</div>
+              </details>)}</div>
+            </details>
+            <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
               <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
               <label>Příjmení <small>volitelné</small><input autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
-              {draft.passId !== 'none' && <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>}
+              {!draft.passIds.includes('none') && <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>}
+            </div>}
+          </>}
+          {page === 'favorite' && <>
+            <div className="flow-review"><span className="flow-avatar" style={{ color: cat?.color }}>●</span><h3>{cat?.label}</h3><p>{passLabels(draft)}</p></div>
+            {saveFavorite && <div className="flow-fields">
+              <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
+              <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
+              <label>Příjmení <small>volitelné</small><input autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
+              {!draft.passIds.includes('none') && <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>}
               <p className="flow-hint">* Pro uložení do oblíbených vyplňte přezdívku. Jméno a příjmení jsou volitelné.</p>
             </div>}
           </>}
@@ -134,11 +239,23 @@ export default function PassengerFlow({ passengers, favorites, onSaveFavorites, 
       </div>
       <footer className="flow-footer">
         {page === 'list' ? <button className="flow-primary" disabled={!selected.length} onClick={() => onConfirm(selected)}><span>Potvrdit výběr</span><span>{countLabel(selected.length)} →</span></button>
-          : <button className="flow-primary" disabled={!draft.catId || ((page === 'review' || page === 'favorite') && saveFavorite && !draft.name?.trim())} onClick={() => page === 'review' || page === 'favorite' ? complete() : setPage(page === 'category' ? 'pass' : 'review')}><span>{page === 'favorite' ? 'Uložit do oblíbených' : page === 'review' ? editing ? 'Uložit změny' : 'Přidat cestujícího' : 'Pokračovat'}</span><span>{page === 'review' || page === 'favorite' ? '✓' : '→'}</span></button>}
+          : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim())} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
       </footer>
+      {version === 'v3.0' && quickAddOpen && <div className="flow-sheet-scrim" onClick={() => setQuickAddOpen(false)}>
+        <section className="flow-sheet" role="dialog" aria-modal="true" aria-labelledby="quick-add-title" onClick={event => event.stopPropagation()}>
+          <div className="flow-sheet-handle" aria-hidden="true" />
+          <div className="flow-sheet-header"><h2 id="quick-add-title">Přidat cestujícího</h2><button aria-label="Zavřít" onClick={() => setQuickAddOpen(false)}>×</button></div>
+          <div className="flow-sheet-pickers">
+            <div className="flow-sheet-picker"><h3>Typ cestujícího</h3><div className="flow-picker-list" role="radiogroup" aria-label="Typ cestujícího">{categories.map(category => <button key={category.id} role="radio" aria-checked={draft.catId === category.id} className={draft.catId === category.id ? 'selected' : ''} onClick={() => setDraft({ ...draft, catId: category.id })}><span>{category.label}</span><b aria-hidden="true">{draft.catId === category.id ? '●' : '○'}</b></button>)}</div></div>
+            <div className="flow-sheet-picker"><h3>Slevy a průkazy</h3><div className="flow-picker-list" aria-label="Slevy a průkazy">{passes.map(pass => <label key={pass.id} className={draft.passIds.includes(pass.id) ? 'selected' : ''}><input type="checkbox" checked={draft.passIds.includes(pass.id)} onChange={() => togglePass(pass.id)} /><span>{pass.label}</span></label>)}</div></div>
+          </div>
+          <div className="flow-sheet-favorite">
+            <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={event => setSaveFavorite(event.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště bude cestující v seznamu.</small></span></label>
+            {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={event => setDraft({ ...draft, name: event.target.value })} required /></label></div>}
+          </div>
+          <div className="flow-sheet-actions"><button onClick={() => setQuickAddOpen(false)}>Zrušit</button><button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim())} onClick={complete}>Přidat</button></div>
+        </section>
+      </div>}
     </section>
   );
 }
-
-
-

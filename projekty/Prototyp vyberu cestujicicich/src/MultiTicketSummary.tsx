@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { countLabel, passengerLabel, type Passenger } from './PassengerFlow';
 
 export const journeyTickets = [
-  { id: 'bus', line: 'Bus 153', color: '#a78bfa', from: 'Veverská Bítýška, náměstí', to: 'Tišnov, železniční stanice', departure: '14:14', arrival: '14:36', price: 12, fare: 'IDS JMK Zlevněná A', detail: '2 zóny, 60 minut', setting: 'Automatická aktivace' },
-  { id: 'r9', line: 'R9 (R 980 Vysočina)', color: '#fb7185', from: 'Tišnov', to: 'Kolín', departure: '14:44', arrival: '17:12', price: 175, fare: 'Flexi základní jednosměrná', detail: 'Cestující 65+, 2. třída', setting: 'Bez místenky' },
-  { id: 'r22', line: 'R22 (R 1210)', color: '#fb7185', from: 'Kolín', to: 'Česká Lípa hl. n.', departure: '17:45', arrival: '19:31', price: 81, fare: 'Senior (nad 65 let)', detail: '2. třída', setting: 'Místo A/45' },
+  { id: 'bus', line: 'Bus 153', color: '#ff6e7f', from: 'Veverská Bítýška, náměstí', to: 'Tišnov, železniční stanice', departure: '14:14', arrival: '14:36', price: 12, fare: 'IDS JMK Zlevněná A', detail: '2 zóny, 60 minut', setting: 'Automatická aktivace' },
+  { id: 'r9', line: 'R9 (R 980 Vysočina)', color: '#ea5bf6', from: 'Tišnov', to: 'Kolín', departure: '14:44', arrival: '17:12', price: 175, fare: 'Flexi základní jednosměrná', detail: 'Cestující 65+, 2. třída', setting: 'Bez místenky' },
+  { id: 'r22', line: 'R22 (R 1210)', color: '#ea5bf6', from: 'Kolín', to: 'Česká Lípa hl. n.', departure: '17:45', arrival: '19:31', price: 81, fare: 'Senior (nad 65 let)', detail: '2. třída', setting: 'Místo A/45' },
 ];
 export function multiTotal(ids: string[], count: number) { return journeyTickets.filter(t => ids.includes(t.id)).reduce((sum, t) => sum + t.price, 0) * count; }
 function Route({ ticket }: { ticket: typeof journeyTickets[number] }) {
-  return <div className="journey-route"><strong style={{ color: ticket.color }}>{ticket.line}</strong><div><time>{ticket.departure}</time><span>{ticket.from}</span></div><div><time>{ticket.arrival}</time><span>{ticket.to}</span></div></div>;
+  return <div className="journey-route"><strong className="route-name" style={{ color: ticket.color }}>{ticket.line}</strong><div><time>{ticket.departure}</time><span>{ticket.from}</span></div><div><time>{ticket.arrival}</time><span>{ticket.to}</span></div></div>;
 }
 export function JourneyResult({ onBuy }: { onBuy: () => void }) {
   return <article className="journey-result"><div className="journey-band"><span>14:14 → 19:31</span><span>5 hod 17 min</span></div>
@@ -25,9 +25,8 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
   return <section className="passenger-flow">
     <header className="flow-header"><button aria-label="Zpět" onClick={onBack}>←</button><h1>Souhrn jízdenek</h1></header>
     <div className="flow-content journey-summary">
-      <div className="journey-padding"><p className="flow-eyebrow">Jedno spojení · více jízdenek</p><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
-        <div className="journey-passengers"><div><strong>{countLabel(passengers.length)}</strong><p>{passengers.map(passengerLabel).join(', ')}</p></div><button onClick={onEditPassengers}>Upravit cestující</button></div>
-        <p className="journey-note">Cestující platí pro všechny vybrané úseky. Pro každého vznikne samostatná jízdenka na každý úsek.</p>
+      <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
+        <div className="journey-passengers"><div><strong>{countLabel(passengers.length)}</strong><p>{passengers.map(passengerLabel).join(', ')}</p></div><button onClick={onEditPassengers}>Upravit</button></div>
       </div>
       {removed && <div className="journey-undo" role="status">Úsek odebrán.<button onClick={() => { setTicketIds(journeyTickets.filter(t => ticketIds.includes(t.id) || t.id === removed).map(t => t.id)); setRemoved(null); }}>Vrátit</button></div>}
       {journeyTickets.filter(t => ticketIds.includes(t.id)).map(ticket => <article key={ticket.id} className="journey-ticket">
