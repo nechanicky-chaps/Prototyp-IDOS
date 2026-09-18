@@ -1,6 +1,6 @@
 import MultiTicketSummary, { JourneyResult, journeyTickets, multiTotal } from "./MultiTicketSummary";
 import { useState } from "react";
-import PassengerFlow, { initialPassengers, initialFavorites, passengerLabel, passLabels, countLabel, demoTotal, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
+import PassengerFlow, { initialPassengers, initialFavorites, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
 
 type Screen =
   | "results"
@@ -8,7 +8,6 @@ type Screen =
   | "passengers"
   | "fares"
   | "summary"
-  | "checkout-summary"
   | "payment"
   | "confirm";
 
@@ -23,6 +22,13 @@ const BLUE_BTN = "#026cb6";
 const TRAM = "#ff6e7f";
 const TRAIN = "#ea5bf6";
 const GREEN = "#4ade80";
+
+const purchaseFareOptions = [
+  { title: "Nabídka IDS", detail: "IDS JMK Základní (3 zóny, 90 minut)", price: 33 },
+  { title: "Jízdenka dopravce", detail: "Základní jednosměrná", price: 46 },
+  { title: "Jednodenní nabídka IDS", detail: "Celodenní cestování v oblasti", price: 250 },
+  { title: "Flexi nabídka", detail: "Více možností změny spojení", price: 58 },
+];
 
 // ─────────────────────────────────────────────────────────
 // Icons & Graphic Elements
@@ -861,15 +867,21 @@ function FaresScreen({ onBack, onNext }: { onBack: () => void; onNext: () => voi
 // ─────────────────────────────────────────────────────────
 function SummaryScreen({
   passengers,
+  selectedFare,
+  onSelectFare,
   onBack,
   onNext,
   onEditPassengers,
 }: {
   passengers: Passenger[];
+  selectedFare: number;
+  onSelectFare: (index: number) => void;
   onBack: () => void;
   onNext: () => void;
   onEditPassengers: () => void;
 }) {
+  const chosenFare = purchaseFareOptions[selectedFare];
+  const chosenTotal = chosenFare.price * passengers.length;
   return (
     <div className="flex flex-col h-full" style={{ background: BG }}>
       <Header
@@ -986,12 +998,12 @@ function SummaryScreen({
               <div className="flex items-baseline gap-2">
                 <span style={{ color: MUTED }} className="text-xs w-8">tarif</span>
                 <span className="text-white text-sm">
-                  {passengers.length}x IDS JMK Základní (3 zóny, 90 minut)
+                  {passengers.length}x {chosenFare.detail}
                 </span>
               </div>
               <div className="flex items-baseline gap-2 mt-1">
                 <span style={{ color: MUTED }} className="text-xs w-8">cena</span>
-                <span className="text-white text-sm font-bold">{demoTotal(passengers)} Kč</span>
+                <span className="text-white text-sm font-bold">{chosenTotal} Kč</span>
               </div>
             </div>
           </div>
@@ -1018,6 +1030,20 @@ function SummaryScreen({
             <span style={{ color: BLUE_LINK }} className="text-xs underline">Přidat kolo</span>
           </button>
         </div>
+
+        <section className="inline-fares">
+          <h2>Alternativní tarifní nabídky</h2>
+          {purchaseFareOptions.map((offer, index) => index !== selectedFare && (
+            <button key={offer.title} onClick={() => onSelectFare(index)} className="checkout-offer">
+              <div>
+                <strong>{offer.title}</strong>
+                <span>{offer.detail}</span>
+              </div>
+              <span>{offer.price * passengers.length} Kč</span>
+              <ArrowRight />
+            </button>
+          ))}
+        </section>
       </div>
 
       {/* Bottom bar */}
@@ -1032,90 +1058,16 @@ function SummaryScreen({
         >
           <span className="text-sm font-semibold">{passengers.length}</span>
           <UsersIcon />
-          <span className="text-base font-semibold ml-2">{demoTotal(passengers)} Kč</span>
+          <span className="text-base font-semibold ml-2">{chosenTotal} Kč</span>
         </button>
         <button
           onClick={onNext}
           className="flex items-center gap-2 text-white font-medium hover:opacity-80"
         >
-          <span className="text-sm">Souhrn</span>
+          <span className="text-sm">Platba</span>
           <ArrowRight />
         </button>
       </div>
-    </div>
-  );
-}
-
-function CheckoutSummaryScreen({
-  passengers,
-  multi,
-  total,
-  ticketCount,
-  onBack,
-  onPayment,
-  onChooseAlternative,
-}: {
-  passengers: Passenger[];
-  multi: boolean;
-  total: number;
-  ticketCount: number;
-  onBack: () => void;
-  onPayment: () => void;
-  onChooseAlternative: () => void;
-}) {
-  const alternatives = multi
-    ? [
-        { title: "Jedna průběžná jízdenka", detail: "Flexi základní jednosměrná", price: "284 Kč" },
-        { title: "Celodenní nabídka", detail: "Síťová jízdenka pro celou trasu", price: "319 Kč" },
-      ]
-    : [
-        { title: "Jízdenka dopravce", detail: "Základní jednosměrná", price: "46 Kč" },
-        { title: "Jednodenní nabídka IDS", detail: "Celodenní cestování v oblasti", price: "250 Kč" },
-        { title: "Flexi nabídka", detail: "Více možností změny spojení", price: "58 Kč" },
-      ];
-
-  return (
-    <div className="checkout-summary-screen">
-      <Header title="Souhrn" onBack={onBack} />
-      <div className="checkout-summary-content">
-        <section className="checkout-route-row" aria-label="Spojení">
-          <div>
-            <strong>{multi ? "Veverská Bítýška → Česká Lípa" : "Bráfova → Adamov zastávka"}</strong>
-            <span>{multi ? "14:14–19:31 · přes Tišnov a Kolín" : "13:06–13:50 · Tram 1, Vlak S2"}</span>
-          </div>
-          <span>{multi ? "5:17" : "0:44"}</span>
-        </section>
-
-        <section className="checkout-ticket-card">
-          <p className="checkout-section-label">Kupujete</p>
-          <div className="checkout-ticket-main">
-            <TicketIcon />
-            <div>
-              <strong>{multi ? `${ticketCount} samostatné jízdenky` : "Nabídka IDS"}</strong>
-              <span>{multi ? "Pro jednotlivé úseky spojení" : `${passengers.length}× IDS JMK Základní`}</span>
-            </div>
-            <strong>{total} Kč</strong>
-          </div>
-        </section>
-
-        <section className="checkout-alternatives">
-          <h2>Alternativní tarifní nabídky</h2>
-          {alternatives.map((offer) => (
-            <button key={offer.title} onClick={onChooseAlternative} className="checkout-offer">
-              <div>
-                <strong>{offer.title}</strong>
-                <span>{offer.detail}</span>
-              </div>
-              <span>{offer.price}</span>
-              <ArrowRight />
-            </button>
-          ))}
-        </section>
-      </div>
-      <button onClick={onPayment} className="checkout-payment-button">
-        <span>{total} Kč</span>
-        <span>Platba <ArrowRight /></span>
-      </button>
     </div>
   );
 }
@@ -1391,16 +1343,18 @@ export default function App() {
   );
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
   const [designVersion, setDesignVersion] = useState<DesignVersion>("v3.0");
+  const [selectedFare, setSelectedFare] = useState(0);
 
   const [multi, setMulti] = useState(location.hash === "#vice-jizdenek");
   const [ticketIds, setTicketIds] = useState(journeyTickets.map((t) => t.id));
-  const total = multi ? multiTotal(ticketIds, passengers.length) : demoTotal(passengers);
+  const total = multi ? multiTotal(ticketIds, passengers.length) : purchaseFareOptions[selectedFare].price * passengers.length;
   const ticketCount = passengers.length * (multi ? ticketIds.length : 1);
 
   const chooseScenario = (value: boolean) => {
     if (value === multi) return;
     const scenarioPassengers = value ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers;
     setMulti(value);
+    setSelectedFare(0);
     setTicketIds(journeyTickets.map((t) => t.id));
     setPassengers(scenarioPassengers);
     setAvailablePassengers(scenarioPassengers);
@@ -1445,26 +1399,16 @@ export default function App() {
             setTicketIds={setTicketIds}
             onBack={() => setScreen("results")}
             onEditPassengers={() => setScreen("passengers")}
-            onNext={() => setScreen("checkout-summary")}
+            onNext={() => setScreen("payment")}
           />
         ) : (
           <SummaryScreen
             passengers={passengers}
+            selectedFare={selectedFare}
+            onSelectFare={setSelectedFare}
             onBack={() => setScreen("results")}
-            onNext={() => setScreen("checkout-summary")}
+            onNext={() => setScreen("payment")}
             onEditPassengers={() => setScreen("passengers")}
-          />
-        );
-      case "checkout-summary":
-        return (
-          <CheckoutSummaryScreen
-            passengers={passengers}
-            multi={multi}
-            total={total}
-            ticketCount={ticketCount}
-            onBack={() => setScreen("summary")}
-            onPayment={() => setScreen("payment")}
-            onChooseAlternative={() => setScreen("summary")}
           />
         );
       case "payment":
@@ -1473,7 +1417,7 @@ export default function App() {
             total={total}
             ticketCount={ticketCount}
             passengers={passengers}
-            onBack={() => setScreen("checkout-summary")}
+            onBack={() => setScreen("summary")}
             onPay={() => setScreen("confirm")}
           />
         );

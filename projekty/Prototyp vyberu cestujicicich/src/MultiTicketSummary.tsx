@@ -21,6 +21,7 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
   passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack: () => void; onEditPassengers: () => void; onNext: () => void;
 }) {
   const [removed, setRemoved] = useState<string | null>(null);
+  const [alternative, setAlternative] = useState<string | null>(null);
   const count = ticketIds.length * passengers.length;
   return <section className="passenger-flow">
     <header className="flow-header"><button aria-label="Zpět" onClick={onBack}>←</button><h1>Souhrn jízdenek</h1></header>
@@ -37,7 +38,16 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
         </div>
       </article>)}
       {!ticketIds.length && <div className="journey-padding"><p className="flow-empty">Nemáte vybranou žádnou jízdenku.</p><button className="flow-text-button" onClick={() => { setTicketIds(journeyTickets.map(t => t.id)); setRemoved(null); }}>Obnovit všechny úseky</button></div>}
+      {!!ticketIds.length && <section className="inline-fares">
+        <h2>Alternativní tarifní nabídky</h2>
+        {[
+          { title: 'Jedna průběžná jízdenka', detail: 'Flexi základní jednosměrná', price: '284 Kč' },
+          { title: 'Celodenní nabídka', detail: 'Síťová jízdenka pro celou trasu', price: '319 Kč' },
+        ].map(offer => <button key={offer.title} onClick={() => setAlternative(offer.title)} className="checkout-offer">
+          <div><strong>{offer.title}</strong><span>{offer.detail}</span></div><span>{offer.price}</span><span aria-hidden="true">{alternative === offer.title ? '✓' : '→'}</span>
+        </button>)}
+      </section>}
     </div>
-    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count} onClick={onNext}><span>Souhrn</span><span>→</span></button></footer>
+    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count} onClick={onNext}><span>Platba</span><span>→</span></button></footer>
   </section>;
 }
