@@ -76,6 +76,16 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-switch[aria-checked="true"] { border-color: #5fa8d5; background: #026cb6; }
 .flow-switch[aria-checked="true"] span { background: #fff; transform: translateX(18px); }
 .flow-v2-add { justify-content: center; margin-top: 16px; border-style: solid; }
+.flow-age-field { padding: 16px; border: 1px solid #195277; border-radius: 10px; background: #001424; }
+.flow-age-field > label { display: block; margin-bottom: 8px; color: #dce7ef; font-size: 13px; font-weight: 500; }
+.flow-age-input { display: flex; align-items: center; gap: 10px; }
+.flow-age-input input { width: 100%; min-width: 0; height: 52px; padding: 8px 12px; border: 1px solid #29445a; border-radius: 7px; background: #00101d; color: #fff; font-size: 22px; font-weight: 600; }
+.flow-age-input input::placeholder { color: #587084; font-size: 15px; font-weight: 400; }
+.flow-age-input > span { color: #8ba0b3; font-size: 13px; }
+.flow-age-result { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #0e273c; }
+.flow-age-result .flow-avatar { width: 32px; height: 32px; font-size: 13px; }
+.flow-age-result small { display: block; margin-bottom: 3px; color: #8ba0b3; font-size: 10px; }
+.flow-age-result strong { display: block; color: #fff; font-size: 13px; }
 .flow-sheet-scrim { position: absolute; inset: 0; z-index: 50; display: flex; align-items: flex-end; background: rgba(0, 7, 13, .62); }
 .flow-sheet { display: flex; flex-direction: column; width: 100%; height: 54%; min-height: 380px; max-height: 560px; padding: 8px 14px max(12px, env(safe-area-inset-bottom)); border: 1px solid #195277; border-bottom: 0; border-radius: 18px 18px 0 0; background: #001424; box-shadow: 0 -10px 32px rgba(0, 0, 0, .45); }
 .flow-sheet-handle { width: 38px; height: 4px; margin: 0 auto 8px; border-radius: 2px; background: #496278; }

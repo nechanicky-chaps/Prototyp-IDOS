@@ -1343,7 +1343,7 @@ export default function App() {
     location.hash === "#vice-jizdenek" ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers
   );
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
-  const [designVersion, setDesignVersion] = useState<DesignVersion>("v3.0");
+  const [designVersion, setDesignVersion] = useState<DesignVersion>("v4.0");
   const [selectedFare, setSelectedFare] = useState(0);
 
   const [multi, setMulti] = useState(location.hash === "#vice-jizdenek");

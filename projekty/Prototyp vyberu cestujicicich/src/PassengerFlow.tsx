@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export type Passenger = { uid: string; catId: string; passIds: string[]; name?: string; firstName?: string; lastName?: string; passNumber?: string };
+export type Passenger = { uid: string; catId: string; passIds: string[]; age?: number; name?: string; firstName?: string; lastName?: string; passNumber?: string };
 export const categories = [
   { id: 'child0', label: 'Dítě (0–1 rok)', color: '#34d399' },
   { id: 'child2', label: 'Dítě (2 roky)', color: '#34d399' },
@@ -59,8 +59,8 @@ const passGroups = [
 ];
 export const initialPassengers: Passenger[] = [{ uid: 'adult-default', catId: 'adult', passIds: ['none'] }];
 export const initialFavorites: Passenger[] = [
-  { uid: 'fav1', catId: 'adult', passIds: ['none'], name: 'Tom' },
-  { uid: 'fav2', catId: 'senior60', passIds: ['inkarta'], name: 'Jana' },
+  { uid: 'fav1', catId: 'adult', passIds: ['none'], age: 35, name: 'Tom' },
+  { uid: 'fav2', catId: 'senior60', passIds: ['inkarta'], age: 60, name: 'Jana' },
 ];
 export const passengerLabel = (p: Passenger) => p.name || categories.find(c => c.id === p.catId)?.label || 'Cestující';
 export const passLabels = (p: Passenger) => p.passIds.map(id => passes.find(pass => pass.id === id)?.label).filter(Boolean).join(', ');
@@ -68,8 +68,21 @@ export const countLabel = (n: number) => `${n} ${n > 0 && n < 5 ? 'cestující' 
 // Deliberately a fixed demonstration price, not a tariff calculation.
 export const demoTotal = (passengers: Passenger[]) => passengers.length * 33;
 
-export type DesignVersion = 'v1.0' | 'v2.0' | 'v3.0';
+export type DesignVersion = 'v1.0' | 'v2.0' | 'v3.0' | 'v4.0';
 type Page = 'list' | 'category' | 'favorite';
+
+function categoryForAge(age: number) {
+  if (age <= 1) return 'child0';
+  if (age <= 14) return `child${age}`;
+  if (age === 15) return 'junior15';
+  if (age <= 17) return 'junior1617';
+  if (age <= 25) return 'student';
+  if (age <= 59) return 'adult';
+  if (age <= 61) return 'senior60';
+  if (age <= 64) return 'senior6264';
+  if (age <= 69) return 'senior65';
+  return 'senior70';
+}
 export default function PassengerFlow({ passengers, availablePassengers, favorites, version, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
@@ -155,6 +168,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         <button className={version === 'v1.0' ? 'selected' : ''} aria-pressed={version === 'v1.0'} onClick={() => onVersionChange('v1.0')}>V1.0</button>
         <button className={version === 'v2.0' ? 'selected' : ''} aria-pressed={version === 'v2.0'} onClick={() => onVersionChange('v2.0')}>V2.0</button>
         <button className={version === 'v3.0' ? 'selected' : ''} aria-pressed={version === 'v3.0'} onClick={() => onVersionChange('v3.0')}>V3.0</button>
+        <button className={version === 'v4.0' ? 'selected' : ''} aria-pressed={version === 'v4.0'} onClick={() => onVersionChange('v4.0')}>V4.0</button>
       </div>
       <header className="flow-header">
         <button aria-label="Zpět" onClick={back}>←</button>
@@ -162,7 +176,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         {page !== 'list' && <button className="flow-cancel" onClick={() => setPage('list')}>Zrušit</button>}
       </header>
       <div ref={content} className="flow-content">
-        {page === 'list' && (version === 'v2.0' || version === 'v3.0') ? <>
+        {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0') ? <>
           <div className="flow-v2-list">
             {v2Rows.map(({ passenger, label, favorite }) => {
               const active = selected.some(item => item.uid === passenger.uid);
@@ -200,9 +214,36 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           <button className="flow-text-button" onClick={() => start(undefined, true)}>＋ Přidat oblíbeného cestujícího</button>
         </> : <>
           {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
-          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : 'Vyberte kategorii'}</h2>
-          <p className="flow-hint">{page === 'favorite' ? 'Doplňte přezdívku, podle které ho příště poznáte.' : 'Vyberte kategorii a případný slevový průkaz.'}</p>
-          {page === 'category' && <>
+          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : version === 'v4.0' ? 'Věk v den cesty' : 'Vyberte kategorii'}</h2>
+          <p className="flow-hint">{page === 'favorite' ? 'Doplňte přezdívku, podle které ho příště poznáte.' : version === 'v4.0' ? 'Podle věku vybereme správnou kategorii cestujícího.' : 'Vyberte kategorii a případný slevový průkaz.'}</p>
+          {page === 'category' && version === 'v4.0' ? <>
+            <div className="flow-age-field">
+              <label htmlFor="passenger-age">Věk v den cesty</label>
+              <div className="flow-age-input"><input id="passenger-age" type="number" inputMode="numeric" min="0" max="120" step="1" placeholder="Např. 12" value={draft.age ?? ''} onChange={event => {
+                const value = event.target.value;
+                if (!value) { setDraft({ ...draft, age: undefined, catId: '' }); return; }
+                const parsed = Number(value);
+                if (!Number.isFinite(parsed)) { setDraft({ ...draft, age: undefined, catId: '' }); return; }
+                const age = Math.floor(Math.max(0, Math.min(120, parsed)));
+                setDraft({ ...draft, age, catId: categoryForAge(age) });
+              }} /><span>let</span></div>
+              {cat && <div className="flow-age-result"><span className="flow-avatar" style={{ color: cat.color }}>●</span><div><small>Kategorie cestujícího</small><strong>{cat.label}</strong></div></div>}
+            </div>
+            <details className="flow-disclosure">
+              <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></summary>
+              <div className="flow-disclosures">{passGroups.map(group => <details key={group.id} className="flow-disclosure flow-disclosure-nested">
+                <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
+                <div className="flow-options" role="group" aria-label={group.label}>{group.items.map(passOption)}</div>
+              </details>)}</div>
+            </details>
+            <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
+            {saveFavorite && <div className="flow-fields">
+              <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
+              <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
+              <label>Příjmení <small>volitelné</small><input autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
+              {!draft.passIds.includes('none') && <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>}
+            </div>}
+          </> : page === 'category' && <>
             <div className="flow-disclosures" role="group" aria-label="Kategorie cestujícího">{categoryGroups.map(group => group.items.length === 1 ? <div key={group.id} className="flow-disclosure flow-single-category">
               <div className="flow-category-label">{group.label}</div>
               <div className="flow-options">{group.items.map(categoryOption)}</div>
