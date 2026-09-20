@@ -108,7 +108,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         : [...current.passIds.filter(id => id !== 'none'), passId],
   }));
   const start = (p?: Passenger, favorite = false) => {
-    setDraft(p ? { ...p } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: '', passIds: ['none'] });
+    setDraft(p ? { ...p, age: p.catId === 'adult' ? undefined : p.age } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: version === 'v4.0' ? 'adult' : '', passIds: ['none'] });
     setEditing(!!p); setSaveFavorite(favorite); setPage('category');
   };
   const startQuickAdd = () => {
@@ -214,21 +214,26 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           <button className="flow-text-button" onClick={() => start(undefined, true)}>＋ Přidat oblíbeného cestujícího</button>
         </> : <>
           {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
-          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : version === 'v4.0' ? 'Věk v den cesty' : 'Vyberte kategorii'}</h2>
-          <p className="flow-hint">{page === 'favorite' ? 'Doplňte přezdívku, podle které ho příště poznáte.' : version === 'v4.0' ? 'Podle věku vybereme správnou kategorii cestujícího.' : 'Vyberte kategorii a případný slevový průkaz.'}</p>
+          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : 'Vyberte kategorii'}</h2>
+          <p className="flow-hint">{page === 'favorite' ? 'Doplňte přezdívku, podle které ho příště poznáte.' : version === 'v4.0' ? 'Věk potřebujeme jen do 26 let a od 60 let.' : 'Vyberte kategorii a případný slevový průkaz.'}</p>
           {page === 'category' && version === 'v4.0' ? <>
-            <div className="flow-age-field">
+            <div className="flow-options" role="group" aria-label="Kategorie cestujícího">
+              <button className={`flow-option ${draft.catId === 'adult' ? 'selected' : ''}`} aria-pressed={draft.catId === 'adult'} onClick={() => setDraft({ ...draft, catId: 'adult', age: undefined })}><span><strong>Dospělý</strong><small>26–59 let · bez zadávání věku</small></span><span className="flow-radio" aria-hidden="true">{draft.catId === 'adult' ? '●' : '○'}</span></button>
+              <button className={`flow-option ${draft.catId !== 'adult' ? 'selected' : ''}`} aria-pressed={draft.catId !== 'adult'} onClick={() => { if (draft.catId === 'adult') setDraft({ ...draft, catId: '', age: undefined }); }}><span><strong>Dítě, mladistvý nebo senior</strong><small>0–25 let nebo 60 let a více</small></span><span className="flow-radio" aria-hidden="true">{draft.catId !== 'adult' ? '●' : '○'}</span></button>
+            </div>
+            {draft.catId !== 'adult' && <div className="flow-age-field" style={{ marginTop: 12 }}>
               <label htmlFor="passenger-age">Věk v den cesty</label>
               <div className="flow-age-input"><input id="passenger-age" type="number" inputMode="numeric" min="0" max="120" step="1" placeholder="Např. 12" value={draft.age ?? ''} onChange={event => {
                 const value = event.target.value;
                 if (!value) { setDraft({ ...draft, age: undefined, catId: '' }); return; }
                 const parsed = Number(value);
                 if (!Number.isFinite(parsed)) { setDraft({ ...draft, age: undefined, catId: '' }); return; }
-                const age = Math.floor(Math.max(0, Math.min(120, parsed)));
-                setDraft({ ...draft, age, catId: categoryForAge(age) });
+                const valid = Number.isInteger(parsed) && parsed >= 0 && parsed <= 120 && (parsed < 26 || parsed >= 60);
+                setDraft({ ...draft, age: parsed, catId: valid ? categoryForAge(parsed) : '' });
               }} /><span>let</span></div>
+              {draft.age !== undefined && !draft.catId && <p className="flow-hint" role="alert" style={{ marginTop: 10, marginBottom: 0 }}>{draft.age >= 26 && draft.age < 60 ? 'Pro věk 26–59 let vyberte Dospělý.' : 'Zadejte celý věk od 0 do 120 let.'}</p>}
               {cat && <div className="flow-age-result"><span className="flow-avatar" style={{ color: cat.color }}>●</span><div><small>Kategorie cestujícího</small><strong>{cat.label}</strong></div></div>}
-            </div>
+            </div>}
             <details className="flow-disclosure">
               <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></summary>
               <div className="flow-disclosures">{passGroups.map(group => <details key={group.id} className="flow-disclosure flow-disclosure-nested">
