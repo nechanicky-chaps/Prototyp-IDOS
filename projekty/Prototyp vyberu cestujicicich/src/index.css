@@ -203,3 +203,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-age-wheel { height: 120px; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; padding-block: 40px; }
 .flow-age-wheel button { display: block; height: 40px; width: 100%; scroll-snap-align: center; color: #8ba0b3; font-size: 18px; }
 .flow-age-wheel button[aria-pressed="true"] { color: #fff; font-weight: 700; background: #012845; }
+
+.flow-pass-checklist { margin-top: 20px; }
+.flow-pass-checklist h3 { margin: 0 0 12px; font-size: 15px; }

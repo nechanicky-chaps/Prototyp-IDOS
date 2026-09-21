@@ -51,12 +51,6 @@ const categoryGroups = [
   { id: 'adults', label: 'Dospělí (26–59)', items: categories.filter(c => c.id === 'adult') },
   { id: 'seniors', label: 'Senior+', items: categories.filter(c => c.id.startsWith('senior')) },
 ];
-const passGroups = [
-  { id: 'inkarta', label: 'In-Karta', items: passes.filter(p => ['none', 'in25', 'in50', 'inkarta', 'inkarta_plus'].includes(p.id)) },
-  { id: 'student', label: 'Studentské karty', items: passes.filter(p => ['itic', 'isic', 'alive'].includes(p.id)) },
-  { id: 'accessibility', label: 'Průkazy ZTP a invalidity', items: passes.filter(p => ['invalidity3', 'ztp', 'ztpp', 'ztpp_guide', 'tzp', 'tzps', 'tzps_guide'].includes(p.id)) },
-  { id: 'other', label: 'Ostatní průkazy', items: passes.filter(p => ['parent', 'first_class', 'idsok'].includes(p.id)) },
-];
 export const initialPassengers: Passenger[] = [{ uid: 'adult-default', catId: 'adult', passIds: ['none'] }];
 export const initialFavorites: Passenger[] = [
   { uid: 'fav1', catId: 'adult', passIds: ['none'], age: 35, name: 'Tom' },
@@ -264,13 +258,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               {draft.age !== undefined && !draft.catId && <p className="flow-hint" role="alert" style={{ marginTop: 10, marginBottom: 0 }}>Zadejte celý věk od 0 do 120 let.</p>}
               {cat && <div className="flow-age-result"><span className="flow-avatar" style={{ color: cat.color }}>●</span><div><small>Kategorie cestujícího</small><strong>{cat.label}</strong></div></div>}
             </div>}
-            <details className="flow-disclosure">
-              <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></summary>
-              <div className="flow-disclosures">{passGroups.map(group => <details key={group.id} className="flow-disclosure flow-disclosure-nested">
-                <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
-                <div className="flow-options" role="group" aria-label={group.label}>{group.items.map(passOption)}</div>
-              </details>)}</div>
-            </details>
+            <section className="flow-pass-checklist" aria-label="Slevové průkazy">
+              <h3>Slevové průkazy</h3>
+              <div className="flow-options">{passes.map(passOption)}</div>
+            </section>
             <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
@@ -286,13 +277,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
               <div className="flow-options">{group.items.map(categoryOption)}</div>
             </details>)}</div>
-            <details className="flow-disclosure">
-              <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></summary>
-              <div className="flow-disclosures">{passGroups.map(group => <details key={group.id} className="flow-disclosure flow-disclosure-nested">
-                <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
-                <div className="flow-options" role="group" aria-label={group.label}>{group.items.map(passOption)}</div>
-              </details>)}</div>
-            </details>
+            <section className="flow-pass-checklist" aria-label="Slevové průkazy">
+              <h3>Slevové průkazy</h3>
+              <div className="flow-options">{passes.map(passOption)}</div>
+            </section>
             <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
