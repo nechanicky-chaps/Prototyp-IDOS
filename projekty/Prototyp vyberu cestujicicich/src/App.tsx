@@ -900,11 +900,11 @@ function SummaryScreen({
           <div className="journey-passengers">
             <UsersIcon />
             <div>
-              <strong>{countLabel(passengers.length)}</strong>
+              <span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}</span>
               <p>{passengers.map(passengerLabel).join(", ")}</p>
 
             </div>
-            <button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}</button>
+            <button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}
           </div>
         </div>

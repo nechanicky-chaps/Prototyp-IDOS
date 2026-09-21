@@ -243,3 +243,5 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-passengers .journey-required-mark { color: #ff6e7f; font-size: 20px; font-weight: 800; }
 
 .flow-v5-selector:not(.flow-v5-passes) { background: #026CB6; color: #fff; border-color: #026CB6; }
+
+.journey-passenger-count { display: inline-flex; align-items: center; gap: 6px; }

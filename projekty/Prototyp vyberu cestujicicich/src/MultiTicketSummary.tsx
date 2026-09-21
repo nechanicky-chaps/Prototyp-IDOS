@@ -28,7 +28,7 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
     <header className="flow-header"><button aria-label="Zpět" onClick={onBack}>←</button><h1>Souhrn jízdenek</h1></header>
     <div className="flow-content journey-summary">
       <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
-        <div className="journey-passengers"><div><strong>{countLabel(passengers.length)}</strong><p>{passengers.map(passengerLabel).join(', ')}</p></div><button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}</button>
+        <div className="journey-passengers"><div><span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}</span><p>{passengers.map(passengerLabel).join(', ')}</p></div><button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}</div>
       </div>
       {removed && <div className="journey-undo" role="status">Úsek odebrán.<button onClick={() => { setTicketIds(journeyTickets.filter(t => ticketIds.includes(t.id) || t.id === removed).map(t => t.id)); setRemoved(null); }}>Vrátit</button></div>}
