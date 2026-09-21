@@ -369,7 +369,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     <div className="flow-v5-label">Vybraná kategorie</div>
     <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span aria-hidden="true">⌄</span></button>
     <details className="flow-disclosure flow-v5-extra">
-      <summary><strong>Doplňující údaje</strong><span aria-hidden="true">⌄</span></summary>
+      <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
       <div className="flow-fields">
         <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
         <label>Příjmení <small>volitelné</small><input autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
