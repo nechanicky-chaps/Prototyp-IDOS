@@ -268,3 +268,12 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .multi-payment-total { display: flex; align-items: center; gap: 16px; text-align: left; font-size: 13px; }
 .multi-payment-total strong { font-size: 16px; white-space: nowrap; }
 .multi-payment-bar > .summary-payment { display: flex; align-items: center; gap: 12px; min-height: 40px; font-size: 14px; }
+
+.fare-fab { position: absolute; right: 16px; bottom: 80px; z-index: 20; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; max-width: calc(100% - 32px); }
+.fare-fab-trigger { width: 48px; height: 48px; border-radius: 50%; background: #026cb6; color: #fff; display: grid; place-items: center; box-shadow: 0 4px 14px #0007; }
+.fare-fab-trigger > span { font-size: 28px; }
+.fare-fab-menu { width: 320px; max-width: 100%; padding: 8px; background: #01223a; border: 1px solid #195277; border-radius: 12px; box-shadow: 0 8px 28px #0009; }
+.fare-fab-menu h2 { font-size: 13px; color: #8ba0b3; padding: 8px; margin: 0; }
+.fare-fab-menu button { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 54px; width: 100%; padding: 12px 10px; text-align: left; color: white; border-top: 1px solid #195277; font-size: 13px; }
+.fare-fab-menu button:hover, .fare-fab-menu button:focus-visible { background: #026cb6; border-radius: 6px; }
+.fare-fab-menu strong { white-space: nowrap; }

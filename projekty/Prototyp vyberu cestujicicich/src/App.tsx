@@ -1,3 +1,4 @@
+import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
 import MultiTicketSummary, { JourneyResult, journeyTickets, multiTotal } from "./MultiTicketSummary";
 import { useState } from "react";
 import PassengerFlow, { initialPassengers, initialFavorites, hasPassengerName, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
@@ -866,6 +867,7 @@ function FaresScreen({ onBack, onNext }: { onBack: () => void; onNext: () => voi
 // SCREEN 5: Summary / Souhrn jízdenek (Screenshot 2)
 // ─────────────────────────────────────────────────────────
 function SummaryScreen({
+  summaryVersion, onSummaryVersionChange,
   passengers,
   selectedFare,
   onSelectFare,
@@ -873,6 +875,7 @@ function SummaryScreen({
   onNext,
   onEditPassengers,
 }: {
+  summaryVersion: SummaryVersion; onSummaryVersionChange: (version: SummaryVersion) => void;
   passengers: Passenger[];
   selectedFare: number;
   onSelectFare: (index: number) => void;
@@ -884,7 +887,8 @@ function SummaryScreen({
   const chosenTotal = chosenFare.price * passengers.length;
   const missingNames = passengers.some(p => !hasPassengerName(p));
   return (
-    <div className="flex flex-col h-full" style={{ background: BG }}>
+    <div className="relative flex flex-col h-full" style={{ background: BG }}>
+      <SummaryVersionSwitch version={summaryVersion} onChange={onSummaryVersionChange} />
       <Header
         title="Souhrn jízdenek"
         onBack={onBack}
@@ -1034,7 +1038,7 @@ function SummaryScreen({
           </button>
         </div>
 
-        <section className="inline-fares">
+        {summaryVersion === 'v2' && <section className="inline-fares">
           <h2>Alternativní tarifní nabídky</h2>
           {purchaseFareOptions.map((offer, index) => index !== selectedFare && (
             <div key={offer.title} className="checkout-offer">
@@ -1047,9 +1051,10 @@ function SummaryScreen({
               </button>
             </div>
           ))}
-        </section>
+        </section>}
       </div>
 
+      {summaryVersion === 'v1' && <FareFab offers={purchaseFareOptions.flatMap((offer, index) => index === selectedFare ? [] : [{ id: String(index), title: offer.title, price: `${offer.price * passengers.length} Kč`, onSelect: () => onSelectFare(index) }])} />}
       {/* Bottom bar */}
       <div
         style={{ background: HEADER }}
@@ -1348,6 +1353,7 @@ export default function App() {
   );
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
   const [designVersion, setDesignVersion] = useState<DesignVersion>("v5.0");
+  const [summaryVersion, setSummaryVersion] = useState<SummaryVersion>('v2');
   const [multiActivation, setMultiActivation] = useState('Automatická aktivace');
   const [requireNames, setRequireNames] = useState(false);
   const [selectedFare, setSelectedFare] = useState(0);
@@ -1402,6 +1408,8 @@ export default function App() {
       case "summary":
         return multi ? (
           <MultiTicketSummary
+            summaryVersion={summaryVersion}
+            onSummaryVersionChange={setSummaryVersion}
             activation={multiActivation}
             setActivation={setMultiActivation}
             passengers={passengers}
@@ -1413,6 +1421,8 @@ export default function App() {
           />
         ) : (
           <SummaryScreen
+            summaryVersion={summaryVersion}
+            onSummaryVersionChange={setSummaryVersion}
             passengers={passengers}
             selectedFare={selectedFare}
             onSelectFare={setSelectedFare}

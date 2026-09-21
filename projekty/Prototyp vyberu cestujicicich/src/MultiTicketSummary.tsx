@@ -1,3 +1,4 @@
+import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
 import { useState } from 'react';
 import { countLabel, passengerLabel, hasPassengerName, type Passenger } from './PassengerFlow';
 
@@ -17,7 +18,8 @@ export function JourneyResult({ onBuy }: { onBuy: () => void }) {
     <button className="flow-primary" onClick={onBuy}><span>Koupit 3 jízdenky</span><span>268 Kč →</span></button></div>
   </article>;
 }
-export default function MultiTicketSummary({ passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext }: {
+export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext }: {
+  summaryVersion: SummaryVersion; onSummaryVersionChange: (version: SummaryVersion) => void;
   activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack: () => void; onEditPassengers: () => void; onNext: () => void;
 }) {
   const [removed, setRemoved] = useState<string | null>(null);
@@ -26,6 +28,7 @@ export default function MultiTicketSummary({ passengers, activation, setActivati
   const count = ticketIds.length * passengers.length;
   const missingNames = passengers.some(p => !hasPassengerName(p));
   return <section className="passenger-flow">
+    <SummaryVersionSwitch version={summaryVersion} onChange={onSummaryVersionChange} />
     <header className="flow-header"><button aria-label="Zpět" onClick={onBack}>←</button><h1>Souhrn jízdenek</h1></header>
     <div className="flow-content journey-summary">
       <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
@@ -52,7 +55,7 @@ export default function MultiTicketSummary({ passengers, activation, setActivati
         </div>
       </article>)}
       {!ticketIds.length && <div className="journey-padding"><p className="flow-empty">Nemáte vybranou žádnou jízdenku.</p><button className="flow-text-button" onClick={() => { setTicketIds(journeyTickets.map(t => t.id)); setRemoved(null); }}>Obnovit všechny úseky</button></div>}
-      {!!ticketIds.length && <section className="inline-fares">
+      {summaryVersion === 'v2' && !!ticketIds.length && <section className="inline-fares">
         <h2>Alternativní tarifní nabídky</h2>
         {[
           { title: 'Jedna průběžná jízdenka', detail: 'Flexi základní jednosměrná', price: '284 Kč' },
@@ -63,6 +66,11 @@ export default function MultiTicketSummary({ passengers, activation, setActivati
         </div>)}
       </section>}
     </div>
+    {summaryVersion === 'v1' && !!ticketIds.length && <FareFab offers={[
+      { id: 'through', title: 'Jedna průběžná jízdenka', price: '284 Kč' },
+      { id: 'day', title: 'Celodenní nabídka', price: '319 Kč' },
+      { id: 'separate', title: 'Samostatné jízdenky', price: `${multiTotal(ticketIds, passengers.length)} Kč` },
+    ].map(offer => ({ ...offer, selected: alternative === offer.title, onSelect: () => setAlternative(offer.title) }))} />}
     <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></button><button className="summary-payment" disabled={!count || missingNames} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
   </section>;
 }
