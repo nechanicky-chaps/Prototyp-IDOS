@@ -901,13 +901,12 @@ function SummaryScreen({
 
       <div className="flex-1 overflow-auto">
         <div className="journey-passengers-summary">
-          <div className="journey-passengers" role="button" tabIndex={0} onClick={onEditPassengers} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onEditPassengers(); } }}>
+          <div className="journey-passengers">
             <UsersIcon />
-            <div>
+            <button className="journey-passenger-main" onClick={onEditPassengers}>
               <span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span>
-              <p>{passengers.map(passengerLabel).join(", ")}</p>
-
-            </div>
+              <span>{passengers.map(passengerLabel).join(", ")}</span>
+            </button>
             <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
           </div>

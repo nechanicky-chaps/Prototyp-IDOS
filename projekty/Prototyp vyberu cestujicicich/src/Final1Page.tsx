@@ -7,17 +7,17 @@ type Screen = 'summary' | 'passengers' | 'payment' | 'confirm';
 const BG = '#00101d';
 const HEADER = '#0365ac';
 
-function AndroidNavBar({ onBack }: { onBack: () => void }) {
+function AndroidNavBar({ onBack, onHome }: { onBack: () => void; onHome: () => void }) {
   return (
     <div style={{ background: '#000' }} className="flex items-center justify-around py-2 px-8 text-neutral-400 select-none flex-shrink-0">
-      <button aria-label="Recent apps" className="p-1 hover:text-white">
+      <span aria-hidden="true" className="p-1">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
           <line x1="6" y1="5" x2="6" y2="19" />
           <line x1="12" y1="5" x2="12" y2="19" />
           <line x1="18" y1="5" x2="18" y2="19" />
         </svg>
-      </button>
-      <button aria-label="Home" className="p-1 hover:text-white">
+      </span>
+      <button aria-label="Domů" className="p-1 hover:text-white" onClick={onHome}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
           <circle cx="12" cy="12" r="7" />
         </svg>
@@ -131,7 +131,6 @@ export default function Final1Page() {
                 passengers={passengers}
                 ticketIds={ticketIds}
                 setTicketIds={setTicketIds}
-                onBack={() => setScreen('summary')}
                 onEditPassengers={openPassengers}
                 onNext={proceedToPayment}
               />
@@ -158,7 +157,7 @@ export default function Final1Page() {
               // Jednoduchá platební obrazovka – přejde na potvrzení
               <div className="flex flex-col h-full" style={{ background: BG }}>
                 <div style={{ background: HEADER }} className="flex items-center gap-3 px-4 py-3 min-h-[52px] flex-shrink-0">
-                  <button onClick={() => setScreen('summary')} className="text-white opacity-95 -ml-1">
+                  <button aria-label="Zpět" onClick={() => setScreen('summary')} className="text-white opacity-95 -ml-1">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
                     </svg>
@@ -181,7 +180,7 @@ export default function Final1Page() {
               <ConfirmScreen total={total} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
             )}
           </div>
-          <AndroidNavBar onBack={handleNavBack} />
+          <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('summary')} />
         </div>
       </div>
     </>

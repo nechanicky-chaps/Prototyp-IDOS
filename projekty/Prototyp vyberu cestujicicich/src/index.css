@@ -169,6 +169,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-passengers-summary .journey-passengers > svg { flex-shrink: 0; color: #5fa8d5; }
 .journey-passengers { display: flex; align-items: center; gap: 12px; border: 1px solid #0e273c; border-radius: 8px; padding: 12px; background: #001424; }
 .journey-passengers > div { flex: 1; min-width: 0; }
+.journey-passengers button.journey-passenger-main { flex: 1; width: auto; min-width: 0; min-height: 44px; color: #fff; text-align: left; }
+.journey-passenger-main > span:last-child { display: block; margin-top: 3px; color: #8ba0b3; font-size: 12px; overflow-wrap: anywhere; }
+.journey-passengers > svg + .journey-passenger-main { margin-left: 0; }
+.flow-header-root h1 { text-align: center; }
 .journey-passengers strong { font-size: 13px; color: #fff; }
 .journey-passengers p { font-size: 12px; color: #8ba0b3; overflow-wrap: anywhere; margin-top: 3px; }
 .journey-passengers button { color: #5fa8d5; font-size: 12px; width: 65px; min-height: 40px; }
