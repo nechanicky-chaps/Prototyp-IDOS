@@ -249,3 +249,22 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-v5-dialog-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #195277; }
 .flow-v5-dialog-header h2 { border: 0; }
 .flow-v5-dialog-header button { min-width: 44px; min-height: 44px; margin-right: 8px; color: #5fa8d5; font-size: 26px; }
+
+.multi-route { padding-bottom: 0; }
+.multi-setting-row { display: grid; grid-template-columns: 20px 52px minmax(0, 1fr) auto; align-items: start; column-gap: 10px; padding: 12px 16px; font-size: 13px; color: #fff; }
+.multi-setting-row > svg { color: #5fa8d5; }
+.multi-label { color: #8ba0b3; font-size: 12px; }
+.multi-dot { width: 8px; height: 8px; border-radius: 50%; background: #5fa8d5; margin: 5px auto 0; }
+.multi-setting-row button { color: #5fa8d5; font-size: 12px; text-decoration: underline; }
+.multi-seat { padding-top: 0; padding-bottom: 18px; }
+.multi-fare-details { border-top: 1px solid #0e273c; padding: 8px 0 24px; }
+.multi-price { padding-top: 0; }
+.multi-price strong { text-align: left; }
+.multi-person-name { display: block; margin: 12px 16px 0 46px; color: #8ba0b3; font-size: 12px; }
+.multi-activation-options { margin: 0 16px 12px 46px; padding: 4px 12px; border: 1px solid #195277; border-radius: 6px; }
+.multi-activation-options label { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; }
+.multi-activation-options input { accent-color: #026cb6; }
+.multi-payment-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: #0365ac; color: #fff; flex-shrink: 0; }
+.multi-payment-total { display: flex; align-items: center; gap: 16px; text-align: left; font-size: 13px; }
+.multi-payment-total strong { font-size: 16px; white-space: nowrap; }
+.multi-payment-bar > .summary-payment { display: flex; align-items: center; gap: 12px; min-height: 40px; font-size: 14px; }

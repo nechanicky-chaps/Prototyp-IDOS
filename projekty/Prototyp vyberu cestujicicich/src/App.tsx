@@ -1348,6 +1348,7 @@ export default function App() {
   );
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
   const [designVersion, setDesignVersion] = useState<DesignVersion>("v5.0");
+  const [multiActivation, setMultiActivation] = useState('Automatická aktivace');
   const [requireNames, setRequireNames] = useState(false);
   const [selectedFare, setSelectedFare] = useState(0);
 
@@ -1401,6 +1402,8 @@ export default function App() {
       case "summary":
         return multi ? (
           <MultiTicketSummary
+            activation={multiActivation}
+            setActivation={setMultiActivation}
             passengers={passengers}
             ticketIds={ticketIds}
             setTicketIds={setTicketIds}

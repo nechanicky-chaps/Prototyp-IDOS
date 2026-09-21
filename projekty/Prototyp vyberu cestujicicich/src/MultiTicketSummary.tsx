@@ -17,10 +17,11 @@ export function JourneyResult({ onBuy }: { onBuy: () => void }) {
     <button className="flow-primary" onClick={onBuy}><span>Koupit 3 jízdenky</span><span>268 Kč →</span></button></div>
   </article>;
 }
-export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds, onBack, onEditPassengers, onNext }: {
-  passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack: () => void; onEditPassengers: () => void; onNext: () => void;
+export default function MultiTicketSummary({ passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext }: {
+  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack: () => void; onEditPassengers: () => void; onNext: () => void;
 }) {
   const [removed, setRemoved] = useState<string | null>(null);
+  const [activationOpen, setActivationOpen] = useState(false);
   const [alternative, setAlternative] = useState<string | null>(null);
   const count = ticketIds.length * passengers.length;
   const missingNames = passengers.some(p => !hasPassengerName(p));
@@ -34,9 +35,20 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
       {removed && <div className="journey-undo" role="status">Úsek odebrán.<button onClick={() => { setTicketIds(journeyTickets.filter(t => ticketIds.includes(t.id) || t.id === removed).map(t => t.id)); setRemoved(null); }}>Vrátit</button></div>}
       {journeyTickets.filter(t => ticketIds.includes(t.id)).map(ticket => <article key={ticket.id} className="journey-ticket">
         <div className="journey-band"><strong>Odjezd {ticket.departure}</strong><button aria-label={'Odebrat úsek ' + ticket.line} onClick={() => { setTicketIds(ticketIds.filter(id => id !== ticket.id)); setRemoved(ticket.id); }}>×</button></div>
-        <div className="journey-padding"><Route ticket={ticket} /><p className="journey-setting">{ticket.setting}</p>
-          <div className="journey-ticket-list">{passengers.map(p => <div key={p.uid} className="journey-ticket-person"><div><strong>{passengerLabel(p)}</strong><p>{p.catId === 'senior65' ? ticket.fare : 'Ukázková jízdenka'}{p.catId === 'senior65' && <small>{ticket.detail}</small>}</p></div><strong>{ticket.price} Kč</strong></div>)}</div>
-          <div className="journey-subtotal"><span>{passengers.length}× jízdenka · celkem za úsek</span><strong>{ticket.price * passengers.length} Kč</strong></div>
+        {ticket.id !== 'bus' && <div className="multi-setting-row"><span className="multi-dot" aria-hidden="true" /><span className="multi-label">třída pro cestu</span><span>2. třída</span></div>}
+        <div className="journey-padding multi-route"><Route ticket={ticket} /></div>
+        {ticket.id !== 'bus' && <div className="multi-setting-row multi-seat"><span /><span className="multi-label">{ticket.id === 'r22' ? 'místo' : ''}</span><span>{ticket.id === 'r22' ? 'A/45' : 'Bez místenky'}</span></div>}
+        <div className="multi-fare-details">
+          {ticket.id === 'bus' && <>
+            <div className="multi-setting-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 6v6l4 2" /></svg><span className="multi-label">Aktivace</span><span>{activation}</span><button aria-expanded={activationOpen} onClick={() => setActivationOpen(!activationOpen)}>Upravit</button></div>
+            {activationOpen && <div className="multi-activation-options" role="group" aria-label="Aktivace jízdenky">{['Automatická aktivace', 'Ruční aktivace'].map(option => <label key={option}><input type="radio" name="multi-activation" checked={activation === option} onChange={() => { setActivation(option); setActivationOpen(false); }} />{option}</label>)}</div>}
+          </>}
+          {passengers.map(p => <div key={p.uid} className="multi-fare-person">
+            {passengers.length > 1 && <strong className="multi-person-name">{passengerLabel(p)}</strong>}
+            <div className="multi-setting-row"><span className="multi-dot" aria-hidden="true" /><span className="multi-label">tarif</span><span>1× {p.catId === 'senior65' ? ticket.fare : 'Ukázková jízdenka'}{p.catId === 'senior65' && <> ({ticket.detail})</>}</span></div>
+            <div className="multi-setting-row multi-price"><span /><span className="multi-label">cena</span><strong>{ticket.price} Kč</strong></div>
+          </div>)}
+          {passengers.length > 1 && <div className="multi-setting-row multi-price"><span /><span className="multi-label">celkem</span><strong>{ticket.price * passengers.length} Kč</strong></div>}
         </div>
       </article>)}
       {!ticketIds.length && <div className="journey-padding"><p className="flow-empty">Nemáte vybranou žádnou jízdenku.</p><button className="flow-text-button" onClick={() => { setTicketIds(journeyTickets.map(t => t.id)); setRemoved(null); }}>Obnovit všechny úseky</button></div>}
@@ -51,6 +63,6 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
         </div>)}
       </section>}
     </div>
-    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count || missingNames} onClick={onNext}><span>Platba</span><span>→</span></button></footer>
+    <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></button><button className="summary-payment" disabled={!count || missingNames} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
   </section>;
 }
