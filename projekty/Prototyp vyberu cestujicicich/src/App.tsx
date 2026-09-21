@@ -904,11 +904,11 @@ function SummaryScreen({
           <div className="journey-passengers">
             <UsersIcon />
             <div>
-              <span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}</span>
+              <span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span>
               <p>{passengers.map(passengerLabel).join(", ")}</p>
 
             </div>
-            <button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit</button>
+            <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
           </div>
         </div>

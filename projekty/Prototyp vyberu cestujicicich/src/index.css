@@ -239,8 +239,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 
 .journey-passengers { flex-wrap: wrap; }
 .journey-passengers > button.flow-required-notice { flex: 0 0 100%; width: 100%; min-height: 0; margin: 0; padding-top: 10px; border-top: 1px solid #0e273c; }
-.journey-edit-passengers { display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-shrink: 0; }
-.journey-passengers .journey-required-mark { color: #ff6e7f; font-size: 20px; font-weight: 800; }
+.journey-passengers .journey-edit-passengers { width: auto; min-width: 65px; display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-shrink: 0; }
+.journey-passengers .journey-required-mark { display: inline-grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%; background: #f41430; color: #fff; font-size: 16px; font-weight: 800; line-height: 1; }
 
 .flow-v5-selector:not(.flow-v5-passes) { background: #026CB6; color: #fff; border-color: #026CB6; }
 
