@@ -396,7 +396,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
   return <>
     {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
     <div className="flow-v5-label">Vybraná kategorie</div>
-    <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span aria-hidden="true">⌄</span></button>
+    <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span className="flow-extra-arrow" aria-hidden="true" /></button>
     <details className="flow-disclosure flow-v5-extra">
       <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
       <div className="flow-fields">
@@ -406,7 +406,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
         <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
       </div>
     </details>
-    <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></button>
+    <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span className="flow-extra-arrow" aria-hidden="true" /></button>
     <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
     {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
