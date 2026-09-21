@@ -165,9 +165,9 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   </label>;
   const otherPassengers = availablePassengers.filter(p => p.uid !== 'adult-default' && !favorites.some(f => f.uid === p.uid));
   const v2Rows = [
-    { passenger: availablePassengers.find(p => p.uid === 'adult-default') || initialPassengers[0], label: 'Já', favorite: false },
+    { passenger: availablePassengers.find(p => p.uid === 'adult-default') || initialPassengers[0], label: 'Já', favorite: favorites.some(p => p.uid === 'adult-default') },
     ...otherPassengers.filter(p => selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
-    ...favorites.map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
+    ...favorites.filter(p => p.uid !== 'adult-default').map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
     ...otherPassengers.filter(p => !selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
   ];
   return (
@@ -190,7 +190,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
             {v2Rows.map(({ passenger, label, favorite }) => {
               const active = selected.some(item => item.uid === passenger.uid);
               return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
-                <span className={`flow-v2-marker ${favorite ? 'favorite' : ''}`} aria-hidden="true">{favorite ? '★' : '●'}</span>
+                <button className="flow-star flow-v2-star" aria-pressed={favorite}
+                  aria-label={`${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
+                  onClick={() => toggleFavorite(passenger)}>
+                  <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
+                </button>
                 <span className="flow-v2-avatar" aria-hidden="true" />
                 <span className="flow-v2-info"><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></span>
                 <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>
