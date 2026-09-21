@@ -198,3 +198,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .scenario-tabs { display: flex; flex-shrink: 0; padding: 8px 12px; gap: 8px; background: #00101d; border-bottom: 1px solid #0e273c; }
 .scenario-tabs button { flex: 1; padding: 8px 6px; border: 1px solid #0e273c; border-radius: 6px; color: #8ba0b3; font-size: 11px; }
 .scenario-tabs button[aria-pressed="true"] { border-color: #5fa8d5; color: #fff; background: #026cb6; font-weight: 500; }
+.flow-age-wheel-frame { position: relative; margin-top: 12px; background: #00101d; border-radius: 8px; overflow: hidden; }
+.flow-age-wheel-frame::after { content: ''; position: absolute; top: 40px; left: 0; right: 0; height: 40px; border-block: 1px solid #5fa8d5; pointer-events: none; }
+.flow-age-wheel { height: 120px; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; padding-block: 40px; }
+.flow-age-wheel button { display: block; height: 40px; width: 100%; scroll-snap-align: center; color: #8ba0b3; font-size: 18px; }
+.flow-age-wheel button[aria-pressed="true"] { color: #fff; font-weight: 700; background: #012845; }
