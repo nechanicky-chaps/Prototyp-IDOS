@@ -97,6 +97,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const [editing, setEditing] = useState(false);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [enterAge, setEnterAge] = useState(false);
+  const cancelBack = useRef(false);
+  const latestBack = useRef<() => void>(() => {});
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
   useEffect(() => { heading.current?.focus(); content.current?.scrollTo(0, 0); }, [page]);
@@ -148,7 +150,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     }
     else if (version === 'v4.0' || version === 'v5.0') {
       if (draft.catId && (!saveFavorite || draft.name?.trim())) complete();
-      else content.current?.querySelector<HTMLInputElement>('input:invalid, #passenger-age')?.focus();
+      else { const input = content.current?.querySelector<HTMLInputElement>('input:invalid, #passenger-age'); input?.focus(); input?.reportValidity(); }
     }
     else setPage('list');
   };
@@ -164,6 +166,38 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     else if (version === 'v5.0') onSaveFavorites(favorites.filter(p => p.uid !== passenger.uid));
     setQuickAddOpen(false);
     setPage('list');
+  };
+  latestBack.current = back;
+  useEffect(() => {
+    if (version !== 'v5.0' || page === 'list') return;
+    const marker = crypto.randomUUID();
+    const push = () => history.pushState({ ...history.state, passengerForm: marker }, '');
+    push();
+    const handlePop = () => {
+      const modal = document.querySelector<HTMLDialogElement>('.flow-v5-dialog[open]');
+      if (modal) { push(); modal.dispatchEvent(new Event('cancel', { cancelable: true })); return; }
+      if (cancelBack.current) { cancelBack.current = false; setPage('list'); return; }
+      const invalid = content.current?.querySelector<HTMLInputElement>('input[required]:invalid');
+      if (invalid) { push(); invalid.focus(); invalid.reportValidity(); return; }
+      latestBack.current();
+    };
+    window.addEventListener('popstate', handlePop);
+    return () => {
+      window.removeEventListener('popstate', handlePop);
+      if (history.state?.passengerForm === marker) history.back();
+    };
+  }, [page, version]);
+  const navigateBack = () => {
+    if (version === 'v5.0' && page !== 'list') history.back();
+    else latestBack.current();
+  };
+  useEffect(() => {
+    window.addEventListener('passenger-back', navigateBack);
+    return () => window.removeEventListener('passenger-back', navigateBack);
+  });
+  const cancelForm = () => {
+    if (version === 'v5.0' && page !== 'list') { cancelBack.current = true; history.back(); }
+    else setPage('list');
   };
   const categoryOption = (c: typeof categories[number]) => <button key={c.id} aria-pressed={draft.catId === c.id} className={`flow-option ${draft.catId === c.id ? 'selected' : ''}`} onClick={() => setDraft({ ...draft, catId: c.id })}>
     <span className="flow-avatar" style={{ color: c.color }}>●</span><span><strong>{c.label}</strong></span><span className="flow-radio">{draft.catId === c.id ? '●' : '○'}</span>
@@ -190,9 +224,9 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         <button className={version === 'v5.0' ? 'selected' : ''} aria-pressed={version === 'v5.0'} onClick={() => onVersionChange('v5.0')}>V5.0</button>
       </div>
       <header className="flow-header">
-        <button aria-label="Zpět" onClick={back}>←</button>
+        <button aria-label="Zpět" onClick={navigateBack}>←</button>
         <h1 ref={heading} tabIndex={-1}>{page === 'favorite' ? 'Uložit do oblíbených' : 'Cestující'}</h1>
-        {page !== 'list' && <button className="flow-cancel" onClick={() => setPage('list')}>Zrušit</button>}
+        {page !== 'list' && <button className="flow-cancel" onClick={cancelForm}>Zrušit</button>}
       </header>
       <div ref={content} className="flow-content">
         {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0' || version === 'v5.0') ? <>
@@ -312,10 +346,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           </>}
         </>}
       </div>
-      <footer className="flow-footer">
+      {(version !== 'v5.0' || page === 'list') && <footer className="flow-footer">
         {page === 'list' ? <button className="flow-primary" disabled={!selected.length} onClick={() => onConfirm(selected)}><span>Potvrdit výběr</span><span>{countLabel(selected.length)} →</span></button>
           : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim())} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
-      </footer>
+      </footer>}
       {version === 'v3.0' && quickAddOpen && <div className="flow-sheet-scrim" onClick={() => setQuickAddOpen(false)}>
         <section className="flow-sheet" role="dialog" aria-modal="true" aria-labelledby="quick-add-title" onClick={event => event.stopPropagation()}>
           <div className="flow-sheet-handle" aria-hidden="true" />
