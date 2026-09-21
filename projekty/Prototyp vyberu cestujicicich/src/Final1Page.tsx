@@ -64,8 +64,8 @@ export default function Final1Page() {
   const [requireNames, setRequireNames] = useState(false);
   const [activation, setActivation] = useState('Automatická aktivace');
   const [ticketIds, setTicketIds] = useState(journeyTickets.map(t => t.id));
+  const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
 
-  const total = multiTotal(ticketIds, passengers.length);
   const ticketCount = passengers.length * ticketIds.length;
 
   // Stejná logika jako v App.tsx – pokud chybí jména, přejdi na cestující
@@ -133,6 +133,7 @@ export default function Final1Page() {
                 setTicketIds={setTicketIds}
                 onEditPassengers={openPassengers}
                 onNext={proceedToPayment}
+                onTotalChange={setCheckoutTotal}
               />
             )}
             {screen === 'passengers' && (
@@ -166,18 +167,18 @@ export default function Final1Page() {
                 </div>
                 <div className="flex-1 flex items-center justify-center px-6 text-center">
                   <div>
-                    <p style={{ color: '#8ba0b3' }} className="text-sm mb-6">Celková cena: <strong className="text-white">{total} Kč</strong></p>
+                    <p style={{ color: '#8ba0b3' }} className="text-sm mb-6">Celková cena: <strong className="text-white">{checkoutTotal} Kč</strong></p>
                     <button onClick={() => setScreen('confirm')}
                       style={{ background: '#026cb6', borderRadius: 6 }}
                       className="px-8 py-3 text-white font-medium text-sm active:opacity-90 shadow-sm">
-                      Zaplatit {total} Kč →
+                      Zaplatit {checkoutTotal} Kč →
                     </button>
                   </div>
                 </div>
               </div>
             )}
             {screen === 'confirm' && (
-              <ConfirmScreen total={total} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
+              <ConfirmScreen total={checkoutTotal} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
             )}
           </div>
           <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('summary')} />

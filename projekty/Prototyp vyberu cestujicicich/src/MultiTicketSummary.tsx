@@ -1,5 +1,5 @@
 import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { countLabel, passengerLabel, hasPassengerName, type Passenger } from './PassengerFlow';
 
 export const journeyTickets = [
@@ -18,15 +18,19 @@ export function JourneyResult({ onBuy }: { onBuy: () => void }) {
     <button className="flow-primary" onClick={onBuy}><span>Koupit 3 jízdenky</span><span>268 Kč →</span></button></div>
   </article>;
 }
-export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext }: {
+export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext, onTotalChange }: {
   summaryVersion: SummaryVersion; onSummaryVersionChange: (version: SummaryVersion) => void;
-  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack?: () => void; onEditPassengers: () => void; onNext: () => void;
+  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack?: () => void; onEditPassengers: () => void; onNext: () => void; onTotalChange?: (total: number) => void;
 }) {
   const [removed, setRemoved] = useState<string | null>(null);
   const [activationOpen, setActivationOpen] = useState(false);
   const [alternative, setAlternative] = useState<string | null>(null);
   const count = ticketIds.length * passengers.length;
   const missingNames = passengers.some(p => !hasPassengerName(p));
+  const alternativeTotal = alternative === 'Jedna průběžná jízdenka' ? 284 * passengers.length
+    : alternative === 'Celodenní nabídka' ? 319 * passengers.length
+      : multiTotal(ticketIds, passengers.length);
+  useEffect(() => onTotalChange?.(alternativeTotal), [alternativeTotal, onTotalChange]);
   return <section className="passenger-flow">
     <SummaryVersionSwitch version={summaryVersion} onChange={onSummaryVersionChange} />
     <header className={`flow-header ${onBack ? '' : 'flow-header-root'}`}>{onBack && <button aria-label="Zpět" onClick={onBack}>←</button>}<h1>Souhrn jízdenek</h1></header>
@@ -70,10 +74,10 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
       </section>}
     </div>
     {summaryVersion === 'v1' && !!ticketIds.length && <FareFab offers={[
-      { id: 'through', title: 'Jedna průběžná jízdenka', price: '284 Kč' },
-      { id: 'day', title: 'Celodenní nabídka', price: '319 Kč' },
+      { id: 'through', title: 'Jedna průběžná jízdenka', price: `${284 * passengers.length} Kč` },
+      { id: 'day', title: 'Celodenní nabídka', price: `${319 * passengers.length} Kč` },
       { id: 'separate', title: 'Samostatné jízdenky', price: `${multiTotal(ticketIds, passengers.length)} Kč` },
-    ].map(offer => ({ ...offer, selected: alternative === offer.title, onSelect: () => setAlternative(offer.title) }))} />}
-    <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></button><button className="summary-payment" disabled={!count} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
+    ].map(offer => ({ ...offer, selected: alternative === offer.title || (!alternative && offer.id === 'separate'), onSelect: () => setAlternative(offer.title) }))} />}
+    <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{alternativeTotal} Kč</strong></button><button className="summary-payment" disabled={!count} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
   </section>;
 }
