@@ -230,7 +230,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       </header>
       <div ref={content} className="flow-content">
         {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0' || version === 'v5.0') ? <>
-          {requireNames && selected.some(p => !hasPassengerName(p)) && <p className="flow-required-notice">Dopravce vyžaduje jméno a příjmení všech cestujících.</p>}
+          {requireNames && selected.some(p => !hasPassengerName(p)) && <p className="flow-required-notice">Dopravce vyžaduje doplnit údaje</p>}
           <div className="flow-v2-list">
             {v2Rows.map(({ passenger, label, favorite }) => {
               const active = selected.some(item => item.uid === passenger.uid);

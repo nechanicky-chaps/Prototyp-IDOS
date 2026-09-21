@@ -909,7 +909,7 @@ function SummaryScreen({
 
             </div>
             <button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit</button>
-            {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}
+            {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
           </div>
         </div>
 
