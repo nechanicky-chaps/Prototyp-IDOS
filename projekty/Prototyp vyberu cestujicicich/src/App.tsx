@@ -902,9 +902,10 @@ function SummaryScreen({
             <div>
               <strong>{countLabel(passengers.length)}</strong>
               <p>{passengers.map(passengerLabel).join(", ")}</p>
-              {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}
+
             </div>
-            <button onClick={onEditPassengers}>Upravit</button>
+            <button className="journey-edit-passengers" onClick={onEditPassengers}>Upravit{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}</button>
+            {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}
           </div>
         </div>
 

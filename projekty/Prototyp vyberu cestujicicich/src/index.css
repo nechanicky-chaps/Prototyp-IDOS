@@ -236,3 +236,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-required-notice, .journey-passengers button.flow-required-notice { display: block; color: #ff8d98; font-size: 12px; line-height: 1.5; text-align: left; margin: 8px 0; }
 .summary-payment:disabled { background: #455564; color: #aab4bd; border-radius: 6px; padding: 8px 12px; cursor: not-allowed; opacity: 1; }
 .flow-primary:disabled { background: #455564; color: #aab4bd; cursor: not-allowed; }
+
+.journey-passengers { flex-wrap: wrap; }
+.journey-passengers > button.flow-required-notice { flex: 0 0 100%; width: 100%; min-height: 0; margin: 0; padding-top: 10px; border-top: 1px solid #0e273c; }
+.journey-edit-passengers { display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-shrink: 0; }
+.journey-passengers .journey-required-mark { color: #ff6e7f; font-size: 20px; font-weight: 800; }
