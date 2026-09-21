@@ -181,7 +181,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       </div>
       <header className="flow-header">
         <button aria-label="Zpět" onClick={back}>←</button>
-        <h1 ref={heading} tabIndex={-1}>{page === 'list' ? 'Cestující' : page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Upravit cestujícího' : 'Přidat cestujícího'}</h1>
+        <h1 ref={heading} tabIndex={-1}>{page === 'favorite' ? 'Uložit do oblíbených' : 'Cestující'}</h1>
         {page !== 'list' && <button className="flow-cancel" onClick={() => setPage('list')}>Zrušit</button>}
       </header>
       <div ref={content} className="flow-content">
@@ -223,12 +223,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           <button className="flow-text-button" onClick={() => start(undefined, true)}>＋ Přidat oblíbeného cestujícího</button>
         </> : <>
           {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
-          <h2>{page === 'favorite' ? 'Jak cestujícího pojmenujete?' : 'Vyberte kategorii'}</h2>
-          <p className="flow-hint">{page === 'favorite' ? 'Doplňte přezdívku, podle které ho příště poznáte.' : version === 'v4.0' ? 'Věk potřebujeme jen do 26 let a od 60 let.' : 'Vyberte kategorii a případný slevový průkaz.'}</p>
+          {page === 'favorite' && <><h2>Jak cestujícího pojmenujete?</h2><p className="flow-hint">Doplňte přezdívku, podle které ho příště poznáte.</p></>}
           {page === 'category' && version === 'v4.0' ? <>
             <div className="flow-options" role="group" aria-label="Kategorie cestujícího">
               <button className={`flow-option ${!enterAge ? 'selected' : ''}`} aria-pressed={!enterAge} onClick={() => { setEnterAge(false); setDraft({ ...draft, catId: 'adult', age: undefined }); }}><span><strong>Dospělý</strong><small>26–59 let · bez zadávání věku</small></span><span className="flow-radio" aria-hidden="true">{!enterAge ? '●' : '○'}</span></button>
-              <button className={`flow-option ${enterAge ? 'selected' : ''}`} aria-pressed={enterAge} onClick={() => { if (!enterAge) { setEnterAge(true); setDraft({ ...draft, catId: '', age: undefined }); } }}><span><strong>Dítě, mladistvý nebo senior</strong><small>Vybrat podle věku</small></span><span className="flow-radio" aria-hidden="true">{enterAge ? '●' : '○'}</span></button>
+              <button className={`flow-option ${enterAge ? 'selected' : ''}`} aria-pressed={enterAge} onClick={() => { if (!enterAge) { setEnterAge(true); setDraft({ ...draft, catId: '', age: undefined }); } }}><span><strong>Věková kategorie</strong><small>Vybrat podle věku</small></span><span className="flow-radio" aria-hidden="true">{enterAge ? '●' : '○'}</span></button>
             </div>
             {enterAge && <div className="flow-age-field" style={{ marginTop: 12 }}>
               <label htmlFor="passenger-age">Věk v den cesty</label>
