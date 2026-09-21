@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ResultsScreen } from './App';
+import { purchaseFareOptions, ResultsScreen, SummaryScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
-import PassengerFlow, { initialFavorites, hasPassengerName, type Passenger } from './PassengerFlow';
+import PassengerFlow, { initialFavorites, initialPassengers, hasPassengerName, type Passenger } from './PassengerFlow';
 
 type Screen = 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
 
@@ -55,6 +55,7 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
 
 export default function Final1Page() {
   const [screen, setScreen] = useState<Screen>('results');
+  const [multi, setMulti] = useState(true);
   const [passengers, setPassengers] = useState<Passenger[]>([
     { uid: 'senior-example', catId: 'senior65', passIds: ['none'] },
   ]);
@@ -66,8 +67,23 @@ export default function Final1Page() {
   const [activation, setActivation] = useState('Automatická aktivace');
   const [ticketIds, setTicketIds] = useState(journeyTickets.map(t => t.id));
   const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
+  const [selectedFare, setSelectedFare] = useState(0);
 
-  const ticketCount = passengers.length * ticketIds.length;
+  const paymentTotal = multi ? checkoutTotal : purchaseFareOptions[selectedFare].price * passengers.length;
+  const ticketCount = passengers.length * (multi ? ticketIds.length : 1);
+
+  const chooseScenario = (value: boolean) => {
+    if (value === multi) return;
+    const scenarioPassengers = value
+      ? [{ uid: 'senior-example', catId: 'senior65', passIds: ['none'] }]
+      : initialPassengers;
+    setMulti(value);
+    setPassengers(scenarioPassengers);
+    setAvailablePassengers(scenarioPassengers);
+    setTicketIds(journeyTickets.map(ticket => ticket.id));
+    setSelectedFare(0);
+    setRequireNames(false);
+  };
 
   // Stejná logika jako v App.tsx – pokud chybí jména, přejdi na cestující
   const proceedToPayment = () => {
@@ -126,13 +142,14 @@ export default function Final1Page() {
           <div className="final1-no-vsw" style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             {screen === 'results' && (
               <ResultsScreen
-                multi
+                multi={multi}
                 presentation
-                onScenario={() => {}}
+                showScenarioTabs
+                onScenario={chooseScenario}
                 onBuy={() => setScreen('summary')}
               />
             )}
-            {screen === 'summary' && (
+            {screen === 'summary' && multi && (
               <MultiTicketSummary
                 summaryVersion="v1"
                 onSummaryVersionChange={() => {}}
@@ -144,6 +161,19 @@ export default function Final1Page() {
                 onEditPassengers={openPassengers}
                 onNext={proceedToPayment}
                 onTotalChange={setCheckoutTotal}
+              />
+            )}
+            {screen === 'summary' && !multi && (
+              <SummaryScreen
+                summaryVersion="v1"
+                onSummaryVersionChange={() => {}}
+                presentation
+                passengers={passengers}
+                selectedFare={selectedFare}
+                onSelectFare={setSelectedFare}
+                onBack={() => setScreen('results')}
+                onEditPassengers={openPassengers}
+                onNext={proceedToPayment}
               />
             )}
             {screen === 'passengers' && (
@@ -177,18 +207,18 @@ export default function Final1Page() {
                 </div>
                 <div className="flex-1 flex items-center justify-center px-6 text-center">
                   <div>
-                    <p style={{ color: '#8ba0b3' }} className="text-sm mb-6">Celková cena: <strong className="text-white">{checkoutTotal} Kč</strong></p>
+                    <p style={{ color: '#8ba0b3' }} className="text-sm mb-6">Celková cena: <strong className="text-white">{paymentTotal} Kč</strong></p>
                     <button onClick={() => setScreen('confirm')}
                       style={{ background: '#026cb6', borderRadius: 6 }}
                       className="px-8 py-3 text-white font-medium text-sm active:opacity-90 shadow-sm">
-                      Zaplatit {checkoutTotal} Kč →
+                      Zaplatit {paymentTotal} Kč →
                     </button>
                   </div>
                 </div>
               </div>
             )}
             {screen === 'confirm' && (
-              <ConfirmScreen total={checkoutTotal} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
+              <ConfirmScreen total={paymentTotal} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
             )}
           </div>
           <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('results')} />

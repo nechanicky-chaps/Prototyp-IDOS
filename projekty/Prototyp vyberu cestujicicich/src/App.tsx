@@ -24,7 +24,7 @@ const TRAM = "#ff6e7f";
 const TRAIN = "#ea5bf6";
 const GREEN = "#4ade80";
 
-const purchaseFareOptions = [
+export const purchaseFareOptions = [
   { title: "Nabídka IDS", detail: "IDS JMK Základní (3 zóny, 90 minut)", price: 33 },
   { title: "Jízdenka dopravce", detail: "Základní jednosměrná", price: 46 },
   { title: "Jednodenní nabídka IDS", detail: "Celodenní cestování v oblasti", price: 250 },
@@ -536,12 +536,14 @@ export function ResultsScreen({
   multi,
   onScenario,
   presentation = false,
+  showScenarioTabs = !presentation,
 }: {
   onBack?: () => void;
   onBuy: () => void;
   multi: boolean;
   onScenario: (multi: boolean) => void;
   presentation?: boolean;
+  showScenarioTabs?: boolean;
 }) {
   const connections = [
     {
@@ -611,7 +613,7 @@ export function ResultsScreen({
         )}
       />
 
-      {!presentation && <div className="scenario-tabs" aria-label="Ukázkové scénáře">
+      {showScenarioTabs && <div className="scenario-tabs" aria-label="Ukázkové scénáře">
         <button aria-pressed={!multi} onClick={() => onScenario(false)}>Jedna jízdenka</button>
         <button aria-pressed={multi} onClick={() => onScenario(true)}>Více jízdenek</button>
       </div>}
@@ -707,12 +709,12 @@ export function ResultsScreen({
                     <CartIcon />
                     Koupit
                   </button>
-                  <button
+                  {!presentation && <button
                     style={{ border: `1.5px solid ${BORDER}`, borderRadius: 6, color: MUTED }}
                     className="px-2 py-1.5 hover:bg-white/5"
                   >
                     <DotsIcon />
-                  </button>
+                  </button>}
                 </div>
               )}
             </div>
@@ -868,8 +870,9 @@ function FaresScreen({ onBack, onNext }: { onBack: () => void; onNext: () => voi
 // ─────────────────────────────────────────────────────────
 // SCREEN 5: Summary / Souhrn jízdenek (Screenshot 2)
 // ─────────────────────────────────────────────────────────
-function SummaryScreen({
+export function SummaryScreen({
   summaryVersion, onSummaryVersionChange,
+  presentation = false,
   passengers,
   selectedFare,
   onSelectFare,
@@ -878,6 +881,7 @@ function SummaryScreen({
   onEditPassengers,
 }: {
   summaryVersion: SummaryVersion; onSummaryVersionChange: (version: SummaryVersion) => void;
+  presentation?: boolean;
   passengers: Passenger[];
   selectedFare: number;
   onSelectFare: (index: number) => void;
@@ -894,11 +898,11 @@ function SummaryScreen({
       <Header
         title="Souhrn jízdenek"
         onBack={onBack}
-        extra={
+        extra={presentation ? undefined : (
           <button className="text-white opacity-95 hover:opacity-100">
             <RefreshIcon />
           </button>
-        }
+        )}
       />
 
       <div className="flex-1 overflow-auto">
