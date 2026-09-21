@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export type Passenger = { uid: string; catId: string; passIds: string[]; age?: number; name?: string; firstName?: string; lastName?: string; passNumber?: string };
+export type Passenger = { uid: string; catId: string; passIds: string[]; age?: number; name?: string; firstName?: string; lastName?: string; passNumber?: string; birthDate?: string };
 export const categories = [
   { id: 'child0', label: 'Dítě (0–1 rok)', color: '#34d399' },
   { id: 'child2', label: 'Dítě (2 roky)', color: '#34d399' },
@@ -64,11 +64,12 @@ export const initialFavorites: Passenger[] = [
 ];
 export const passengerLabel = (p: Passenger) => p.name || categories.find(c => c.id === p.catId)?.label || 'Cestující';
 export const passLabels = (p: Passenger) => p.passIds.map(id => passes.find(pass => pass.id === id)?.label).filter(Boolean).join(', ');
+export const hasPassengerName = (p: Passenger) => !!p.firstName?.trim() && !!p.lastName?.trim();
 export const countLabel = (n: number) => `${n} ${n > 0 && n < 5 ? 'cestující' : 'cestujících'}`;
 // Deliberately a fixed demonstration price, not a tariff calculation.
 export const demoTotal = (passengers: Passenger[]) => passengers.length * 33;
 
-export type DesignVersion = 'v1.0' | 'v2.0' | 'v3.0' | 'v4.0';
+export type DesignVersion = 'v1.0' | 'v2.0' | 'v3.0' | 'v4.0' | 'v5.0';
 type Page = 'list' | 'category' | 'favorite';
 
 function categoryForAge(age: number) {
@@ -83,10 +84,10 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, version, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, version, requireNames = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
-  version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
+  requireNames?: boolean; version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
   onBack: () => void; onConfirm: (p: Passenger[]) => void;
 }) {
   const [selected, setSelected] = useState(passengers);
@@ -110,7 +111,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   }));
   const start = (p?: Passenger, favorite = false) => {
     setEnterAge(!!p && p.catId !== 'adult');
-    setDraft(p ? { ...p, age: p.catId === 'adult' ? undefined : p.age } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: version === 'v4.0' ? 'adult' : '', passIds: ['none'] });
+    setDraft(p ? { ...p, age: p.catId === 'adult' ? undefined : p.age } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: (version === 'v4.0' || version === 'v5.0') ? 'adult' : '', passIds: ['none'] });
     setEditing(!!p); setSaveFavorite(favorite); setPage('category');
   };
   const startQuickAdd = () => {
@@ -121,13 +122,20 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   };
   const toggleFavorite = (p: Passenger) => {
     if (favorites.some(f => f.uid === p.uid)) {
+      if (!availablePassengers.some(item => item.uid === p.uid)) onSaveAvailablePassengers([...availablePassengers, p]);
       onSaveFavorites(favorites.filter(f => f.uid !== p.uid));
       return;
     }
     setDraft({ ...p });
     setEditing(true);
     setSaveFavorite(true);
-    setPage('favorite');
+    setPage(version === 'v5.0' ? 'category' : 'favorite');
+  };
+  const updateName = (p: Passenger, field: 'firstName' | 'lastName', value: string) => {
+    const updated = { ...p, [field]: value };
+    setSelected(items => items.map(item => item.uid === p.uid ? updated : item));
+    onSaveAvailablePassengers(availablePassengers.some(item => item.uid === p.uid) ? availablePassengers.map(item => item.uid === p.uid ? updated : item) : [...availablePassengers, updated]);
+    if (favorites.some(item => item.uid === p.uid)) onSaveFavorites(favorites.map(item => item.uid === p.uid ? updated : item));
   };
   const toggleSelected = (p: Passenger) => {
     const active = selected.some(item => item.uid === p.uid);
@@ -135,10 +143,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   };
   const back = () => {
     if (page === 'list') {
-      if (version === 'v4.0' && selected.length) onConfirm(selected);
+      if ((version === 'v4.0' || version === 'v5.0') && selected.length) onConfirm(selected);
       else onBack();
     }
-    else if (version === 'v4.0') {
+    else if (version === 'v4.0' || version === 'v5.0') {
       if (draft.catId && (!saveFavorite || draft.name?.trim())) complete();
       else content.current?.querySelector<HTMLInputElement>('input:invalid, #passenger-age')?.focus();
     }
@@ -150,9 +158,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     const upsert = (items: Passenger[]) => items.some(p => p.uid === passenger.uid)
       ? items.map(p => p.uid === passenger.uid ? passenger : p)
       : [...items, passenger];
-    setSelected(upsert);
+    setSelected(items => version === 'v5.0' && editing ? items.map(p => p.uid === passenger.uid ? passenger : p) : upsert(items));
     onSaveAvailablePassengers(upsert(availablePassengers));
-    if (saveFavorite) onSaveFavorites([...favorites.filter(p => p.uid !== passenger.uid), passenger]);
+    if (saveFavorite) onSaveFavorites(upsert(favorites));
+    else if (version === 'v5.0') onSaveFavorites(favorites.filter(p => p.uid !== passenger.uid));
     setQuickAddOpen(false);
     setPage('list');
   };
@@ -178,6 +187,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         <button className={version === 'v2.0' ? 'selected' : ''} aria-pressed={version === 'v2.0'} onClick={() => onVersionChange('v2.0')}>V2.0</button>
         <button className={version === 'v3.0' ? 'selected' : ''} aria-pressed={version === 'v3.0'} onClick={() => onVersionChange('v3.0')}>V3.0</button>
         <button className={version === 'v4.0' ? 'selected' : ''} aria-pressed={version === 'v4.0'} onClick={() => onVersionChange('v4.0')}>V4.0</button>
+        <button className={version === 'v5.0' ? 'selected' : ''} aria-pressed={version === 'v5.0'} onClick={() => onVersionChange('v5.0')}>V5.0</button>
       </div>
       <header className="flow-header">
         <button aria-label="Zpět" onClick={back}>←</button>
@@ -185,7 +195,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         {page !== 'list' && <button className="flow-cancel" onClick={() => setPage('list')}>Zrušit</button>}
       </header>
       <div ref={content} className="flow-content">
-        {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0') ? <>
+        {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0' || version === 'v5.0') ? <>
+          {requireNames && selected.some(p => !hasPassengerName(p)) && <p className="flow-required-notice">Dopravce vyžaduje jméno a příjmení všech cestujících.</p>}
           <div className="flow-v2-list">
             {v2Rows.map(({ passenger, label, favorite }) => {
               const active = selected.some(item => item.uid === passenger.uid);
@@ -196,8 +207,12 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
                 </button>
                 <span className="flow-v2-avatar" aria-hidden="true" />
-                <span className="flow-v2-info"><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></span>
-                <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>
+                {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => start(passenger, favorite)}><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></span>}
+                {version === 'v5.0' ? <label className="flow-select-person"><input type="checkbox" checked={active} aria-label={`Cestuje ${label}`} onChange={() => toggleSelected(passenger)} /></label> : <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>}
+                {requireNames && active && <div className="flow-quick-names flow-fields">
+                  <label>Jméno <span>*</span><input required autoComplete="given-name" aria-label={`Jméno: ${label}`} value={passenger.firstName || ''} onChange={e => updateName(passenger, 'firstName', e.target.value)} /></label>
+                  <label>Příjmení <span>*</span><input required autoComplete="family-name" aria-label={`Příjmení: ${label}`} value={passenger.lastName || ''} onChange={e => updateName(passenger, 'lastName', e.target.value)} /></label>
+                </div>}
               </div>;
             })}
           </div>
@@ -228,7 +243,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         </> : <>
           {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
           {page === 'favorite' && <><h2>Jak cestujícího pojmenujete?</h2><p className="flow-hint">Doplňte přezdívku, podle které ho příště poznáte.</p></>}
-          {page === 'category' && version === 'v4.0' ? <>
+          {page === 'category' && version === 'v5.0' ? <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={setSaveFavorite} editing={editing} /> : page === 'category' && version === 'v4.0' ? <>
             <div className="flow-options" role="group" aria-label="Kategorie cestujícího">
               <button className={`flow-option ${!enterAge ? 'selected' : ''}`} aria-pressed={!enterAge} onClick={() => { setEnterAge(false); setDraft({ ...draft, catId: 'adult', age: undefined }); }}><span><strong>Dospělý</strong><small>26–59 let · bez zadávání věku</small></span><span className="flow-radio" aria-hidden="true">{!enterAge ? '●' : '○'}</span></button>
               <button className={`flow-option ${enterAge ? 'selected' : ''}`} aria-pressed={enterAge} onClick={() => { if (!enterAge) { setEnterAge(true); setDraft({ ...draft, catId: '', age: undefined }); } }}><span><strong>Věková kategorie</strong><small>Vybrat podle věku</small></span><span className="flow-radio" aria-hidden="true">{enterAge ? '●' : '○'}</span></button>
@@ -318,4 +333,62 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       </div>}
     </section>
   );
+}
+
+function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing }: {
+  draft: Passenger; setDraft: (p: Passenger) => void;
+  saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
+  const [pendingCategory, setPendingCategory] = useState(draft.catId);
+  const [pendingPasses, setPendingPasses] = useState(draft.passIds);
+  useEffect(() => {
+    if (picker) {
+      dialog.current?.showModal();
+      dialog.current?.querySelector<HTMLElement>('[aria-checked="true"], input:checked')?.scrollIntoView({ block: 'center' });
+    }
+  }, [picker]);
+  const openPicker = (kind: 'category' | 'passes') => {
+    setPendingCategory(draft.catId); setPendingPasses([...draft.passIds]); setPicker(kind);
+  };
+  const closePicker = () => { dialog.current?.close(); setPicker(null); };
+  const confirm = () => {
+    setDraft(picker === 'category' ? { ...draft, catId: pendingCategory, age: pendingCategory === draft.catId ? draft.age : undefined } : { ...draft, passIds: pendingPasses });
+    closePicker();
+  };
+  const passRow = (pass: typeof passes[number]) => <label key={pass.id} className="flow-v5-picker-row">
+    <input type="checkbox" checked={pendingPasses.includes(pass.id)} onChange={() => setPendingPasses(current => {
+      if (pass.id === 'none') return ['none'];
+      const next = current.includes(pass.id) ? current.filter(id => id !== pass.id) : [...current.filter(id => id !== 'none'), pass.id];
+      return next.length ? next : ['none'];
+    })} /><span>{pass.label}</span>
+  </label>;
+  return <>
+    {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
+    <div className="flow-v5-label">Vybraná kategorie</div>
+    <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span aria-hidden="true">⌄</span></button>
+    <details className="flow-disclosure flow-v5-extra">
+      <summary><strong>Doplňující údaje</strong><span aria-hidden="true">⌄</span></summary>
+      <div className="flow-fields">
+        <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
+        <label>Příjmení <small>volitelné</small><input autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
+        <label>Datum narození <small>volitelné</small><input type="date" autoComplete="bday" value={draft.birthDate || ''} onChange={e => setDraft({ ...draft, birthDate: e.target.value })} /></label>
+        <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
+      </div>
+    </details>
+    <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span aria-hidden="true">⌄</span></button>
+    <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
+    {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
+    {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
+      <h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>
+      <div className="flow-v5-picker-content">
+        {picker === 'category' ? categoryGroups.map((group, index) => <section key={group.id} aria-label={['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}>
+          <h3>{['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}</h3>
+          {group.items.map(category => <label className="flow-v5-picker-row" key={category.id}><input type="radio" name="v5-category" checked={pendingCategory === category.id} onChange={() => setPendingCategory(category.id)} /><span>{category.label}</span></label>)}
+        </section>) : <>{passRow(passes[0])}{passSections.map(section => <section key={section.label} aria-label={section.label}><h3>{section.label}</h3>{passes.filter(pass => section.ids.includes(pass.id)).map(passRow)}</section>)}</>}
+      </div>
+      <footer><button onClick={closePicker}>Zrušit</button><button className="flow-v5-confirm" onClick={confirm}>Potvrdit</button></footer>
+    </dialog>}
+  </>;
 }

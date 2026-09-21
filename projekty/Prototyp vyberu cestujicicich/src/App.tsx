@@ -1,6 +1,6 @@
 import MultiTicketSummary, { JourneyResult, journeyTickets, multiTotal } from "./MultiTicketSummary";
 import { useState } from "react";
-import PassengerFlow, { initialPassengers, initialFavorites, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
+import PassengerFlow, { initialPassengers, initialFavorites, hasPassengerName, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger } from "./PassengerFlow";
 
 type Screen =
   | "results"
@@ -882,6 +882,7 @@ function SummaryScreen({
 }) {
   const chosenFare = purchaseFareOptions[selectedFare];
   const chosenTotal = chosenFare.price * passengers.length;
+  const missingNames = passengers.some(p => !hasPassengerName(p));
   return (
     <div className="flex flex-col h-full" style={{ background: BG }}>
       <Header
@@ -901,6 +902,7 @@ function SummaryScreen({
             <div>
               <strong>{countLabel(passengers.length)}</strong>
               <p>{passengers.map(passengerLabel).join(", ")}</p>
+              {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}
             </div>
             <button onClick={onEditPassengers}>Upravit</button>
           </div>
@@ -1063,7 +1065,8 @@ function SummaryScreen({
         </button>
         <button
           onClick={onNext}
-          className="flex items-center gap-2 text-white font-medium hover:opacity-80"
+          disabled={missingNames || !passengers.length}
+          className="summary-payment flex items-center gap-2 text-white font-medium hover:opacity-80"
         >
           <span className="text-sm">Platba</span>
           <ArrowRight />
@@ -1343,7 +1346,8 @@ export default function App() {
     location.hash === "#vice-jizdenek" ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers
   );
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
-  const [designVersion, setDesignVersion] = useState<DesignVersion>("v4.0");
+  const [designVersion, setDesignVersion] = useState<DesignVersion>("v5.0");
+  const [requireNames, setRequireNames] = useState(false);
   const [selectedFare, setSelectedFare] = useState(0);
 
   const [multi, setMulti] = useState(location.hash === "#vice-jizdenek");
@@ -1382,6 +1386,7 @@ export default function App() {
             availablePassengers={availablePassengers}
             favorites={favorites}
             version={designVersion}
+            requireNames={requireNames}
             onVersionChange={setDesignVersion}
             onSaveAvailablePassengers={setAvailablePassengers}
             onSaveFavorites={setFavorites}
@@ -1399,8 +1404,8 @@ export default function App() {
             ticketIds={ticketIds}
             setTicketIds={setTicketIds}
             onBack={() => setScreen("results")}
-            onEditPassengers={() => setScreen("passengers")}
-            onNext={() => setScreen("payment")}
+            onEditPassengers={() => { setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
+            onNext={() => { if (passengers.length && passengers.every(hasPassengerName)) setScreen("payment"); }}
           />
         ) : (
           <SummaryScreen
@@ -1408,8 +1413,8 @@ export default function App() {
             selectedFare={selectedFare}
             onSelectFare={setSelectedFare}
             onBack={() => setScreen("results")}
-            onNext={() => setScreen("payment")}
-            onEditPassengers={() => setScreen("passengers")}
+            onNext={() => { if (passengers.length && passengers.every(hasPassengerName)) setScreen("payment"); }}
+            onEditPassengers={() => { setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
           />
         );
       case "payment":

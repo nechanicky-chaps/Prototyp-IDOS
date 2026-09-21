@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { countLabel, passengerLabel, type Passenger } from './PassengerFlow';
+import { countLabel, passengerLabel, hasPassengerName, type Passenger } from './PassengerFlow';
 
 export const journeyTickets = [
   { id: 'bus', line: 'Bus 153', color: '#ff6e7f', from: 'Veverská Bítýška, náměstí', to: 'Tišnov, železniční stanice', departure: '14:14', arrival: '14:36', price: 12, fare: 'IDS JMK Zlevněná A', detail: '2 zóny, 60 minut', setting: 'Automatická aktivace' },
@@ -23,11 +23,12 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
   const [removed, setRemoved] = useState<string | null>(null);
   const [alternative, setAlternative] = useState<string | null>(null);
   const count = ticketIds.length * passengers.length;
+  const missingNames = passengers.some(p => !hasPassengerName(p));
   return <section className="passenger-flow">
     <header className="flow-header"><button aria-label="Zpět" onClick={onBack}>←</button><h1>Souhrn jízdenek</h1></header>
     <div className="flow-content journey-summary">
       <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
-        <div className="journey-passengers"><div><strong>{countLabel(passengers.length)}</strong><p>{passengers.map(passengerLabel).join(', ')}</p></div><button onClick={onEditPassengers}>Upravit</button></div>
+        <div className="journey-passengers"><div><strong>{countLabel(passengers.length)}</strong><p>{passengers.map(passengerLabel).join(', ')}</p>{missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje jméno a příjmení. Doplnit údaje →</button>}</div><button onClick={onEditPassengers}>Upravit</button></div>
       </div>
       {removed && <div className="journey-undo" role="status">Úsek odebrán.<button onClick={() => { setTicketIds(journeyTickets.filter(t => ticketIds.includes(t.id) || t.id === removed).map(t => t.id)); setRemoved(null); }}>Vrátit</button></div>}
       {journeyTickets.filter(t => ticketIds.includes(t.id)).map(ticket => <article key={ticket.id} className="journey-ticket">
@@ -49,6 +50,6 @@ export default function MultiTicketSummary({ passengers, ticketIds, setTicketIds
         </div>)}
       </section>}
     </div>
-    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count} onClick={onNext}><span>Platba</span><span>→</span></button></footer>
+    <footer className="flow-footer"><div className="journey-totals"><span>{countLabel(passengers.length)} · {count} {count === 1 ? 'jízdenka' : count > 1 && count < 5 ? 'jízdenky' : 'jízdenek'}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></div><button className="flow-primary" disabled={!count || missingNames} onClick={onNext}><span>Platba</span><span>→</span></button></footer>
   </section>;
 }
