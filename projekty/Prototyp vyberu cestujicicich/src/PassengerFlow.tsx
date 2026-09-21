@@ -375,8 +375,6 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
-  const [pendingCategory, setPendingCategory] = useState(draft.catId);
-  const [pendingPasses, setPendingPasses] = useState(draft.passIds);
   useEffect(() => {
     if (picker) {
       dialog.current?.showModal();
@@ -384,19 +382,16 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     }
   }, [picker]);
   const openPicker = (kind: 'category' | 'passes') => {
-    setPendingCategory(draft.catId); setPendingPasses([...draft.passIds]); setPicker(kind);
+    setPicker(kind);
   };
   const closePicker = () => { dialog.current?.close(); setPicker(null); };
-  const confirm = () => {
-    setDraft(picker === 'category' ? { ...draft, catId: pendingCategory, age: pendingCategory === draft.catId ? draft.age : undefined } : { ...draft, passIds: pendingPasses });
-    closePicker();
-  };
+
   const passRow = (pass: typeof passes[number]) => <label key={pass.id} className="flow-v5-picker-row">
-    <input type="checkbox" checked={pendingPasses.includes(pass.id)} onChange={() => setPendingPasses(current => {
-      if (pass.id === 'none') return ['none'];
-      const next = current.includes(pass.id) ? current.filter(id => id !== pass.id) : [...current.filter(id => id !== 'none'), pass.id];
-      return next.length ? next : ['none'];
-    })} /><span>{pass.label}</span>
+    <input type="checkbox" checked={draft.passIds.includes(pass.id)} onChange={() => {
+      const current = draft.passIds;
+      const next = pass.id === 'none' ? ['none'] : current.includes(pass.id) ? current.filter(id => id !== pass.id) : [...current.filter(id => id !== 'none'), pass.id];
+      setDraft({ ...draft, passIds: next.length ? next : ['none'] });
+    }} /><span>{pass.label}</span>
   </label>;
   return <>
     {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
@@ -415,14 +410,14 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
     {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
-      <h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>
+      <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2><button aria-label="Zavřít nabídku" onClick={closePicker}>×</button></header>
       <div className="flow-v5-picker-content">
         {picker === 'category' ? categoryGroups.map((group, index) => <section key={group.id} aria-label={['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}>
           <h3>{['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}</h3>
-          {group.items.map(category => <label className="flow-v5-picker-row" key={category.id}><input type="radio" name="v5-category" checked={pendingCategory === category.id} onChange={() => setPendingCategory(category.id)} /><span>{category.label}</span></label>)}
+          {group.items.map(category => <label className="flow-v5-picker-row" key={category.id}><input type="radio" name="v5-category" checked={draft.catId === category.id} onClick={() => { setDraft({ ...draft, catId: category.id, age: category.id === draft.catId ? draft.age : undefined }); closePicker(); }} readOnly /><span>{category.label}</span></label>)}
         </section>) : <>{passRow(passes[0])}{passSections.map(section => <section key={section.label} aria-label={section.label}><h3>{section.label}</h3>{passes.filter(pass => section.ids.includes(pass.id)).map(passRow)}</section>)}</>}
       </div>
-      <footer><button onClick={closePicker}>Zrušit</button><button className="flow-v5-confirm" onClick={confirm}>Potvrdit</button></footer>
+
     </dialog>}
   </>;
 }
