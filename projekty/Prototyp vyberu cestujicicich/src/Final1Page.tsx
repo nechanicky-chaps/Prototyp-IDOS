@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { ResultsScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
 import PassengerFlow, { initialFavorites, hasPassengerName, type Passenger } from './PassengerFlow';
 
-type Screen = 'summary' | 'passengers' | 'payment' | 'confirm';
+type Screen = 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
 
 const BG = '#00101d';
 const HEADER = '#0365ac';
@@ -53,7 +54,7 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
 }
 
 export default function Final1Page() {
-  const [screen, setScreen] = useState<Screen>('summary');
+  const [screen, setScreen] = useState<Screen>('results');
   const [passengers, setPassengers] = useState<Passenger[]>([
     { uid: 'senior-example', catId: 'senior65', passIds: ['none'] },
   ]);
@@ -89,6 +90,7 @@ export default function Final1Page() {
       window.dispatchEvent(new Event('passenger-back'));
       return;
     }
+    if (screen === 'summary') setScreen('results');
     if (screen === 'payment' || screen === 'confirm') setScreen('summary');
   };
 
@@ -122,6 +124,14 @@ export default function Final1Page() {
           }}
         >
           <div className="final1-no-vsw" style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {screen === 'results' && (
+              <ResultsScreen
+                multi
+                presentation
+                onScenario={() => {}}
+                onBuy={() => setScreen('summary')}
+              />
+            )}
             {screen === 'summary' && (
               <MultiTicketSummary
                 summaryVersion="v1"
@@ -181,7 +191,7 @@ export default function Final1Page() {
               <ConfirmScreen total={checkoutTotal} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
             )}
           </div>
-          <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('summary')} />
+          <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('results')} />
         </div>
       </div>
     </>

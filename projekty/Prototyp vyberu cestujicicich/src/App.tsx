@@ -530,16 +530,18 @@ function HomeScreen({
 // ─────────────────────────────────────────────────────────
 // SCREEN 2: Results (Screenshot 5)
 // ─────────────────────────────────────────────────────────
-function ResultsScreen({
+export function ResultsScreen({
   onBack,
   onBuy,
   multi,
   onScenario,
+  presentation = false,
 }: {
   onBack?: () => void;
   onBuy: () => void;
   multi: boolean;
   onScenario: (multi: boolean) => void;
+  presentation?: boolean;
 }) {
   const connections = [
     {
@@ -600,19 +602,19 @@ function ResultsScreen({
       <Header
         title="Spojení"
         onBack={onBack}
-        extra={
+        extra={presentation ? undefined : (
           <div className="flex items-center gap-4 text-white">
             <button aria-label="Oblíbené"><StarIcon /></button>
             <button aria-label="Mapa"><MapIcon /></button>
             <button aria-label="Více"><DotsIcon /></button>
           </div>
-        }
+        )}
       />
 
-      <div className="scenario-tabs" aria-label="Ukázkové scénáře">
+      {!presentation && <div className="scenario-tabs" aria-label="Ukázkové scénáře">
         <button aria-pressed={!multi} onClick={() => onScenario(false)}>Jedna jízdenka</button>
         <button aria-pressed={multi} onClick={() => onScenario(true)}>Více jízdenek</button>
-      </div>
+      </div>}
 
       <div className="flex-1 overflow-auto">
         {multi ? (
@@ -718,7 +720,7 @@ function ResultsScreen({
         )}
       </div>
 
-      <BottomNav active="search" />
+      {!presentation && <BottomNav active="search" />}
     </div>
   );
 }
