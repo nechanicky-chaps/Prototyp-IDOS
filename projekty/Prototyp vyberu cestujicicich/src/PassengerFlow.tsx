@@ -45,6 +45,12 @@ export const passes = [
   { id: 'first_class', label: 'Časový doplatek do 1. třídy', sub: 'Doplatek' },
   { id: 'idsok', label: 'Průkaz IDSOK', sub: 'Krajská karta' },
 ];
+const passSections = [
+  { label: 'In-Karta', ids: ['in25', 'in50', 'inkarta', 'inkarta_plus'] },
+  { label: 'Studentské karty', ids: ['itic', 'isic', 'alive'] },
+  { label: 'Průkazy ZTP a invalidity', ids: ['invalidity3', 'ztp', 'ztpp', 'ztpp_guide', 'tzp', 'tzps', 'tzps_guide'] },
+  { label: 'Ostatní průkazy', ids: ['parent', 'first_class', 'idsok'] },
+];
 const categoryGroups = [
   { id: 'children', label: 'Děti (0–15)', items: categories.filter(c => c.id.startsWith('child')) },
   { id: 'youth', label: 'Mladiství (15–26)', items: categories.filter(c => c.id.startsWith('junior') || c.id === 'student') },
@@ -77,26 +83,6 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-function AgeWheel({ age, onChange }: { age: number | undefined; onChange: (age: number) => void }) {
-  const wheel = useRef<HTMLDivElement>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  useEffect(() => {
-    if (age !== undefined && Number.isInteger(age) && age >= 0 && age <= 120 && wheel.current) {
-      wheel.current.scrollTop = age * 40;
-    }
-  }, [age]);
-  useEffect(() => () => clearTimeout(timer.current), []);
-  return <div className="flow-age-wheel-frame">
-    <div className="flow-age-wheel" ref={wheel} aria-label="Rolovací výběr věku" onScroll={event => {
-      clearTimeout(timer.current);
-      const target = event.currentTarget;
-      timer.current = setTimeout(() => onChange(Math.max(0, Math.min(120, Math.round(target.scrollTop / 40)))), 180);
-    }}>
-      {Array.from({ length: 121 }, (_, value) => <button type="button" key={value} aria-pressed={age === value} onClick={() => onChange(value)}>{value} let</button>)}
-    </div>
-  </div>;
-}
-
 export default function PassengerFlow({ passengers, availablePassengers, favorites, version, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
@@ -254,14 +240,17 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                 const valid = Number.isInteger(parsed) && parsed >= 0 && parsed <= 120;
                 setDraft({ ...draft, age: parsed, catId: valid ? categoryForAge(parsed) : '' });
               }} /><span>let</span></div>
-              <AgeWheel age={draft.age} onChange={age => setDraft(current => ({ ...current, age, catId: categoryForAge(age) }))} />
               {draft.age !== undefined && !draft.catId && <p className="flow-hint" role="alert" style={{ marginTop: 10, marginBottom: 0 }}>Zadejte celý věk od 0 do 120 let.</p>}
               {cat && <div className="flow-age-result"><span className="flow-avatar" style={{ color: cat.color }}>●</span><div><small>Kategorie cestujícího</small><strong>{cat.label}</strong></div></div>}
             </div>}
-            <section className="flow-pass-checklist" aria-label="Slevové průkazy">
-              <h3>Slevové průkazy</h3>
-              <div className="flow-options">{passes.map(passOption)}</div>
-            </section>
+            <details className="flow-disclosure flow-pass-checklist">
+              <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span className="flow-pass-chevron" aria-hidden="true">⌄</span></summary>
+              <div className="flow-options">{passOption(passes[0])}</div>
+              {passSections.map(section => <section className="flow-pass-section" key={section.label} aria-label={section.label}>
+                <h3>{section.label}</h3>
+                <div className="flow-options">{passes.filter(pass => section.ids.includes(pass.id)).map(passOption)}</div>
+              </section>)}
+            </details>
             <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
@@ -277,10 +266,14 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               <summary><strong>{group.label}</strong><span aria-hidden="true">⌄</span></summary>
               <div className="flow-options">{group.items.map(categoryOption)}</div>
             </details>)}</div>
-            <section className="flow-pass-checklist" aria-label="Slevové průkazy">
-              <h3>Slevové průkazy</h3>
-              <div className="flow-options">{passes.map(passOption)}</div>
-            </section>
+            <details className="flow-disclosure flow-pass-checklist">
+              <summary><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span className="flow-pass-chevron" aria-hidden="true">⌄</span></summary>
+              <div className="flow-options">{passOption(passes[0])}</div>
+              {passSections.map(section => <section className="flow-pass-section" key={section.label} aria-label={section.label}>
+                <h3>{section.label}</h3>
+                <div className="flow-options">{passes.filter(pass => section.ids.includes(pass.id)).map(passOption)}</div>
+              </section>)}
+            </details>
             <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
