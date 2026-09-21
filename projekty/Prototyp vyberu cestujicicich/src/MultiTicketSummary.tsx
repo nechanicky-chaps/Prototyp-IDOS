@@ -32,7 +32,7 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
     <header className="flow-header"><button aria-label="Zpět" onClick={onBack}>←</button><h1>Souhrn jízdenek</h1></header>
     <div className="flow-content journey-summary">
       <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
-        <div className="journey-passengers"><div><span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span><p>{passengers.map(passengerLabel).join(', ')}</p></div><button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
+        <div className="journey-passengers" role="button" tabIndex={0} onClick={onEditPassengers} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onEditPassengers(); } }}><div><span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span><p>{passengers.map(passengerLabel).join(', ')}</p></div><button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}</div>
       </div>
       {removed && <div className="journey-undo" role="status">Úsek odebrán.<button onClick={() => { setTicketIds(journeyTickets.filter(t => ticketIds.includes(t.id) || t.id === removed).map(t => t.id)); setRemoved(null); }}>Vrátit</button></div>}
@@ -71,6 +71,6 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
       { id: 'day', title: 'Celodenní nabídka', price: '319 Kč' },
       { id: 'separate', title: 'Samostatné jízdenky', price: `${multiTotal(ticketIds, passengers.length)} Kč` },
     ].map(offer => ({ ...offer, selected: alternative === offer.title, onSelect: () => setAlternative(offer.title) }))} />}
-    <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></button><button className="summary-payment" disabled={!count || missingNames} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
+    <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{multiTotal(ticketIds, passengers.length)} Kč</strong></button><button className="summary-payment" disabled={!count} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
   </section>;
 }

@@ -901,7 +901,7 @@ function SummaryScreen({
 
       <div className="flex-1 overflow-auto">
         <div className="journey-passengers-summary">
-          <div className="journey-passengers">
+          <div className="journey-passengers" role="button" tabIndex={0} onClick={onEditPassengers} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onEditPassengers(); } }}>
             <UsersIcon />
             <div>
               <span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span>
@@ -1071,7 +1071,7 @@ function SummaryScreen({
         </button>
         <button
           onClick={onNext}
-          disabled={missingNames || !passengers.length}
+          disabled={!passengers.length}
           className="summary-payment flex items-center gap-2 text-white font-medium hover:opacity-80"
         >
           <span className="text-sm">Platba</span>
@@ -1373,6 +1373,17 @@ export default function App() {
     setAvailablePassengers(scenarioPassengers);
   };
 
+  const proceedToPayment = () => {
+    if (!passengers.length) return;
+    if (!passengers.every(hasPassengerName)) {
+      setRequireNames(true);
+      setDesignVersion("v5.0");
+      setScreen("passengers");
+      return;
+    }
+    setScreen("payment");
+  };
+
   const renderScreen = () => {
     switch (screen) {
       case "results":
@@ -1417,7 +1428,7 @@ export default function App() {
             setTicketIds={setTicketIds}
             onBack={() => setScreen("results")}
             onEditPassengers={() => { setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
-            onNext={() => { if (passengers.length && passengers.every(hasPassengerName)) setScreen("payment"); }}
+            onNext={proceedToPayment}
           />
         ) : (
           <SummaryScreen
@@ -1427,7 +1438,7 @@ export default function App() {
             selectedFare={selectedFare}
             onSelectFare={setSelectedFare}
             onBack={() => setScreen("results")}
-            onNext={() => { if (passengers.length && passengers.every(hasPassengerName)) setScreen("payment"); }}
+            onNext={proceedToPayment}
             onEditPassengers={() => { setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
           />
         );
