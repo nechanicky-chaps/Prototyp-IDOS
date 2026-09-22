@@ -1,12 +1,66 @@
 import { useState } from 'react';
 import { purchaseFareOptions, ResultsScreen, SummaryScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
-import PassengerFlow, { initialFavorites, initialPassengers, hasPassengerName, type Passenger } from './PassengerFlow';
+import PassengerFlow, { initialFavorites, initialPassengers, passengersMissingRequiredNames, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
-type Screen = 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
+type Screen = 'setup' | 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
+type PrototypeConfig = {
+  requiredNames: RequiredNameMode;
+  selectionControl: 'checkbox' | 'switch';
+  fareDisplay: 'fab' | 'inline' | 'collapsible';
+  selectedOrder: 'top' | 'keep';
+  showConfirmButton: boolean;
+  showFormSaveButton: boolean;
+};
 
 const BG = '#00101d';
 const HEADER = '#0365ac';
+const defaultConfig: PrototypeConfig = {
+  requiredNames: 'all',
+  selectionControl: 'switch',
+  fareDisplay: 'fab',
+  selectedOrder: 'keep',
+  showConfirmButton: false,
+  showFormSaveButton: false,
+};
+
+function SetupGroup({ title, value, options, onChange }: {
+  title: string; value: string; options: { value: string; label: string; defaultChoice?: boolean }[]; onChange: (value: string) => void;
+}) {
+  return <fieldset className="prototype-setup-group"><legend>{title}</legend><div>
+    {options.map(option => <button type="button" key={option.value} aria-pressed={value === option.value} onClick={() => onChange(option.value)}>
+      <span>{option.label}</span>{option.defaultChoice && <small>výchozí</small>}
+    </button>)}
+  </div></fieldset>;
+}
+
+function SetupScreen({ config, onChange, onContinue }: { config: PrototypeConfig; onChange: (config: PrototypeConfig) => void; onContinue: () => void }) {
+  const set = <K extends keyof PrototypeConfig>(key: K, value: PrototypeConfig[K]) => onChange({ ...config, [key]: value });
+  return <section className="prototype-setup" data-idos-theme="dark">
+    <header><h1>Nastavení prototypu</h1><p>Zvolte varianty, které chcete v ukázce porovnat.</p></header>
+    <div className="prototype-setup-content">
+      <SetupGroup title="Výzva k zadání údajů" value={config.requiredNames} onChange={value => set('requiredNames', value as RequiredNameMode)} options={[
+        { value: 'none', label: 'Žádná' }, { value: 'holder', label: 'Držitel jízdenky' }, { value: 'all', label: 'Všichni cestující', defaultChoice: true },
+      ]} />
+      <SetupGroup title="Aktivace cestujícího" value={config.selectionControl} onChange={value => set('selectionControl', value as PrototypeConfig['selectionControl'])} options={[
+        { value: 'checkbox', label: 'Checkboxy' }, { value: 'switch', label: 'Přepínače', defaultChoice: true },
+      ]} />
+      <SetupGroup title="Alternativní tarifní nabídky" value={config.fareDisplay} onChange={value => set('fareDisplay', value as PrototypeConfig['fareDisplay'])} options={[
+        { value: 'fab', label: 'FAB button', defaultChoice: true }, { value: 'inline', label: 'Na hlavní stránce viditelné' }, { value: 'collapsible', label: 'Na hlavní stránce sbalitelné' },
+      ]} />
+      <SetupGroup title="Vybraný cestující" value={config.selectedOrder} onChange={value => set('selectedOrder', value as PrototypeConfig['selectedOrder'])} options={[
+        { value: 'top', label: 'Přesunout nahoru v seznamu' }, { value: 'keep', label: 'Ponechat na místě' , defaultChoice: true },
+      ]} />
+      <SetupGroup title="Spodní tlačítko Potvrdit výběr" value={config.showConfirmButton ? 'show' : 'hide'} onChange={value => set('showConfirmButton', value === 'show')} options={[
+        { value: 'hide', label: 'Schovat', defaultChoice: true }, { value: 'show', label: 'Zobrazit' },
+      ]} />
+      <SetupGroup title="Spodní tlačítko Přidat cestujícího" value={config.showFormSaveButton ? 'show' : 'hide'} onChange={value => set('showFormSaveButton', value === 'show')} options={[
+        { value: 'hide', label: 'Schovat', defaultChoice: true }, { value: 'show', label: 'Zobrazit' },
+      ]} />
+    </div>
+    <footer><button className="prototype-setup-start" onClick={onContinue}>Pokračovat k výběru spojení <span aria-hidden="true">→</span></button></footer>
+  </section>;
+}
 
 function AndroidNavBar({ onBack, onHome }: { onBack: () => void; onHome: () => void }) {
   return (
@@ -54,7 +108,8 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
 }
 
 export default function Final1Page() {
-  const [screen, setScreen] = useState<Screen>('results');
+  const [screen, setScreen] = useState<Screen>('setup');
+  const [config, setConfig] = useState<PrototypeConfig>(defaultConfig);
   const [multi, setMulti] = useState(true);
   const [passengers, setPassengers] = useState<Passenger[]>([
     { uid: 'senior-example', catId: 'senior65', passIds: ['none'] },
@@ -63,7 +118,7 @@ export default function Final1Page() {
     { uid: 'senior-example', catId: 'senior65', passIds: ['none'] },
   ]);
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
-  const [requireNames, setRequireNames] = useState(false);
+  const [showRequiredFields, setShowRequiredFields] = useState(false);
   const [activation, setActivation] = useState('Automatická aktivace');
   const [ticketIds, setTicketIds] = useState(journeyTickets.map(t => t.id));
   const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
@@ -82,14 +137,13 @@ export default function Final1Page() {
     setAvailablePassengers(scenarioPassengers);
     setTicketIds(journeyTickets.map(ticket => ticket.id));
     setSelectedFare(0);
-    setRequireNames(false);
+    setShowRequiredFields(false);
   };
 
-  // Stejná logika jako v App.tsx – pokud chybí jména, přejdi na cestující
   const proceedToPayment = () => {
     if (!passengers.length) return;
-    if (!passengers.every(hasPassengerName)) {
-      setRequireNames(true);
+    if (passengersMissingRequiredNames(passengers, config.requiredNames)) {
+      setShowRequiredFields(true);
       setScreen('passengers');
       return;
     }
@@ -97,7 +151,7 @@ export default function Final1Page() {
   };
 
   const openPassengers = () => {
-    setRequireNames(true);
+    setShowRequiredFields(config.requiredNames !== 'none');
     setScreen('passengers');
   };
 
@@ -106,6 +160,7 @@ export default function Final1Page() {
       window.dispatchEvent(new Event('passenger-back'));
       return;
     }
+    if (screen === 'results') setScreen('setup');
     if (screen === 'summary') setScreen('results');
     if (screen === 'payment' || screen === 'confirm') setScreen('summary');
   };
@@ -140,6 +195,7 @@ export default function Final1Page() {
           }}
         >
           <div className="final1-no-vsw" style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {screen === 'setup' && <SetupScreen config={config} onChange={setConfig} onContinue={() => setScreen('results')} />}
             {screen === 'results' && (
               <ResultsScreen
                 multi={multi}
@@ -151,8 +207,10 @@ export default function Final1Page() {
             )}
             {screen === 'summary' && multi && (
               <MultiTicketSummary
-                summaryVersion="v1"
+                summaryVersion={config.fareDisplay === 'fab' ? 'v1' : 'v2'}
                 onSummaryVersionChange={() => {}}
+                collapsibleFares={config.fareDisplay === 'collapsible'}
+                requiredNameMode={config.requiredNames}
                 activation={activation}
                 setActivation={setActivation}
                 passengers={passengers}
@@ -165,9 +223,11 @@ export default function Final1Page() {
             )}
             {screen === 'summary' && !multi && (
               <SummaryScreen
-                summaryVersion="v1"
+                summaryVersion={config.fareDisplay === 'fab' ? 'v1' : 'v2'}
                 onSummaryVersionChange={() => {}}
                 presentation
+                collapsibleFares={config.fareDisplay === 'collapsible'}
+                requiredNameMode={config.requiredNames}
                 passengers={passengers}
                 selectedFare={selectedFare}
                 onSelectFare={setSelectedFare}
@@ -182,14 +242,18 @@ export default function Final1Page() {
                 availablePassengers={availablePassengers}
                 favorites={favorites}
                 version="v5.0"
-                requireNames={requireNames}
+                requiredNameMode={showRequiredFields ? config.requiredNames : 'none'}
+                selectionControl={config.selectionControl}
+                moveSelectedToTop={config.selectedOrder === 'top'}
+                showConfirmButton={config.showConfirmButton}
+                showFormSaveButton={config.showFormSaveButton}
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}
                 onBack={() => setScreen('summary')}
                 onConfirm={items => {
                   setPassengers(items);
-                  setRequireNames(false);
+                  setShowRequiredFields(false);
                   setScreen('summary');
                 }}
               />
@@ -221,7 +285,7 @@ export default function Final1Page() {
               <ConfirmScreen total={paymentTotal} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
             )}
           </div>
-          <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('results')} />
+          <AndroidNavBar onBack={handleNavBack} onHome={() => setScreen('setup')} />
         </div>
       </div>
     </>

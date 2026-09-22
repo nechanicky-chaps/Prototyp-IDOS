@@ -184,6 +184,12 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-note { font-size: 12px; color: #8ba0b3; line-height: 1.5; margin-top: 10px; }
 .inline-fares { padding: 18px 16px 64px; border-top: 1px solid #0e273c; background: #00101d; }
 .inline-fares h2 { margin: 0 -16px 8px; padding: 10px 16px; background: #013354; font-size: 15px; font-weight: 600; color: #fff; }
+.inline-fares-collapsible { padding: 0 16px; }
+.inline-fares-collapsible[open] { padding-bottom: 64px; }
+.inline-fares-collapsible > summary { display: flex; align-items: center; justify-content: space-between; min-height: 44px; margin: 0 -16px; padding: 10px 16px; list-style: none; background: #013354; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
+.inline-fares-collapsible > summary::-webkit-details-marker { display: none; }
+.inline-fares-collapsible > summary span { transition: transform .18s ease; }
+.inline-fares-collapsible[open] > summary span { transform: rotate(180deg); }
 .checkout-offer { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 76px; padding: 12px; border-top: 1px solid #0e273c; color: #fff; text-align: left; }
 .checkout-offer:last-child { border-bottom: 1px solid #0e273c; }
 .checkout-offer div { min-width: 0; }
@@ -248,6 +254,21 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-confirm-dialog footer { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 14px; border-top: 1px solid #195277; }
 .flow-confirm-dialog footer button { min-height: 42px; padding: 0 14px; color: #5fa8d5; }
 .flow-confirm-dialog footer .flow-confirm-remove { border-radius: 6px; background: #c81e35; color: #fff; font-weight: 600; }
+
+/* Final1 configurator follows projekty/redesign-idos/design-system dark tokens. */
+.prototype-setup { --setup-bg: #00101A; --setup-surface: #0C2C41; --setup-text: #FFFFFF; --setup-secondary: #85A5BA; --setup-primary: #009BFF; --setup-on-primary: #00101A; --setup-border: #1C415A; display: flex; flex: 1; min-height: 0; flex-direction: column; background: var(--setup-bg); color: var(--setup-text); font: 500 16px/19px 'Roboto Flex', 'Roboto', Arial, sans-serif; }
+.prototype-setup > header { padding: 20px 16px 14px; border-bottom: 1px solid var(--setup-border); }
+.prototype-setup > header h1 { margin: 0; font: 600 20px/28px 'Roboto Flex', 'Roboto', Arial, sans-serif; letter-spacing: -.4px; }
+.prototype-setup > header p { margin: 4px 0 0; color: var(--setup-secondary); font: 400 13px/18px 'Roboto', Arial, sans-serif; }
+.prototype-setup-content { display: flex; flex: 1; min-height: 0; flex-direction: column; gap: 18px; overflow-y: auto; padding: 18px 16px 24px; }
+.prototype-setup-group { min-width: 0; margin: 0; padding: 0; border: 0; }
+.prototype-setup-group legend { margin-bottom: 9px; color: var(--setup-text); font-size: 14px; font-weight: 600; }
+.prototype-setup-group > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.prototype-setup-group button { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; padding: 6px 12px; border: 1px solid var(--setup-border); border-radius: 8px; background: transparent; color: var(--setup-secondary); font: 500 14px/18px 'Roboto Flex', 'Roboto', Arial, sans-serif; text-align: left; }
+.prototype-setup-group button[aria-pressed="true"] { border-color: var(--setup-primary); background: var(--setup-primary); color: var(--setup-on-primary); }
+.prototype-setup-group button small { padding: 1px 5px; border-radius: 999px; background: color-mix(in srgb, currentColor 16%, transparent); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; }
+.prototype-setup > footer { padding: 12px 16px 16px; border-top: 1px solid var(--setup-border); background: var(--setup-bg); }
+.prototype-setup-start { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 56px; padding: 12px 16px; border-radius: 8px; background: var(--setup-primary); color: var(--setup-on-primary); box-shadow: 0 4px 12px rgba(0,0,0,.15); font: 600 17px/21px 'Roboto Flex', 'Roboto', Arial, sans-serif; }
 
 .flow-quick-names { grid-column: 1 / -1; border-top: 1px solid #195277; padding-top: 14px; margin-top: 4px; }
 .flow-required-notice, .journey-passengers button.flow-required-notice { display: block; color: #ff8d98; font-size: 12px; line-height: 1.5; text-align: left; margin: 8px 0; }

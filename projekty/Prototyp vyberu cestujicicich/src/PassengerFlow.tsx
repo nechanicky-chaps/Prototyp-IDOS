@@ -75,6 +75,12 @@ export const initialFavorites: Passenger[] = [
 export const passengerLabel = (p: Passenger) => p.name || categories.find(c => c.id === p.catId)?.label || 'Cestující';
 export const passLabels = (p: Passenger) => p.passIds.map(id => passes.find(pass => pass.id === id)?.label).filter(Boolean).join(', ');
 export const hasPassengerName = (p: Passenger) => !!p.firstName?.trim() && !!p.lastName?.trim();
+export type RequiredNameMode = 'none' | 'holder' | 'all';
+export const passengersMissingRequiredNames = (passengers: Passenger[], mode: RequiredNameMode) => {
+  if (mode === 'none') return false;
+  const required = mode === 'holder' ? passengers.slice(0, 1) : passengers;
+  return required.some(passenger => !hasPassengerName(passenger));
+};
 export const countLabel = (n: number) => `${n} ${n > 0 && n < 5 ? 'cestující' : 'cestujících'}`;
 // Deliberately a fixed demonstration price, not a tariff calculation.
 export const demoTotal = (passengers: Passenger[]) => passengers.length * 33;
@@ -94,10 +100,11 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, version, requireNames = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
-  requireNames?: boolean; version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
+  requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
+  version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
   onBack: () => void; onConfirm: (p: Passenger[]) => void;
 }) {
   const [selected, setSelected] = useState(passengers);
@@ -113,6 +120,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const latestBack = useRef<() => void>(() => {});
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
+  const effectiveNameMode: RequiredNameMode = requiredNameMode ?? (requireNames ? 'all' : 'none');
+  const needsName = (passenger: Passenger) => effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && selected[0]?.uid === passenger.uid);
   useEffect(() => { heading.current?.focus(); content.current?.scrollTo(0, 0); }, [page]);
   const cat = categories.find(c => c.id === draft.catId);
   const togglePass = (passId: string) => setDraft(current => ({
@@ -170,20 +179,20 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   };
   const toggleSelected = (p: Passenger) => {
     const active = selected.some(item => item.uid === p.uid);
-    if (active && selected.length === 1) {
-      setSelectionError('Vyberte alespoň jednoho cestujícího.');
-      return;
-    }
     setSelectionError('');
     setSelected(items => active ? items.filter(item => item.uid !== p.uid) : [...items, { ...p }]);
   };
+  const saveSelection = () => {
+    if (!selected.length) {
+      setSelectionError('Vyberte alespoň jednoho cestujícího.');
+      content.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    onConfirm(selected);
+  };
   const back = () => {
     if (page === 'list') {
-      if (!selected.length) {
-        setSelectionError('Vyberte alespoň jednoho cestujícího.');
-        content.current?.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      else if (version === 'v4.0' || version === 'v5.0') onConfirm(selected);
+      if (version === 'v4.0' || version === 'v5.0') saveSelection();
       else onBack();
     }
     else if (version === 'v4.0' || version === 'v5.0') {
@@ -246,11 +255,17 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     <span><strong>{p.label}</strong><small>{p.sub}</small></span>
   </label>;
   const otherPassengers = availablePassengers.filter(p => p.uid !== SELF_PASSENGER_UID && !favorites.some(f => f.uid === p.uid));
-  const v2Rows = [
-    { passenger: availablePassengers.find(p => p.uid === SELF_PASSENGER_UID) || initialPassengers[0], label: 'Já', favorite: true },
+  const orderedRows = moveSelectedToTop ? [
     ...otherPassengers.filter(p => selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
     ...favorites.filter(p => p.uid !== SELF_PASSENGER_UID).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
     ...otherPassengers.filter(p => !selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
+  ] : [
+    ...favorites.filter(p => p.uid !== SELF_PASSENGER_UID).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
+    ...otherPassengers.map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
+  ];
+  const v2Rows = [
+    { passenger: availablePassengers.find(p => p.uid === SELF_PASSENGER_UID) || initialPassengers[0], label: 'Já', favorite: true },
+    ...orderedRows,
   ];
   return (
     <section className="passenger-flow">
@@ -265,12 +280,12 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       <header className="flow-header">
         <button aria-label="Zpět" onClick={navigateBack}>←</button>
         <h1 ref={heading} tabIndex={-1}>{page === 'favorite' ? 'Uložit do oblíbených' : 'Cestující'}</h1>
-        {page !== 'list' && <button className="flow-cancel" onClick={cancelForm}>Zrušit</button>}
+        <button className="flow-cancel" onClick={page === 'list' ? onBack : cancelForm}>Zrušit</button>
       </header>
       <div ref={content} className="flow-content">
         {page === 'list' && selectionError && <p className="flow-selection-error" role="alert">{selectionError}</p>}
         {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0' || version === 'v5.0') ? <>
-          {requireNames && selected.some(p => !hasPassengerName(p)) && <p className="flow-required-notice">Dopravce vyžaduje doplnit údaje</p>}
+          {passengersMissingRequiredNames(selected, effectiveNameMode) && <p className="flow-required-notice">Dopravce vyžaduje doplnit údaje</p>}
           <div className="flow-v2-list">
             {v2Rows.map(({ passenger, label, favorite }) => {
               const active = selected.some(item => item.uid === passenger.uid);
@@ -283,8 +298,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                 </button>
                 <span className="flow-v2-avatar" aria-hidden="true" />
                 {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => start(passenger, favorite)}><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></span>}
-                {version === 'v5.0' ? <label className="flow-select-person"><input type="checkbox" checked={active} aria-label={`Cestuje ${label}`} onChange={() => toggleSelected(passenger)} /></label> : <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>}
-                {requireNames && active && <div className="flow-quick-names flow-fields">
+                {version === 'v5.0' && selectionControl === 'checkbox' ? <label className="flow-select-person"><input type="checkbox" checked={active} aria-label={`Cestuje ${label}`} onChange={() => toggleSelected(passenger)} /></label> : <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>}
+                {active && needsName(passenger) && <div className="flow-quick-names flow-fields">
                   <label>Jméno <span>*</span><input required autoComplete="given-name" aria-label={`Jméno: ${label}`} value={passenger.firstName || ''} onChange={e => updateName(passenger, 'firstName', e.target.value)} /></label>
                   <label>Příjmení <span>*</span><input required autoComplete="family-name" aria-label={`Příjmení: ${label}`} value={passenger.lastName || ''} onChange={e => updateName(passenger, 'lastName', e.target.value)} /></label>
                 </div>}
@@ -388,8 +403,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           </>}
         </>}
       </div>
-      {(version !== 'v5.0' || page === 'list') && <footer className="flow-footer">
-        {page === 'list' ? <button className="flow-primary" disabled={!selected.length} onClick={() => onConfirm(selected)}><span>Potvrdit výběr</span><span>{countLabel(selected.length)} →</span></button>
+      {((page === 'list' && showConfirmButton) || (page !== 'list' && (version !== 'v5.0' || showFormSaveButton))) && <footer className="flow-footer">
+        {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>Potvrdit výběr</span><span>{countLabel(selected.length)} →</span></button>
           : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim())} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
       </footer>}
       {version === 'v3.0' && quickAddOpen && <div className="flow-sheet-scrim" onClick={() => setQuickAddOpen(false)}>

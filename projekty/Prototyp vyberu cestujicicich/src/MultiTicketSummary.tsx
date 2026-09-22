@@ -1,6 +1,6 @@
 import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
 import { useEffect, useState } from 'react';
-import { countLabel, passengerLabel, hasPassengerName, type Passenger } from './PassengerFlow';
+import { countLabel, passengerLabel, passengersMissingRequiredNames, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
 export const journeyTickets = [
   { id: 'bus', line: 'Bus 153', color: '#ff6e7f', from: 'Veverská Bítýška, náměstí', to: 'Tišnov, železniční stanice', departure: '14:14', arrival: '14:36', price: 12, fare: 'IDS JMK Zlevněná A', detail: '2 zóny, 60 minut', setting: 'Automatická aktivace' },
@@ -18,18 +18,25 @@ export function JourneyResult({ onBuy }: { onBuy: () => void }) {
     <button className="flow-primary" onClick={onBuy}><span>Koupit 3 jízdenky</span><span>268 Kč →</span></button></div>
   </article>;
 }
-export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext, onTotalChange }: {
+export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext, onTotalChange, requiredNameMode = 'all', collapsibleFares = false }: {
   summaryVersion: SummaryVersion; onSummaryVersionChange: (version: SummaryVersion) => void;
-  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack?: () => void; onEditPassengers: () => void; onNext: () => void; onTotalChange?: (total: number) => void;
+  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack?: () => void; onEditPassengers: () => void; onNext: () => void; onTotalChange?: (total: number) => void; requiredNameMode?: RequiredNameMode; collapsibleFares?: boolean;
 }) {
   const [removed, setRemoved] = useState<string | null>(null);
   const [activationOpen, setActivationOpen] = useState(false);
   const [alternative, setAlternative] = useState<string | null>(null);
   const count = ticketIds.length * passengers.length;
-  const missingNames = passengers.some(p => !hasPassengerName(p));
+  const missingNames = passengersMissingRequiredNames(passengers, requiredNameMode);
   const alternativeTotal = alternative === 'Jedna průběžná jízdenka' ? 284 * passengers.length
     : alternative === 'Celodenní nabídka' ? 319 * passengers.length
       : multiTotal(ticketIds, passengers.length);
+  const alternativeRows = [
+    { title: 'Jedna průběžná jízdenka', detail: 'Flexi základní jednosměrná', price: '284 Kč' },
+    { title: 'Celodenní nabídka', detail: 'Síťová jízdenka pro celou trasu', price: '319 Kč' },
+  ].map(offer => <div key={offer.title} className="checkout-offer">
+    <div><strong>{offer.title}</strong><span>{offer.detail}</span></div>
+    <button className="checkout-offer-action" onClick={() => setAlternative(offer.title)}>{alternative === offer.title ? 'Vybráno' : `Vybrat za ${offer.price}`}</button>
+  </div>);
   useEffect(() => onTotalChange?.(alternativeTotal), [alternativeTotal, onTotalChange]);
   return <section className="passenger-flow">
     <SummaryVersionSwitch version={summaryVersion} onChange={onSummaryVersionChange} />
@@ -64,16 +71,9 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
         </div>
       </article>)}
       {!ticketIds.length && <div className="journey-padding"><p className="flow-empty">Nemáte vybranou žádnou jízdenku.</p><button className="flow-text-button" onClick={() => { setTicketIds(journeyTickets.map(t => t.id)); setRemoved(null); }}>Obnovit všechny úseky</button></div>}
-      {summaryVersion === 'v2' && !!ticketIds.length && <section className="inline-fares">
-        <h2>Alternativní tarifní nabídky</h2>
-        {[
-          { title: 'Jedna průběžná jízdenka', detail: 'Flexi základní jednosměrná', price: '284 Kč' },
-          { title: 'Celodenní nabídka', detail: 'Síťová jízdenka pro celou trasu', price: '319 Kč' },
-        ].map(offer => <div key={offer.title} className="checkout-offer">
-          <div><strong>{offer.title}</strong><span>{offer.detail}</span></div>
-          <button className="checkout-offer-action" onClick={() => setAlternative(offer.title)}>{alternative === offer.title ? 'Vybráno' : `Vybrat za ${offer.price}`}</button>
-        </div>)}
-      </section>}
+      {summaryVersion === 'v2' && !!ticketIds.length && (collapsibleFares
+        ? <details className="inline-fares inline-fares-collapsible"><summary>Alternativní tarifní nabídky <span aria-hidden="true">▾</span></summary><div>{alternativeRows}</div></details>
+        : <section className="inline-fares"><h2>Alternativní tarifní nabídky</h2>{alternativeRows}</section>)}
     </div>
     {summaryVersion === 'v1' && !!ticketIds.length && <FareFab offers={[
       { id: 'through', title: 'Jedna průběžná jízdenka', price: `${284 * passengers.length} Kč` },
