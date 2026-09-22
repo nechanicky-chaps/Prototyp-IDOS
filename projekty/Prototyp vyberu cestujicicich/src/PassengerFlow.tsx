@@ -100,8 +100,9 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
+  selfPassenger?: Passenger;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
   version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
@@ -264,7 +265,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     ...otherPassengers.map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
   ];
   const v2Rows = [
-    { passenger: availablePassengers.find(p => p.uid === SELF_PASSENGER_UID) || initialPassengers[0], label: 'Já', favorite: true },
+    { passenger: availablePassengers.find(p => p.uid === SELF_PASSENGER_UID) || favorites.find(p => p.uid === SELF_PASSENGER_UID) || selfPassenger, label: selfPassenger.name || categories.find(c => c.id === selfPassenger.catId)?.label || 'Cestující', favorite: true },
     ...orderedRows,
   ];
   return (
@@ -292,7 +293,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
                 <button className="flow-star flow-v2-star" aria-pressed={favorite}
                   disabled={passenger.uid === SELF_PASSENGER_UID}
-                  aria-label={passenger.uid === SELF_PASSENGER_UID ? 'Já je vždy v oblíbených' : `${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
+                  aria-label={passenger.uid === SELF_PASSENGER_UID ? (selfPassenger.name ? 'Já je vždy v oblíbených' : 'Výchozí cestující je vždy v oblíbených') : `${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
                   onClick={() => toggleFavorite(passenger)}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
                 </button>
@@ -316,7 +317,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
             </button>
             <button className="flow-star" aria-pressed={favorites.some(f => f.uid === p.uid)}
               disabled={p.uid === SELF_PASSENGER_UID}
-              aria-label={p.uid === SELF_PASSENGER_UID ? 'Já je vždy v oblíbených' : (favorites.some(f => f.uid === p.uid) ? 'Odebrat z oblíbených: ' : 'Přidat do oblíbených: ') + passengerLabel(p)}
+              aria-label={p.uid === SELF_PASSENGER_UID ? (selfPassenger.name ? 'Já je vždy v oblíbených' : 'Výchozí cestující je vždy v oblíbených') : (favorites.some(f => f.uid === p.uid) ? 'Odebrat z oblíbených: ' : 'Přidat do oblíbených: ') + passengerLabel(p)}
               onClick={() => toggleFavorite(p)}>
               <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorites.some(f => f.uid === p.uid) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
             </button>

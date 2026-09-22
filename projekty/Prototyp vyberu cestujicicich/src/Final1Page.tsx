@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { purchaseFareOptions, ResultsScreen, SummaryScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
-import PassengerFlow, { initialFavorites, initialPassengers, passengersMissingRequiredNames, type Passenger, type RequiredNameMode } from './PassengerFlow';
+import PassengerFlow, { initialFavorites, initialPassengers, passengersMissingRequiredNames, SELF_PASSENGER_UID, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
 type Screen = 'setup' | 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
 type PrototypeConfig = {
+  identity: 'signed-in' | 'anonymous';
   requiredNames: RequiredNameMode;
   selectionControl: 'checkbox' | 'switch';
   fareDisplay: 'fab' | 'inline' | 'collapsible';
@@ -16,6 +17,7 @@ type PrototypeConfig = {
 const BG = '#00101d';
 const HEADER = '#0365ac';
 const defaultConfig: PrototypeConfig = {
+  identity: 'signed-in',
   requiredNames: 'all',
   selectionControl: 'switch',
   fareDisplay: 'fab',
@@ -39,6 +41,9 @@ function SetupScreen({ config, onChange, onContinue }: { config: PrototypeConfig
   return <section className="prototype-setup" data-idos-theme="dark">
     <header><h1>Nastavení prototypu</h1><p>Zvolte varianty, které chcete v ukázce porovnat.</p></header>
     <div className="prototype-setup-content">
+      <SetupGroup title="Cestující" value={config.identity} onChange={value => set('identity', value as PrototypeConfig['identity'])} options={[
+        { value: 'signed-in', label: 'Přihlášený', defaultChoice: true }, { value: 'anonymous', label: 'Nepřihlášený' },
+      ]} />
       <SetupGroup title="Výzva k zadání údajů" value={config.requiredNames} onChange={value => set('requiredNames', value as RequiredNameMode)} options={[
         { value: 'none', label: 'Žádná' }, { value: 'holder', label: 'Držitel jízdenky' }, { value: 'all', label: 'Všichni cestující', defaultChoice: true },
       ]} />
@@ -123,6 +128,10 @@ export default function Final1Page() {
   const [ticketIds, setTicketIds] = useState(journeyTickets.map(t => t.id));
   const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
   const [selectedFare, setSelectedFare] = useState(0);
+  const configuredSelf: Passenger = config.identity === 'signed-in' ? initialPassengers[0] : {
+    ...initialPassengers[0], name: undefined, firstName: undefined, lastName: undefined,
+  };
+  const configuredFavorites = initialFavorites.map(passenger => passenger.uid === SELF_PASSENGER_UID ? configuredSelf : passenger);
 
   const paymentTotal = multi ? checkoutTotal : purchaseFareOptions[selectedFare].price * passengers.length;
   const ticketCount = passengers.length * (multi ? ticketIds.length : 1);
@@ -131,13 +140,26 @@ export default function Final1Page() {
     if (value === multi) return;
     const scenarioPassengers = value
       ? [{ uid: 'senior-example', catId: 'senior65', passIds: ['none'] }]
-      : initialPassengers;
+      : [configuredSelf];
     setMulti(value);
     setPassengers(scenarioPassengers);
     setAvailablePassengers(scenarioPassengers);
     setTicketIds(journeyTickets.map(ticket => ticket.id));
     setSelectedFare(0);
     setShowRequiredFields(false);
+  };
+
+  const startPrototype = () => {
+    const scenarioPassengers = multi
+      ? [{ uid: 'senior-example', catId: 'senior65', passIds: ['none'] }]
+      : [configuredSelf];
+    setPassengers(scenarioPassengers);
+    setAvailablePassengers(scenarioPassengers);
+    setFavorites(configuredFavorites);
+    setTicketIds(journeyTickets.map(ticket => ticket.id));
+    setSelectedFare(0);
+    setShowRequiredFields(false);
+    setScreen('results');
   };
 
   const proceedToPayment = () => {
@@ -195,7 +217,7 @@ export default function Final1Page() {
           }}
         >
           <div className="final1-no-vsw" style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            {screen === 'setup' && <SetupScreen config={config} onChange={setConfig} onContinue={() => setScreen('results')} />}
+            {screen === 'setup' && <SetupScreen config={config} onChange={setConfig} onContinue={startPrototype} />}
             {screen === 'results' && (
               <ResultsScreen
                 multi={multi}
@@ -241,6 +263,7 @@ export default function Final1Page() {
                 passengers={passengers}
                 availablePassengers={availablePassengers}
                 favorites={favorites}
+                selfPassenger={configuredSelf}
                 version="v5.0"
                 requiredNameMode={showRequiredFields ? config.requiredNames : 'none'}
                 selectionControl={config.selectionControl}
