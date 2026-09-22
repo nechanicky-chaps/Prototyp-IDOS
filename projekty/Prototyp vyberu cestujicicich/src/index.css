@@ -32,8 +32,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-header h1 { flex: 1; font-size: 18px; font-weight: 500; outline: none; }
 .flow-header button { min-height: 38px; min-width: 32px; font-size: 22px; }
 .flow-header .flow-cancel { font-size: 13px; font-weight: 400; opacity: 0.9; }
-.flow-header-count { display: inline-flex; align-items: center; gap: 4px; color: #fff; font-size: 14px; white-space: nowrap; }
-.flow-header-count strong { font-size: 16px; }
+.flow-header-count { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-size: 15px; white-space: nowrap; padding: 4px 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.14); }
+.flow-header-count strong { font-size: 16px; font-weight: 700; line-height: 1; }
+.flow-header-count svg { flex-shrink: 0; color: #fff; }
 .flow-steps { display: flex; padding: 14px 16px; gap: 10px; background: #001424; border-bottom: 1px solid #0e273c; flex-shrink: 0; }
 .flow-steps li { display: flex; align-items: center; gap: 6px; flex: 1; font-size: 11px; color: #8ba0b3; }
 .flow-steps li span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #0e273c; font-weight: 600; font-size: 11px; }
