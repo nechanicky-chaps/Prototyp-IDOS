@@ -322,36 +322,22 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setPage('list');
   };
   latestBack.current = back;
-  useEffect(() => {
-    if (version !== 'v5.0' || page === 'list') return;
-    const marker = crypto.randomUUID();
-    const push = () => history.pushState({ ...history.state, passengerForm: marker }, '');
-    push();
-    const handlePop = () => {
-      const modal = document.querySelector<HTMLDialogElement>('.flow-v5-dialog[open]');
-      if (modal) { push(); modal.dispatchEvent(new Event('cancel', { cancelable: true })); return; }
-      if (cancelBack.current) { cancelBack.current = false; setPage('list'); return; }
-      const invalid = content.current?.querySelector<HTMLInputElement>('input[required]:invalid');
-      if (invalid) { push(); invalid.focus(); invalid.reportValidity(); return; }
-      latestBack.current();
-    };
-    window.addEventListener('popstate', handlePop);
-    return () => {
-      window.removeEventListener('popstate', handlePop);
-      if (history.state?.passengerForm === marker) history.back();
-    };
-  }, [page, version]);
   const navigateBack = () => {
-    if (version === 'v5.0' && page !== 'list') history.back();
-    else latestBack.current();
+    const modal = document.querySelector<HTMLDialogElement>('.flow-v5-dialog[open]');
+    if (modal) {
+      modal.dispatchEvent(new Event('cancel', { cancelable: true }));
+      return;
+    }
+    back();
   };
   useEffect(() => {
-    window.addEventListener('passenger-back', navigateBack);
-    return () => window.removeEventListener('passenger-back', navigateBack);
+    const handleBack = () => navigateBack();
+    window.addEventListener('passenger-back', handleBack);
+    return () => window.removeEventListener('passenger-back', handleBack);
   });
   const cancelForm = () => {
-    if (version === 'v5.0' && page !== 'list') { cancelBack.current = true; history.back(); }
-    else setPage('list');
+    setFormError('');
+    setPage('list');
   };
   const categoryOption = (c: typeof categories[number]) => <button key={c.id} aria-pressed={draft.catId === c.id} className={`flow-option ${draft.catId === c.id ? 'selected' : ''}`} onClick={() => setDraft({ ...draft, catId: c.id })}>
     <span className="flow-avatar" style={{ color: c.color }}>●</span><span><strong>{c.label}</strong></span><span className="flow-radio">{draft.catId === c.id ? '●' : '○'}</span>
