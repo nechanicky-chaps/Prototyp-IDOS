@@ -385,8 +385,19 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       </div>
       <header className="flow-header">
         <button aria-label="Zpět" onClick={navigateBack}>←</button>
-        <h1 ref={heading} tabIndex={-1}>{page === 'favorite' ? 'Uložit do oblíbených' : 'Cestující'}</h1>
-        {page === 'list' && <span className="flow-header-count" aria-label={`${countLabel(selected.length)} vybráno`}><strong>{selected.length}</strong><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg></span>}
+        {page === 'list' ? (
+          <h1 ref={heading} tabIndex={-1} className="flow-header-title-count" aria-label={`Vybráno ${countLabel(selected.length)}`}>
+            <strong>{selected.length}</strong>
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </h1>
+        ) : (
+          <h1 ref={heading} tabIndex={-1}>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? (saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího') : 'Přidat cestujícího'}</h1>
+        )}
         <button className="flow-cancel" onClick={page === 'list' ? onBack : cancelForm}>Zrušit</button>
       </header>
       <div ref={content} className="flow-content">
