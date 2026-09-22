@@ -1122,7 +1122,7 @@ export function SummaryScreen({
 // ─────────────────────────────────────────────────────────
 // SCREEN 6: Payment / Platba (Screenshot 3)
 // ─────────────────────────────────────────────────────────
-function PaymentScreen({
+export function PaymentScreen({
   passengers,
   total,
   ticketCount,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { purchaseFareOptions, ResultsScreen, SummaryScreen } from './App';
+import { purchaseFareOptions, ResultsScreen, SummaryScreen, PaymentScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
 import PassengerFlow, { initialPassengers, loadPassengerMemory, savePassengerMemory, passengersMissingRequiredNames, SELF_PASSENGER_UID, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
@@ -282,27 +282,13 @@ export default function Final1Page() {
               />
             )}
             {screen === 'payment' && (
-              // Jednoduchá platební obrazovka – přejde na potvrzení
-              <div className="flex flex-col h-full" style={{ background: BG }}>
-                <div style={{ background: HEADER }} className="flex items-center gap-3 px-4 py-3 min-h-[52px] flex-shrink-0">
-                  <button aria-label="Zpět" onClick={() => setScreen('summary')} className="text-white opacity-95 -ml-1">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
-                    </svg>
-                  </button>
-                  <span className="text-white font-medium text-[19px] tracking-tight">Platba</span>
-                </div>
-                <div className="flex-1 flex items-center justify-center px-6 text-center">
-                  <div>
-                    <p style={{ color: '#8ba0b3' }} className="text-sm mb-6">Celková cena: <strong className="text-white">{paymentTotal} Kč</strong></p>
-                    <button onClick={() => setScreen('confirm')}
-                      style={{ background: '#026cb6', borderRadius: 6 }}
-                      className="px-8 py-3 text-white font-medium text-sm active:opacity-90 shadow-sm">
-                      Zaplatit {paymentTotal} Kč →
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <PaymentScreen
+                passengers={passengers}
+                total={paymentTotal}
+                ticketCount={ticketCount}
+                onBack={() => setScreen('summary')}
+                onPay={() => setScreen('confirm')}
+              />
             )}
             {screen === 'confirm' && (
               <ConfirmScreen total={paymentTotal} ticketCount={ticketCount} onDone={() => setScreen('summary')} />
