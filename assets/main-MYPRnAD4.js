@@ -1,1 +1,0 @@
-import{_ as e,g as t,h as n,m as r,t as i}from"./src-Dp-ILq4L.js";var a=e(t(),1),o=e(n(),1),s=r();o.createRoot(document.getElementById(`root`)).render((0,s.jsx)(a.StrictMode,{children:(0,s.jsx)(i,{})}));
