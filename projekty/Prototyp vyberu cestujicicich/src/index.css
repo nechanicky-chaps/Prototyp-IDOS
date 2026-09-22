@@ -164,7 +164,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-transfer { color: #8ba0b3; font-size: 12px; margin: 8px 0 14px; }
 .journey-summary { padding: 0; background: #00101d; }
 .journey-summary h2 { font-size: 18px; color: #fff; }
-.journey-passengers-summary { padding: 12px 16px 0; background: #00101d; }
+.journey-passengers-summary { padding: 12px 16px; background: #00101d; }
 .journey-passengers-summary .journey-passengers { padding: 10px 12px; }
 .journey-passengers-summary .journey-passengers > svg { flex-shrink: 0; color: #5fa8d5; }
 .journey-passenger-number { min-width: 24px; color: #fff; font-size: 26px; font-weight: 700; line-height: 1; text-align: center; }
@@ -181,7 +181,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-passengers p { font-size: 12px; color: #8ba0b3; overflow-wrap: anywhere; margin-top: 3px; }
 .journey-passengers button { color: #5fa8d5; font-size: 12px; width: 65px; min-height: 40px; }
 .journey-note { font-size: 12px; color: #8ba0b3; line-height: 1.5; margin-top: 10px; }
-.inline-fares { padding: 18px 16px 24px; border-top: 1px solid #0e273c; background: #00101d; }
+.inline-fares { padding: 18px 16px 64px; border-top: 1px solid #0e273c; background: #00101d; }
 .inline-fares h2 { margin: 0 -16px 8px; padding: 10px 16px; background: #013354; font-size: 15px; font-weight: 600; color: #fff; }
 .checkout-offer { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 76px; padding: 12px; border-top: 1px solid #0e273c; color: #fff; text-align: left; }
 .checkout-offer:last-child { border-bottom: 1px solid #0e273c; }
