@@ -167,6 +167,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-passengers-summary { padding: 12px 16px 0; background: #00101d; }
 .journey-passengers-summary .journey-passengers { padding: 10px 12px; }
 .journey-passengers-summary .journey-passengers > svg { flex-shrink: 0; color: #5fa8d5; }
+.journey-passenger-number { min-width: 24px; color: #fff; font-size: 26px; font-weight: 700; line-height: 1; text-align: center; }
+.journey-passenger-icon { flex-shrink: 0; color: #5fa8d5; }
+.journey-passenger-list { display: flex !important; flex-direction: column; gap: 2px; margin-top: 0 !important; color: #dce7ef !important; }
+.journey-passenger-list > span { display: block; }
 .journey-passengers { display: flex; align-items: center; gap: 12px; border: 1px solid #0e273c; border-radius: 8px; padding: 12px; background: #001424; }
 .journey-passengers > div { flex: 1; min-width: 0; }
 .journey-passengers button.journey-passenger-main { flex: 1; width: auto; min-width: 0; min-height: 44px; color: #fff; text-align: left; }
@@ -235,6 +239,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-v5-dialog footer { display: flex; justify-content: flex-end; gap: 12px; padding: 12px 16px; border-top: 1px solid #195277; }
 .flow-v5-dialog footer button { min-height: 44px; padding: 0 16px; color: #5fa8d5; }
 .flow-v5-dialog footer .flow-v5-confirm { background: #026cb6; color: white; border-radius: 6px; }
+.flow-selection-error { margin: 0 0 12px; padding: 10px 12px; border: 1px solid #f41430; border-radius: 8px; background: #32101a; color: #fff; font-size: 13px; }
 
 .flow-quick-names { grid-column: 1 / -1; border-top: 1px solid #195277; padding-top: 14px; margin-top: 4px; }
 .flow-required-notice, .journey-passengers button.flow-required-notice { display: block; color: #ff8d98; font-size: 12px; line-height: 1.5; text-align: left; margin: 8px 0; }

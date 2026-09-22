@@ -97,6 +97,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const [editing, setEditing] = useState(false);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [enterAge, setEnterAge] = useState(false);
+  const [selectionError, setSelectionError] = useState('');
   const cancelBack = useRef(false);
   const latestBack = useRef<() => void>(() => {});
   const heading = useRef<HTMLHeadingElement>(null);
@@ -141,11 +142,20 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   };
   const toggleSelected = (p: Passenger) => {
     const active = selected.some(item => item.uid === p.uid);
+    if (active && selected.length === 1) {
+      setSelectionError('Vyberte alespoň jednoho cestujícího.');
+      return;
+    }
+    setSelectionError('');
     setSelected(items => active ? items.filter(item => item.uid !== p.uid) : [...items, { ...p }]);
   };
   const back = () => {
     if (page === 'list') {
-      if ((version === 'v4.0' || version === 'v5.0') && selected.length) onConfirm(selected);
+      if (!selected.length) {
+        setSelectionError('Vyberte alespoň jednoho cestujícího.');
+        content.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      else if (version === 'v4.0' || version === 'v5.0') onConfirm(selected);
       else onBack();
     }
     else if (version === 'v4.0' || version === 'v5.0') {
@@ -161,6 +171,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       ? items.map(p => p.uid === passenger.uid ? passenger : p)
       : [...items, passenger];
     setSelected(items => version === 'v5.0' && editing ? items.map(p => p.uid === passenger.uid ? passenger : p) : upsert(items));
+    setSelectionError('');
     onSaveAvailablePassengers(upsert(availablePassengers));
     if (saveFavorite) onSaveFavorites(upsert(favorites));
     else if (version === 'v5.0') onSaveFavorites(favorites.filter(p => p.uid !== passenger.uid));
@@ -229,6 +240,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         {page !== 'list' && <button className="flow-cancel" onClick={cancelForm}>Zrušit</button>}
       </header>
       <div ref={content} className="flow-content">
+        {page === 'list' && selectionError && <p className="flow-selection-error" role="alert">{selectionError}</p>}
         {page === 'list' && (version === 'v2.0' || version === 'v3.0' || version === 'v4.0' || version === 'v5.0') ? <>
           {requireNames && selected.some(p => !hasPassengerName(p)) && <p className="flow-required-notice">Dopravce vyžaduje doplnit údaje</p>}
           <div className="flow-v2-list">
@@ -263,13 +275,13 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               onClick={() => toggleFavorite(p)}>
               <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorites.some(f => f.uid === p.uid) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
             </button>
-            <button className="flow-remove" aria-label={`Odebrat ${passengerLabel(p)}`} onClick={() => setSelected(items => items.filter(s => s.uid !== p.uid))}>×</button>
+            <button className="flow-remove" aria-label={`Odebrat ${passengerLabel(p)}`} onClick={() => toggleSelected(p)}>×</button>
           </div>)}</div>
           <button className="flow-add" onClick={() => start()}><span>＋</span> Přidat dalšího cestujícího</button>
           <div className="flow-section-title"><h3>Oblíbení cestující</h3><span>★</span></div>
           <div className="flow-favorites">{favorites.map(p => {
             const active = selected.some(s => s.uid === p.uid);
-            return <button key={p.uid} aria-pressed={active} className={`flow-favorite ${active ? 'selected' : ''}`} onClick={() => setSelected(items => active ? items.filter(s => s.uid !== p.uid) : [...items, { ...p }])}>
+            return <button key={p.uid} aria-pressed={active} className={`flow-favorite ${active ? 'selected' : ''}`} onClick={() => toggleSelected(p)}>
               <span className="flow-avatar">{p.name?.slice(0, 1)}</span><strong>{passengerLabel(p)}</strong><small>{categories.find(c => c.id === p.catId)?.label}</small><span className="flow-favorite-status">{active ? '✓ Vybráno' : '+ Vybrat'}</span>
             </button>;
           })}</div>
@@ -375,6 +387,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
+  const [pendingPasses, setPendingPasses] = useState(draft.passIds);
   useEffect(() => {
     if (picker) {
       dialog.current?.showModal();
@@ -382,15 +395,20 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     }
   }, [picker]);
   const openPicker = (kind: 'category' | 'passes') => {
+    if (kind === 'passes') setPendingPasses([...draft.passIds]);
     setPicker(kind);
   };
   const closePicker = () => { dialog.current?.close(); setPicker(null); };
+  const confirmPasses = () => {
+    setDraft({ ...draft, passIds: pendingPasses });
+    closePicker();
+  };
 
   const passRow = (pass: typeof passes[number]) => <label key={pass.id} className="flow-v5-picker-row">
-    <input type="checkbox" checked={draft.passIds.includes(pass.id)} onChange={() => {
-      const current = draft.passIds;
+    <input type="checkbox" checked={pendingPasses.includes(pass.id)} onChange={() => {
+      const current = pendingPasses;
       const next = pass.id === 'none' ? ['none'] : current.includes(pass.id) ? current.filter(id => id !== pass.id) : [...current.filter(id => id !== 'none'), pass.id];
-      setDraft({ ...draft, passIds: next.length ? next : ['none'] });
+      setPendingPasses(next.length ? next : ['none']);
     }} /><span>{pass.label}</span>
   </label>;
   return <>
@@ -410,14 +428,14 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
     {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
-      <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2><button aria-label="Zavřít nabídku" onClick={closePicker}>×</button></header>
+      <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>{picker === 'category' && <button aria-label="Zavřít nabídku" onClick={closePicker}>×</button>}</header>
       <div className="flow-v5-picker-content">
         {picker === 'category' ? categoryGroups.map((group, index) => <section key={group.id} aria-label={['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}>
           <h3>{['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}</h3>
           {group.items.map(category => <label className="flow-v5-picker-row" key={category.id}><input type="radio" name="v5-category" checked={draft.catId === category.id} onClick={() => { setDraft({ ...draft, catId: category.id, age: category.id === draft.catId ? draft.age : undefined }); closePicker(); }} readOnly /><span>{category.label}</span></label>)}
         </section>) : <>{passRow(passes[0])}{passSections.map(section => <section key={section.label} aria-label={section.label}><h3>{section.label}</h3>{passes.filter(pass => section.ids.includes(pass.id)).map(passRow)}</section>)}</>}
       </div>
-
+      {picker === 'passes' && <footer><button onClick={closePicker}>Zrušit</button><button className="flow-v5-confirm" onClick={confirmPasses}>OK</button></footer>}
     </dialog>}
   </>;
 }

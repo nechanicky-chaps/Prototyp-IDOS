@@ -37,7 +37,9 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
     <div className="flow-content journey-summary">
       <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
         <div className="journey-passengers">
-          <button className="journey-passenger-main" onClick={onEditPassengers}><span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span><span>{passengers.map(passengerLabel).join(', ')}</span></button>
+          <span className="journey-passenger-number" aria-label={`${passengers.length} cestujících`}>{passengers.length}</span>
+          <svg className="journey-passenger-icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-2.5A4.5 4.5 0 0 1 8 12h2a4.5 4.5 0 0 1 4.5 4.5V19"/><circle cx="17" cy="9" r="2.5"/><path d="M16 13h1.5a3.5 3.5 0 0 1 3.5 3.5V19"/></svg>
+          <button className="journey-passenger-main" onClick={onEditPassengers}><span className="journey-passenger-list">{passengers.map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)}</span></button>
           <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
           {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
         </div>

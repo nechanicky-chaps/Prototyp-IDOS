@@ -908,10 +908,10 @@ export function SummaryScreen({
       <div className="flex-1 overflow-auto">
         <div className="journey-passengers-summary">
           <div className="journey-passengers">
+            <span className="journey-passenger-number" aria-label={`${passengers.length} cestujících`}>{passengers.length}</span>
             <UsersIcon />
             <button className="journey-passenger-main" onClick={onEditPassengers}>
-              <span className="journey-passenger-count"><strong>{countLabel(passengers.length)}</strong></span>
-              <span>{passengers.map(passengerLabel).join(", ")}</span>
+              <span className="journey-passenger-list">{passengers.map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)}</span>
             </button>
             <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
