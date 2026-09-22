@@ -32,6 +32,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-header h1 { flex: 1; font-size: 18px; font-weight: 500; outline: none; }
 .flow-header button { min-height: 38px; min-width: 32px; font-size: 22px; }
 .flow-header .flow-cancel { font-size: 13px; font-weight: 400; opacity: 0.9; }
+.flow-header-count { display: inline-flex; align-items: center; gap: 4px; color: #fff; font-size: 14px; white-space: nowrap; }
+.flow-header-count strong { font-size: 16px; }
 .flow-steps { display: flex; padding: 14px 16px; gap: 10px; background: #001424; border-bottom: 1px solid #0e273c; flex-shrink: 0; }
 .flow-steps li { display: flex; align-items: center; gap: 6px; flex: 1; font-size: 11px; color: #8ba0b3; }
 .flow-steps li span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #0e273c; font-weight: 600; font-size: 11px; }
@@ -71,6 +73,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-v2-info { min-width: 0; }
 .flow-v2-info strong { display: block; color: #fff; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
 .flow-v2-info small { display: block; margin-top: 5px; color: #8ba0b3; font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
+.flow-v2-info small > span { display: block; }
+.flow-v2-info .flow-passenger-name { margin-top: 3px; color: #dce7ef; font-size: 12px; }
 .flow-switch { position: relative; width: 44px; height: 26px; padding: 0; border: 1px solid #29445a; border-radius: 999px; background: #25394a; transition: background .18s ease, border-color .18s ease; }
 .flow-switch span { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #c8d1d8; box-shadow: 0 1px 3px rgba(0, 0, 0, .45); transition: transform .18s ease, background .18s ease; }
 .flow-switch[aria-checked="true"] { border-color: #5fa8d5; background: #026cb6; }
@@ -142,6 +146,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-footer { padding: 12px 16px max(14px, env(safe-area-inset-bottom)); border-top: 1px solid #0e273c; background: #00101d; flex-shrink: 0; }
 .flow-primary { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; background: #026cb6; color: white; border-radius: 6px; padding: 14px 16px; font-size: 14px; font-weight: 500; min-height: 48px; border: none; }
 .flow-primary span + span { font-size: 13px; font-weight: 600; }
+.flow-delete-passenger { width: 100%; min-height: 44px; margin-top: 8px; border: 1px solid #8f3443; border-radius: 6px; color: #ff8290; font-size: 13px; font-weight: 500; }
 .flow-empty { padding: 18px; border: 1px dashed #0e273c; border-radius: 8px; font-size: 13px; color: #8ba0b3; text-align: center; }
 @media (max-width: 430px), (max-height: 890px) {
   .phone-frame { height: 100dvh !important; max-height: 100dvh; margin: 0; border-radius: 0 !important; box-shadow: none !important; max-width: 100%; }
@@ -213,6 +218,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .scenario-tabs { display: flex; flex-shrink: 0; padding: 8px 12px; gap: 8px; background: #00101d; border-bottom: 1px solid #0e273c; }
 .scenario-tabs button { flex: 1; padding: 8px 6px; border: 1px solid #0e273c; border-radius: 6px; color: #8ba0b3; font-size: 11px; }
 .scenario-tabs button[aria-pressed="true"] { border-color: #5fa8d5; color: #fff; background: #026cb6; font-weight: 500; }
+.result-passenger-control { display: inline-flex; align-items: center; gap: 4px; min-width: 42px; min-height: 40px; color: #fff; }
+.result-passenger-control strong { font-size: 15px; }
 
 .flow-pass-section { padding: 12px 0; border-top: 1px solid #0e273c; }
 .flow-pass-section h3 { margin: 0 0 10px; color: #5fa8d5; font-size: 12px; font-weight: 500; }

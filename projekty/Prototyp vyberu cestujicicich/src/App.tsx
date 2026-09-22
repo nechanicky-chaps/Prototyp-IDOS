@@ -1,7 +1,7 @@
 import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
 import MultiTicketSummary, { JourneyResult, journeyTickets, multiTotal } from "./MultiTicketSummary";
-import { useState } from "react";
-import PassengerFlow, { initialPassengers, initialFavorites, hasPassengerName, passengersMissingRequiredNames, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger, type RequiredNameMode } from "./PassengerFlow";
+import { useEffect, useState } from "react";
+import PassengerFlow, { initialPassengers, hasPassengerName, loadPassengerMemory, savePassengerMemory, passengersMissingRequiredNames, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger, type RequiredNameMode } from "./PassengerFlow";
 
 type Screen =
   | "results"
@@ -537,6 +537,8 @@ export function ResultsScreen({
   onScenario,
   presentation = false,
   showScenarioTabs = !presentation,
+  passengerCount = 1,
+  onOpenPassengers,
 }: {
   onBack?: () => void;
   onBuy: () => void;
@@ -544,6 +546,8 @@ export function ResultsScreen({
   onScenario: (multi: boolean) => void;
   presentation?: boolean;
   showScenarioTabs?: boolean;
+  passengerCount?: number;
+  onOpenPassengers?: () => void;
 }) {
   const connections = [
     {
@@ -601,17 +605,37 @@ export function ResultsScreen({
 
   return (
     <div className="flex flex-col h-full" style={{ background: BG }}>
-      <Header
-        title="Spojení"
-        onBack={onBack}
-        extra={presentation ? undefined : (
-          <div className="flex items-center gap-4 text-white">
-            <button aria-label="Oblíbené"><StarIcon /></button>
-            <button aria-label="Mapa"><MapIcon /></button>
-            <button aria-label="Více"><DotsIcon /></button>
+      <div style={{ background: HEADER }}>
+        <div className="flex items-center justify-between px-4 pt-3 pb-1 min-h-[50px]">
+          <div className="flex items-center gap-3">
+            {onBack && (
+              <button onClick={onBack} aria-label="Zpět" className="text-white opacity-95 hover:opacity-100 -ml-1">
+                <ArrowLeft />
+              </button>
+            )}
+            <span className="text-white font-medium text-[19px] tracking-tight">Spojení</span>
           </div>
-        )}
-      />
+          <div className="flex items-center gap-4 text-white">
+            {onOpenPassengers && (
+              <button
+                onClick={onOpenPassengers}
+                className="result-passenger-control flex items-center gap-1.5 text-sm font-medium hover:opacity-85"
+                aria-label={`Upravit cestující, vybráno ${passengerCount}`}
+              >
+                <strong className="text-base font-semibold">{passengerCount}</strong>
+                <UsersIcon />
+              </button>
+            )}
+            <button aria-label="Více" className="text-white opacity-90 hover:opacity-100">
+              <DotsIcon />
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 px-4 pb-2.5 text-white/95">
+          <span className="text-[10px]">▼</span>
+          <span className="text-sm font-normal">Brno + IDS JMK</span>
+        </div>
+      </div>
 
       {showScenarioTabs && <div className="scenario-tabs" aria-label="Ukázkové scénáře">
         <button aria-pressed={!multi} onClick={() => onScenario(false)}>Jedna jízdenka</button>
@@ -921,7 +945,7 @@ export function SummaryScreen({
             <span className="journey-passenger-number" aria-label={`${passengers.length} cestujících`}>{passengers.length}</span>
             <UsersIcon />
             <button className="journey-passenger-main" onClick={onEditPassengers}>
-              <span className="journey-passenger-list">{passengers.map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)}</span>
+              <span className="journey-passenger-list">{passengers.slice(0, 2).map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)}{passengers.length > 2 && <span>+{passengers.length - 2} další</span>}</span>
             </button>
             <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
@@ -1346,21 +1370,21 @@ function ConfirmScreen({
 // Main App
 // ─────────────────────────────────────────────────────────
 export default function App() {
+  const passengerMemory = loadPassengerMemory();
   const [screen, setScreen] = useState<Screen>(
     location.hash === "#cestujici" ? "passengers" : "results"
   );
-  const [passengers, setPassengers] = useState<Passenger[]>(
-    location.hash === "#vice-jizdenek" ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers
-  );
-  const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>(
-    location.hash === "#vice-jizdenek" ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers
-  );
-  const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
+  const [passengers, setPassengers] = useState<Passenger[]>(initialPassengers);
+  const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>(passengerMemory.availablePassengers);
+  const [favorites, setFavorites] = useState<Passenger[]>(passengerMemory.favorites);
   const [designVersion, setDesignVersion] = useState<DesignVersion>("v5.0");
   const [summaryVersion, setSummaryVersion] = useState<SummaryVersion>('v2');
   const [multiActivation, setMultiActivation] = useState('Automatická aktivace');
   const [requireNames, setRequireNames] = useState(false);
   const [selectedFare, setSelectedFare] = useState(0);
+  const [passengerReturn, setPassengerReturn] = useState<'results' | 'summary'>('summary');
+
+  useEffect(() => savePassengerMemory(availablePassengers, favorites), [availablePassengers, favorites]);
 
   const [multi, setMulti] = useState(location.hash === "#vice-jizdenek");
   const [ticketIds, setTicketIds] = useState(journeyTickets.map((t) => t.id));
@@ -1369,12 +1393,9 @@ export default function App() {
 
   const chooseScenario = (value: boolean) => {
     if (value === multi) return;
-    const scenarioPassengers = value ? [{ uid: "senior-example", catId: "senior65", passIds: ["none"] }] : initialPassengers;
     setMulti(value);
     setSelectedFare(0);
     setTicketIds(journeyTickets.map((t) => t.id));
-    setPassengers(scenarioPassengers);
-    setAvailablePassengers(scenarioPassengers);
   };
 
   const proceedToPayment = () => {
@@ -1396,6 +1417,8 @@ export default function App() {
             multi={multi}
             onScenario={chooseScenario}
             onBuy={() => setScreen("summary")}
+            passengerCount={passengers.length}
+            onOpenPassengers={() => { setPassengerReturn('results'); setRequireNames(false); setDesignVersion('v5.0'); setScreen('passengers'); }}
           />
         );
       case "passenger":
@@ -1413,10 +1436,11 @@ export default function App() {
             onVersionChange={setDesignVersion}
             onSaveAvailablePassengers={setAvailablePassengers}
             onSaveFavorites={setFavorites}
-            onBack={() => setScreen("summary")}
+            onBack={() => setScreen(passengerReturn)}
             onConfirm={(items) => {
               setPassengers(items);
-              setScreen("summary");
+              setRequireNames(false);
+              setScreen(passengerReturn);
             }}
           />
         );
@@ -1431,7 +1455,7 @@ export default function App() {
             ticketIds={ticketIds}
             setTicketIds={setTicketIds}
             onBack={() => setScreen("results")}
-            onEditPassengers={() => { setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
+            onEditPassengers={() => { setPassengerReturn('summary'); setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
             onNext={proceedToPayment}
           />
         ) : (
@@ -1443,7 +1467,7 @@ export default function App() {
             onSelectFare={setSelectedFare}
             onBack={() => setScreen("results")}
             onNext={proceedToPayment}
-            onEditPassengers={() => { setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
+            onEditPassengers={() => { setPassengerReturn('summary'); setRequireNames(true); setDesignVersion("v5.0"); setScreen("passengers"); }}
           />
         );
       case "payment":

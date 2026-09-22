@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { purchaseFareOptions, ResultsScreen, SummaryScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
-import PassengerFlow, { initialFavorites, initialPassengers, passengersMissingRequiredNames, SELF_PASSENGER_UID, type Passenger, type RequiredNameMode } from './PassengerFlow';
+import PassengerFlow, { initialPassengers, loadPassengerMemory, savePassengerMemory, passengersMissingRequiredNames, SELF_PASSENGER_UID, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
 type Screen = 'setup' | 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
 type PrototypeConfig = {
@@ -113,43 +113,44 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
 }
 
 export default function Final1Page() {
+  const passengerMemory = loadPassengerMemory();
   const [screen, setScreen] = useState<Screen>('setup');
   const [config, setConfig] = useState<PrototypeConfig>(defaultConfig);
   const [multi, setMulti] = useState(false);
   const [passengers, setPassengers] = useState<Passenger[]>(initialPassengers);
-  const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>(initialPassengers);
-  const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
+  const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>(passengerMemory.availablePassengers);
+  const [favorites, setFavorites] = useState<Passenger[]>(passengerMemory.favorites);
   const [showRequiredFields, setShowRequiredFields] = useState(false);
   const [activation, setActivation] = useState('Automatická aktivace');
   const [ticketIds, setTicketIds] = useState(journeyTickets.map(t => t.id));
   const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
   const [selectedFare, setSelectedFare] = useState(0);
+  const [passengerReturn, setPassengerReturn] = useState<'results' | 'summary'>('summary');
   const configuredSelf: Passenger = config.identity === 'signed-in' ? initialPassengers[0] : {
     ...initialPassengers[0], name: undefined, firstName: undefined, lastName: undefined,
   };
-  const configuredFavorites = initialFavorites.map(passenger => passenger.uid === SELF_PASSENGER_UID ? configuredSelf : passenger);
+  const configuredFavorites = [configuredSelf, ...favorites.filter(passenger => passenger.uid !== SELF_PASSENGER_UID)];
+
+  useEffect(() => savePassengerMemory(availablePassengers, favorites), [availablePassengers, favorites]);
 
   const paymentTotal = multi ? checkoutTotal : purchaseFareOptions[selectedFare].price * passengers.length;
   const ticketCount = passengers.length * (multi ? ticketIds.length : 1);
 
   const chooseScenario = (value: boolean) => {
     if (value === multi) return;
-    const scenarioPassengers = value
-      ? [{ uid: 'senior-example', catId: 'senior65', passIds: ['none'] }]
-      : [configuredSelf];
     setMulti(value);
-    setPassengers(scenarioPassengers);
-    setAvailablePassengers(scenarioPassengers);
     setTicketIds(journeyTickets.map(ticket => ticket.id));
     setSelectedFare(0);
     setShowRequiredFields(false);
   };
 
   const startPrototype = () => {
-    const scenarioPassengers = [configuredSelf];
+    const scenarioPassengers = passengers.length
+      ? passengers.map(passenger => passenger.uid === SELF_PASSENGER_UID ? configuredSelf : passenger)
+      : [configuredSelf];
     setMulti(false);
     setPassengers(scenarioPassengers);
-    setAvailablePassengers(scenarioPassengers);
+    setAvailablePassengers([configuredSelf, ...availablePassengers.filter(passenger => passenger.uid !== SELF_PASSENGER_UID)]);
     setFavorites(configuredFavorites);
     setTicketIds(journeyTickets.map(ticket => ticket.id));
     setSelectedFare(0);
@@ -160,6 +161,7 @@ export default function Final1Page() {
   const proceedToPayment = () => {
     if (!passengers.length) return;
     if (passengersMissingRequiredNames(passengers, config.requiredNames)) {
+      setPassengerReturn('summary');
       setShowRequiredFields(true);
       setScreen('passengers');
       return;
@@ -167,7 +169,8 @@ export default function Final1Page() {
     setScreen('payment');
   };
 
-  const openPassengers = () => {
+  const openPassengers = (returnTo: 'results' | 'summary' = 'summary') => {
+    setPassengerReturn(returnTo);
     setShowRequiredFields(config.requiredNames !== 'none');
     setScreen('passengers');
   };
@@ -220,6 +223,8 @@ export default function Final1Page() {
                 showScenarioTabs
                 onScenario={chooseScenario}
                 onBuy={() => setScreen('summary')}
+                passengerCount={passengers.length}
+                onOpenPassengers={() => openPassengers('results')}
               />
             )}
             {screen === 'summary' && multi && (
@@ -233,7 +238,7 @@ export default function Final1Page() {
                 passengers={passengers}
                 ticketIds={ticketIds}
                 setTicketIds={setTicketIds}
-                onEditPassengers={openPassengers}
+                onEditPassengers={() => openPassengers('summary')}
                 onNext={proceedToPayment}
                 onTotalChange={setCheckoutTotal}
               />
@@ -249,7 +254,7 @@ export default function Final1Page() {
                 selectedFare={selectedFare}
                 onSelectFare={setSelectedFare}
                 onBack={() => setScreen('results')}
-                onEditPassengers={openPassengers}
+                onEditPassengers={() => openPassengers('summary')}
                 onNext={proceedToPayment}
               />
             )}
@@ -268,11 +273,11 @@ export default function Final1Page() {
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}
-                onBack={() => setScreen('summary')}
+                onBack={() => setScreen(passengerReturn)}
                 onConfirm={items => {
                   setPassengers(items);
                   setShowRequiredFields(false);
-                  setScreen('summary');
+                  setScreen(passengerReturn);
                 }}
               />
             )}

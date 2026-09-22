@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
 export type Passenger = { uid: string; catId: string; passIds: string[]; age?: number; name?: string; firstName?: string; lastName?: string; passNumber?: string; birthDate?: string };
+export const MAX_FAVORITE_PASSENGERS = 6;
+export const MAX_LOCAL_PASSENGERS = 6;
+export const MAX_SELECTED_PASSENGERS = 6;
+const LOCAL_PASSENGERS_KEY = 'idos-prototype-local-passengers-v1';
+const FAVORITE_PASSENGERS_KEY = 'idos-prototype-favorite-passengers-v1';
 export const categories = [
   { id: 'child0', label: 'Dítě (0–1 rok)', color: '#34d399' },
   { id: 'child2', label: 'Dítě (2 roky)', color: '#34d399' },
@@ -72,7 +77,39 @@ export const initialFavorites: Passenger[] = [
   { uid: 'fav1', catId: 'adult', passIds: ['none'], age: 35, name: 'Tom' },
   { uid: 'fav2', catId: 'senior60', passIds: ['inkarta'], age: 60, name: 'Jana' },
 ];
+const readPassengers = (key: string) => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || 'null');
+    return Array.isArray(value) ? value as Passenger[] : null;
+  } catch {
+    return null;
+  }
+};
+export const loadPassengerMemory = (selfPassenger: Passenger = defaultPassenger) => {
+  const storedFavorites = readPassengers(FAVORITE_PASSENGERS_KEY) ?? initialFavorites.filter(item => item.uid !== SELF_PASSENGER_UID);
+  const storedLocal = readPassengers(LOCAL_PASSENGERS_KEY) ?? [];
+  const favorites = [selfPassenger, ...storedFavorites.filter(item => item.uid !== SELF_PASSENGER_UID)].slice(0, MAX_FAVORITE_PASSENGERS);
+  const favoriteIds = new Set(favorites.map(item => item.uid));
+  const local = storedLocal.filter(item => item.uid !== SELF_PASSENGER_UID && !favoriteIds.has(item.uid)).slice(0, MAX_LOCAL_PASSENGERS);
+  return { favorites, availablePassengers: [...favorites, ...local] };
+};
+export const savePassengerMemory = (availablePassengers: Passenger[], favorites: Passenger[]) => {
+  if (typeof window === 'undefined') return;
+  const favoriteIds = new Set(favorites.map(item => item.uid));
+  const storedFavorites = favorites.filter(item => item.uid !== SELF_PASSENGER_UID).slice(0, MAX_FAVORITE_PASSENGERS - 1);
+  const storedLocal = availablePassengers
+    .filter(item => item.uid !== SELF_PASSENGER_UID && !favoriteIds.has(item.uid))
+    .slice(0, MAX_LOCAL_PASSENGERS);
+  try {
+    localStorage.setItem(FAVORITE_PASSENGERS_KEY, JSON.stringify(storedFavorites));
+    localStorage.setItem(LOCAL_PASSENGERS_KEY, JSON.stringify(storedLocal));
+  } catch {
+    // Úložiště může být v anonymním režimu prohlížeče nedostupné.
+  }
+};
 export const passengerLabel = (p: Passenger) => p.name || categories.find(c => c.id === p.catId)?.label || 'Cestující';
+export const passengerFullName = (p: Passenger) => [p.firstName, p.lastName].filter(Boolean).join(' ').trim();
 export const passLabels = (p: Passenger) => p.passIds.map(id => passes.find(pass => pass.id === id)?.label).filter(Boolean).join(', ');
 export const hasPassengerName = (p: Passenger) => !!p.firstName?.trim() && !!p.lastName?.trim();
 export type RequiredNameMode = 'none' | 'holder' | 'all';
@@ -116,13 +153,18 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [enterAge, setEnterAge] = useState(false);
   const [selectionError, setSelectionError] = useState('');
+  const [formError, setFormError] = useState('');
   const [favoriteRemoval, setFavoriteRemoval] = useState<{ passenger: Passenger; fromEditor: boolean } | null>(null);
+  const [passengerDeletion, setPassengerDeletion] = useState<Passenger | null>(null);
   const cancelBack = useRef(false);
   const latestBack = useRef<() => void>(() => {});
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const effectiveNameMode: RequiredNameMode = requiredNameMode ?? (requireNames ? 'all' : 'none');
   const needsName = (passenger: Passenger) => effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && selected[0]?.uid === passenger.uid);
+  const draftNeedsName = effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && (!selected.length || selected[0]?.uid === draft.uid));
+  const favoriteIds = new Set(favorites.map(item => item.uid));
+  const localPassengers = availablePassengers.filter(item => item.uid !== SELF_PASSENGER_UID && !favoriteIds.has(item.uid));
   useEffect(() => { heading.current?.focus(); content.current?.scrollTo(0, 0); }, [page]);
   const cat = categories.find(c => c.id === draft.catId);
   const togglePass = (passId: string) => setDraft(current => ({
@@ -134,6 +176,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         : [...current.passIds.filter(id => id !== 'none'), passId],
   }));
   const start = (p?: Passenger, favorite = false) => {
+    setFormError('');
     setEnterAge(!!p && p.catId !== 'adult');
     setDraft(p ? { ...p, age: p.catId === 'adult' ? undefined : p.age } : { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: (version === 'v4.0' || version === 'v5.0') ? 'adult' : '', passIds: ['none'] });
     setEditing(!!p); setSaveFavorite(favorite); setPage('category');
@@ -150,6 +193,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       setFavoriteRemoval({ passenger: p, fromEditor: false });
       return;
     }
+    if (favorites.length >= MAX_FAVORITE_PASSENGERS) {
+      setSelectionError(`Můžete mít nejvýše ${MAX_FAVORITE_PASSENGERS} oblíbených cestujících.`);
+      return;
+    }
     setDraft({ ...p });
     setEditing(true);
     setSaveFavorite(true);
@@ -160,6 +207,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       setFavoriteRemoval({ passenger: draft, fromEditor: true });
       return;
     }
+    if (value && !favorites.some(item => item.uid === draft.uid) && favorites.length >= MAX_FAVORITE_PASSENGERS) {
+      setFormError(`Můžete mít nejvýše ${MAX_FAVORITE_PASSENGERS} oblíbených cestujících.`);
+      return;
+    }
+    setFormError('');
     setSaveFavorite(draft.uid === SELF_PASSENGER_UID || value);
   };
   const confirmFavoriteRemoval = () => {
@@ -167,6 +219,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     const { passenger, fromEditor } = favoriteRemoval;
     if (fromEditor) setSaveFavorite(false);
     else {
+      if (localPassengers.length >= MAX_LOCAL_PASSENGERS) {
+        setSelectionError(`Nejprve smažte některého z ${MAX_LOCAL_PASSENGERS} neoblíbených cestujících.`);
+        setFavoriteRemoval(null);
+        return;
+      }
       if (!availablePassengers.some(item => item.uid === passenger.uid)) onSaveAvailablePassengers([...availablePassengers, passenger]);
       onSaveFavorites(favorites.filter(item => item.uid !== passenger.uid));
     }
@@ -181,12 +238,26 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const toggleSelected = (p: Passenger) => {
     const active = selected.some(item => item.uid === p.uid);
     setSelectionError('');
+    if (!active && selected.length >= MAX_SELECTED_PASSENGERS) {
+      setSelectionError(`Pro jednu cestu můžete vybrat nejvýše ${MAX_SELECTED_PASSENGERS} cestujících.`);
+      return;
+    }
     setSelected(items => active ? items.filter(item => item.uid !== p.uid) : [...items, { ...p }]);
   };
   const saveSelection = () => {
     if (!selected.length) {
       setSelectionError('Vyberte alespoň jednoho cestujícího.');
       content.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const missingName = selected.find(passenger => needsName(passenger) && !hasPassengerName(passenger));
+    if (missingName) {
+      setSelectionError(`Doplňte jméno a příjmení pro cestujícího ${passengerLabel(missingName)}.`);
+      requestAnimationFrame(() => {
+        const input = content.current?.querySelector<HTMLInputElement>('input[required]:invalid');
+        input?.focus();
+        input?.reportValidity();
+      });
       return;
     }
     onConfirm(selected);
@@ -197,14 +268,39 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       else onBack();
     }
     else if (version === 'v4.0' || version === 'v5.0') {
-      if (draft.catId && (!saveFavorite || draft.name?.trim())) complete();
-      else { const input = content.current?.querySelector<HTMLInputElement>('input:invalid, #passenger-age'); input?.focus(); input?.reportValidity(); }
+      if (draft.catId && (!saveFavorite || draft.name?.trim()) && (!draftNeedsName || hasPassengerName(draft))) {
+        complete();
+      } else {
+        const details = content.current?.querySelectorAll<HTMLDetailsElement>('details');
+        details?.forEach(d => { d.open = true; });
+        const input = content.current?.querySelector<HTMLInputElement>('input:invalid, #passenger-age');
+        input?.focus();
+        input?.reportValidity();
+      }
     }
     else setPage('list');
   };
   const complete = () => {
-    if (!draft.catId || (saveFavorite && !draft.name?.trim())) return;
+    if (!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))) return;
     const passenger = { ...draft, name: draft.name?.trim() || undefined };
+    const wasFavorite = favorites.some(item => item.uid === passenger.uid);
+    const wasAvailable = availablePassengers.some(item => item.uid === passenger.uid);
+    if (!editing && !selected.some(item => item.uid === passenger.uid) && selected.length >= MAX_SELECTED_PASSENGERS) {
+      setFormError(`Pro jednu cestu můžete vybrat nejvýše ${MAX_SELECTED_PASSENGERS} cestujících.`);
+      return;
+    }
+    if (saveFavorite && !wasFavorite && favorites.length >= MAX_FAVORITE_PASSENGERS) {
+      setFormError(`Můžete mít nejvýše ${MAX_FAVORITE_PASSENGERS} oblíbených cestujících.`);
+      return;
+    }
+    if (!saveFavorite && !wasAvailable && localPassengers.length >= MAX_LOCAL_PASSENGERS) {
+      setFormError(`Můžete mít nejvýše ${MAX_LOCAL_PASSENGERS} neoblíbených cestujících.`);
+      return;
+    }
+    if (!saveFavorite && wasFavorite && localPassengers.length >= MAX_LOCAL_PASSENGERS) {
+      setFormError(`Nejprve smažte některého z ${MAX_LOCAL_PASSENGERS} neoblíbených cestujících.`);
+      return;
+    }
     const upsert = (items: Passenger[]) => items.some(p => p.uid === passenger.uid)
       ? items.map(p => p.uid === passenger.uid ? passenger : p)
       : [...items, passenger];
@@ -214,6 +310,15 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     if (saveFavorite || passenger.uid === SELF_PASSENGER_UID) onSaveFavorites(upsert(favorites));
     else if (version === 'v5.0') onSaveFavorites(favorites.filter(p => p.uid !== passenger.uid));
     setQuickAddOpen(false);
+    setPage('list');
+  };
+  const confirmPassengerDeletion = () => {
+    if (!passengerDeletion || passengerDeletion.uid === SELF_PASSENGER_UID) return;
+    const uid = passengerDeletion.uid;
+    setSelected(items => items.filter(item => item.uid !== uid));
+    onSaveAvailablePassengers(availablePassengers.filter(item => item.uid !== uid));
+    onSaveFavorites(favorites.filter(item => item.uid !== uid));
+    setPassengerDeletion(null);
     setPage('list');
   };
   latestBack.current = back;
@@ -281,6 +386,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       <header className="flow-header">
         <button aria-label="Zpět" onClick={navigateBack}>←</button>
         <h1 ref={heading} tabIndex={-1}>{page === 'favorite' ? 'Uložit do oblíbených' : 'Cestující'}</h1>
+        {page === 'list' && <span className="flow-header-count" aria-label={`${countLabel(selected.length)} vybráno`}><strong>{selected.length}</strong><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg></span>}
         <button className="flow-cancel" onClick={page === 'list' ? onBack : cancelForm}>Zrušit</button>
       </header>
       <div ref={content} className="flow-content">
@@ -298,9 +404,9 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
                 </button>
                 <span className="flow-v2-avatar" aria-hidden="true" />
-                {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => start(passenger, favorite)}><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{categories.find(c => c.id === passenger.catId)?.label} · {passLabels(passenger)}</small></span>}
+                {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => start(passenger, favorite)}><strong>{label}</strong><small><span>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</span>{hasPassengerName(passenger) && <span className="flow-passenger-name">{passengerFullName(passenger)}</span>}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</small></span>}
                 {version === 'v5.0' && selectionControl === 'checkbox' ? <label className="flow-select-person"><input type="checkbox" checked={active} aria-label={`Cestuje ${label}`} onChange={() => toggleSelected(passenger)} /></label> : <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>}
-                {active && needsName(passenger) && <div className="flow-quick-names flow-fields">
+                {active && needsName(passenger) && !hasPassengerName(passenger) && <div className="flow-quick-names flow-fields">
                   <label>Jméno <span>*</span><input required autoComplete="given-name" aria-label={`Jméno: ${label}`} value={passenger.firstName || ''} onChange={e => updateName(passenger, 'firstName', e.target.value)} /></label>
                   <label>Příjmení <span>*</span><input required autoComplete="family-name" aria-label={`Příjmení: ${label}`} value={passenger.lastName || ''} onChange={e => updateName(passenger, 'lastName', e.target.value)} /></label>
                 </div>}
@@ -335,7 +441,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         </> : <>
           {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
           {page === 'favorite' && <><h2>Jak cestujícího pojmenujete?</h2><p className="flow-hint">Doplňte přezdívku, podle které ho příště poznáte.</p></>}
-          {page === 'category' && version === 'v5.0' ? <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={editing} favoriteLocked={draft.uid === SELF_PASSENGER_UID} /> : page === 'category' && version === 'v4.0' ? <>
+          {page === 'category' && formError && <p className="flow-selection-error" role="alert">{formError}</p>}
+          {page === 'category' && version === 'v5.0' ? <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={editing} favoriteLocked={draft.uid === SELF_PASSENGER_UID} nameRequired={draftNeedsName} onDelete={() => setPassengerDeletion(draft)} /> : page === 'category' && version === 'v4.0' ? <>
             <div className="flow-options" role="group" aria-label="Kategorie cestujícího">
               <button className={`flow-option ${!enterAge ? 'selected' : ''}`} aria-pressed={!enterAge} onClick={() => { setEnterAge(false); setDraft({ ...draft, catId: 'adult', age: undefined }); }}><span><strong>Dospělý</strong><small>26–59 let · bez zadávání věku</small></span><span className="flow-radio" aria-hidden="true">{!enterAge ? '●' : '○'}</span></button>
               <button className={`flow-option ${enterAge ? 'selected' : ''}`} aria-pressed={enterAge} onClick={() => { if (!enterAge) { setEnterAge(true); setDraft({ ...draft, catId: '', age: undefined }); } }}><span><strong>Věková kategorie</strong><small>Vybrat podle věku</small></span><span className="flow-radio" aria-hidden="true">{enterAge ? '●' : '○'}</span></button>
@@ -406,7 +513,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       </div>
       {((page === 'list' && showConfirmButton) || (page !== 'list' && (version !== 'v5.0' || showFormSaveButton))) && <footer className="flow-footer">
         {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>Potvrdit výběr</span><span>{countLabel(selected.length)} →</span></button>
-          : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim())} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
+          : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
       </footer>}
       {version === 'v3.0' && quickAddOpen && <div className="flow-sheet-scrim" onClick={() => setQuickAddOpen(false)}>
         <section className="flow-sheet" role="dialog" aria-modal="true" aria-labelledby="quick-add-title" onClick={event => event.stopPropagation()}>
@@ -430,13 +537,21 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           <footer><button onClick={() => setFavoriteRemoval(null)}>Zrušit</button><button className="flow-confirm-remove" onClick={confirmFavoriteRemoval}>Odebrat</button></footer>
         </section>
       </div>}
+      {passengerDeletion && <div className="flow-confirm-scrim" onClick={() => setPassengerDeletion(null)}>
+        <section className="flow-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="passenger-deletion-title" onClick={event => event.stopPropagation()}>
+          <h2 id="passenger-deletion-title">Smazat cestujícího?</h2>
+          <p>Cestující <strong>{passengerLabel(passengerDeletion)}</strong> bude odstraněn ze zařízení i z tohoto výběru.</p>
+          <footer><button onClick={() => setPassengerDeletion(null)}>Zrušit</button><button className="flow-confirm-remove" onClick={confirmPassengerDeletion}>Smazat</button></footer>
+        </section>
+      </div>}
     </section>
   );
 }
 
-function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked }: {
+function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, onDelete }: {
   draft: Passenger; setDraft: (p: Passenger) => void;
   saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean; favoriteLocked: boolean;
+  nameRequired: boolean; onDelete: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
@@ -468,11 +583,11 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
     <div className="flow-v5-label">Vybraná kategorie</div>
     <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span className="flow-extra-arrow" aria-hidden="true" /></button>
-    <details className="flow-disclosure flow-v5-extra">
+    <details className="flow-disclosure flow-v5-extra" open={nameRequired || undefined}>
       <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
       <div className="flow-fields">
-        <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
-        <label>Příjmení <small>volitelné</small><input autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
+        <label>Jméno {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
+        <label>Příjmení {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
         <label>Datum narození <small>volitelné</small><input type="date" autoComplete="bday" value={draft.birthDate || ''} onChange={e => setDraft({ ...draft, birthDate: e.target.value })} /></label>
         <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
       </div>
@@ -480,6 +595,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span className="flow-extra-arrow" aria-hidden="true" /></button>
     <label className="flow-save"><input type="checkbox" checked={favoriteLocked || saveFavorite} disabled={favoriteLocked} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
     {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
+    {editing && !favoriteLocked && <button type="button" className="flow-delete-passenger" onClick={onDelete}>Smazat cestujícího</button>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
       <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>{picker === 'category' && <button aria-label="Zavřít nabídku" onClick={closePicker}>×</button>}</header>
       <div className="flow-v5-picker-content">
