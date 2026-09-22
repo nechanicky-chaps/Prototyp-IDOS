@@ -149,6 +149,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 .flow-star { display: grid; place-items: center; width: 40px; min-height: 40px; flex-shrink: 0; color: #8ba0b3; }
 .flow-star[aria-pressed="true"] { color: #fbbf24; }
+.flow-star:disabled { cursor: default; opacity: 1; }
 .flow-review + .flow-fields { margin-top: 20px; }
 .flow-person { gap: 6px; }
 .journey-result { background: #00101d; }
@@ -240,6 +241,13 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-v5-dialog footer button { min-height: 44px; padding: 0 16px; color: #5fa8d5; }
 .flow-v5-dialog footer .flow-v5-confirm { background: #026cb6; color: white; border-radius: 6px; }
 .flow-selection-error { margin: 0 0 12px; padding: 10px 12px; border: 1px solid #f41430; border-radius: 8px; background: #32101a; color: #fff; font-size: 13px; }
+.flow-confirm-scrim { position: absolute; inset: 0; z-index: 80; display: grid; place-items: center; padding: 20px; background: rgba(0, 0, 0, .7); }
+.flow-confirm-dialog { width: 100%; max-width: 340px; overflow: hidden; border: 1px solid #195277; border-radius: 10px; background: #001424; color: #fff; box-shadow: 0 16px 50px rgba(0, 0, 0, .55); }
+.flow-confirm-dialog h2 { margin: 0; padding: 18px 18px 8px; font-size: 18px; }
+.flow-confirm-dialog p { margin: 0; padding: 4px 18px 20px; color: #dce7ef; font-size: 14px; line-height: 1.5; }
+.flow-confirm-dialog footer { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 14px; border-top: 1px solid #195277; }
+.flow-confirm-dialog footer button { min-height: 42px; padding: 0 14px; color: #5fa8d5; }
+.flow-confirm-dialog footer .flow-confirm-remove { border-radius: 6px; background: #c81e35; color: #fff; font-weight: 600; }
 
 .flow-quick-names { grid-column: 1 / -1; border-top: 1px solid #195277; padding-top: 14px; margin-top: 4px; }
 .flow-required-notice, .journey-passengers button.flow-required-notice { display: block; color: #ff8d98; font-size: 12px; line-height: 1.5; text-align: left; margin: 8px 0; }

@@ -57,8 +57,18 @@ const categoryGroups = [
   { id: 'adults', label: 'Dospělí (26–59)', items: categories.filter(c => c.id === 'adult') },
   { id: 'seniors', label: 'Senior+', items: categories.filter(c => c.id.startsWith('senior')) },
 ];
-export const initialPassengers: Passenger[] = [{ uid: 'adult-default', catId: 'adult', passIds: ['none'] }];
+export const SELF_PASSENGER_UID = 'adult-default';
+export const defaultPassenger: Passenger = {
+  uid: SELF_PASSENGER_UID,
+  catId: 'adult',
+  passIds: ['none'],
+  name: 'Já',
+  firstName: 'Přihlášený',
+  lastName: 'Cestující',
+};
+export const initialPassengers: Passenger[] = [defaultPassenger];
 export const initialFavorites: Passenger[] = [
+  defaultPassenger,
   { uid: 'fav1', catId: 'adult', passIds: ['none'], age: 35, name: 'Tom' },
   { uid: 'fav2', catId: 'senior60', passIds: ['inkarta'], age: 60, name: 'Jana' },
 ];
@@ -98,6 +108,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [enterAge, setEnterAge] = useState(false);
   const [selectionError, setSelectionError] = useState('');
+  const [favoriteRemoval, setFavoriteRemoval] = useState<{ passenger: Passenger; fromEditor: boolean } | null>(null);
   const cancelBack = useRef(false);
   const latestBack = useRef<() => void>(() => {});
   const heading = useRef<HTMLHeadingElement>(null);
@@ -124,15 +135,32 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setQuickAddOpen(true);
   };
   const toggleFavorite = (p: Passenger) => {
+    if (p.uid === SELF_PASSENGER_UID) return;
     if (favorites.some(f => f.uid === p.uid)) {
-      if (!availablePassengers.some(item => item.uid === p.uid)) onSaveAvailablePassengers([...availablePassengers, p]);
-      onSaveFavorites(favorites.filter(f => f.uid !== p.uid));
+      setFavoriteRemoval({ passenger: p, fromEditor: false });
       return;
     }
     setDraft({ ...p });
     setEditing(true);
     setSaveFavorite(true);
     setPage(version === 'v5.0' ? 'category' : 'favorite');
+  };
+  const requestFavoriteState = (value: boolean) => {
+    if (!value && draft.uid !== SELF_PASSENGER_UID && favorites.some(item => item.uid === draft.uid)) {
+      setFavoriteRemoval({ passenger: draft, fromEditor: true });
+      return;
+    }
+    setSaveFavorite(draft.uid === SELF_PASSENGER_UID || value);
+  };
+  const confirmFavoriteRemoval = () => {
+    if (!favoriteRemoval) return;
+    const { passenger, fromEditor } = favoriteRemoval;
+    if (fromEditor) setSaveFavorite(false);
+    else {
+      if (!availablePassengers.some(item => item.uid === passenger.uid)) onSaveAvailablePassengers([...availablePassengers, passenger]);
+      onSaveFavorites(favorites.filter(item => item.uid !== passenger.uid));
+    }
+    setFavoriteRemoval(null);
   };
   const updateName = (p: Passenger, field: 'firstName' | 'lastName', value: string) => {
     const updated = { ...p, [field]: value };
@@ -173,7 +201,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setSelected(items => version === 'v5.0' && editing ? items.map(p => p.uid === passenger.uid ? passenger : p) : upsert(items));
     setSelectionError('');
     onSaveAvailablePassengers(upsert(availablePassengers));
-    if (saveFavorite) onSaveFavorites(upsert(favorites));
+    if (saveFavorite || passenger.uid === SELF_PASSENGER_UID) onSaveFavorites(upsert(favorites));
     else if (version === 'v5.0') onSaveFavorites(favorites.filter(p => p.uid !== passenger.uid));
     setQuickAddOpen(false);
     setPage('list');
@@ -217,11 +245,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     <input type="checkbox" checked={draft.passIds.includes(p.id)} onChange={() => togglePass(p.id)} />
     <span><strong>{p.label}</strong><small>{p.sub}</small></span>
   </label>;
-  const otherPassengers = availablePassengers.filter(p => p.uid !== 'adult-default' && !favorites.some(f => f.uid === p.uid));
+  const otherPassengers = availablePassengers.filter(p => p.uid !== SELF_PASSENGER_UID && !favorites.some(f => f.uid === p.uid));
   const v2Rows = [
-    { passenger: availablePassengers.find(p => p.uid === 'adult-default') || initialPassengers[0], label: 'Já', favorite: favorites.some(p => p.uid === 'adult-default') },
+    { passenger: availablePassengers.find(p => p.uid === SELF_PASSENGER_UID) || initialPassengers[0], label: 'Já', favorite: true },
     ...otherPassengers.filter(p => selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
-    ...favorites.filter(p => p.uid !== 'adult-default').map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
+    ...favorites.filter(p => p.uid !== SELF_PASSENGER_UID).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: true })),
     ...otherPassengers.filter(p => !selected.some(item => item.uid === p.uid)).map(passenger => ({ passenger, label: passengerLabel(passenger), favorite: false })),
   ];
   return (
@@ -248,7 +276,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               const active = selected.some(item => item.uid === passenger.uid);
               return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
                 <button className="flow-star flow-v2-star" aria-pressed={favorite}
-                  aria-label={`${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
+                  disabled={passenger.uid === SELF_PASSENGER_UID}
+                  aria-label={passenger.uid === SELF_PASSENGER_UID ? 'Já je vždy v oblíbených' : `${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
                   onClick={() => toggleFavorite(passenger)}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
                 </button>
@@ -271,7 +300,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               <strong>{passengerLabel(p)}</strong><small>{p.name && `${categories.find(c => c.id === p.catId)?.label} · `}{passLabels(p)}</small>
             </button>
             <button className="flow-star" aria-pressed={favorites.some(f => f.uid === p.uid)}
-              aria-label={(favorites.some(f => f.uid === p.uid) ? 'Odebrat z oblíbených: ' : 'Přidat do oblíbených: ') + passengerLabel(p)}
+              disabled={p.uid === SELF_PASSENGER_UID}
+              aria-label={p.uid === SELF_PASSENGER_UID ? 'Já je vždy v oblíbených' : (favorites.some(f => f.uid === p.uid) ? 'Odebrat z oblíbených: ' : 'Přidat do oblíbených: ') + passengerLabel(p)}
               onClick={() => toggleFavorite(p)}>
               <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorites.some(f => f.uid === p.uid) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
             </button>
@@ -289,7 +319,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         </> : <>
           {page === 'favorite' && <p className="flow-eyebrow">Oblíbený cestující</p>}
           {page === 'favorite' && <><h2>Jak cestujícího pojmenujete?</h2><p className="flow-hint">Doplňte přezdívku, podle které ho příště poznáte.</p></>}
-          {page === 'category' && version === 'v5.0' ? <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={setSaveFavorite} editing={editing} /> : page === 'category' && version === 'v4.0' ? <>
+          {page === 'category' && version === 'v5.0' ? <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={editing} favoriteLocked={draft.uid === SELF_PASSENGER_UID} /> : page === 'category' && version === 'v4.0' ? <>
             <div className="flow-options" role="group" aria-label="Kategorie cestujícího">
               <button className={`flow-option ${!enterAge ? 'selected' : ''}`} aria-pressed={!enterAge} onClick={() => { setEnterAge(false); setDraft({ ...draft, catId: 'adult', age: undefined }); }}><span><strong>Dospělý</strong><small>26–59 let · bez zadávání věku</small></span><span className="flow-radio" aria-hidden="true">{!enterAge ? '●' : '○'}</span></button>
               <button className={`flow-option ${enterAge ? 'selected' : ''}`} aria-pressed={enterAge} onClick={() => { if (!enterAge) { setEnterAge(true); setDraft({ ...draft, catId: '', age: undefined }); } }}><span><strong>Věková kategorie</strong><small>Vybrat podle věku</small></span><span className="flow-radio" aria-hidden="true">{enterAge ? '●' : '○'}</span></button>
@@ -315,7 +345,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                 <div className="flow-options">{passes.filter(pass => section.ids.includes(pass.id)).map(passOption)}</div>
               </section>)}
             </details>
-            <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
+            <label className="flow-save"><input type="checkbox" checked={draft.uid === SELF_PASSENGER_UID || saveFavorite} disabled={draft.uid === SELF_PASSENGER_UID} onChange={e => requestFavoriteState(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
               <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
@@ -338,7 +368,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                 <div className="flow-options">{passes.filter(pass => section.ids.includes(pass.id)).map(passOption)}</div>
               </section>)}
             </details>
-            <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
+            <label className="flow-save"><input type="checkbox" checked={draft.uid === SELF_PASSENGER_UID || saveFavorite} disabled={draft.uid === SELF_PASSENGER_UID} onChange={e => requestFavoriteState(e.target.checked)} /><span><strong>Uložit do oblíbených</strong><small>Příště cestujícího vyberete jedním klepnutím.</small></span></label>
             {saveFavorite && <div className="flow-fields">
               <label>Přezdívka <span>*</span><input value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} required /></label>
               <label>Jméno <small>volitelné</small><input autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
@@ -377,13 +407,20 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           <div className="flow-sheet-actions"><button onClick={() => setQuickAddOpen(false)}>Zrušit</button><button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim())} onClick={complete}>Přidat</button></div>
         </section>
       </div>}
+      {favoriteRemoval && <div className="flow-confirm-scrim" onClick={() => setFavoriteRemoval(null)}>
+        <section className="flow-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="favorite-removal-title" onClick={event => event.stopPropagation()}>
+          <h2 id="favorite-removal-title">Odebrat z oblíbených?</h2>
+          <p>Opravdu chcete cestujícího <strong>{passengerLabel(favoriteRemoval.passenger)}</strong> odebrat z oblíbených?</p>
+          <footer><button onClick={() => setFavoriteRemoval(null)}>Zrušit</button><button className="flow-confirm-remove" onClick={confirmFavoriteRemoval}>Odebrat</button></footer>
+        </section>
+      </div>}
     </section>
   );
 }
 
-function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing }: {
+function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked }: {
   draft: Passenger; setDraft: (p: Passenger) => void;
-  saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean;
+  saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean; favoriteLocked: boolean;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
@@ -425,7 +462,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
       </div>
     </details>
     <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span className="flow-extra-arrow" aria-hidden="true" /></button>
-    <label className="flow-save"><input type="checkbox" checked={saveFavorite} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
+    <label className="flow-save"><input type="checkbox" checked={favoriteLocked || saveFavorite} disabled={favoriteLocked} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
     {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
       <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>{picker === 'category' && <button aria-label="Zavřít nabídku" onClick={closePicker}>×</button>}</header>
