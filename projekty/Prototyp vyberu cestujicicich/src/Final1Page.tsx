@@ -115,13 +115,9 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
 export default function Final1Page() {
   const [screen, setScreen] = useState<Screen>('setup');
   const [config, setConfig] = useState<PrototypeConfig>(defaultConfig);
-  const [multi, setMulti] = useState(true);
-  const [passengers, setPassengers] = useState<Passenger[]>([
-    { uid: 'senior-example', catId: 'senior65', passIds: ['none'] },
-  ]);
-  const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>([
-    { uid: 'senior-example', catId: 'senior65', passIds: ['none'] },
-  ]);
+  const [multi, setMulti] = useState(false);
+  const [passengers, setPassengers] = useState<Passenger[]>(initialPassengers);
+  const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>(initialPassengers);
   const [favorites, setFavorites] = useState<Passenger[]>(initialFavorites);
   const [showRequiredFields, setShowRequiredFields] = useState(false);
   const [activation, setActivation] = useState('Automatická aktivace');
@@ -150,9 +146,8 @@ export default function Final1Page() {
   };
 
   const startPrototype = () => {
-    const scenarioPassengers = multi
-      ? [{ uid: 'senior-example', catId: 'senior65', passIds: ['none'] }]
-      : [configuredSelf];
+    const scenarioPassengers = [configuredSelf];
+    setMulti(false);
     setPassengers(scenarioPassengers);
     setAvailablePassengers(scenarioPassengers);
     setFavorites(configuredFavorites);
