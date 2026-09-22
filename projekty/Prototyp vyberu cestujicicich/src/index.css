@@ -175,8 +175,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .journey-passengers-summary .journey-passengers > svg { flex-shrink: 0; color: #5fa8d5; }
 .journey-passenger-number { min-width: 24px; color: #fff; font-size: 26px; font-weight: 700; line-height: 1; text-align: center; }
 .journey-passenger-icon { flex-shrink: 0; color: #5fa8d5; }
-.journey-passenger-list { display: flex !important; flex-direction: column; gap: 2px; margin-top: 0 !important; color: #dce7ef !important; }
-.journey-passenger-list > span { display: block; }
+.journey-passenger-list { display: flex !important; flex-direction: column; gap: 2px; margin-top: 0 !important; color: #dce7ef !important; min-width: 0; }
+.journey-passenger-list > span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 500; }
+.journey-passenger-more { color: #8ba0b3; font-weight: 400; margin-left: 4px; }
 .journey-passengers { display: flex; align-items: center; gap: 12px; border: 1px solid #0e273c; border-radius: 8px; padding: 12px; background: #001424; }
 .journey-passengers > div { flex: 1; min-width: 0; }
 .journey-passengers button.journey-passenger-main { flex: 1; width: auto; min-width: 0; min-height: 44px; color: #fff; text-align: left; }

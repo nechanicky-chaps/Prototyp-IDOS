@@ -945,7 +945,16 @@ export function SummaryScreen({
             <span className="journey-passenger-number" aria-label={`${passengers.length} cestujících`}>{passengers.length}</span>
             <UsersIcon />
             <button className="journey-passenger-main" onClick={onEditPassengers}>
-              <span className="journey-passenger-list">{passengers.slice(0, 2).map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)}{passengers.length > 2 && <span>+{passengers.length - 2} další</span>}</span>
+              <span className="journey-passenger-list">
+                {passengers.length <= 2 ? (
+                  passengers.map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)
+                ) : (
+                  <>
+                    <span>{passengerLabel(passengers[0])}</span>
+                    <span>{passengerLabel(passengers[1])} <span className="journey-passenger-more">+{passengers.length - 2} další</span></span>
+                  </>
+                )}
+              </span>
             </button>
             <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
             {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
