@@ -112,7 +112,7 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
   );
 }
 
-export default function Final1Page() {
+export default function Final1Page({ purchaseStartsWithPassengers = false }: { purchaseStartsWithPassengers?: boolean }) {
   const passengerMemory = loadPassengerMemory();
   const [screen, setScreen] = useState<Screen>('setup');
   const [config, setConfig] = useState<PrototypeConfig>(defaultConfig);
@@ -175,6 +175,14 @@ export default function Final1Page() {
     setScreen('passengers');
   };
 
+  const startPurchase = () => {
+    if (purchaseStartsWithPassengers) {
+      openPassengers('summary');
+      return;
+    }
+    setScreen('summary');
+  };
+
   const handleNavBack = () => {
     if (screen === 'passengers') {
       window.dispatchEvent(new Event('passenger-back'));
@@ -222,7 +230,7 @@ export default function Final1Page() {
                 presentation
                 showScenarioTabs
                 onScenario={chooseScenario}
-                onBuy={() => setScreen('summary')}
+                onBuy={startPurchase}
                 passengerCount={passengers.length}
                 onOpenPassengers={() => openPassengers('results')}
               />
