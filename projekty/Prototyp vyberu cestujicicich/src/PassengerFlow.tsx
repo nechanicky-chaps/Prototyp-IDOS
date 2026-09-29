@@ -137,9 +137,10 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   selfPassenger?: Passenger;
+  confirmLabel?: string;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
   version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
@@ -153,6 +154,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [enterAge, setEnterAge] = useState(false);
   const [selectionError, setSelectionError] = useState('');
+  const [editingNameIds, setEditingNameIds] = useState<Set<string>>(() => new Set());
   const [formError, setFormError] = useState('');
   const [favoriteRemoval, setFavoriteRemoval] = useState<{ passenger: Passenger; fromEditor: boolean } | null>(null);
   const [passengerDeletion, setPassengerDeletion] = useState<Passenger | null>(null);
@@ -230,6 +232,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setFavoriteRemoval(null);
   };
   const updateName = (p: Passenger, field: 'firstName' | 'lastName', value: string) => {
+    // Keep the fields mounted until the selection is confirmed, even once both names are nonempty.
+    setEditingNameIds(ids => new Set(ids).add(p.uid));
     const updated = { ...p, [field]: value };
     setSelected(items => items.map(item => item.uid === p.uid ? updated : item));
     onSaveAvailablePassengers(availablePassengers.some(item => item.uid === p.uid) ? availablePassengers.map(item => item.uid === p.uid ? updated : item) : [...availablePassengers, updated]);
@@ -403,7 +407,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
                 <span className="flow-v2-avatar" aria-hidden="true" />
                 {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => start(passenger, favorite)}><strong>{label}</strong><small><span>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</span>{hasPassengerName(passenger) && <span className="flow-passenger-name">{passengerFullName(passenger)}</span>}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</small></span>}
                 {version === 'v5.0' && selectionControl === 'checkbox' ? <label className="flow-select-person"><input type="checkbox" checked={active} aria-label={`Cestuje ${label}`} onChange={() => toggleSelected(passenger)} /></label> : <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>}
-                {active && needsName(passenger) && !hasPassengerName(passenger) && <div className="flow-quick-names flow-fields">
+                {active && needsName(passenger) && (!hasPassengerName(passenger) || editingNameIds.has(passenger.uid)) && <div className="flow-quick-names flow-fields">
                   <label>Jméno <span>*</span><input required autoComplete="given-name" aria-label={`Jméno: ${label}`} value={passenger.firstName || ''} onChange={e => updateName(passenger, 'firstName', e.target.value)} /></label>
                   <label>Příjmení <span>*</span><input required autoComplete="family-name" aria-label={`Příjmení: ${label}`} value={passenger.lastName || ''} onChange={e => updateName(passenger, 'lastName', e.target.value)} /></label>
                 </div>}
@@ -509,7 +513,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
         </>}
       </div>
       {((page === 'list' && showConfirmButton) || (page !== 'list' && (version !== 'v5.0' || showFormSaveButton))) && <footer className="flow-footer">
-        {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>Potvrdit výběr</span><span>{countLabel(selected.length)} →</span></button>
+        {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>{confirmLabel}</span><span>{countLabel(selected.length)} →</span></button>
           : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
       </footer>}
       {version === 'v3.0' && quickAddOpen && <div className="flow-sheet-scrim" onClick={() => setQuickAddOpen(false)}>

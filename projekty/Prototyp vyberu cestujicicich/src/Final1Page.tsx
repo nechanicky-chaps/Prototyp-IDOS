@@ -228,10 +228,12 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
               <ResultsScreen
                 multi={multi}
                 presentation
-                showScenarioTabs
                 onScenario={chooseScenario}
                 onBuy={startPurchase}
+                onPayNow={() => setScreen('payment')}
+                onBack={() => setScreen('setup')}
                 passengerCount={passengers.length}
+                selectedPassengers={passengers}
                 onOpenPassengers={() => openPassengers('results')}
               />
             )}
@@ -276,7 +278,8 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
                 requiredNameMode={showRequiredFields ? config.requiredNames : 'none'}
                 selectionControl={config.selectionControl}
                 moveSelectedToTop={config.selectedOrder === 'top'}
-                showConfirmButton={config.showConfirmButton}
+                showConfirmButton={config.showConfirmButton || (purchaseStartsWithPassengers && passengerReturn === 'summary')}
+                confirmLabel={purchaseStartsWithPassengers && passengerReturn === 'summary' ? 'Pokračovat k jízdence' : undefined}
                 showFormSaveButton={config.showFormSaveButton}
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}

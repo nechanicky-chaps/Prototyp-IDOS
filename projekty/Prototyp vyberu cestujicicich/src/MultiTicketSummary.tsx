@@ -1,6 +1,6 @@
 import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
 import { useEffect, useState } from 'react';
-import { countLabel, passengerLabel, passengersMissingRequiredNames, type Passenger, type RequiredNameMode } from './PassengerFlow';
+import { passengerLabel, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
 export const journeyTickets = [
   { id: 'bus', line: 'Bus 153', color: '#ff6e7f', from: 'Veverská Bítýška, náměstí', to: 'Tišnov, železniční stanice', departure: '14:14', arrival: '14:36', price: 12, fare: 'IDS JMK Zlevněná A', detail: '2 zóny, 60 minut', setting: 'Automatická aktivace' },
@@ -26,7 +26,6 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
   const [activationOpen, setActivationOpen] = useState(false);
   const [alternative, setAlternative] = useState<string | null>(null);
   const count = ticketIds.length * passengers.length;
-  const missingNames = passengersMissingRequiredNames(passengers, requiredNameMode);
   const alternativeTotal = alternative === 'Jedna průběžná jízdenka' ? 284 * passengers.length
     : alternative === 'Celodenní nabídka' ? 319 * passengers.length
       : multiTotal(ticketIds, passengers.length);
@@ -42,26 +41,7 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
     <SummaryVersionSwitch version={summaryVersion} onChange={onSummaryVersionChange} />
     <header className={`flow-header ${onBack ? '' : 'flow-header-root'}`}>{onBack && <button aria-label="Zpět" onClick={onBack}>←</button>}<h1>Souhrn jízdenek</h1></header>
     <div className="flow-content journey-summary">
-      <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p>
-        <div className="journey-passengers">
-          <span className="journey-passenger-number" aria-label={`${passengers.length} cestujících`}>{passengers.length}</span>
-          <svg className="journey-passenger-icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-2.5A4.5 4.5 0 0 1 8 12h2a4.5 4.5 0 0 1 4.5 4.5V19"/><circle cx="17" cy="9" r="2.5"/><path d="M16 13h1.5a3.5 3.5 0 0 1 3.5 3.5V19"/></svg>
-          <button className="journey-passenger-main" onClick={onEditPassengers}>
-            <span className="journey-passenger-list">
-              {passengers.length <= 2 ? (
-                passengers.map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)
-              ) : (
-                <>
-                  <span>{passengerLabel(passengers[0])}</span>
-                  <span>{passengerLabel(passengers[1])} <span className="journey-passenger-more">+{passengers.length - 2} další</span></span>
-                </>
-              )}
-            </span>
-          </button>
-          <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
-          {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
-        </div>
-      </div>
+      <div className="journey-padding"><h2>Veverská Bítýška → Česká Lípa</h2><p className="flow-hint">14:14–19:31 · přes Tišnov a Kolín</p></div>
       {removed && <div className="journey-undo" role="status">Úsek odebrán.<button onClick={() => { setTicketIds(journeyTickets.filter(t => ticketIds.includes(t.id) || t.id === removed).map(t => t.id)); setRemoved(null); }}>Vrátit</button></div>}
       {journeyTickets.filter(t => ticketIds.includes(t.id)).map(ticket => <article key={ticket.id} className="journey-ticket">
         <div className="journey-band"><strong>Odjezd {ticket.departure}</strong><button aria-label={'Odebrat úsek ' + ticket.line} onClick={() => { setTicketIds(ticketIds.filter(id => id !== ticket.id)); setRemoved(ticket.id); }}>×</button></div>
@@ -91,6 +71,6 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
       { id: 'day', title: 'Celodenní nabídka', price: `${319 * passengers.length} Kč` },
       { id: 'separate', title: 'Samostatné jízdenky', price: `${multiTotal(ticketIds, passengers.length)} Kč` },
     ].map(offer => ({ ...offer, selected: alternative === offer.title || (!alternative && offer.id === 'separate'), onSelect: () => setAlternative(offer.title) }))} />}
-    <footer className="multi-payment-bar"><button className="multi-payment-total" onClick={onEditPassengers} aria-label="Upravit cestující"><span>{countLabel(passengers.length)}</span><strong>{alternativeTotal} Kč</strong></button><button className="summary-payment" disabled={!count} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
+    <footer className="multi-payment-bar"><button className="multi-payment-total summary-passenger-return" onClick={onEditPassengers} aria-label={`Zpět na výběr cestujících, vybráno ${passengers.length}`}><svg className="summary-passenger-chevron" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg><span>{passengers.length}</span><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-2.5A4.5 4.5 0 0 1 8 12h2a4.5 4.5 0 0 1 4.5 4.5V19"/><circle cx="17" cy="9" r="2.5"/><path d="M16 13h1.5a3.5 3.5 0 0 1 3.5 3.5V19"/></svg><strong>{alternativeTotal} Kč</strong></button><button className="summary-payment" disabled={!count} onClick={onNext}>Platba <span aria-hidden="true">→</span></button></footer>
   </section>;
 }

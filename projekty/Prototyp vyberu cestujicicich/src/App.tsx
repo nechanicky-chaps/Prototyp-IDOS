@@ -336,7 +336,7 @@ function Header({ title, onBack, extra }: { title: string; onBack?: () => void; 
     <div style={{ background: HEADER }} className="flex items-center gap-3 px-4 py-3 min-h-[52px] flex-shrink-0">
       {onBack && (
         <button onClick={onBack} aria-label="Zpět" className="text-white opacity-95 hover:opacity-100 -ml-1">
-          <ArrowLeft />
+          <svg className="summary-passenger-chevron" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
         </button>
       )}
       <span className="text-white font-medium text-[19px] flex-1 tracking-tight">{title}</span>
@@ -533,20 +533,24 @@ function HomeScreen({
 export function ResultsScreen({
   onBack,
   onBuy,
+  onPayNow,
   multi,
   onScenario,
   presentation = false,
   showScenarioTabs = !presentation,
   passengerCount = 1,
+  selectedPassengers = [],
   onOpenPassengers,
 }: {
   onBack?: () => void;
   onBuy: () => void;
+  onPayNow: () => void;
   multi: boolean;
   onScenario: (multi: boolean) => void;
   presentation?: boolean;
   showScenarioTabs?: boolean;
   passengerCount?: number;
+  selectedPassengers?: Passenger[];
   onOpenPassengers?: () => void;
 }) {
   const connections = [
@@ -601,11 +605,104 @@ export function ResultsScreen({
       ],
       price: null,
     },
+    {
+      wait: "za 1 h 13 min",
+      duration: "45 min",
+      segments: [
+        { type: "walk", text: "přesun asi 8 min z Moje poloha" },
+        {
+          type: "tram",
+          line: "Tram 1",
+          color: TRAM,
+          hasWarning: false,
+          stops: [
+            { time: "13:49", name: "Bráfova", suffix: " z" },
+            { time: "14:06", name: "Hlavní nádraží", platform: "2" },
+          ],
+          status: "odjezd bývá včas",
+        },
+        { type: "walk", text: "přesun asi 5 min" },
+        {
+          type: "train",
+          line: "Vlak S2",
+          color: TRAIN,
+          hasWarning: false,
+          stops: [
+            { time: "14:13", name: "Brno hl. n." },
+            { time: "14:34", name: "Adamov zastávka" },
+          ],
+          status: "odjezd bývá včas",
+        },
+      ],
+      price: "33 Kč",
+    },
+    {
+      wait: "za 1 h 43 min",
+      duration: "46 min",
+      segments: [
+        { type: "walk", text: "přesun asi 7 min z Moje poloha" },
+        {
+          type: "tram",
+          line: "Tram 10",
+          color: TRAM,
+          hasWarning: true,
+          stops: [
+            { time: "14:19", name: "Mozolky" },
+            { time: "14:36", name: "Hlavní nádraží", platform: "5" },
+          ],
+          status: "odjezd může mít zpoždění",
+        },
+        { type: "walk", text: "přesun asi 4 min" },
+        {
+          type: "train",
+          line: "Vlak S2",
+          color: TRAIN,
+          hasWarning: false,
+          stops: [
+            { time: "14:43", name: "Brno hl. n." },
+            { time: "15:04", name: "Adamov zastávka" },
+          ],
+          status: "odjezd bývá včas",
+        },
+      ],
+      price: "33 Kč",
+    },
+    {
+      wait: "za 2 h 13 min",
+      duration: "44 min",
+      segments: [
+        { type: "walk", text: "přesun asi 8 min z Moje poloha" },
+        {
+          type: "tram",
+          line: "Tram 1",
+          color: TRAM,
+          hasWarning: false,
+          stops: [
+            { time: "14:49", name: "Bráfova", suffix: " z" },
+            { time: "15:06", name: "Hlavní nádraží", platform: "2" },
+          ],
+          status: "odjezd bývá včas",
+        },
+        { type: "walk", text: "přesun asi 4 min" },
+        {
+          type: "train",
+          line: "Vlak S2",
+          color: TRAIN,
+          hasWarning: false,
+          stops: [
+            { time: "15:13", name: "Brno hl. n." },
+            { time: "15:34", name: "Adamov zastávka" },
+          ],
+          status: "odjezd bývá včas",
+        },
+      ],
+      price: "33 Kč",
+    },
   ];
 
   return (
-    <div className="flex flex-col h-full" style={{ background: BG }}>
-      <div style={{ background: HEADER }}>
+    <div className="results-screen" style={{ background: BG }}>
+      <div className="results-topbar" style={{ background: HEADER }}>
         <div className="flex items-center justify-between px-4 pt-3 pb-1 min-h-[50px]">
           <div className="flex items-center gap-3">
             {onBack && (
@@ -615,18 +712,12 @@ export function ResultsScreen({
             )}
             <span className="text-white font-medium text-[19px] tracking-tight">Spojení</span>
           </div>
-          <div className="flex items-center gap-4 text-white">
-            {onOpenPassengers && (
-              <button
-                onClick={onOpenPassengers}
-                className="result-passenger-control flex items-center gap-1.5 text-sm font-medium hover:opacity-85"
-                aria-label={`Upravit cestující, vybráno ${passengerCount}`}
-              >
-                <strong className="text-base font-semibold">{passengerCount}</strong>
-                <UsersIcon />
-              </button>
-            )}
-            <button aria-label="Více" className="text-white opacity-90 hover:opacity-100">
+          <div className="result-header-actions">
+            <button aria-label="Oblíbené spojení" className="result-favorite-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z" /></svg>
+            </button>
+            <button aria-label="Mapa spojení"><MapIcon /></button>
+            <button aria-label="Více">
               <DotsIcon />
             </button>
           </div>
@@ -637,12 +728,22 @@ export function ResultsScreen({
         </div>
       </div>
 
+      {onOpenPassengers && <button className="result-passenger-panel" onClick={onOpenPassengers} aria-label={`Upravit cestující, vybráno ${passengerCount}`}>
+        <UsersIcon />
+        <span className="result-passenger-panel-content">
+          <span className="result-passenger-panel-title">{countLabel(passengerCount)}</span>
+          <span className="result-passenger-panel-names">{selectedPassengers.length ? selectedPassengers.map(passengerLabel).join(' · ') : 'Vybrat cestující'}</span>
+        </span>
+        <span className="result-passenger-panel-edit">Upravit</span>
+        <ArrowRight />
+      </button>}
+
       {showScenarioTabs && <div className="scenario-tabs" aria-label="Ukázkové scénáře">
         <button aria-pressed={!multi} onClick={() => onScenario(false)}>Jedna jízdenka</button>
         <button aria-pressed={multi} onClick={() => onScenario(true)}>Více jízdenek</button>
       </div>}
 
-      <div className="flex-1 overflow-auto">
+      <div className="results-list">
         {multi ? (
           <JourneyResult onBuy={onBuy} />
         ) : (
@@ -720,25 +821,23 @@ export function ResultsScreen({
               {conn.price && (
                 <div
                   style={{ background: CARD, borderTop: `1px solid ${BORDER}` }}
-                  className="flex items-center justify-end gap-2.5 px-4 py-3"
+                  className="result-buy-footer"
                 >
-                  <span style={{ color: BLUE_LINK }} className="text-sm font-semibold mr-auto">
+                  <span style={{ color: BLUE_LINK }} className="result-buy-price">
                     {conn.price}
                   </span>
                   <button
                     onClick={onBuy}
                     style={{ border: `1.5px solid ${BLUE_BTN}`, color: BLUE_LINK, borderRadius: 6 }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium hover:bg-[#026cb6]/10 active:opacity-85"
+                    className="result-buy-button"
                   >
                     <CartIcon />
                     Koupit
                   </button>
-                  {!presentation && <button
-                    style={{ border: `1.5px solid ${BORDER}`, borderRadius: 6, color: MUTED }}
-                    className="px-2 py-1.5 hover:bg-white/5"
-                  >
-                    <DotsIcon />
-                  </button>}
+                  <details className="result-buy-menu">
+                    <summary aria-label="Další možnosti nákupu"><DotsIcon /></summary>
+                    <div><button onClick={onPayNow}>Rovnou k platbě</button></div>
+                  </details>
                 </div>
               )}
             </div>
@@ -919,7 +1018,6 @@ export function SummaryScreen({
 }) {
   const chosenFare = purchaseFareOptions[selectedFare];
   const chosenTotal = chosenFare.price * passengers.length;
-  const missingNames = passengersMissingRequiredNames(passengers, requiredNameMode);
   const inlineFareRows = purchaseFareOptions.map((offer, index) => index !== selectedFare && (
     <div key={offer.title} className="checkout-offer">
       <div><strong>{offer.title}</strong><span>{offer.detail}</span></div>
@@ -940,27 +1038,6 @@ export function SummaryScreen({
       />
 
       <div className="flex-1 overflow-auto">
-        <div className="journey-passengers-summary">
-          <div className="journey-passengers">
-            <span className="journey-passenger-number" aria-label={`${passengers.length} cestujících`}>{passengers.length}</span>
-            <UsersIcon />
-            <button className="journey-passenger-main" onClick={onEditPassengers}>
-              <span className="journey-passenger-list">
-                {passengers.length <= 2 ? (
-                  passengers.map(passenger => <span key={passenger.uid}>{passengerLabel(passenger)}</span>)
-                ) : (
-                  <>
-                    <span>{passengerLabel(passengers[0])}</span>
-                    <span>{passengerLabel(passengers[1])} <span className="journey-passenger-more">+{passengers.length - 2} další</span></span>
-                  </>
-                )}
-              </span>
-            </button>
-            <button className="journey-edit-passengers" onClick={onEditPassengers}>{missingNames && <strong className="journey-required-mark" aria-label="Chybí údaje">!</strong>}Upravit</button>
-            {missingNames && <button className="flow-required-notice" onClick={onEditPassengers}>Dopravce vyžaduje doplnit údaje</button>}
-          </div>
-        </div>
-
         {/* Connection timing banner */}
         <div style={{ background: BAND }} className="px-4 py-2.5">
           <span className="text-white/90 text-sm font-medium">za 30 min</span>
@@ -1099,9 +1176,11 @@ export function SummaryScreen({
       >
         <button
           onClick={onEditPassengers}
-          className="flex items-center gap-2 hover:opacity-80 text-white"
+          className="summary-passenger-return flex items-center gap-2 hover:opacity-80 text-white"
           title="Upravit cestující"
+          aria-label={`Zpět na výběr cestujících, vybráno ${passengers.length}`}
         >
+          <ArrowLeft />
           <span className="text-sm font-semibold">{passengers.length}</span>
           <UsersIcon />
           <span className="text-base font-semibold ml-2">{chosenTotal} Kč</span>
@@ -1426,7 +1505,9 @@ export default function App() {
             multi={multi}
             onScenario={chooseScenario}
             onBuy={() => setScreen("summary")}
+            onPayNow={() => setScreen("payment")}
             passengerCount={passengers.length}
+            selectedPassengers={passengers}
             onOpenPassengers={() => { setPassengerReturn('results'); setRequireNames(false); setDesignVersion('v5.0'); setScreen('passengers'); }}
           />
         );
