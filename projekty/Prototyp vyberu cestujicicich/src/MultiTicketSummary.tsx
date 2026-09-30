@@ -18,9 +18,9 @@ export function JourneyResult({ onBuy }: { onBuy: () => void }) {
     <button className="flow-primary" onClick={onBuy}><span>Koupit 3 jízdenky</span><span>268 Kč →</span></button></div>
   </article>;
 }
-export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext, onTotalChange, requiredNameMode = 'all', collapsibleFares = false }: {
+export default function MultiTicketSummary({ summaryVersion, onSummaryVersionChange, passengers, activation, setActivation, ticketIds, setTicketIds, onBack, onEditPassengers, onNext, onTotalChange, requiredNameMode = 'all', collapsibleFares = false, showAlternativeFares = true }: {
   summaryVersion: SummaryVersion; onSummaryVersionChange: (version: SummaryVersion) => void;
-  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack?: () => void; onEditPassengers: () => void; onNext: () => void; onTotalChange?: (total: number) => void; requiredNameMode?: RequiredNameMode; collapsibleFares?: boolean;
+  activation: string; setActivation: (value: string) => void; passengers: Passenger[]; ticketIds: string[]; setTicketIds: (ids: string[]) => void; onBack?: () => void; onEditPassengers: () => void; onNext: () => void; onTotalChange?: (total: number) => void; requiredNameMode?: RequiredNameMode; collapsibleFares?: boolean; showAlternativeFares?: boolean;
 }) {
   const [removed, setRemoved] = useState<string | null>(null);
   const [activationOpen, setActivationOpen] = useState(false);
@@ -62,11 +62,11 @@ export default function MultiTicketSummary({ summaryVersion, onSummaryVersionCha
         </div>
       </article>)}
       {!ticketIds.length && <div className="journey-padding"><p className="flow-empty">Nemáte vybranou žádnou jízdenku.</p><button className="flow-text-button" onClick={() => { setTicketIds(journeyTickets.map(t => t.id)); setRemoved(null); }}>Obnovit všechny úseky</button></div>}
-      {summaryVersion === 'v2' && !!ticketIds.length && (collapsibleFares
+      {showAlternativeFares && summaryVersion === 'v2' && !!ticketIds.length && (collapsibleFares
         ? <details className="inline-fares inline-fares-collapsible"><summary>Alternativní tarifní nabídky <span aria-hidden="true">▾</span></summary><div>{alternativeRows}</div></details>
         : <section className="inline-fares"><h2>Alternativní tarifní nabídky</h2>{alternativeRows}</section>)}
     </div>
-    {summaryVersion === 'v1' && !!ticketIds.length && <FareFab offers={[
+    {showAlternativeFares && summaryVersion === 'v1' && !!ticketIds.length && <FareFab offers={[
       { id: 'through', title: 'Jedna průběžná jízdenka', price: `${284 * passengers.length} Kč` },
       { id: 'day', title: 'Celodenní nabídka', price: `${319 * passengers.length} Kč` },
       { id: 'separate', title: 'Samostatné jízdenky', price: `${multiTotal(ticketIds, passengers.length)} Kč` },

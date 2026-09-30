@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
-import { purchaseFareOptions, ResultsScreen, SummaryScreen, PaymentScreen } from './App';
+import { FaresScreen, purchaseFareOptions, ResultsScreen, SummaryScreen, PaymentScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
 import PassengerFlow, { initialPassengers, loadPassengerMemory, savePassengerMemory, passengersMissingRequiredNames, SELF_PASSENGER_UID, type Passenger, type RequiredNameMode } from './PassengerFlow';
 
-type Screen = 'setup' | 'results' | 'summary' | 'passengers' | 'payment' | 'confirm';
+type Screen = 'setup' | 'results' | 'fares' | 'summary' | 'passengers' | 'payment' | 'confirm';
 type PrototypeConfig = {
   identity: 'signed-in' | 'anonymous';
   requiredNames: RequiredNameMode;
-  selectionControl: 'checkbox' | 'switch';
-  fareDisplay: 'fab' | 'inline' | 'collapsible';
+  fareDisplay: 'step' | 'fab' | 'inline' | 'collapsible';
   selectedOrder: 'top' | 'keep';
-  showConfirmButton: boolean;
-  showFormSaveButton: boolean;
 };
 
 const BG = '#00101d';
@@ -19,11 +16,8 @@ const HEADER = '#0365ac';
 const defaultConfig: PrototypeConfig = {
   identity: 'signed-in',
   requiredNames: 'all',
-  selectionControl: 'switch',
-  fareDisplay: 'fab',
+  fareDisplay: 'step',
   selectedOrder: 'keep',
-  showConfirmButton: false,
-  showFormSaveButton: false,
 };
 
 function SetupGroup({ title, value, options, onChange }: {
@@ -47,20 +41,11 @@ function SetupScreen({ config, onChange, onContinue }: { config: PrototypeConfig
       <SetupGroup title="Výzva k zadání údajů" value={config.requiredNames} onChange={value => set('requiredNames', value as RequiredNameMode)} options={[
         { value: 'none', label: 'Žádná' }, { value: 'holder', label: 'Držitel jízdenky' }, { value: 'all', label: 'Všichni cestující', defaultChoice: true },
       ]} />
-      <SetupGroup title="Aktivace cestujícího" value={config.selectionControl} onChange={value => set('selectionControl', value as PrototypeConfig['selectionControl'])} options={[
-        { value: 'checkbox', label: 'Checkboxy' }, { value: 'switch', label: 'Přepínače', defaultChoice: true },
-      ]} />
       <SetupGroup title="Alternativní tarifní nabídky" value={config.fareDisplay} onChange={value => set('fareDisplay', value as PrototypeConfig['fareDisplay'])} options={[
-        { value: 'fab', label: 'FAB button', defaultChoice: true }, { value: 'inline', label: 'Na hlavní stránce viditelné' }, { value: 'collapsible', label: 'Na hlavní stránce sbalitelné' },
+        { value: 'step', label: 'Samostatný krok', defaultChoice: true }, { value: 'fab', label: 'FAB button' }, { value: 'inline', label: 'Na hlavní stránce viditelné' }, { value: 'collapsible', label: 'Na hlavní stránce sbalitelné' },
       ]} />
       <SetupGroup title="Vybraný cestující" value={config.selectedOrder} onChange={value => set('selectedOrder', value as PrototypeConfig['selectedOrder'])} options={[
         { value: 'top', label: 'Přesunout nahoru v seznamu' }, { value: 'keep', label: 'Ponechat na místě' , defaultChoice: true },
-      ]} />
-      <SetupGroup title="Spodní tlačítko Potvrdit výběr" value={config.showConfirmButton ? 'show' : 'hide'} onChange={value => set('showConfirmButton', value === 'show')} options={[
-        { value: 'hide', label: 'Schovat', defaultChoice: true }, { value: 'show', label: 'Zobrazit' },
-      ]} />
-      <SetupGroup title="Spodní tlačítko Přidat cestujícího" value={config.showFormSaveButton ? 'show' : 'hide'} onChange={value => set('showFormSaveButton', value === 'show')} options={[
-        { value: 'hide', label: 'Schovat', defaultChoice: true }, { value: 'show', label: 'Zobrazit' },
       ]} />
     </div>
     <footer><button className="prototype-setup-start" onClick={onContinue}>Pokračovat k výběru spojení <span aria-hidden="true">→</span></button></footer>
@@ -125,7 +110,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
   const [ticketIds, setTicketIds] = useState(journeyTickets.map(t => t.id));
   const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
   const [selectedFare, setSelectedFare] = useState(0);
-  const [passengerReturn, setPassengerReturn] = useState<'results' | 'summary'>('summary');
+  const [passengerReturn, setPassengerReturn] = useState<'results' | 'fares' | 'summary'>('summary');
   const configuredSelf: Passenger = config.identity === 'signed-in' ? initialPassengers[0] : {
     ...initialPassengers[0], name: undefined, firstName: undefined, lastName: undefined,
   };
@@ -145,9 +130,11 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
   };
 
   const startPrototype = () => {
-    const scenarioPassengers = passengers.length
-      ? passengers.map(passenger => passenger.uid === SELF_PASSENGER_UID ? configuredSelf : passenger)
-      : [configuredSelf];
+    const scenarioPassengers = config.identity === 'anonymous'
+      ? [configuredSelf]
+      : passengers.length
+        ? passengers.map(passenger => passenger.uid === SELF_PASSENGER_UID ? configuredSelf : passenger)
+        : [configuredSelf];
     setMulti(false);
     setPassengers(scenarioPassengers);
     setAvailablePassengers([configuredSelf, ...availablePassengers.filter(passenger => passenger.uid !== SELF_PASSENGER_UID)]);
@@ -169,18 +156,19 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
     setScreen('payment');
   };
 
-  const openPassengers = (returnTo: 'results' | 'summary' = 'summary') => {
+  const openPassengers = (returnTo: 'results' | 'fares' | 'summary' = 'summary') => {
     setPassengerReturn(returnTo);
     setShowRequiredFields(config.requiredNames !== 'none');
     setScreen('passengers');
   };
 
   const startPurchase = () => {
+    const nextScreen = config.fareDisplay === 'step' ? 'fares' : 'summary';
     if (purchaseStartsWithPassengers) {
-      openPassengers('summary');
+      openPassengers(nextScreen);
       return;
     }
-    setScreen('summary');
+    setScreen(nextScreen);
   };
 
   const handleNavBack = () => {
@@ -189,7 +177,8 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
       return;
     }
     if (screen === 'results') setScreen('setup');
-    if (screen === 'summary') setScreen('results');
+    if (screen === 'fares') purchaseStartsWithPassengers ? openPassengers('fares') : setScreen('results');
+    if (screen === 'summary') setScreen(config.fareDisplay === 'step' ? 'fares' : 'results');
     if (screen === 'payment' || screen === 'confirm') setScreen('summary');
   };
 
@@ -242,6 +231,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
                 summaryVersion={config.fareDisplay === 'fab' ? 'v1' : 'v2'}
                 onSummaryVersionChange={() => {}}
                 collapsibleFares={config.fareDisplay === 'collapsible'}
+                showAlternativeFares={config.fareDisplay !== 'step'}
                 requiredNameMode={config.requiredNames}
                 activation={activation}
                 setActivation={setActivation}
@@ -259,13 +249,22 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
                 onSummaryVersionChange={() => {}}
                 presentation
                 collapsibleFares={config.fareDisplay === 'collapsible'}
+                showAlternativeFares={config.fareDisplay !== 'step'}
                 requiredNameMode={config.requiredNames}
                 passengers={passengers}
                 selectedFare={selectedFare}
                 onSelectFare={setSelectedFare}
-                onBack={() => setScreen('results')}
+                onBack={() => setScreen(config.fareDisplay === 'step' ? 'fares' : 'results')}
                 onEditPassengers={() => openPassengers('summary')}
                 onNext={proceedToPayment}
+              />
+            )}
+            {screen === 'fares' && (
+              <FaresScreen
+                onBack={() => purchaseStartsWithPassengers ? openPassengers('fares') : setScreen('results')}
+                onNext={() => setScreen('summary')}
+                selectedFare={selectedFare}
+                onSelectFare={setSelectedFare}
               />
             )}
             {screen === 'passengers' && (
@@ -276,11 +275,11 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
                 selfPassenger={configuredSelf}
                 version="v5.0"
                 requiredNameMode={showRequiredFields ? config.requiredNames : 'none'}
-                selectionControl={config.selectionControl}
+                selectionControl="switch"
                 moveSelectedToTop={config.selectedOrder === 'top'}
-                showConfirmButton={config.showConfirmButton || (purchaseStartsWithPassengers && passengerReturn === 'summary')}
-                confirmLabel={purchaseStartsWithPassengers && passengerReturn === 'summary' ? 'Pokračovat k jízdence' : undefined}
-                showFormSaveButton={config.showFormSaveButton}
+                showConfirmButton={purchaseStartsWithPassengers && (passengerReturn === 'fares' || passengerReturn === 'summary')}
+                confirmLabel={purchaseStartsWithPassengers && passengerReturn === 'fares' ? 'Pokračovat k nabídce' : purchaseStartsWithPassengers && passengerReturn === 'summary' ? 'Pokračovat k jízdence' : undefined}
+                showFormSaveButton={false}
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}

@@ -918,21 +918,20 @@ function PassengerScreen({ onBack, onNext }: { onBack: () => void; onNext: () =>
 // ─────────────────────────────────────────────────────────
 // SCREEN 4: Fare Offers / Nabídka jízdného (Screenshot 1)
 // ─────────────────────────────────────────────────────────
-function FaresScreen({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
-  const [selected, setSelected] = useState(0);
-
-  const offers = [
-    {
-      title: "Nabídka IDS",
-      price: "33 Kč",
-      description: "Nabídka s maximální možnou preferencí IDS tarifů",
-    },
-    {
-      title: "Jednodenní nabídka IDS",
-      price: "250 Kč",
-      description: "Jednodenní IDS jízdenka pokrývající oblast z vyhledaného spojení",
-    },
-  ];
+export function FaresScreen({ onBack, onNext, selectedFare, onSelectFare }: {
+  onBack: () => void;
+  onNext: () => void;
+  selectedFare?: number;
+  onSelectFare?: (index: number) => void;
+}) {
+  const [localSelected, setLocalSelected] = useState(0);
+  const selected = selectedFare ?? localSelected;
+  const setSelected = onSelectFare ?? setLocalSelected;
+  const offers = purchaseFareOptions.map(offer => ({
+    title: offer.title,
+    price: `${offer.price} Kč`,
+    description: offer.detail,
+  }));
 
   return (
     <div className="flex flex-col h-full" style={{ background: BG }}>
@@ -998,6 +997,7 @@ export function SummaryScreen({
   presentation = false,
   requiredNameMode = 'all',
   collapsibleFares = false,
+  showAlternativeFares = true,
   passengers,
   selectedFare,
   onSelectFare,
@@ -1009,6 +1009,7 @@ export function SummaryScreen({
   presentation?: boolean;
   requiredNameMode?: RequiredNameMode;
   collapsibleFares?: boolean;
+  showAlternativeFares?: boolean;
   passengers: Passenger[];
   selectedFare: number;
   onSelectFare: (index: number) => void;
@@ -1163,12 +1164,12 @@ export function SummaryScreen({
           </button>
         </div>
 
-        {summaryVersion === 'v2' && (collapsibleFares
+        {showAlternativeFares && summaryVersion === 'v2' && (collapsibleFares
           ? <details className="inline-fares inline-fares-collapsible"><summary>Alternativní tarifní nabídky <span aria-hidden="true">▾</span></summary><div>{inlineFareRows}</div></details>
           : <section className="inline-fares"><h2>Alternativní tarifní nabídky</h2>{inlineFareRows}</section>)}
       </div>
 
-      {summaryVersion === 'v1' && <FareFab offers={purchaseFareOptions.flatMap((offer, index) => index === selectedFare ? [] : [{ id: String(index), title: offer.title, price: `${offer.price * passengers.length} Kč`, onSelect: () => onSelectFare(index) }])} />}
+      {showAlternativeFares && summaryVersion === 'v1' && <FareFab offers={purchaseFareOptions.flatMap((offer, index) => index === selectedFare ? [] : [{ id: String(index), title: offer.title, price: `${offer.price * passengers.length} Kč`, onSelect: () => onSelectFare(index) }])} />}
       {/* Bottom bar */}
       <div
         style={{ background: HEADER }}
