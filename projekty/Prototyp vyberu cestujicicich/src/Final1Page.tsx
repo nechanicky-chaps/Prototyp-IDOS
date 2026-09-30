@@ -6,6 +6,7 @@ import PassengerFlow, { initialPassengers, loadPassengerMemory, savePassengerMem
 type Screen = 'setup' | 'results' | 'fares' | 'summary' | 'passengers' | 'payment' | 'confirm';
 type PrototypeConfig = {
   identity: 'signed-in' | 'anonymous';
+  passengerDisplay: 'bar' | 'icon';
   requiredNames: RequiredNameMode;
   fareDisplay: 'step' | 'fab' | 'inline' | 'collapsible';
   selectedOrder: 'top' | 'keep';
@@ -15,6 +16,7 @@ const BG = '#00101d';
 const HEADER = '#0365ac';
 const defaultConfig: PrototypeConfig = {
   identity: 'signed-in',
+  passengerDisplay: 'icon',
   requiredNames: 'all',
   fareDisplay: 'step',
   selectedOrder: 'keep',
@@ -37,6 +39,9 @@ function SetupScreen({ config, onChange, onContinue }: { config: PrototypeConfig
     <div className="prototype-setup-content">
       <SetupGroup title="Cestující" value={config.identity} onChange={value => set('identity', value as PrototypeConfig['identity'])} options={[
         { value: 'signed-in', label: 'Přihlášený', defaultChoice: true }, { value: 'anonymous', label: 'Nepřihlášený' },
+      ]} />
+      <SetupGroup title="Cestující ve spojení" value={config.passengerDisplay} onChange={value => set('passengerDisplay', value as PrototypeConfig['passengerDisplay'])} options={[
+        { value: 'bar', label: 'Lišta' }, { value: 'icon', label: 'Ikona', defaultChoice: true },
       ]} />
       <SetupGroup title="Výzva k zadání údajů" value={config.requiredNames} onChange={value => set('requiredNames', value as RequiredNameMode)} options={[
         { value: 'none', label: 'Žádná' }, { value: 'holder', label: 'Držitel jízdenky' }, { value: 'all', label: 'Všichni cestující', defaultChoice: true },
@@ -217,12 +222,14 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
               <ResultsScreen
                 multi={multi}
                 presentation
+                showSearchScope={false}
                 onScenario={chooseScenario}
                 onBuy={startPurchase}
                 onPayNow={() => setScreen('payment')}
                 onBack={() => setScreen('setup')}
                 passengerCount={passengers.length}
                 selectedPassengers={passengers}
+                passengerDisplay={config.passengerDisplay}
                 onOpenPassengers={() => openPassengers('results')}
               />
             )}

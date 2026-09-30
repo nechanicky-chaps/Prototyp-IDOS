@@ -538,8 +538,10 @@ export function ResultsScreen({
   onScenario,
   presentation = false,
   showScenarioTabs = !presentation,
+  showSearchScope = true,
   passengerCount = 1,
   selectedPassengers = [],
+  passengerDisplay = 'bar',
   onOpenPassengers,
 }: {
   onBack?: () => void;
@@ -549,8 +551,10 @@ export function ResultsScreen({
   onScenario: (multi: boolean) => void;
   presentation?: boolean;
   showScenarioTabs?: boolean;
+  showSearchScope?: boolean;
   passengerCount?: number;
   selectedPassengers?: Passenger[];
+  passengerDisplay?: 'bar' | 'icon';
   onOpenPassengers?: () => void;
 }) {
   const connections = [
@@ -713,6 +717,10 @@ export function ResultsScreen({
             <span className="text-white font-medium text-[19px] tracking-tight">Spojení</span>
           </div>
           <div className="result-header-actions">
+            {onOpenPassengers && passengerDisplay === 'icon' && <button className="result-passenger-icon" onClick={onOpenPassengers} aria-label={`Upravit cestující, vybráno ${passengerCount}`}>
+              <span>{passengerCount}</span>
+              <UsersIcon />
+            </button>}
             <button aria-label="Oblíbené spojení" className="result-favorite-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z" /></svg>
             </button>
@@ -722,13 +730,13 @@ export function ResultsScreen({
             </button>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 px-4 pb-2.5 text-white/95">
+        {showSearchScope && <div className="flex items-center gap-1.5 px-4 pb-2.5 text-white/95">
           <span className="text-[10px]">▼</span>
           <span className="text-sm font-normal">Brno + IDS JMK</span>
-        </div>
+        </div>}
       </div>
 
-      {onOpenPassengers && <button className="result-passenger-panel" onClick={onOpenPassengers} aria-label={`Upravit cestující, vybráno ${passengerCount}`}>
+      {onOpenPassengers && passengerDisplay === 'bar' && <button className="result-passenger-panel" onClick={onOpenPassengers} aria-label={`Upravit cestující, vybráno ${passengerCount}`}>
         <UsersIcon />
         <span className="result-passenger-panel-content">
           <span className="result-passenger-panel-title">{countLabel(passengerCount)}</span>

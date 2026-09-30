@@ -43,6 +43,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .result-header-actions { display: flex; align-items: center; color: #fff; }
 .result-header-actions button { display: grid; place-items: center; width: 44px; height: 44px; background: transparent; border: 0; color: inherit; }
 .result-header-actions .result-favorite-icon { color: #6ba7cc; }
+.result-header-actions .result-passenger-icon { display: inline-flex; align-items: center; justify-content: center; gap: 3px; color: #fff; }
+.result-passenger-icon span { min-width: 10px; font-size: 13px; line-height: 1; font-weight: 600; text-align: right; }
+.result-passenger-icon svg { width: 21px; height: 21px; }
 .results-screen { height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .results-topbar { position: relative; }
 .results-list { min-height: 0; padding-bottom: 24px; }
