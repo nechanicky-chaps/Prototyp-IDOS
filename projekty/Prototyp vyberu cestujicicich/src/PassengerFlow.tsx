@@ -137,14 +137,14 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   selfPassenger?: Passenger;
   confirmLabel?: string;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
   version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
-  onBack: () => void; onConfirm: (p: Passenger[]) => void;
+  onBack: () => void; onExitToResults?: (p: Passenger[]) => void; onConfirm: (p: Passenger[]) => void;
 }) {
   const [selected, setSelected] = useState(passengers);
   const [page, setPage] = useState<Page>('list');
@@ -268,7 +268,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   };
   const back = () => {
     if (page === 'list') {
-      if (version === 'v4.0' || version === 'v5.0') saveSelection();
+      if (onExitToResults) onExitToResults(selected);
+      else if (version === 'v4.0' || version === 'v5.0') saveSelection();
       else onBack();
     }
     else if (version === 'v4.0' || version === 'v5.0') {

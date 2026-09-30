@@ -290,7 +290,15 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}
-                onBack={() => setScreen(passengerReturn)}
+                onBack={() => {
+                  setShowRequiredFields(false);
+                  setScreen('results');
+                }}
+                onExitToResults={items => {
+                  setPassengers(items);
+                  setShowRequiredFields(false);
+                  setScreen('results');
+                }}
                 onConfirm={items => {
                   setPassengers(items);
                   setShowRequiredFields(false);
