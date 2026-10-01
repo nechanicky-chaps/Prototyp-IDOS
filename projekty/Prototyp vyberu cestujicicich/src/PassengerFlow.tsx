@@ -195,7 +195,22 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   };
   const startInlineAdd = () => {
     setFormError('');
-    setDraft({ uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: 'adult', passIds: ['none'] });
+    const passenger: Passenger = { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: 'adult', passIds: ['none'] };
+    if (inlineAddPresentation === 'sheet' && effectiveNameMode === 'none') {
+      if (selected.length >= MAX_SELECTED_PASSENGERS) {
+        setSelectionError(`Pro jednu cestu můžete vybrat nejvýše ${MAX_SELECTED_PASSENGERS} cestujících.`);
+        return;
+      }
+      if (localPassengers.length >= MAX_LOCAL_PASSENGERS) {
+        setSelectionError(`Můžete mít nejvýše ${MAX_LOCAL_PASSENGERS} neoblíbených cestujících.`);
+        return;
+      }
+      setSelectionError('');
+      setSelected(items => [...items, passenger]);
+      onSaveAvailablePassengers([...availablePassengers, passenger]);
+      return;
+    }
+    setDraft(passenger);
     setEditing(false);
     setSaveFavorite(false);
     setInlineFormMode('add');
@@ -462,7 +477,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
             {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
             <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline showFavoriteName={inlineFormMode === 'favorite'} onDelete={() => {}} />
             <footer>
-              {inlineFormMode === 'edit' && draft.uid !== SELF_PASSENGER_UID && <button className="flow-inline-delete" onClick={() => setPassengerDeletion(draft)}>Smazat cestujícího</button>}
+              {inlineFormMode === 'edit' && draft.uid !== SELF_PASSENGER_UID && <button className="flow-inline-delete" onClick={() => setPassengerDeletion(draft)}>Odebrat cestujícího</button>}
               <button onClick={() => setInlineAddOpen(false)}>Zrušit</button>
               <button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>{inlineFormMode === 'add' ? 'Přidat cestujícího' : inlineFormMode === 'favorite' && !favoriteIds.has(draft.uid) ? 'Uložit do oblíbených' : 'Uložit změny'}</button>
             </footer>
@@ -595,9 +610,9 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       </div>}
       {passengerDeletion && <div className="flow-confirm-scrim" onClick={() => setPassengerDeletion(null)}>
         <section className="flow-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="passenger-deletion-title" onClick={event => event.stopPropagation()}>
-          <h2 id="passenger-deletion-title">Smazat cestujícího?</h2>
+          <h2 id="passenger-deletion-title">Odebrat cestujícího?</h2>
           <p>Cestující <strong>{passengerLabel(passengerDeletion)}</strong> bude odstraněn ze zařízení i z tohoto výběru.</p>
-          <footer><button onClick={() => setPassengerDeletion(null)}>Zrušit</button><button className="flow-confirm-remove" onClick={confirmPassengerDeletion}>Smazat</button></footer>
+          <footer><button onClick={() => setPassengerDeletion(null)}>Zrušit</button><button className="flow-confirm-remove" onClick={confirmPassengerDeletion}>Odebrat</button></footer>
         </section>
       </div>}
     </section>
@@ -679,7 +694,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
       <label className="flow-save"><input type="checkbox" checked={favoriteLocked || saveFavorite} disabled={favoriteLocked} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
       {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
     </>}
-    {editing && !favoriteLocked && <button type="button" className="flow-delete-passenger" onClick={onDelete}>Smazat cestujícího</button>}
+    {editing && !favoriteLocked && <button type="button" className="flow-delete-passenger" onClick={onDelete}>Odebrat cestujícího</button>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
       <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>{picker === 'category' && <button aria-label="Zavřít nabídku" onClick={closePicker}>×</button>}</header>
       <div className="flow-v5-picker-content">
