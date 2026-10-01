@@ -137,13 +137,13 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, listDensity = 'comfortable', addPassengerControl = 'text', inlineAdd = false, showInlineAddTitle = true, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, listDensity = 'comfortable', addPassengerControl = 'text', inlineAdd = false, showInlineAddTitle = true, inlineAddPresentation = 'inline', onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   selfPassenger?: Passenger;
   confirmLabel?: string;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
-  listDensity?: 'comfortable' | 'compact'; addPassengerControl?: 'text' | 'plus'; inlineAdd?: boolean; showInlineAddTitle?: boolean;
+  listDensity?: 'comfortable' | 'compact'; addPassengerControl?: 'text' | 'plus'; inlineAdd?: boolean; showInlineAddTitle?: boolean; inlineAddPresentation?: 'inline' | 'sheet';
   version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
   onBack: () => void; onExitToResults?: (p: Passenger[]) => void; onConfirm: (p: Passenger[]) => void;
 }) {
@@ -427,12 +427,14 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               </div>;
             })}
           </div>
-          {inlineAdd && inlineAddOpen && <section ref={inlineAddSection} className="flow-inline-add" aria-labelledby={showInlineAddTitle ? 'inline-add-title' : undefined} aria-label={showInlineAddTitle ? undefined : 'Přidat cestujícího'}>
+          {inlineAdd && inlineAddOpen && <div className={inlineAddPresentation === 'sheet' ? 'flow-inline-add-layer flow-inline-add-layer--sheet' : 'flow-inline-add-layer'} onClick={inlineAddPresentation === 'sheet' ? () => setInlineAddOpen(false) : undefined}>
+            <section ref={inlineAddSection} className={`flow-inline-add${inlineAddPresentation === 'sheet' ? ' flow-inline-add--sheet' : ''}`} role={inlineAddPresentation === 'sheet' ? 'dialog' : undefined} aria-modal={inlineAddPresentation === 'sheet' ? true : undefined} aria-labelledby={showInlineAddTitle ? 'inline-add-title' : undefined} aria-label={showInlineAddTitle ? undefined : 'Přidat cestujícího'} onClick={inlineAddPresentation === 'sheet' ? event => event.stopPropagation() : undefined}>
             {showInlineAddTitle && <header><h2 id="inline-add-title">Přidat cestujícího</h2><button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>}
             {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
             <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline onDelete={() => {}} />
             <footer><button onClick={() => setInlineAddOpen(false)}>Zrušit</button><button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>Přidat cestujícího</button></footer>
-          </section>}
+            </section>
+          </div>}
           {addPassengerControl === 'text' && <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span> Přidat dalšího cestujícího</button>}
         </> : page === 'list' ? <>
           {!selected.length && <p className="flow-empty">Zatím není nikdo vybraný. Přidejte alespoň jednoho cestujícího.</p>}
