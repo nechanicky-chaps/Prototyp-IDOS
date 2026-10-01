@@ -203,15 +203,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     if (inlineAddPresentation === 'inline') requestAnimationFrame(() => inlineAddSection.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
   const startInlineEditor = (passenger: Passenger, favorite: boolean, mode: 'edit' | 'favorite') => {
-    const fallbackFavoriteName = passenger.name?.trim()
-      || passenger.firstName?.trim()
-      || categories.find(category => category.id === passenger.catId)?.label
-      || 'Cestující';
     setFormError('');
     setDraft({
       ...passenger,
       age: passenger.catId === 'adult' ? undefined : passenger.age,
-      name: mode === 'favorite' ? fallbackFavoriteName : passenger.name,
+      name: mode === 'favorite' ? '' : passenger.name,
     });
     setEditing(true);
     setSaveFavorite(mode === 'favorite' || favorite);
