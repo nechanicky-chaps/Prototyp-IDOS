@@ -115,8 +115,8 @@ export const hasPassengerName = (p: Passenger) => !!p.firstName?.trim() && !!p.l
 export type RequiredNameMode = 'none' | 'holder' | 'all';
 export const passengersMissingRequiredNames = (passengers: Passenger[], mode: RequiredNameMode) => {
   if (mode === 'none') return false;
-  const required = mode === 'holder' ? passengers.slice(0, 1) : passengers;
-  return required.some(passenger => !hasPassengerName(passenger));
+  if (mode === 'holder') return !passengers.some(hasPassengerName);
+  return passengers.some(passenger => !hasPassengerName(passenger));
 };
 export const countLabel = (n: number) => `${n} ${n > 0 && n < 5 ? 'cestující' : 'cestujících'}`;
 // Deliberately a fixed demonstration price, not a tariff calculation.
@@ -167,8 +167,9 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const effectiveNameMode: RequiredNameMode = requiredNameMode ?? (requireNames ? 'all' : 'none');
-  const needsName = (passenger: Passenger) => effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && selected[0]?.uid === passenger.uid);
-  const draftNeedsName = effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && (!selected.length || selected[0]?.uid === draft.uid));
+  const hasNamedHolder = selected.some(hasPassengerName);
+  const needsName = (passenger: Passenger) => effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && !hasNamedHolder && selected[0]?.uid === passenger.uid);
+  const draftNeedsName = effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && !selected.some(passenger => passenger.uid !== draft.uid && hasPassengerName(passenger)));
   const favoriteIds = new Set(favorites.map(item => item.uid));
   const localPassengers = availablePassengers.filter(item => item.uid !== SELF_PASSENGER_UID && !favoriteIds.has(item.uid));
   useEffect(() => { heading.current?.focus(); content.current?.scrollTo(0, 0); }, [page]);
@@ -196,7 +197,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const startInlineAdd = () => {
     setFormError('');
     const passenger: Passenger = { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: 'adult', passIds: ['none'] };
-    if (inlineAddPresentation === 'sheet' && effectiveNameMode === 'none') {
+    if (inlineAddPresentation === 'sheet' && (effectiveNameMode === 'none' || (effectiveNameMode === 'holder' && hasNamedHolder))) {
       if (selected.length >= MAX_SELECTED_PASSENGERS) {
         setSelectionError(`Pro jednu cestu můžete vybrat nejvýše ${MAX_SELECTED_PASSENGERS} cestujících.`);
         return;
@@ -308,9 +309,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       content.current?.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const missingName = selected.find(passenger => needsName(passenger) && !hasPassengerName(passenger));
-    if (missingName) {
-      setSelectionError(`Doplňte jméno a příjmení pro cestujícího ${passengerLabel(missingName)}.`);
+    if (passengersMissingRequiredNames(selected, effectiveNameMode)) {
+      const missingName = selected.find(passenger => !hasPassengerName(passenger))!;
+      setSelectionError(effectiveNameMode === 'holder'
+        ? 'Doplňte jméno a příjmení alespoň jednoho vybraného cestujícího jako držitele jízdenky.'
+        : `Doplňte jméno a příjmení pro cestujícího ${passengerLabel(missingName)}.`);
       requestAnimationFrame(() => {
         const input = content.current?.querySelector<HTMLInputElement>('input[required]:invalid');
         input?.focus();
