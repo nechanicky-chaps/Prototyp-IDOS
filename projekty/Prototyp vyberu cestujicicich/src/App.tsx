@@ -926,11 +926,12 @@ function PassengerScreen({ onBack, onNext }: { onBack: () => void; onNext: () =>
 // ─────────────────────────────────────────────────────────
 // SCREEN 4: Fare Offers / Nabídka jízdného (Screenshot 1)
 // ─────────────────────────────────────────────────────────
-export function FaresScreen({ onBack, onNext, selectedFare, onSelectFare }: {
+export function FaresScreen({ onBack, onNext, selectedFare, onSelectFare, selectAdvances = false }: {
   onBack: () => void;
   onNext: () => void;
   selectedFare?: number;
   onSelectFare?: (index: number) => void;
+  selectAdvances?: boolean;
 }) {
   const [localSelected, setLocalSelected] = useState(0);
   const selected = selectedFare ?? localSelected;
@@ -961,7 +962,10 @@ export function FaresScreen({ onBack, onNext, selectedFare, onSelectFare }: {
                   Detail nabídky
                 </button>
                 <button
-                  onClick={() => setSelected(i)}
+                  onClick={() => {
+                    setSelected(i);
+                    if (selectAdvances) onNext();
+                  }}
                   style={{
                     background: selected === i ? BLUE_BTN : "#ffffff",
                     color: selected === i ? "#ffffff" : "#0365ac",

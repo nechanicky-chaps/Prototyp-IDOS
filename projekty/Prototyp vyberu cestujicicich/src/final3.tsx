@@ -5,6 +5,6 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Final1Page purchaseStartsWithPassengers passengerListDensity="compact" addPassengerControl="plus" inlinePassengerAdd />
+    <Final1Page purchaseStartsWithPassengers passengerListDensity="compact" addPassengerControl="plus" inlinePassengerAdd fareSelectAdvances />
   </React.StrictMode>,
 );
