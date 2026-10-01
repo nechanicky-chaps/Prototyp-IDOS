@@ -137,7 +137,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-inline-add .flow-v5-name-fields label { margin-bottom: 8px; }
 .flow-inline-add .flow-v5-name-fields input { margin-top: 0; }
 .flow-inline-add .flow-v5-favorite-name label { margin-bottom: 8px; }
-.flow-inline-add .flow-v5-favorite-name input { margin-top: 0; }
+.flow-inline-add .flow-v5-favorite-name input { margin-top: 0; font-weight: 700; }
 .flow-inline-add .flow-v5-passes { margin-top: 4px; }
 .flow-inline-add .flow-v5-extra { margin-top: 4px; }
 .flow-inline-add .flow-save { padding: 12px 2px; }

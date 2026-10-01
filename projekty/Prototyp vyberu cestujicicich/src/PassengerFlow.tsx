@@ -218,6 +218,16 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setInlineFormMode(mode);
     setInlineAddOpen(true);
   };
+  const removeFavoriteImmediately = (passenger: Passenger) => {
+    if (passenger.uid === SELF_PASSENGER_UID) return;
+    if (localPassengers.length >= MAX_LOCAL_PASSENGERS) {
+      setSelectionError(`Nejprve smažte některého z ${MAX_LOCAL_PASSENGERS} neoblíbených cestujících.`);
+      return;
+    }
+    setSelectionError('');
+    if (!availablePassengers.some(item => item.uid === passenger.uid)) onSaveAvailablePassengers([...availablePassengers, passenger]);
+    onSaveFavorites(favorites.filter(item => item.uid !== passenger.uid));
+  };
   const toggleFavorite = (p: Passenger) => {
     if (p.uid === SELF_PASSENGER_UID) return;
     if (favorites.some(f => f.uid === p.uid)) {
@@ -432,8 +442,8 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
                 <button className="flow-star flow-v2-star" aria-pressed={favorite}
                   disabled={passenger.uid === SELF_PASSENGER_UID}
-                  aria-label={passenger.uid === SELF_PASSENGER_UID ? (selfPassenger.name ? 'Já je vždy v oblíbených' : 'Výchozí cestující je vždy v oblíbených') : inlineAdd && inlineAddPresentation === 'sheet' ? `${favorite ? 'Upravit oblíbeného cestujícího' : 'Přidat do oblíbených'}: ${label}` : `${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
-                  onClick={() => inlineAdd && inlineAddPresentation === 'sheet' ? startInlineEditor(passenger, favorite, 'favorite') : toggleFavorite(passenger)}>
+                  aria-label={passenger.uid === SELF_PASSENGER_UID ? (selfPassenger.name ? 'Já je vždy v oblíbených' : 'Výchozí cestující je vždy v oblíbených') : `${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
+                  onClick={() => inlineAdd && inlineAddPresentation === 'sheet' ? favorite ? removeFavoriteImmediately(passenger) : startInlineEditor(passenger, favorite, 'favorite') : toggleFavorite(passenger)}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
                 </button>
                 <span className="flow-v2-avatar" aria-hidden="true" />
