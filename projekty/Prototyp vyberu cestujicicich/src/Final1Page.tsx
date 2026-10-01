@@ -102,11 +102,12 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
   );
 }
 
-export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text', inlinePassengerAdd = false, fareSelectAdvances = false }: {
+export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text', inlinePassengerAdd = false, showInlineAddTitle = true, fareSelectAdvances = false }: {
   purchaseStartsWithPassengers?: boolean;
   passengerListDensity?: 'comfortable' | 'compact';
   addPassengerControl?: 'text' | 'plus';
   inlinePassengerAdd?: boolean;
+  showInlineAddTitle?: boolean;
   fareSelectAdvances?: boolean;
 }) {
   const passengerMemory = loadPassengerMemory();
@@ -297,6 +298,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 listDensity={passengerListDensity}
                 addPassengerControl={addPassengerControl}
                 inlineAdd={inlinePassengerAdd}
+                showInlineAddTitle={showInlineAddTitle}
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}
