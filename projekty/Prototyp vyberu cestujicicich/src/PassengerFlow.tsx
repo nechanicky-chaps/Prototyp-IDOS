@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 export type Passenger = { uid: string; catId: string; passIds: string[]; age?: number; name?: string; firstName?: string; lastName?: string; passNumber?: string; birthDate?: string };
 export const MAX_FAVORITE_PASSENGERS = 6;
@@ -230,6 +230,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setSaveFavorite(mode === 'favorite' || favorite);
     setInlineFormMode(mode);
     setInlineAddOpen(true);
+    if (inlineAddPresentation === 'inline') requestAnimationFrame(() => inlineAddSection.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
   };
   const removeFavoriteImmediately = (passenger: Passenger) => {
     if (passenger.uid === SELF_PASSENGER_UID) return;
@@ -238,6 +239,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       return;
     }
     const passengerWithoutNickname = { ...passenger, name: undefined };
+    if (inlineAddOpen && draft.uid === passenger.uid) setInlineAddOpen(false);
     setSelectionError('');
     setSelected(items => items.map(item => item.uid === passenger.uid ? passengerWithoutNickname : item));
     onSaveAvailablePassengers(availablePassengers.some(item => item.uid === passenger.uid)
@@ -424,6 +426,18 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     { passenger: availablePassengers.find(p => p.uid === SELF_PASSENGER_UID) || favorites.find(p => p.uid === SELF_PASSENGER_UID) || selfPassenger, label: selfPassenger.name || categories.find(c => c.id === selfPassenger.catId)?.label || 'Cestující', favorite: true },
     ...orderedRows,
   ];
+  const inlineEditor = inlineAdd && inlineAddOpen ? <div className={inlineAddPresentation === 'sheet' ? 'flow-inline-add-layer flow-inline-add-layer--sheet' : 'flow-inline-add-layer'} onClick={inlineAddPresentation === 'sheet' ? () => setInlineAddOpen(false) : undefined}>
+    <section ref={inlineAddSection} className={`flow-inline-add${inlineAddPresentation === 'sheet' ? ' flow-inline-add--sheet' : ''}`} role={inlineAddPresentation === 'sheet' ? 'dialog' : undefined} aria-modal={inlineAddPresentation === 'sheet' ? true : undefined} aria-label={inlineFormMode === 'add' ? 'Přidat cestujícího' : inlineFormMode === 'favorite' ? 'Oblíbený cestující' : 'Upravit cestujícího'} onClick={inlineAddPresentation === 'sheet' ? event => event.stopPropagation() : undefined}>
+      {showInlineAddTitle && <header><h2>{inlineFormMode === 'add' ? 'Přidat cestujícího' : 'Upravit cestujícího'}</h2><button aria-label="Zavřít formulář cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>}
+      {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
+      <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={draft.uid === SELF_PASSENGER_UID} nameRequired={draftNeedsName} minimalInline showFavoriteName={inlineFormMode === 'favorite' || (inlineAddPresentation === 'inline' && saveFavorite)} onDelete={() => {}} />
+      <footer>
+        {inlineFormMode === 'edit' && draft.uid !== SELF_PASSENGER_UID && <button className="flow-inline-delete" onClick={() => setPassengerDeletion(draft)}>Odebrat cestujícího</button>}
+        <button onClick={() => setInlineAddOpen(false)}>Zrušit</button>
+        <button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>{inlineFormMode === 'add' ? 'Přidat cestujícího' : inlineFormMode === 'favorite' && !favoriteIds.has(draft.uid) ? 'Uložit do oblíbených' : 'Uložit změny'}</button>
+      </footer>
+    </section>
+  </div> : null;
   return (
     <section className={`passenger-flow ${listDensity === 'compact' ? 'passenger-flow-compact' : ''}`}>
       <div className="flow-version-switch" role="group" aria-label="Verze návrhu">
@@ -458,35 +472,25 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           <div className="flow-v2-list">
             {v2Rows.map(({ passenger, label, favorite }) => {
               const active = selected.some(item => item.uid === passenger.uid);
-              return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
+              const expandedInline = inlineAdd && inlineAddPresentation === 'inline' && inlineAddOpen && inlineFormMode !== 'add' && draft.uid === passenger.uid;
+              return <Fragment key={passenger.uid}><div className={`flow-v2-person ${active ? 'selected' : ''}`}>
                 <button className="flow-star flow-v2-star" aria-pressed={favorite}
                   disabled={passenger.uid === SELF_PASSENGER_UID}
                   aria-label={passenger.uid === SELF_PASSENGER_UID ? (selfPassenger.name ? 'Já je vždy v oblíbených' : 'Výchozí cestující je vždy v oblíbených') : `${favorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}: ${label}`}
-                  onClick={() => inlineAdd && inlineAddPresentation === 'sheet' ? favorite ? removeFavoriteImmediately(passenger) : startInlineEditor(passenger, favorite, 'favorite') : toggleFavorite(passenger)}>
+                  onClick={() => inlineAdd ? favorite ? removeFavoriteImmediately(passenger) : startInlineEditor(passenger, favorite, 'favorite') : toggleFavorite(passenger)}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill={favorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z" /></svg>
                 </button>
                 <span className="flow-v2-avatar" aria-hidden="true" />
-                {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => inlineAdd && inlineAddPresentation === 'sheet' ? startInlineEditor(passenger, favorite, 'edit') : start(passenger, favorite)}><strong>{label}</strong><small><span>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</span>{hasPassengerName(passenger) && <span className="flow-passenger-name">{passengerFullName(passenger)}</span>}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</small></span>}
+                {version === 'v5.0' ? <button className="flow-v2-info flow-edit-person" aria-label={`Upravit ${label}`} onClick={() => inlineAdd ? startInlineEditor(passenger, favorite, 'edit') : start(passenger, favorite)}><strong>{label}</strong><small><span>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</span>{hasPassengerName(passenger) && <span className="flow-passenger-name">{passengerFullName(passenger)}</span>}</small></button> : <span className="flow-v2-info"><strong>{label}</strong><small>{passenger.name ? `${categories.find(c => c.id === passenger.catId)?.label} · ${passLabels(passenger)}` : passLabels(passenger)}</small></span>}
                 {version === 'v5.0' && selectionControl === 'checkbox' ? <label className="flow-select-person"><input type="checkbox" checked={active} aria-label={`Cestuje ${label}`} onChange={() => toggleSelected(passenger)} /></label> : <button className="flow-switch" role="switch" aria-checked={active} aria-label={`${active ? 'Odebrat' : 'Vybrat'} ${label}`} onClick={() => toggleSelected(passenger)}><span /></button>}
-                {active && needsName(passenger) && (!hasPassengerName(passenger) || editingNameIds.has(passenger.uid)) && <div className="flow-quick-names flow-fields">
+                {!expandedInline && active && needsName(passenger) && (!hasPassengerName(passenger) || editingNameIds.has(passenger.uid)) && <div className="flow-quick-names flow-fields">
                   <label>Jméno <span>*</span><input required autoComplete="given-name" aria-label={`Jméno: ${label}`} value={passenger.firstName || ''} onChange={e => updateName(passenger, 'firstName', e.target.value)} /></label>
                   <label>Příjmení <span>*</span><input required autoComplete="family-name" aria-label={`Příjmení: ${label}`} value={passenger.lastName || ''} onChange={e => updateName(passenger, 'lastName', e.target.value)} /></label>
                 </div>}
-              </div>;
+              </div>{expandedInline && inlineEditor}</Fragment>;
             })}
           </div>
-          {inlineAdd && inlineAddOpen && <div className={inlineAddPresentation === 'sheet' ? 'flow-inline-add-layer flow-inline-add-layer--sheet' : 'flow-inline-add-layer'} onClick={inlineAddPresentation === 'sheet' ? () => setInlineAddOpen(false) : undefined}>
-            <section ref={inlineAddSection} className={`flow-inline-add${inlineAddPresentation === 'sheet' ? ' flow-inline-add--sheet' : ''}`} role={inlineAddPresentation === 'sheet' ? 'dialog' : undefined} aria-modal={inlineAddPresentation === 'sheet' ? true : undefined} aria-labelledby={showInlineAddTitle ? 'inline-add-title' : undefined} aria-label={showInlineAddTitle ? undefined : inlineFormMode === 'add' ? 'Přidat cestujícího' : inlineFormMode === 'favorite' ? 'Oblíbený cestující' : 'Upravit cestujícího'} onClick={inlineAddPresentation === 'sheet' ? event => event.stopPropagation() : undefined}>
-            {showInlineAddTitle && <header><h2 id="inline-add-title">Přidat cestujícího</h2><button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>}
-            {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
-            <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline showFavoriteName={inlineFormMode === 'favorite'} onDelete={() => {}} />
-            <footer>
-              {inlineFormMode === 'edit' && draft.uid !== SELF_PASSENGER_UID && <button className="flow-inline-delete" onClick={() => setPassengerDeletion(draft)}>Odebrat cestujícího</button>}
-              <button onClick={() => setInlineAddOpen(false)}>Zrušit</button>
-              <button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>{inlineFormMode === 'add' ? 'Přidat cestujícího' : inlineFormMode === 'favorite' && !favoriteIds.has(draft.uid) ? 'Uložit do oblíbených' : 'Uložit změny'}</button>
-            </footer>
-            </section>
-          </div>}
+          {(inlineAddPresentation === 'sheet' || inlineFormMode === 'add') && inlineEditor}
           {addPassengerControl === 'text' && <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span> Přidat dalšího cestujícího</button>}
         </> : page === 'list' ? <>
           {!selected.length && <p className="flow-empty">Zatím není nikdo vybraný. Přidejte alespoň jednoho cestujícího.</p>}
