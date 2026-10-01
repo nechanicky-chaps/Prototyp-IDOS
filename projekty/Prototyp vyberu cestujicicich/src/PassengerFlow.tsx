@@ -430,7 +430,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           {inlineAdd && inlineAddOpen && <section ref={inlineAddSection} className="flow-inline-add" aria-labelledby="inline-add-title">
             <header><h2 id="inline-add-title">Přidat cestujícího</h2><button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>
             {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
-            <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} onDelete={() => {}} />
+            <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline onDelete={() => {}} />
             <footer><button onClick={() => setInlineAddOpen(false)}>Zrušit</button><button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>Přidat cestujícího</button></footer>
           </section>}
           {addPassengerControl === 'text' && <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span> Přidat dalšího cestujícího</button>}
@@ -569,10 +569,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   );
 }
 
-function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, onDelete }: {
+function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, onDelete }: {
   draft: Passenger; setDraft: (p: Passenger) => void;
   saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean; favoriteLocked: boolean;
-  nameRequired: boolean; onDelete: () => void;
+  nameRequired: boolean; minimalInline?: boolean; onDelete: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
@@ -600,22 +600,44 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
       setPendingPasses(next.length ? next : ['none']);
     }} /><span>{pass.label}</span>
   </label>;
-  return <>
-    {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
+  const categorySelector = <>
     <div className="flow-v5-label">Vybraná kategorie</div>
     <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span className="flow-extra-arrow" aria-hidden="true" /></button>
-    <details className="flow-disclosure flow-v5-extra" open={nameRequired || undefined}>
-      <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
-      <div className="flow-fields">
-        <label>Jméno {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
-        <label>Příjmení {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
-        <label>Datum narození <small>volitelné</small><input type="date" autoComplete="bday" value={draft.birthDate || ''} onChange={e => setDraft({ ...draft, birthDate: e.target.value })} /></label>
-        <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
-      </div>
-    </details>
-    <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span><span className="flow-extra-arrow" aria-hidden="true" /></button>
-    <label className="flow-save"><input type="checkbox" checked={favoriteLocked || saveFavorite} disabled={favoriteLocked} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
-    {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
+  </>;
+  const nameFields = <div className="flow-fields flow-v5-name-fields">
+    <label>Jméno {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
+    <label>Příjmení {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
+  </div>;
+  const passSelector = <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>{minimalInline ? 'Slevový průkaz' : 'Slevové průkazy'}</strong><small>{passLabels(draft)}</small></span><span className="flow-extra-arrow" aria-hidden="true" /></button>;
+  return <>
+    {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
+    {minimalInline ? <>
+      {nameFields}
+      {passSelector}
+      <details className="flow-disclosure flow-v5-extra">
+        <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
+        <div className="flow-v5-extra-content">
+          {categorySelector}
+          <div className="flow-fields">
+            <label>Datum narození <small>volitelné</small><input type="date" autoComplete="bday" value={draft.birthDate || ''} onChange={e => setDraft({ ...draft, birthDate: e.target.value })} /></label>
+            <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
+          </div>
+        </div>
+      </details>
+    </> : <>
+      {categorySelector}
+      <details className="flow-disclosure flow-v5-extra" open={nameRequired || undefined}>
+        <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
+        {nameFields}
+        <div className="flow-fields">
+          <label>Datum narození <small>volitelné</small><input type="date" autoComplete="bday" value={draft.birthDate || ''} onChange={e => setDraft({ ...draft, birthDate: e.target.value })} /></label>
+          <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
+        </div>
+      </details>
+      {passSelector}
+      <label className="flow-save"><input type="checkbox" checked={favoriteLocked || saveFavorite} disabled={favoriteLocked} onChange={e => setSaveFavorite(e.target.checked)} /><span><strong>Uložit do oblíbených</strong></span></label>
+      {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
+    </>}
     {editing && !favoriteLocked && <button type="button" className="flow-delete-passenger" onClick={onDelete}>Smazat cestujícího</button>}
     {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
       <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>{picker === 'category' && <button aria-label="Zavřít nabídku" onClick={closePicker}>×</button>}</header>
