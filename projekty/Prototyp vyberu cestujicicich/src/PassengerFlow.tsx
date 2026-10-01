@@ -428,7 +428,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
             })}
           </div>
           {inlineAdd && inlineAddOpen && <section ref={inlineAddSection} className="flow-inline-add" aria-labelledby={showInlineAddTitle ? 'inline-add-title' : undefined} aria-label={showInlineAddTitle ? undefined : 'Přidat cestujícího'}>
-            <header>{showInlineAddTitle && <h2 id="inline-add-title">Přidat cestujícího</h2>}<button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>
+            {showInlineAddTitle && <header><h2 id="inline-add-title">Přidat cestujícího</h2><button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>}
             {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
             <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline onDelete={() => {}} />
             <footer><button onClick={() => setInlineAddOpen(false)}>Zrušit</button><button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>Přidat cestujícího</button></footer>
