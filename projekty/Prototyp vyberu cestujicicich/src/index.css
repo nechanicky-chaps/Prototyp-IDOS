@@ -123,9 +123,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .passenger-flow-compact .flow-v2-info small { display: flex; gap: 5px; min-width: 0; margin-top: 1px; font-size: 10px; line-height: 14px; white-space: nowrap; overflow: hidden; }
 .passenger-flow-compact .flow-v2-info small > span { display: inline; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .passenger-flow-compact .flow-v2-info .flow-passenger-name { margin-top: 0; color: #85a5ba; font-size: 10px; }
-.passenger-flow-compact .flow-switch { grid-column: 3; justify-self: center; width: 22px; height: 12px; }
-.passenger-flow-compact .flow-switch span { top: 1px; left: 1px; width: 8px; height: 8px; }
-.passenger-flow-compact .flow-switch[aria-checked="true"] span { transform: translateX(10px); }
+.passenger-flow-compact .flow-switch { grid-column: 3; justify-self: center; width: 25px; height: 14px; }
+.passenger-flow-compact .flow-switch span { top: 1px; left: 1px; width: 10px; height: 10px; }
+.passenger-flow-compact .flow-switch[aria-checked="true"] span { transform: translateX(11px); }
 .passenger-flow-compact .flow-quick-names { grid-column: 1 / -1; margin: 4px 4px 8px; }
 .flow-inline-add { padding: 12px; border-bottom: 1px solid #195277; background: #001424; }
 .flow-inline-add > header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
