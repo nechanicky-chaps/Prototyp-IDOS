@@ -220,6 +220,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     if (inlineAddPresentation === 'inline') requestAnimationFrame(() => inlineAddSection.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
   const startInlineEditor = (passenger: Passenger, favorite: boolean, mode: 'edit' | 'favorite') => {
+    if (inlineAddPresentation === 'inline' && inlineAddOpen && inlineFormMode !== 'add' && draft.uid === passenger.uid && mode === 'edit') {
+      setInlineAddOpen(false);
+      setFormError('');
+      return;
+    }
     setFormError('');
     setDraft({
       ...passenger,
