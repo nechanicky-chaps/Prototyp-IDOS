@@ -137,13 +137,13 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, listDensity = 'comfortable', addPassengerControl = 'text', onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, listDensity = 'comfortable', addPassengerControl = 'text', inlineAdd = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   selfPassenger?: Passenger;
   confirmLabel?: string;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
-  listDensity?: 'comfortable' | 'compact'; addPassengerControl?: 'text' | 'plus';
+  listDensity?: 'comfortable' | 'compact'; addPassengerControl?: 'text' | 'plus'; inlineAdd?: boolean;
   version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
   onBack: () => void; onExitToResults?: (p: Passenger[]) => void; onConfirm: (p: Passenger[]) => void;
 }) {
@@ -153,9 +153,11 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const [saveFavorite, setSaveFavorite] = useState(false);
   const [editing, setEditing] = useState(false);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
+  const [inlineAddOpen, setInlineAddOpen] = useState(false);
   const [enterAge, setEnterAge] = useState(false);
   const [selectionError, setSelectionError] = useState('');
   const [editingNameIds, setEditingNameIds] = useState<Set<string>>(() => new Set());
+  const inlineAddSection = useRef<HTMLElement>(null);
   const [formError, setFormError] = useState('');
   const [favoriteRemoval, setFavoriteRemoval] = useState<{ passenger: Passenger; fromEditor: boolean } | null>(null);
   const [passengerDeletion, setPassengerDeletion] = useState<Passenger | null>(null);
@@ -189,6 +191,14 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setEditing(false);
     setSaveFavorite(false);
     setQuickAddOpen(true);
+  };
+  const startInlineAdd = () => {
+    setFormError('');
+    setDraft({ uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: 'adult', passIds: ['none'] });
+    setEditing(false);
+    setSaveFavorite(false);
+    setInlineAddOpen(true);
+    requestAnimationFrame(() => inlineAddSection.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
   const toggleFavorite = (p: Passenger) => {
     if (p.uid === SELF_PASSENGER_UID) return;
@@ -316,6 +326,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     if (saveFavorite || passenger.uid === SELF_PASSENGER_UID) onSaveFavorites(upsert(favorites));
     else if (version === 'v5.0') onSaveFavorites(favorites.filter(p => p.uid !== passenger.uid));
     setQuickAddOpen(false);
+    setInlineAddOpen(false);
     setPage('list');
   };
   const confirmPassengerDeletion = () => {
@@ -416,6 +427,12 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               </div>;
             })}
           </div>
+          {inlineAdd && inlineAddOpen && <section ref={inlineAddSection} className="flow-inline-add" aria-labelledby="inline-add-title">
+            <header><h2 id="inline-add-title">Přidat cestujícího</h2><button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>
+            {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
+            <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} onDelete={() => {}} />
+            <footer><button onClick={() => setInlineAddOpen(false)}>Zrušit</button><button className="flow-inline-add-confirm" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}>Přidat cestujícího</button></footer>
+          </section>}
           {addPassengerControl === 'text' && <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span> Přidat dalšího cestujícího</button>}
         </> : page === 'list' ? <>
           {!selected.length && <p className="flow-empty">Zatím není nikdo vybraný. Přidejte alespoň jednoho cestujícího.</p>}
@@ -514,7 +531,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           </>}
         </>}
       </div>
-      {page === 'list' && addPassengerControl === 'plus' && <button className={`flow-add-plus ${showConfirmButton ? 'with-footer' : ''}`} aria-label="Přidat dalšího cestujícího" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span></button>}
+      {page === 'list' && addPassengerControl === 'plus' && !inlineAddOpen && <button className={`flow-add-plus ${showConfirmButton ? 'with-footer' : ''}`} aria-label="Přidat dalšího cestujícího" onClick={() => inlineAdd ? startInlineAdd() : version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span></button>}
       {((page === 'list' && showConfirmButton) || (page !== 'list' && (version !== 'v5.0' || showFormSaveButton))) && <footer className="flow-footer">
         {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>{confirmLabel}</span><span>{countLabel(selected.length)} →</span></button>
           : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}

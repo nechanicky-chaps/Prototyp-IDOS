@@ -125,6 +125,17 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .passenger-flow-compact .flow-v2-info .flow-passenger-name { margin-top: 0; color: #85a5ba; font-size: 10px; }
 .passenger-flow-compact .flow-switch { grid-column: 3; justify-self: center; }
 .passenger-flow-compact .flow-quick-names { grid-column: 1 / -1; margin: 4px 4px 8px; }
+.flow-inline-add { padding: 12px; border-bottom: 1px solid #195277; background: #001424; }
+.flow-inline-add > header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.flow-inline-add > header h2 { margin: 0; color: #fff; font-size: 16px; font-weight: 500; }
+.flow-inline-add > header button { display: grid; place-items: center; width: 36px; height: 36px; color: #8ba0b3; font-size: 24px; }
+.flow-inline-add .flow-v5-label { margin-bottom: 6px; }
+.flow-inline-add .flow-v5-selector { min-height: 46px; padding: 11px 12px; }
+.flow-inline-add .flow-v5-extra { margin-top: 4px; }
+.flow-inline-add .flow-save { padding: 12px 2px; }
+.flow-inline-add > footer { display: flex; justify-content: flex-end; gap: 8px; padding-top: 12px; border-top: 1px solid #0e273c; }
+.flow-inline-add > footer button { min-height: 40px; padding: 0 14px; border-radius: 6px; color: #5fa8d5; font-size: 13px; }
+.flow-inline-add > footer .flow-inline-add-confirm { background: #0171ba; color: #fff; font-weight: 600; }
 .flow-age-field { padding: 16px; border: 1px solid #195277; border-radius: 10px; background: #001424; }
 .flow-age-field > label { display: block; margin-bottom: 8px; color: #dce7ef; font-size: 13px; font-weight: 500; }
 .flow-age-input { display: flex; align-items: center; gap: 10px; }

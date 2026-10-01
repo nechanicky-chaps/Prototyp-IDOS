@@ -102,10 +102,11 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
   );
 }
 
-export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text' }: {
+export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text', inlinePassengerAdd = false }: {
   purchaseStartsWithPassengers?: boolean;
   passengerListDensity?: 'comfortable' | 'compact';
   addPassengerControl?: 'text' | 'plus';
+  inlinePassengerAdd?: boolean;
 }) {
   const passengerMemory = loadPassengerMemory();
   const [screen, setScreen] = useState<Screen>('setup');
@@ -293,6 +294,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 showFormSaveButton={false}
                 listDensity={passengerListDensity}
                 addPassengerControl={addPassengerControl}
+                inlineAdd={inlinePassengerAdd}
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}
