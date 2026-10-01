@@ -612,12 +612,12 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
   return <>
     {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
     {minimalInline ? <>
+      {categorySelector}
       {nameFields}
       {passSelector}
       <details className="flow-disclosure flow-v5-extra">
         <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
         <div className="flow-v5-extra-content">
-          {categorySelector}
           <div className="flow-fields">
             <label>Datum narození <small>volitelné</small><input type="date" autoComplete="bday" value={draft.birthDate || ''} onChange={e => setDraft({ ...draft, birthDate: e.target.value })} /></label>
             <label>Číslo průkazu <small>volitelné</small><input value={draft.passNumber || ''} onChange={e => setDraft({ ...draft, passNumber: e.target.value })} /></label>
