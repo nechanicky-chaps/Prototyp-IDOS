@@ -601,14 +601,19 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     }} /><span>{pass.label}</span>
   </label>;
   const categorySelector = <>
-    <div className="flow-v5-label">Vybraná kategorie</div>
-    <button className="flow-v5-selector" aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span className="flow-extra-arrow" aria-hidden="true" /></button>
+    {!minimalInline && <div className="flow-v5-label">Vybraná kategorie</div>}
+    <button className="flow-v5-selector" aria-label={`Kategorie cestujícího: ${categories.find(c => c.id === draft.catId)?.label}`} aria-haspopup="dialog" onClick={() => openPicker('category')}><strong>{categories.find(c => c.id === draft.catId)?.label}</strong><span className="flow-extra-arrow" aria-hidden="true" /></button>
   </>;
-  const nameFields = <div className="flow-fields flow-v5-name-fields">
+  const nameFields = minimalInline ? <div className="flow-fields flow-v5-name-fields">
+    <label><input aria-label={`Jméno${nameRequired ? ', povinné' : ', volitelné'}`} placeholder={`Jméno${nameRequired ? ' *' : ' – volitelné'}`} required={nameRequired} autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
+    <label><input aria-label={`Příjmení${nameRequired ? ', povinné' : ', volitelné'}`} placeholder={`Příjmení${nameRequired ? ' *' : ' – volitelné'}`} required={nameRequired} autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
+  </div> : <div className="flow-fields flow-v5-name-fields">
     <label>Jméno {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="given-name" value={draft.firstName || ''} onChange={e => setDraft({ ...draft, firstName: e.target.value })} /></label>
     <label>Příjmení {nameRequired ? <span>*</span> : <small>volitelné</small>}<input required={nameRequired} autoComplete="family-name" value={draft.lastName || ''} onChange={e => setDraft({ ...draft, lastName: e.target.value })} /></label>
   </div>;
-  const passSelector = <button className="flow-v5-selector flow-v5-passes" aria-haspopup="dialog" onClick={() => openPicker('passes')}><span><strong>{minimalInline ? 'Slevový průkaz' : 'Slevové průkazy'}</strong><small>{passLabels(draft)}</small></span><span className="flow-extra-arrow" aria-hidden="true" /></button>;
+  const selectedPassLabels = draft.passIds.filter(id => id !== 'none').map(id => passes.find(pass => pass.id === id)?.label).filter(Boolean).join(', ');
+  const compactPassLabel = selectedPassLabels || 'Bez slevového průkazu';
+  const passSelector = <button className="flow-v5-selector flow-v5-passes" aria-label={`Slevový průkaz: ${compactPassLabel}`} aria-haspopup="dialog" onClick={() => openPicker('passes')}>{minimalInline ? <strong>{compactPassLabel}</strong> : <span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span>}<span className="flow-extra-arrow" aria-hidden="true" /></button>;
   return <>
     {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
     {minimalInline ? <>
