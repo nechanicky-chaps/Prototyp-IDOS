@@ -168,6 +168,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const content = useRef<HTMLDivElement>(null);
   const effectiveNameMode: RequiredNameMode = requiredNameMode ?? (requireNames ? 'all' : 'none');
   const hasNamedHolder = selected.some(hasPassengerName);
+  const canAddWithoutDetails = effectiveNameMode === 'none' || (effectiveNameMode === 'holder' && hasNamedHolder);
   const needsName = (passenger: Passenger) => effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && !hasNamedHolder && selected[0]?.uid === passenger.uid);
   const draftNeedsName = effectiveNameMode === 'all' || (effectiveNameMode === 'holder' && !selected.some(passenger => passenger.uid !== draft.uid && hasPassengerName(passenger)));
   const favoriteIds = new Set(favorites.map(item => item.uid));
@@ -197,7 +198,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   const startInlineAdd = () => {
     setFormError('');
     const passenger: Passenger = { uid: Array.from(crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join(''), catId: 'adult', passIds: ['none'] };
-    if (inlineAddPresentation === 'sheet' && (effectiveNameMode === 'none' || (effectiveNameMode === 'holder' && hasNamedHolder))) {
+    if (canAddWithoutDetails) {
       if (selected.length >= MAX_SELECTED_PASSENGERS) {
         setSelectionError(`Pro jednu cestu můžete vybrat nejvýše ${MAX_SELECTED_PASSENGERS} cestujících.`);
         return;
@@ -584,7 +585,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           </>}
         </>}
       </div>
-      {page === 'list' && addPassengerControl === 'plus' && !inlineAddOpen && <button className={`flow-add-plus ${showConfirmButton ? 'with-footer' : ''}`} aria-label="Přidat dalšího cestujícího" onClick={() => inlineAdd ? startInlineAdd() : version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span></button>}
+      {page === 'list' && addPassengerControl === 'plus' && !inlineAddOpen && <button className={`flow-add-plus ${showConfirmButton ? 'with-footer' : ''}`} aria-label="Přidat dalšího cestujícího" onClick={() => inlineAdd || canAddWithoutDetails ? startInlineAdd() : version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span></button>}
       {((page === 'list' && showConfirmButton) || (page !== 'list' && (version !== 'v5.0' || showFormSaveButton))) && <footer className="flow-footer">
         {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>{confirmLabel}</span><span>{countLabel(selected.length)} →</span></button>
           : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}
