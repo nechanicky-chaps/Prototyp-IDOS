@@ -198,7 +198,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     setEditing(false);
     setSaveFavorite(false);
     setInlineAddOpen(true);
-    requestAnimationFrame(() => inlineAddSection.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    if (inlineAddPresentation === 'inline') requestAnimationFrame(() => inlineAddSection.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
   const toggleFavorite = (p: Passenger) => {
     if (p.uid === SELF_PASSENGER_UID) return;
