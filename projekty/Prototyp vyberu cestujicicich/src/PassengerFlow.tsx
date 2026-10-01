@@ -220,8 +220,12 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
       setSelectionError(`Nejprve smažte některého z ${MAX_LOCAL_PASSENGERS} neoblíbených cestujících.`);
       return;
     }
+    const passengerWithoutNickname = { ...passenger, name: undefined };
     setSelectionError('');
-    if (!availablePassengers.some(item => item.uid === passenger.uid)) onSaveAvailablePassengers([...availablePassengers, passenger]);
+    setSelected(items => items.map(item => item.uid === passenger.uid ? passengerWithoutNickname : item));
+    onSaveAvailablePassengers(availablePassengers.some(item => item.uid === passenger.uid)
+      ? availablePassengers.map(item => item.uid === passenger.uid ? passengerWithoutNickname : item)
+      : [...availablePassengers, passengerWithoutNickname]);
     onSaveFavorites(favorites.filter(item => item.uid !== passenger.uid));
   };
   const toggleFavorite = (p: Passenger) => {
