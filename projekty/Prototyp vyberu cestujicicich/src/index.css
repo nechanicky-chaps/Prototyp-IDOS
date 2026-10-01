@@ -107,6 +107,24 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-switch[aria-checked="true"] { border-color: #5fa8d5; background: #026cb6; }
 .flow-switch[aria-checked="true"] span { background: #fff; transform: translateX(18px); }
 .flow-v2-add { justify-content: center; margin-top: 16px; border-style: solid; }
+.flow-add-plus { position: absolute; right: 18px; bottom: 18px; z-index: 24; display: grid; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; background: #0171ba; color: #fff; box-shadow: 0 5px 14px rgba(0, 0, 0, .38); }
+.flow-add-plus.with-footer { bottom: 82px; }
+.flow-add-plus span { font-size: 36px; font-weight: 300; line-height: 1; transform: translateY(-1px); }
+.flow-add-plus:active { transform: scale(.96); }
+.passenger-flow-compact .flow-content { padding: 0; }
+.passenger-flow-compact .flow-required-notice, .passenger-flow-compact .flow-selection-error { margin: 10px 12px; }
+.passenger-flow-compact .flow-v2-list { gap: 0; border-top: 1px solid #0e273c; }
+.passenger-flow-compact .flow-v2-person { grid-template-columns: 40px minmax(0, 1fr) 48px; gap: 8px; min-height: 58px; padding: 4px 8px; border: 0; border-bottom: 1px solid #0e273c; border-radius: 0; background: #00101d; }
+.passenger-flow-compact .flow-v2-person.selected { border-color: #0e273c; background: #001726; }
+.passenger-flow-compact .flow-v2-avatar { display: none; }
+.passenger-flow-compact .flow-v2-star { grid-column: 1; width: 40px; min-height: 40px; color: #5fa8d5; }
+.passenger-flow-compact .flow-v2-info { grid-column: 2; min-height: 40px; padding: 5px 0; }
+.passenger-flow-compact .flow-v2-info strong { font-size: 14px; font-weight: 500; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.passenger-flow-compact .flow-v2-info small { display: flex; gap: 5px; min-width: 0; margin-top: 1px; font-size: 10px; line-height: 14px; white-space: nowrap; overflow: hidden; }
+.passenger-flow-compact .flow-v2-info small > span { display: inline; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.passenger-flow-compact .flow-v2-info .flow-passenger-name { margin-top: 0; color: #85a5ba; font-size: 10px; }
+.passenger-flow-compact .flow-switch { grid-column: 3; justify-self: center; }
+.passenger-flow-compact .flow-quick-names { grid-column: 1 / -1; margin: 4px 4px 8px; }
 .flow-age-field { padding: 16px; border: 1px solid #195277; border-radius: 10px; background: #001424; }
 .flow-age-field > label { display: block; margin-bottom: 8px; color: #dce7ef; font-size: 13px; font-weight: 500; }
 .flow-age-input { display: flex; align-items: center; gap: 10px; }

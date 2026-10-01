@@ -137,12 +137,13 @@ function categoryForAge(age: number) {
   if (age <= 69) return 'senior65';
   return 'senior70';
 }
-export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
+export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, listDensity = 'comfortable', addPassengerControl = 'text', onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   selfPassenger?: Passenger;
   confirmLabel?: string;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
+  listDensity?: 'comfortable' | 'compact'; addPassengerControl?: 'text' | 'plus';
   version: DesignVersion; onVersionChange: (version: DesignVersion) => void;
   onBack: () => void; onExitToResults?: (p: Passenger[]) => void; onConfirm: (p: Passenger[]) => void;
 }) {
@@ -365,7 +366,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
     ...orderedRows,
   ];
   return (
-    <section className="passenger-flow">
+    <section className={`passenger-flow ${listDensity === 'compact' ? 'passenger-flow-compact' : ''}`}>
       <div className="flow-version-switch" role="group" aria-label="Verze návrhu">
         <span>Verze návrhu</span>
         <button className={version === 'v1.0' ? 'selected' : ''} aria-pressed={version === 'v1.0'} onClick={() => onVersionChange('v1.0')}>V1.0</button>
@@ -415,7 +416,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
               </div>;
             })}
           </div>
-          <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span>＋</span> Přidat dalšího cestujícího</button>
+          {addPassengerControl === 'text' && <button className="flow-add flow-v2-add" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span> Přidat dalšího cestujícího</button>}
         </> : page === 'list' ? <>
           {!selected.length && <p className="flow-empty">Zatím není nikdo vybraný. Přidejte alespoň jednoho cestujícího.</p>}
           <div className="flow-cards">{selected.map(p => <div className="flow-person" key={p.uid}>
@@ -431,7 +432,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
             </button>
             <button className="flow-remove" aria-label={`Odebrat ${passengerLabel(p)}`} onClick={() => toggleSelected(p)}>×</button>
           </div>)}</div>
-          <button className="flow-add" onClick={() => start()}><span>＋</span> Přidat dalšího cestujícího</button>
+          {addPassengerControl === 'text' && <button className="flow-add" onClick={() => start()}><span aria-hidden="true">＋</span> Přidat dalšího cestujícího</button>}
           <div className="flow-section-title"><h3>Oblíbení cestující</h3><span>★</span></div>
           <div className="flow-favorites">{favorites.map(p => {
             const active = selected.some(s => s.uid === p.uid);
@@ -513,6 +514,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
           </>}
         </>}
       </div>
+      {page === 'list' && addPassengerControl === 'plus' && <button className={`flow-add-plus ${showConfirmButton ? 'with-footer' : ''}`} aria-label="Přidat dalšího cestujícího" onClick={() => version === 'v3.0' ? startQuickAdd() : start()}><span aria-hidden="true">＋</span></button>}
       {((page === 'list' && showConfirmButton) || (page !== 'list' && (version !== 'v5.0' || showFormSaveButton))) && <footer className="flow-footer">
         {page === 'list' ? <button className="flow-primary" onClick={saveSelection}><span>{confirmLabel}</span><span>{countLabel(selected.length)} →</span></button>
           : <button className="flow-primary" disabled={!draft.catId || (saveFavorite && !draft.name?.trim()) || (draftNeedsName && !hasPassengerName(draft))} onClick={complete}><span>{page === 'favorite' ? 'Uložit do oblíbených' : editing ? 'Uložit změny' : 'Přidat cestujícího'}</span><span>✓</span></button>}

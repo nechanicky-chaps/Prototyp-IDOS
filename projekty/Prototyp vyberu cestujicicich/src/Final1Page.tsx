@@ -102,7 +102,11 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
   );
 }
 
-export default function Final1Page({ purchaseStartsWithPassengers = false }: { purchaseStartsWithPassengers?: boolean }) {
+export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text' }: {
+  purchaseStartsWithPassengers?: boolean;
+  passengerListDensity?: 'comfortable' | 'compact';
+  addPassengerControl?: 'text' | 'plus';
+}) {
   const passengerMemory = loadPassengerMemory();
   const [screen, setScreen] = useState<Screen>('setup');
   const [config, setConfig] = useState<PrototypeConfig>(defaultConfig);
@@ -287,6 +291,8 @@ export default function Final1Page({ purchaseStartsWithPassengers = false }: { p
                 showConfirmButton={purchaseStartsWithPassengers && (passengerReturn === 'fares' || passengerReturn === 'summary')}
                 confirmLabel={purchaseStartsWithPassengers && passengerReturn === 'fares' ? 'Pokračovat k nabídce' : purchaseStartsWithPassengers && passengerReturn === 'summary' ? 'Pokračovat k jízdence' : undefined}
                 showFormSaveButton={false}
+                listDensity={passengerListDensity}
+                addPassengerControl={addPassengerControl}
                 onVersionChange={() => {}}
                 onSaveAvailablePassengers={setAvailablePassengers}
                 onSaveFavorites={setFavorites}
