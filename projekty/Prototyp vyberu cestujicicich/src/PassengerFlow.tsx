@@ -450,7 +450,7 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
             <section ref={inlineAddSection} className={`flow-inline-add${inlineAddPresentation === 'sheet' ? ' flow-inline-add--sheet' : ''}`} role={inlineAddPresentation === 'sheet' ? 'dialog' : undefined} aria-modal={inlineAddPresentation === 'sheet' ? true : undefined} aria-labelledby={showInlineAddTitle ? 'inline-add-title' : undefined} aria-label={showInlineAddTitle ? undefined : inlineFormMode === 'add' ? 'Přidat cestujícího' : inlineFormMode === 'favorite' ? 'Oblíbený cestující' : 'Upravit cestujícího'} onClick={inlineAddPresentation === 'sheet' ? event => event.stopPropagation() : undefined}>
             {showInlineAddTitle && <header><h2 id="inline-add-title">Přidat cestujícího</h2><button aria-label="Zavřít přidání cestujícího" onClick={() => setInlineAddOpen(false)}>×</button></header>}
             {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
-            <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline onDelete={() => {}} />
+            <PassengerFormV5 draft={draft} setDraft={setDraft} saveFavorite={saveFavorite} setSaveFavorite={requestFavoriteState} editing={false} favoriteLocked={false} nameRequired={draftNeedsName} minimalInline showFavoriteName={inlineFormMode === 'favorite'} onDelete={() => {}} />
             <footer>
               {inlineFormMode === 'edit' && draft.uid !== SELF_PASSENGER_UID && <button className="flow-inline-delete" onClick={() => setPassengerDeletion(draft)}>Smazat cestujícího</button>}
               <button onClick={() => setInlineAddOpen(false)}>Zrušit</button>
@@ -594,10 +594,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   );
 }
 
-function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, onDelete }: {
+function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, showFavoriteName = false, onDelete }: {
   draft: Passenger; setDraft: (p: Passenger) => void;
   saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean; favoriteLocked: boolean;
-  nameRequired: boolean; minimalInline?: boolean; onDelete: () => void;
+  nameRequired: boolean; minimalInline?: boolean; showFavoriteName?: boolean; onDelete: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
@@ -644,6 +644,7 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
     {minimalInline ? <>
       {categorySelector}
       {nameFields}
+      {showFavoriteName && <div className="flow-fields flow-v5-favorite-name"><label><input aria-label="Přezdívka, povinné" placeholder="Přezdívka *" required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
       {passSelector}
       <details className="flow-disclosure flow-v5-extra">
         <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje</span></summary>
