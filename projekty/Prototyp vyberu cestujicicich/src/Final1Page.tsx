@@ -237,7 +237,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
             position: 'relative',
           }}
         >
-          <div className="final1-no-vsw" style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div className={`final1-no-vsw${final5 ? ' final5-prototype' : ''}`} style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             {screen === 'setup' && <SetupScreen config={config} onChange={setConfig} onContinue={startPrototype} final5={final5} />}
             {screen === 'results' && (
               <ResultsScreen

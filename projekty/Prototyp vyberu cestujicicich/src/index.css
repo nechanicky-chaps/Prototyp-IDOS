@@ -140,6 +140,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-inline-add .flow-v5-favorite-name input { margin-top: 0; font-weight: 700; }
 .final5-person-icon { display: grid; place-items: center; width: 40px; min-height: 44px; color: #5fa8d5; }
 .final5-footer-count { display: inline-flex; align-items: center; gap: 6px; }
+.final5-prototype .summary-passenger-chevron { display: none; }
 .final5-flow .flow-switch { width: 40px; height: 22px; }
 .final5-flow .flow-switch span { width: 18px; height: 18px; }
 .final5-flow .flow-switch[aria-checked="true"] span { transform: translateX(18px); }

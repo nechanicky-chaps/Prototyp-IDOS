@@ -1194,7 +1194,7 @@ export function SummaryScreen({
           title="Upravit cestující"
           aria-label={`Zpět na výběr cestujících, vybráno ${passengers.length}`}
         >
-          <ArrowLeft />
+          <span className="summary-passenger-chevron"><ArrowLeft /></span>
           <span className="text-sm font-semibold">{passengers.length}</span>
           <UsersIcon />
           <span className="text-base font-semibold ml-2">{chosenTotal} Kč</span>
