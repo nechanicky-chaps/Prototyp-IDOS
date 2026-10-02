@@ -107,7 +107,7 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
             <button className="flow-v2-info flow-edit-person" aria-label={`Údaje cestujícího ${nickname || fullName || category}`} onClick={() => edit(passenger)}>
               <span className="final5-person-title"><strong>{nickname || fullName || category}</strong>{nickname && fullName && <span>{fullName}</span>}</span>
               {(nickname || fullName) && <small>{category}</small>}
-              <small>{passLabels(passenger)}</small>
+              {passenger.passIds.some(id => id !== 'none') && <small>{passLabels(passenger)}</small>}
             </button>
             <button className="flow-switch" role="switch" aria-checked={active} aria-label={`Cestuje ${nickname || fullName || category}`} onClick={() => toggle(passenger)}><span /></button>
           </div>;
