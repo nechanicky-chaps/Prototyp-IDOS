@@ -139,6 +139,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-inline-add .flow-v5-favorite-name label { margin-bottom: 8px; }
 .flow-inline-add .flow-v5-favorite-name input { margin-top: 0; font-weight: 700; }
 .final5-person-icon { display: grid; place-items: center; width: 40px; min-height: 44px; color: #5fa8d5; }
+.final5-footer-count { display: inline-flex; align-items: center; gap: 6px; }
+.final5-flow .flow-switch { width: 40px; height: 22px; }
+.final5-flow .flow-switch span { width: 18px; height: 18px; }
+.final5-flow .flow-switch[aria-checked="true"] span { transform: translateX(18px); }
 .final5-flow .flow-v2-person { min-height: 72px; }
 .final5-flow .flow-v2-info small { display: block; color: #8ba0b3; font-size: 11px; line-height: 16px; }
 .final5-person-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }

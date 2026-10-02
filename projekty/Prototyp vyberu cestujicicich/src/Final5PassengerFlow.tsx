@@ -114,7 +114,7 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
         })}</div>
       </div>
       <button className="flow-add-plus with-footer" aria-label="Přidat dalšího cestujícího" onClick={add}>＋</button>
-      <footer className="flow-footer"><button className="flow-primary" onClick={confirm}><span>{confirmLabel || 'Pokračovat k nabídce'}</span><span>{selected.length} →</span></button></footer>
+      <footer className="flow-footer"><button className="flow-primary" onClick={confirm}><span>{confirmLabel || 'Pokračovat k nabídce'}</span><span className="final5-footer-count" aria-label={`Počet cestujících: ${selected.length}`}><span>{selected.length}</span><PersonIcon /><span aria-hidden="true">→</span></span></button></footer>
     </>}
     {draft && inlineAdd && <div className="flow-inline-add-layer flow-inline-add-layer--sheet" onClick={closeEditor}>{editor}</div>}
   </section>;
