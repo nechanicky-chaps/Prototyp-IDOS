@@ -18,6 +18,7 @@ export default defineConfig({
         final2: resolve(__dirname, 'final2/index.html'),
         final3: resolve(__dirname, 'final3/index.html'),
         final4: resolve(__dirname, 'final4/index.html'),
+        final5: resolve(__dirname, 'final5/index.html'),
       },
     },
   },

@@ -26,6 +26,14 @@ Zpět zachovává rozpracované údaje, Zrušit zahodí rozpracované přidání
 
 Celý průchod: Hledat → Koupit → Upravit (u cestujících) → Potvrdit výběr → Platba → Simulovat platbu.
 
+## Final5
+
+Samostatná varianta na `/final5/`. Nastavení obsahuje pouze výzvu k zadání údajů (výchozí držitel jízdenky) a podobu formuláře (výchozí vysunutí odspodu, alternativně nová stránka). Výsledky spojení nezobrazují cestující; nabídka jízdného zůstává samostatným krokem.
+
+Seznam nemá oblíbené, všechny uložené osoby si pamatuje v místním úložišti prohlížeče pod klíčem `idos-final5-passengers-v1`, odděleně od předchozích variant. Po obnovení se vybere pouze první osoba. První osoba má výchozí přezdívku Já a nelze ji odebrat. Ikona člověka i jeho řádek otevřou editaci. Formulář obsahuje kategorii, průkazy, rozbalovací jméno a příjmení a volitelnou přezdívku; neobsahuje datum narození ani číslo průkazu.
+
+Při výzvě pro držitele musí mít alespoň jedna vybraná osoba jméno i příjmení. Pokud takový držitel už existuje, plus přidá další osobu bez výzvy; při režimu Všichni se požadují údaje každé vybrané osoby. Údaje jsou pouze lokální, bez synchronizace s účtem nebo serverem.
+
 ## Rozsah prototypu
 
 Vzhled vychází z dodaného exportu. Ostatní části původního návrhu (například doplňky, nastavení nebo alternativní tarify) zůstávají ukázkové. Kategorie a průkazy jsou převzaté z návrhu, nejsou ověřeným tarifním číselníkem. Cena je pouze demonstrace 33 Kč za osobu bez výpočtu slev. Platba je simulovaná, není připojená platební brána ani backend.

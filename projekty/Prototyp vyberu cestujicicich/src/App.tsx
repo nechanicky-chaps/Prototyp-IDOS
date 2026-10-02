@@ -926,17 +926,18 @@ function PassengerScreen({ onBack, onNext }: { onBack: () => void; onNext: () =>
 // ─────────────────────────────────────────────────────────
 // SCREEN 4: Fare Offers / Nabídka jízdného (Screenshot 1)
 // ─────────────────────────────────────────────────────────
-export function FaresScreen({ onBack, onNext, selectedFare, onSelectFare, selectAdvances = false }: {
+export function FaresScreen({ onBack, onNext, selectedFare, onSelectFare, selectAdvances = false, bundleOffer }: {
   onBack: () => void;
   onNext: () => void;
   selectedFare?: number;
   onSelectFare?: (index: number) => void;
   selectAdvances?: boolean;
+  bundleOffer?: { title: string; price: string; description: string };
 }) {
   const [localSelected, setLocalSelected] = useState(0);
-  const selected = selectedFare ?? localSelected;
+  const selected = bundleOffer ? 0 : selectedFare ?? localSelected;
   const setSelected = onSelectFare ?? setLocalSelected;
-  const offers = purchaseFareOptions.map(offer => ({
+  const offers = bundleOffer ? [bundleOffer] : purchaseFareOptions.map(offer => ({
     title: offer.title,
     price: `${offer.price} Kč`,
     description: offer.detail,

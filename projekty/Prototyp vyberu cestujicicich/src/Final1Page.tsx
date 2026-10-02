@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { FaresScreen, purchaseFareOptions, ResultsScreen, SummaryScreen, PaymentScreen } from './App';
 import MultiTicketSummary, { journeyTickets, multiTotal } from './MultiTicketSummary';
 import PassengerFlow, { initialPassengers, loadPassengerMemory, savePassengerMemory, passengersMissingRequiredNames, SELF_PASSENGER_UID, type Passenger, type RequiredNameMode } from './PassengerFlow';
+import Final5PassengerFlow, { loadFinal5Memory, saveFinal5Memory } from './Final5PassengerFlow';
 
 type Screen = 'setup' | 'results' | 'fares' | 'summary' | 'passengers' | 'payment' | 'confirm';
 type PrototypeConfig = {
@@ -10,6 +11,7 @@ type PrototypeConfig = {
   requiredNames: RequiredNameMode;
   fareDisplay: 'step' | 'fab' | 'inline' | 'collapsible';
   selectedOrder: 'top' | 'keep';
+  editorPresentation: 'sheet' | 'page';
 };
 
 const BG = '#00101d';
@@ -20,6 +22,7 @@ const defaultConfig: PrototypeConfig = {
   requiredNames: 'all',
   fareDisplay: 'step',
   selectedOrder: 'keep',
+  editorPresentation: 'sheet',
 };
 
 function SetupGroup({ title, value, options, onChange }: {
@@ -32,26 +35,29 @@ function SetupGroup({ title, value, options, onChange }: {
   </div></fieldset>;
 }
 
-function SetupScreen({ config, onChange, onContinue }: { config: PrototypeConfig; onChange: (config: PrototypeConfig) => void; onContinue: () => void }) {
+function SetupScreen({ config, onChange, onContinue, final5 = false }: { config: PrototypeConfig; onChange: (config: PrototypeConfig) => void; onContinue: () => void; final5?: boolean }) {
   const set = <K extends keyof PrototypeConfig>(key: K, value: PrototypeConfig[K]) => onChange({ ...config, [key]: value });
   return <section className="prototype-setup" data-idos-theme="dark">
     <header><h1>Nastavení prototypu</h1><p>Zvolte varianty, které chcete v ukázce porovnat.</p></header>
     <div className="prototype-setup-content">
-      <SetupGroup title="Cestující" value={config.identity} onChange={value => set('identity', value as PrototypeConfig['identity'])} options={[
+      {!final5 && <><SetupGroup title="Cestující" value={config.identity} onChange={value => set('identity', value as PrototypeConfig['identity'])} options={[
         { value: 'signed-in', label: 'Přihlášený', defaultChoice: true }, { value: 'anonymous', label: 'Nepřihlášený' },
       ]} />
       <SetupGroup title="Cestující ve spojení" value={config.passengerDisplay} onChange={value => set('passengerDisplay', value as PrototypeConfig['passengerDisplay'])} options={[
         { value: 'bar', label: 'Lišta' }, { value: 'icon', label: 'Ikona', defaultChoice: true },
-      ]} />
+      ]} /></>}
       <SetupGroup title="Výzva k zadání údajů" value={config.requiredNames} onChange={value => set('requiredNames', value as RequiredNameMode)} options={[
-        { value: 'none', label: 'Žádná' }, { value: 'holder', label: 'Držitel jízdenky' }, { value: 'all', label: 'Všichni cestující', defaultChoice: true },
+        { value: 'none', label: 'Žádná' }, { value: 'holder', label: 'Držitel jízdenky', defaultChoice: final5 }, { value: 'all', label: 'Všichni cestující', defaultChoice: !final5 },
       ]} />
-      <SetupGroup title="Alternativní tarifní nabídky" value={config.fareDisplay} onChange={value => set('fareDisplay', value as PrototypeConfig['fareDisplay'])} options={[
+      {!final5 && <><SetupGroup title="Alternativní tarifní nabídky" value={config.fareDisplay} onChange={value => set('fareDisplay', value as PrototypeConfig['fareDisplay'])} options={[
         { value: 'step', label: 'Samostatný krok', defaultChoice: true }, { value: 'fab', label: 'FAB button' }, { value: 'inline', label: 'Na hlavní stránce viditelné' }, { value: 'collapsible', label: 'Na hlavní stránce sbalitelné' },
-      ]} />
-      <SetupGroup title="Vybraný cestující" value={config.selectedOrder} onChange={value => set('selectedOrder', value as PrototypeConfig['selectedOrder'])} options={[
+      ]} /></>}
+      {final5 && <SetupGroup title="Formulář cestujícího" value={config.editorPresentation} onChange={value => set('editorPresentation', value as PrototypeConfig['editorPresentation'])} options={[
+        { value: 'sheet', label: 'Vysunout odspodu', defaultChoice: true }, { value: 'page', label: 'Nová stránka' },
+      ]} />}
+      {!final5 && <SetupGroup title="Vybraný cestující" value={config.selectedOrder} onChange={value => set('selectedOrder', value as PrototypeConfig['selectedOrder'])} options={[
         { value: 'top', label: 'Přesunout nahoru v seznamu' }, { value: 'keep', label: 'Ponechat na místě' , defaultChoice: true },
-      ]} />
+      ]} />}
     </div>
     <footer><button className="prototype-setup-start" onClick={onContinue}>Pokračovat k výběru spojení <span aria-hidden="true">→</span></button></footer>
   </section>;
@@ -102,7 +108,7 @@ function ConfirmScreen({ total, ticketCount, onDone }: { total: number; ticketCo
   );
 }
 
-export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text', inlinePassengerAdd = false, showInlineAddTitle = true, inlineAddPresentation = 'inline', fareSelectAdvances = false }: {
+export default function Final1Page({ purchaseStartsWithPassengers = false, passengerListDensity = 'comfortable', addPassengerControl = 'text', inlinePassengerAdd = false, showInlineAddTitle = true, inlineAddPresentation = 'inline', fareSelectAdvances = false, final5 = false }: {
   purchaseStartsWithPassengers?: boolean;
   passengerListDensity?: 'comfortable' | 'compact';
   addPassengerControl?: 'text' | 'plus';
@@ -110,12 +116,14 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
   showInlineAddTitle?: boolean;
   inlineAddPresentation?: 'inline' | 'sheet';
   fareSelectAdvances?: boolean;
+  final5?: boolean;
 }) {
-  const passengerMemory = loadPassengerMemory();
+  const [passengerMemory] = useState(() => final5 ? loadFinal5Memory() : loadPassengerMemory());
+  const Flow = final5 ? Final5PassengerFlow : PassengerFlow;
   const [screen, setScreen] = useState<Screen>('setup');
-  const [config, setConfig] = useState<PrototypeConfig>(defaultConfig);
+  const [config, setConfig] = useState<PrototypeConfig>(final5 ? { ...defaultConfig, identity: 'anonymous', requiredNames: 'holder' } : defaultConfig);
   const [multi, setMulti] = useState(false);
-  const [passengers, setPassengers] = useState<Passenger[]>(initialPassengers);
+  const [passengers, setPassengers] = useState<Passenger[]>(final5 ? passengerMemory.availablePassengers.slice(0, 1) : initialPassengers);
   const [availablePassengers, setAvailablePassengers] = useState<Passenger[]>(passengerMemory.availablePassengers);
   const [favorites, setFavorites] = useState<Passenger[]>(passengerMemory.favorites);
   const [showRequiredFields, setShowRequiredFields] = useState(false);
@@ -124,12 +132,15 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
   const [checkoutTotal, setCheckoutTotal] = useState(multiTotal(ticketIds, passengers.length));
   const [selectedFare, setSelectedFare] = useState(0);
   const [passengerReturn, setPassengerReturn] = useState<'results' | 'fares' | 'summary'>('summary');
-  const configuredSelf: Passenger = config.identity === 'signed-in' ? initialPassengers[0] : {
+  const configuredSelf: Passenger = final5 ? availablePassengers.find(p => p.uid === SELF_PASSENGER_UID)! : config.identity === 'signed-in' ? initialPassengers[0] : {
     ...initialPassengers[0], name: undefined, firstName: undefined, lastName: undefined,
   };
   const configuredFavorites = [configuredSelf, ...favorites.filter(passenger => passenger.uid !== SELF_PASSENGER_UID)];
 
-  useEffect(() => savePassengerMemory(availablePassengers, favorites), [availablePassengers, favorites]);
+  useEffect(() => {
+    if (final5) saveFinal5Memory(availablePassengers);
+    else savePassengerMemory(availablePassengers, favorites);
+  }, [availablePassengers, favorites, final5]);
 
   const paymentTotal = multi ? checkoutTotal : purchaseFareOptions[selectedFare].price * passengers.length;
   const ticketCount = passengers.length * (multi ? ticketIds.length : 1);
@@ -178,7 +189,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
 
   const startPurchase = (isMulti = multi) => {
     chooseScenario(isMulti);
-    const nextScreen = !isMulti && config.fareDisplay === 'step' ? 'fares' : 'summary';
+    const nextScreen = (final5 || !isMulti) && config.fareDisplay === 'step' ? 'fares' : 'summary';
     if (purchaseStartsWithPassengers) {
       openPassengers(nextScreen);
       return;
@@ -227,7 +238,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
           }}
         >
           <div className="final1-no-vsw" style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            {screen === 'setup' && <SetupScreen config={config} onChange={setConfig} onContinue={startPrototype} />}
+            {screen === 'setup' && <SetupScreen config={config} onChange={setConfig} onContinue={startPrototype} final5={final5} />}
             {screen === 'results' && (
               <ResultsScreen
                 multi={multi}
@@ -235,12 +246,16 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 showSearchScope={false}
                 onScenario={chooseScenario}
                 onBuy={startPurchase}
-                onPayNow={(isMulti = multi) => { chooseScenario(isMulti); setScreen('payment'); }}
+                onPayNow={(isMulti = multi) => {
+                  chooseScenario(isMulti);
+                  if (final5 && passengersMissingRequiredNames(passengers, config.requiredNames)) openPassengers('summary');
+                  else setScreen('payment');
+                }}
                 onBack={() => setScreen('setup')}
                 passengerCount={passengers.length}
                 selectedPassengers={passengers}
                 passengerDisplay={config.passengerDisplay}
-                onOpenPassengers={() => openPassengers('results')}
+                onOpenPassengers={final5 ? undefined : () => openPassengers('results')}
               />
             )}
             {screen === 'summary' && multi && (
@@ -283,10 +298,11 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 selectedFare={selectedFare}
                 onSelectFare={setSelectedFare}
                 selectAdvances={fareSelectAdvances}
+                bundleOffer={final5 && multi ? { title: 'Nabídka pro celou cestu', price: `${multiTotal(ticketIds, passengers.length)} Kč`, description: journeyTickets.map(ticket => `${ticket.line}: ${ticket.fare}`).join(' · ') } : undefined}
               />
             )}
             {screen === 'passengers' && (
-              <PassengerFlow
+              <Flow
                 passengers={passengers}
                 availablePassengers={availablePassengers}
                 favorites={favorites}
@@ -300,7 +316,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 showFormSaveButton={false}
                 listDensity={passengerListDensity}
                 addPassengerControl={addPassengerControl}
-                inlineAdd={inlinePassengerAdd}
+                inlineAdd={final5 ? config.editorPresentation === 'sheet' : inlinePassengerAdd}
                 showInlineAddTitle={showInlineAddTitle}
                 inlineAddPresentation={inlineAddPresentation}
                 onVersionChange={() => {}}

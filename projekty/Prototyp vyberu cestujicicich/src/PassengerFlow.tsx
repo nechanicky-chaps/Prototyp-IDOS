@@ -632,10 +632,10 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   );
 }
 
-function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, showFavoriteName = false, onDelete }: {
+export function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, showFavoriteName = false, simpleProfile = false, onDelete }: {
   draft: Passenger; setDraft: (p: Passenger) => void;
   saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean; favoriteLocked: boolean;
-  nameRequired: boolean; minimalInline?: boolean; showFavoriteName?: boolean; onDelete: () => void;
+  nameRequired: boolean; minimalInline?: boolean; showFavoriteName?: boolean; simpleProfile?: boolean; onDelete: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
@@ -679,7 +679,15 @@ function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editi
   const passSelector = <button className="flow-v5-selector flow-v5-passes" aria-label={`Slevový průkaz: ${compactPassLabel}`} aria-haspopup="dialog" onClick={() => openPicker('passes')}>{minimalInline ? <strong>{compactPassLabel}</strong> : <span><strong>Slevové průkazy</strong><small>{passLabels(draft)}</small></span>}<span className="flow-extra-arrow" aria-hidden="true" /></button>;
   return <>
     {editing && <p className="flow-eyebrow">{saveFavorite ? 'Úprava · oblíbený cestující' : 'Úprava cestujícího'}</p>}
-    {minimalInline ? <>
+    {simpleProfile ? <>
+      {categorySelector}
+      {passSelector}
+      <details className="flow-disclosure flow-v5-extra" open={nameRequired || undefined}>
+        <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje{nameRequired ? ' *' : ''}</span></summary>
+        <div className="flow-v5-extra-content">{nameFields}</div>
+      </details>
+      <div className="flow-fields flow-v5-favorite-name"><label><input aria-label="Přezdívka" placeholder="Přezdívka – volitelné" value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>
+    </> : minimalInline ? <>
       {categorySelector}
       {nameFields}
       {showFavoriteName && <div className="flow-fields flow-v5-favorite-name"><label><input aria-label="Přezdívka, povinné" placeholder="Přezdívka *" required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
