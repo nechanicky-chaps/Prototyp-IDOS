@@ -28,6 +28,7 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState('');
   const [formError, setFormError] = useState('');
+  const [nameEntryIds, setNameEntryIds] = useState<Set<string>>(() => new Set());
   const hasHolder = selected.some(hasPassengerName);
   const nameRequired = requiredNameMode === 'all' || (requiredNameMode === 'holder' && !selected.some(p => p.uid !== draft?.uid && hasPassengerName(p)));
   const closeEditor = () => { setDraft(null); setFormError(''); };
@@ -75,6 +76,12 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
     if (!active && selected.length >= MAX_SELECTED_PASSENGERS) { setError(`Pro jednu cestu můžete vybrat nejvýše ${MAX_SELECTED_PASSENGERS} cestujících.`); return; }
     setError(''); setSelected(items => active ? items.filter(p => p.uid !== passenger.uid) : [...items, passenger]);
   };
+  const updateName = (passenger: Passenger, field: 'firstName' | 'lastName', value: string) => {
+    setNameEntryIds(ids => new Set(ids).add(passenger.uid));
+    onSaveAvailablePassengers(availablePassengers.map(p => p.uid === passenger.uid ? { ...p, [field]: value } : p));
+    setSelected(items => items.map(p => p.uid === passenger.uid ? { ...p, [field]: value } : p));
+    setError('');
+  };
   const confirm = () => {
     if (!selected.length) { setError('Vyberte alespoň jednoho cestujícího.'); return; }
     if (passengersMissingRequiredNames(selected, requiredNameMode)) {
@@ -102,6 +109,7 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
           const nickname = passenger.name?.trim();
           const category = categories.find(c => c.id === passenger.catId)?.label || 'Cestující';
           const active = selected.some(p => p.uid === passenger.uid);
+          const showNames = active && requiredNameMode !== 'none' && (nameEntryIds.has(passenger.uid) || (!hasPassengerName(passenger) && (requiredNameMode === 'all' || !hasHolder)));
           return <div className={`flow-v2-person ${active ? 'selected' : ''}`} key={passenger.uid}>
             <button className="final5-person-icon" aria-label={`Upravit ${nickname || fullName || category}`} onClick={() => edit(passenger)}><PersonIcon /></button>
             <button className="flow-v2-info flow-edit-person" aria-label={`Údaje cestujícího ${nickname || fullName || category}`} onClick={() => edit(passenger)}>
@@ -110,6 +118,10 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
               {passenger.passIds.some(id => id !== 'none') && <small>{passLabels(passenger)}</small>}
             </button>
             <button className="flow-switch" role="switch" aria-checked={active} aria-label={`Cestuje ${nickname || fullName || category}`} onClick={() => toggle(passenger)}><span /></button>
+            {showNames && <div className="flow-quick-names flow-fields">
+              <label><input required autoComplete="given-name" aria-label={`Jméno: ${nickname || fullName || category}`} placeholder="Jméno *" value={passenger.firstName || ''} onChange={event => updateName(passenger, 'firstName', event.target.value)} /></label>
+              <label><input required autoComplete="family-name" aria-label={`Příjmení: ${nickname || fullName || category}`} placeholder="Příjmení *" value={passenger.lastName || ''} onChange={event => updateName(passenger, 'lastName', event.target.value)} /></label>
+            </div>}
           </div>;
         })}</div>
       </div>

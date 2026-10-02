@@ -144,6 +144,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .final5-flow .flow-switch span { width: 18px; height: 18px; }
 .final5-flow .flow-switch[aria-checked="true"] span { transform: translateX(18px); }
 .final5-flow .flow-v2-person { min-height: 72px; }
+.final5-flow .flow-quick-names input { margin-top: 0; }
 .final5-flow .flow-v2-info small { display: block; color: #8ba0b3; font-size: 11px; line-height: 16px; }
 .final5-person-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
 .final5-person-title > span { color: #8ba0b3; font-size: 11px; font-weight: 400; }
