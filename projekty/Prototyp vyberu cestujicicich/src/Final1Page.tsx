@@ -12,6 +12,7 @@ type PrototypeConfig = {
   fareDisplay: 'step' | 'fab' | 'inline' | 'collapsible';
   selectedOrder: 'top' | 'keep';
   editorPresentation: 'sheet' | 'page';
+  pickerHeight: 'max' | 'half';
 };
 
 const BG = '#00101d';
@@ -23,6 +24,7 @@ const defaultConfig: PrototypeConfig = {
   fareDisplay: 'step',
   selectedOrder: 'keep',
   editorPresentation: 'sheet',
+  pickerHeight: 'max',
 };
 
 function SetupGroup({ title, value, options, onChange }: {
@@ -54,6 +56,9 @@ function SetupScreen({ config, onChange, onContinue, final5 = false }: { config:
       ]} /></>}
       {final5 && <SetupGroup title="Formulář cestujícího" value={config.editorPresentation} onChange={value => set('editorPresentation', value as PrototypeConfig['editorPresentation'])} options={[
         { value: 'sheet', label: 'Vysunout odspodu', defaultChoice: true }, { value: 'page', label: 'Nová stránka' },
+      ]} />}
+      {final5 && <SetupGroup title="Výška rolovacího seznamu" value={config.pickerHeight} onChange={value => set('pickerHeight', value as PrototypeConfig['pickerHeight'])} options={[
+        { value: 'max', label: 'Maximální', defaultChoice: true }, { value: 'half', label: 'Poloviční' },
       ]} />}
       {!final5 && <SetupGroup title="Vybraný cestující" value={config.selectedOrder} onChange={value => set('selectedOrder', value as PrototypeConfig['selectedOrder'])} options={[
         { value: 'top', label: 'Přesunout nahoru v seznamu' }, { value: 'keep', label: 'Ponechat na místě' , defaultChoice: true },
@@ -317,6 +322,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 listDensity={passengerListDensity}
                 addPassengerControl={addPassengerControl}
                 inlineAdd={final5 ? config.editorPresentation === 'sheet' : inlinePassengerAdd}
+                pickerHeight={config.pickerHeight}
                 showInlineAddTitle={showInlineAddTitle}
                 inlineAddPresentation={inlineAddPresentation}
                 onVersionChange={() => {}}

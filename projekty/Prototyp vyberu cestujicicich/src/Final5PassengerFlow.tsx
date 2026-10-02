@@ -22,7 +22,7 @@ function PersonIcon() {
 }
 
 export default function Final5PassengerFlow(props: ComponentProps<typeof PassengerFlow>) {
-  const { passengers, availablePassengers, requiredNameMode = 'holder', inlineAdd = true, onSaveAvailablePassengers, onConfirm, onBack, onExitToResults, confirmLabel } = props;
+  const { passengers, availablePassengers, requiredNameMode = 'holder', inlineAdd = true, pickerHeight = 'max', onSaveAvailablePassengers, onConfirm, onBack, onExitToResults, confirmLabel } = props;
   const [selected, setSelected] = useState(passengers);
   const [draft, setDraft] = useState<Passenger | null>(null);
   const [editing, setEditing] = useState(false);
@@ -91,7 +91,7 @@ export default function Final5PassengerFlow(props: ComponentProps<typeof Passeng
   };
   const editor = draft && <section className={`flow-inline-add final5-editor${inlineAdd ? ' flow-inline-add--sheet' : ''}`} role={inlineAdd ? 'dialog' : undefined} aria-modal={inlineAdd ? true : undefined} aria-label={editing ? 'Upravit cestujícího' : 'Přidat cestujícího'} onClick={event => event.stopPropagation()}>
     {formError && <p className="flow-selection-error" role="alert">{formError}</p>}
-    <PassengerFormV5 key={draft.uid} draft={draft} setDraft={setDraft} saveFavorite={false} setSaveFavorite={() => {}} editing={false} favoriteLocked nameRequired={nameRequired} minimalInline simpleProfile onDelete={() => {}} />
+    <PassengerFormV5 key={draft.uid} draft={draft} setDraft={setDraft} saveFavorite={false} setSaveFavorite={() => {}} editing={false} favoriteLocked nameRequired={nameRequired} minimalInline simpleProfile pickerHeight={pickerHeight} onDelete={() => {}} />
     <footer>
       {editing && draft.uid !== SELF_PASSENGER_UID && <button className="flow-inline-delete" onClick={remove}>Odebrat cestujícího</button>}
       <button onClick={closeEditor}>Zrušit</button>

@@ -28,7 +28,7 @@ Celý průchod: Hledat → Koupit → Upravit (u cestujících) → Potvrdit vý
 
 ## Final5
 
-Samostatná varianta na `/final5/`. Nastavení obsahuje pouze výzvu k zadání údajů (výchozí držitel jízdenky) a podobu formuláře (výchozí vysunutí odspodu, alternativně nová stránka). Výsledky spojení nezobrazují cestující; nabídka jízdného zůstává samostatným krokem.
+Samostatná varianta na `/final5/`. Nastavení obsahuje výzvu k zadání údajů (výchozí držitel jízdenky), podobu formuláře (výchozí vysunutí odspodu, alternativně nová stránka) a výšku rolovacích nabídek kategorií a průkazů (výchozí Maximální, alternativně Poloviční). Poloviční nabídka vyjíždí odspodu a zabírá polovinu aplikačního displeje; rolují pouze položky, nadpis a potvrzení zůstávají dostupné. Výsledky spojení nezobrazují cestující; nabídka jízdného zůstává samostatným krokem.
 
 Seznam nemá oblíbené, všechny uložené osoby si pamatuje v místním úložišti prohlížeče pod klíčem `idos-final5-passengers-v1`, odděleně od předchozích variant. Po obnovení se vybere pouze první osoba. První osoba má výchozí přezdívku Já a nelze ji odebrat. Ikona člověka i jeho řádek otevřou editaci. Formulář obsahuje kategorii, průkazy, rozbalovací jméno a příjmení a volitelnou přezdívku; neobsahuje datum narození ani číslo průkazu.
 

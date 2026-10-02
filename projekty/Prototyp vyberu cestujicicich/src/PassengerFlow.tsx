@@ -140,6 +140,7 @@ function categoryForAge(age: number) {
 export default function PassengerFlow({ passengers, availablePassengers, favorites, selfPassenger = initialPassengers[0], version, requireNames = false, requiredNameMode, selectionControl = 'checkbox', moveSelectedToTop = true, showConfirmButton = true, confirmLabel = 'Potvrdit výběr', showFormSaveButton = false, listDensity = 'comfortable', addPassengerControl = 'text', inlineAdd = false, showInlineAddTitle = true, inlineAddPresentation = 'inline', onVersionChange, onSaveAvailablePassengers, onSaveFavorites, onBack, onExitToResults, onConfirm }: {
   passengers: Passenger[]; availablePassengers: Passenger[]; favorites: Passenger[];
   selfPassenger?: Passenger;
+  pickerHeight?: 'max' | 'half';
   confirmLabel?: string;
   onSaveAvailablePassengers: (p: Passenger[]) => void; onSaveFavorites: (p: Passenger[]) => void;
   requireNames?: boolean; requiredNameMode?: RequiredNameMode; selectionControl?: 'checkbox' | 'switch'; moveSelectedToTop?: boolean; showConfirmButton?: boolean; showFormSaveButton?: boolean;
@@ -632,20 +633,33 @@ export default function PassengerFlow({ passengers, availablePassengers, favorit
   );
 }
 
-export function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, showFavoriteName = false, simpleProfile = false, onDelete }: {
+export function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite, editing, favoriteLocked, nameRequired, minimalInline = false, showFavoriteName = false, simpleProfile = false, pickerHeight = 'max', onDelete }: {
   draft: Passenger; setDraft: (p: Passenger) => void;
   saveFavorite: boolean; setSaveFavorite: (value: boolean) => void; editing: boolean; favoriteLocked: boolean;
   nameRequired: boolean; minimalInline?: boolean; showFavoriteName?: boolean; simpleProfile?: boolean; onDelete: () => void;
+  pickerHeight?: 'max' | 'half';
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [picker, setPicker] = useState<'category' | 'passes' | null>(null);
   const [pendingPasses, setPendingPasses] = useState(draft.passIds);
   useEffect(() => {
-    if (picker) {
-      dialog.current?.showModal();
-      dialog.current?.querySelector<HTMLElement>('[aria-checked="true"], input:checked')?.scrollIntoView({ block: 'center' });
-    }
-  }, [picker]);
+    const modal = dialog.current;
+    if (!picker || !modal) return;
+    const screen = modal.closest<HTMLElement>('.passenger-flow');
+    const positionPicker = () => {
+      if (pickerHeight !== 'half' || !screen) return;
+      const bounds = screen.getBoundingClientRect();
+      Object.assign(modal.style, { left: `${bounds.left}px`, top: `${bounds.top + bounds.height / 2}px`, width: `${bounds.width}px`, height: `${bounds.height / 2}px` });
+    };
+    positionPicker();
+    modal.showModal();
+    modal.querySelector<HTMLElement>('[aria-checked="true"], input:checked')?.scrollIntoView({ block: 'center' });
+    if (pickerHeight !== 'half' || !screen) return;
+    const observer = new ResizeObserver(positionPicker);
+    observer.observe(screen);
+    window.addEventListener('resize', positionPicker);
+    return () => { observer.disconnect(); window.removeEventListener('resize', positionPicker); };
+  }, [picker, pickerHeight]);
   const openPicker = (kind: 'category' | 'passes') => {
     if (kind === 'passes') setPendingPasses([...draft.passIds]);
     setPicker(kind);
@@ -716,7 +730,7 @@ export function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite
       {saveFavorite && <div className="flow-fields"><label>Přezdívka <span>*</span><input required value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>}
     </>}
     {editing && !favoriteLocked && <button type="button" className="flow-delete-passenger" onClick={onDelete}>Odebrat cestujícího</button>}
-    {picker && <dialog className="flow-v5-dialog" ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
+    {picker && <dialog className={`flow-v5-dialog${pickerHeight === 'half' ? ' flow-v5-dialog--half' : ''}`} ref={dialog} aria-labelledby="flow-v5-picker-title" onCancel={event => { event.preventDefault(); closePicker(); }}>
       <header className="flow-v5-dialog-header"><h2 id="flow-v5-picker-title">{picker === 'category' ? 'Vyberte kategorii' : 'Slevové průkazy'}</h2>{picker === 'category' && <button aria-label="Zavřít nabídku" onClick={closePicker}>×</button>}</header>
       <div className="flow-v5-picker-content">
         {picker === 'category' ? categoryGroups.map((group, index) => <section key={group.id} aria-label={['Děti', 'Mladiství', 'Dospělí', 'Senioři'][index]}>

@@ -339,6 +339,11 @@ button:focus-visible, input:focus-visible { outline: 2px solid #5fa8d5; outline-
 .flow-v5-dialog { position: fixed; inset: 0; margin: auto; width: min(390px, calc(100vw - 32px)); max-width: none; max-height: 85dvh; padding: 0; border: 1px solid #195277; border-radius: 12px; background: #001424; color: #fff; box-shadow: 0 16px 60px #0008; }
 .flow-v5-dialog[open] { display: flex; flex-direction: column; }
 .flow-v5-dialog::backdrop { background: #0009; }
+.flow-v5-dialog--half { inset: auto; margin: 0; max-height: none; border-radius: 16px 16px 0 0; animation: flow-picker-rise .18s ease-out; }
+.flow-v5-dialog--half .flow-v5-dialog-header, .flow-v5-dialog--half > footer { flex-shrink: 0; }
+.flow-v5-dialog--half .flow-v5-picker-content { flex: 1; min-height: 0; touch-action: pan-y; }
+@keyframes flow-picker-rise { from { transform: translateY(24px); opacity: .5; } to { transform: translateY(0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .flow-v5-dialog--half { animation: none; } }
 .flow-v5-dialog h2 { font-size: 18px; margin: 0; padding: 20px; border-bottom: 1px solid #195277; }
 .flow-v5-picker-content { overflow-y: auto; overscroll-behavior: contain; padding: 0 16px; }
 .flow-v5-picker-content section { border-top: 1px solid #0e273c; padding: 12px 0; }
