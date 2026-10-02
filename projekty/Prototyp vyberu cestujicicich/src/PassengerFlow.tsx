@@ -686,7 +686,7 @@ export function PassengerFormV5({ draft, setDraft, saveFavorite, setSaveFavorite
         <summary><span className="flow-extra-arrow" aria-hidden="true" /><span>Doplňující údaje{nameRequired ? ' *' : ''}</span></summary>
         <div className="flow-v5-extra-content">{nameFields}</div>
       </details>
-      <div className="flow-fields flow-v5-favorite-name"><label><input aria-label="Přezdívka" placeholder="Přezdívka – volitelné" value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>
+      <div className="flow-fields flow-v5-favorite-name"><label>Přezdívka:<input aria-label="Přezdívka" placeholder="Přezdívka – volitelné" value={draft.name || ''} onChange={e => setDraft({ ...draft, name: e.target.value })} /></label></div>
     </> : minimalInline ? <>
       {categorySelector}
       {nameFields}
