@@ -1,6 +1,6 @@
 import FareFab, { SummaryVersionSwitch, type SummaryVersion } from './FareFab';
 import MultiTicketSummary, { JourneyResult, journeyTickets, multiTotal } from "./MultiTicketSummary";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PassengerFlow, { initialPassengers, hasPassengerName, loadPassengerMemory, savePassengerMemory, passengersMissingRequiredNames, passengerLabel, passLabels, countLabel, passes, type DesignVersion, type Passenger, type RequiredNameMode } from "./PassengerFlow";
 
 type Screen =
@@ -545,8 +545,8 @@ export function ResultsScreen({
   onOpenPassengers,
 }: {
   onBack?: () => void;
-  onBuy: () => void;
-  onPayNow: () => void;
+  onBuy: (multi?: boolean) => void;
+  onPayNow: (multi?: boolean) => void;
   multi: boolean;
   onScenario: (multi: boolean) => void;
   presentation?: boolean;
@@ -752,11 +752,11 @@ export function ResultsScreen({
       </div>}
 
       <div className="results-list">
-        {multi ? (
+        {multi && !presentation ? (
           <JourneyResult onBuy={onBuy} />
         ) : (
           connections.map((conn, ci) => (
-            <div key={ci} className="mb-2">
+            <Fragment key={ci}><div className="mb-2">
               {/* Connection header band */}
               <div
                 style={{ background: BAND }}
@@ -835,7 +835,7 @@ export function ResultsScreen({
                     {conn.price}
                   </span>
                   <button
-                    onClick={onBuy}
+                    onClick={() => onBuy(presentation ? false : undefined)}
                     style={{ border: `1.5px solid ${BLUE_BTN}`, color: BLUE_LINK, borderRadius: 6 }}
                     className="result-buy-button"
                   >
@@ -844,11 +844,11 @@ export function ResultsScreen({
                   </button>
                   <details className="result-buy-menu">
                     <summary aria-label="Další možnosti nákupu"><DotsIcon /></summary>
-                    <div><button onClick={onPayNow}>Rovnou k platbě</button></div>
+                    <div><button onClick={() => onPayNow(presentation ? false : undefined)}>Rovnou k platbě</button></div>
                   </details>
                 </div>
               )}
-            </div>
+            </div>{presentation && ci === 0 && <JourneyResult onBuy={() => onBuy(true)} />}</Fragment>
           ))
         )}
       </div>

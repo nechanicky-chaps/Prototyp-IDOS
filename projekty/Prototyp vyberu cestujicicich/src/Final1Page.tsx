@@ -138,6 +138,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
     if (value === multi) return;
     setMulti(value);
     setTicketIds(journeyTickets.map(ticket => ticket.id));
+    setCheckoutTotal(multiTotal(journeyTickets.map(ticket => ticket.id), passengers.length));
     setSelectedFare(0);
     setShowRequiredFields(false);
   };
@@ -175,8 +176,9 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
     setScreen('passengers');
   };
 
-  const startPurchase = () => {
-    const nextScreen = config.fareDisplay === 'step' ? 'fares' : 'summary';
+  const startPurchase = (isMulti = multi) => {
+    chooseScenario(isMulti);
+    const nextScreen = !isMulti && config.fareDisplay === 'step' ? 'fares' : 'summary';
     if (purchaseStartsWithPassengers) {
       openPassengers(nextScreen);
       return;
@@ -233,7 +235,7 @@ export default function Final1Page({ purchaseStartsWithPassengers = false, passe
                 showSearchScope={false}
                 onScenario={chooseScenario}
                 onBuy={startPurchase}
-                onPayNow={() => setScreen('payment')}
+                onPayNow={(isMulti = multi) => { chooseScenario(isMulti); setScreen('payment'); }}
                 onBack={() => setScreen('setup')}
                 passengerCount={passengers.length}
                 selectedPassengers={passengers}
